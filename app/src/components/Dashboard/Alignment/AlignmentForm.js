@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const AlignmentForm = () => {
+const AlignmentForm = ({ setAlignmentType, setData }) => {
   return (
     <Grid container spacing={3}>
       <Grid item lg={5}>
@@ -14,7 +14,7 @@ const AlignmentForm = () => {
             flexDirection: "column",
           }}
         >
-          <Form />
+          <Form setAlignmentType={setAlignmentType} setData={setData}/>
         </Paper>
       </Grid>
     </Grid>
