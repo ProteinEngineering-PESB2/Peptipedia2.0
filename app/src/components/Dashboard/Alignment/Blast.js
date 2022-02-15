@@ -17,7 +17,7 @@ const Blast = ({ data }) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item lg={12}>
+      <Grid item lg={12} xs={12}>
         <Paper
           sx={{
             p: 2,
@@ -28,7 +28,7 @@ const Blast = ({ data }) => {
           <div id="blast-multiple-alignments"></div>
         </Paper>
       </Grid>
-      <Grid item lg={12}>
+      <Grid item lg={12} xs={12}>
         <Paper
           sx={{
             p: 2,
@@ -39,7 +39,7 @@ const Blast = ({ data }) => {
           <div id="blast-alignments-table"></div>
         </Paper>
       </Grid>
-      <Grid item lg={12}>
+      <Grid item lg={12} xs={12}>
         <Paper
           sx={{
             p: 2,

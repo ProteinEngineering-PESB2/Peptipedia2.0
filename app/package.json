@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "alignment-viewer-2": "^1.0.0-beta-15",
     "axios": "^0.25.0",
     "biojs-vis-blasterjs": "^1.1.3",
     "bootstrap": "^5.1.3",

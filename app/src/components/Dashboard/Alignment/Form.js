@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import { blastText, blastFile } from '../../../services/alignments'
+import { blastText, blastFile, msaText, msaFile } from '../../../services/alignments'
 
 const Input = styled("input")({
   display: "none",
@@ -78,15 +78,29 @@ const Form = ({ setAlignmentType, setData }) => {
 
       const { data } = await axios.get(path)
       
+      setLoading(false)
       setAlignmentType(alignmentTypeForm)
       setData(data)
-      setLoading(false)
     } else if (alignmentTypeForm === "msa") {
       if (fileType === "text") {
-
+        res = await msaText(post)
       } else if (fileType === "file") {
-
+        res = await msaFile(post)
       }
+
+      let result = []
+
+      res.map((data) => {
+        result.push({
+          id: data.id,
+          label: `${data.label.substring(0, 12)}`,
+          sequence: data.sequence
+        })
+      })
+
+      setLoading(false)
+      setAlignmentType(alignmentTypeForm)
+      setData(result)
     }
   };
 
