@@ -13,11 +13,11 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 import LoadingButton from '@mui/lab/LoadingButton'
-import SaveIcon from '@mui/icons-material/Save';
 
 import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import SaveIcon from '@mui/icons-material/Save';
 
 import { blastText, blastFile, msaText, msaFile } from '../../../services/alignments'
 
