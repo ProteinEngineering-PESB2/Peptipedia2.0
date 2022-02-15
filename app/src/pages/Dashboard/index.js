@@ -1,150 +1,163 @@
-import './index.css'
+import { useState } from "react";
 
-import { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AiFillDashboard } from "@react-icons/all-files/ai/AiFillDashboard";
-import { FaUserAlt } from "@react-icons/all-files/fa/FaUserAlt";
-import { FiAlignLeft } from "@react-icons/all-files/fi/FiAlignLeft";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Collapse from "@mui/material/Collapse";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
-import { AppContext } from '../../context/AppContext'
+import AppsIcon from "@mui/icons-material/Apps";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import Blast from '../../components/Dashboard/Blast';
-import MSA from '../../components/Dashboard/MSA';
+import {
+  styled,
+  ThemeProvider,
+  createTheme,
+  useTheme,
+} from "@mui/material/styles";
 
-const Dashboard = () => {
-  const [toggleButton, setToggleButton] = useState(false)
-  const [section, setSection] = useState("")
-  const [showArrow, setShowArrow] = useState(false)
+const mdTheme = createTheme();
+const drawerWidth = 240;
 
-  const navigate = useNavigate()
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
-  const { state } = useContext(AppContext)
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
+}));
 
-  const { alignmentType } = state
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  })
+);
 
-  useEffect(() => {
-    if (alignmentType === "") {
-      navigate("/alignment")
-    } else if (alignmentType === "blast") {
-      setSection("blast")
-    } else if (alignmentType === "msa") {
-      setSection("msa")
-    }
-  }, [])
+function Prueba() {
+  const theme = useTheme();
 
-  const handleToggleButton = () => {
-    setToggleButton(!toggleButton)
-    setShowArrow(true)
-  }
+  const [open, setOpen] = useState(false);
+  const [expandItemApps, setExpandItemApps] = useState(false);
 
-  const onChangeSection = (section) => {
-    setSection(section)
-    setShowArrow(false)
-  }
-
-  return (
-    <div className={toggleButton ? "d-flex toggled" : "d-flex"} id="wrapper">
-      <div className="bg-white" id="sidebar-wrapper">
-        <div className="sidebar-heading text-center py-3 fs-4 fw-bold text-uppercase border-bottom">
-          <div className="d-flex">
-            <i className="primary-text me-2 d-flex justify-content-center align-items-center">
-              <AiFillDashboard />
-            </i>
-            <span className="primary-text">Codersbite</span>
-          </div>
-        </div>
-
-        {alignmentType === "msa" && (
-          <div className="list-group list-group-flush">
-            <a
-              onClick={() => onChangeSection("msa")}
-              className="d-flex align-items-center sidebar-item list-group-item list-group-item-action bg-transparent second-text"
+    return (
+      <ThemeProvider theme={mdTheme}>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          <AppBar position="fixed" open={open}>
+            <Toolbar
+              sx={{
+                pr: "24px",
+              }}
             >
-              <i className={section === "msa" ? "me-2 active d-flex" : "me-2 d-flex"}>
-                <AiFillDashboard />
-              </i>
-              <span className={section === "msa" ? "me-2 active" : "me-2"}>MSA</span>
-            </a>
-            <a
-              onClick={() => onChangeSection("prueba")}
-              className="d-flex align-items-center sidebar-item list-group-item list-group-item-action bg-transparent second-text"
-            >
-              <i className={section === "prueba" ? "me-2 active d-flex" : "me-2 d-flex"}>
-                <AiFillDashboard />
-              </i>
-              <span className={section === "prueba" ? "me-2 active" : "me-2"}>Prueba</span>
-            </a>
-          </div>
-        )}
-        {alignmentType === "blast" && (
-          <div className="list-group list-group-flush">
-            <a
-              onClick={() => onChangeSection("blast")}
-              className="d-flex align-items-center sidebar-item list-group-item list-group-item-action bg-transparent second-text"
-            >
-              <i className={section === "blast" ? "me-2 active d-flex" : "me-2 d-flex"}>
-                <AiFillDashboard />
-              </i>
-              <span className={section === "blast" ? "me-2 active" : "me-2"}>Blast</span>
-            </a>
-            <a
-              onClick={() => onChangeSection("prueba")}
-              className="d-flex align-items-center sidebar-item list-group-item list-group-item-action bg-transparent second-text"
-            >
-              <i className={section === "prueba" ? "me-2 active d-flex" : "me-2 d-flex"}>
-                <AiFillDashboard />
-              </i>
-              <span className={section === "prueba" ? "me-2 active" : "me-2"}>Prueba</span>
-            </a>
-          </div>
-        )}
-        
-      </div>
-
-      <div id="page-content-wrapper" className="second-bg">
-        <nav className="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
-          <div className="d-flex align-items-center">
-              <i
-                onClick={handleToggleButton}
-                className="toggle-icon fs-4 me-3 fw-bold" 
-                id="menu-toggle"
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={() => setOpen(true)}
+                sx={{
+                  mr: 2,
+                  ...(open && { display: "none" }),
+                }}
               >
-                <FiAlignLeft/>
-              </i>
-          </div>
-
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li className="nav-item dropdown">
-                      <a className="d-flex align-items-center nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                          role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i className="me-2"><FaUserAlt/></i><span>Claudio Guevara</span>
-                      </a>
-                      <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a className="dropdown-item" href="#">Profile</a></li>
-                          <li><a className="dropdown-item" href="#">Settings</a></li>
-                          <li><a className="dropdown-item" href="#">Logout</a></li>
-                      </ul>
-                  </li>
-              </ul>
-          </div>
-        </nav>
-
-        <div className="container-fluid px-4">
-          {section === "msa" && (
-            <MSA showArrow={showArrow} setShowArrow={setShowArrow}/>
-          )}
-          {section === "blast" && <Blast/>}
-        </div>
-      </div>
-    </div>
-  )
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                Dashboard
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+                boxSizing: "border-box",
+              },
+            }}
+            variant="persistent"
+            anchor="left"
+            open={open}
+          >
+            <DrawerHeader>
+              <IconButton onClick={() => setOpen(false)}>
+                {theme.direction === "ltr" ? (
+                  <ChevronLeftIcon />
+                ) : (
+                  <ChevronRightIcon />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              <ListItemButton onClick={() => setExpandItemApps(!expandItemApps)}>
+                <ListItemIcon>
+                  <AppsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tools" />
+                {expandItemApps ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={expandItemApps} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <FormatAlignCenterIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Alignments" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+            </List>
+          </Drawer>
+          <Main open={open}>
+            <DrawerHeader />
+          </Main>
+        </Box>
+      </ThemeProvider>
+    );
 }
 
-export default Dashboard
+export default Prueba;
