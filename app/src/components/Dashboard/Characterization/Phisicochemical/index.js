@@ -1,16 +1,18 @@
 import { useState } from 'react'
 
 import PhisicochemicalForm from './PhisicochemicalForm'
+import PhisicochemicalTable from './PhisicochemicalTable'
 
 const Phisicochemical = () => {
     const [data, setData] = useState([])
+    const [columns, setColumns] = useState([])
 
     return (
         <>
         {data.length === 0 ? (
-            <PhisicochemicalForm/>
+            <PhisicochemicalForm setData={setData} setColumns={setColumns}/>
         ) : (
-            <h1>Tabla</h1>
+            <PhisicochemicalTable data={data} columns={columns}/>
         )}
         </>
     )

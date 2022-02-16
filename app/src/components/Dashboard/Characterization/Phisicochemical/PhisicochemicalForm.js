@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper'
 
 import Form from './Form'
 
-const PhisicochemicalForm = () => {
+const PhisicochemicalForm = ({ setData, setColumns }) => {
     return (
         <Grid container spacing={3}>
             <Grid item lg={6} sx={{ margin: 'auto' }}>
@@ -14,7 +14,7 @@ const PhisicochemicalForm = () => {
                         flexDirection: 'column'
                     }}
                 >
-                    <Form/>
+                    <Form setData={setData} setColumns={setColumns}/>
                 </Paper>
             </Grid>
         </Grid>

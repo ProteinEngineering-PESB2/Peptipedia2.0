@@ -12,14 +12,16 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import SaveIcon from "@mui/icons-material/Save";
 
-const Form = () => {
-  const [lengthCheckbox, setLengthCheckbox] = useState(false);
-  const [molecularWeightCheckbox, setMolecularWeightCheckbox] = useState(false);
+import { phisicochemical } from "../../../../services/characterizations";
+
+const Form = ({ setData, setColumns }) => {
+  const [lengthCheckbox, setLengthCheckbox] = useState(true);
+  const [molecularWeightCheckbox, setMolecularWeightCheckbox] = useState(true);
   const [isoelectricPointCheckbox, setIsoelectricPointCheckbox] =
-    useState(false);
-  const [chargeDensityCheckbox, setChargeDensityCheckbox] = useState(false);
-  const [chargeCheckbox, setChargeCheckbox] = useState(false);
-  const [textInput, setTextInput] = useState("")
+    useState(true);
+  const [chargeDensityCheckbox, setChargeDensityCheckbox] = useState(true);
+  const [chargeCheckbox, setChargeCheckbox] = useState(true);
+  const [textInput, setTextInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChangeLengthCheckbox = (e) => {
@@ -43,26 +45,49 @@ const Form = () => {
   };
 
   const handleChangeTextInput = (e) => {
-      setTextInput(e.target.value)
-  }
+    setTextInput(e.target.value);
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     const options = {
-        "length": lengthCheckbox,
-        "molecular_weight": molecularWeightCheckbox,
-        "isoelectric_point": isoelectricPointCheckbox,
-        "charge_density": chargeDensityCheckbox,
-        "charge": chargeCheckbox
-    }
+      length: lengthCheckbox,
+      molecular_weight: molecularWeightCheckbox,
+      isoelectric_point: isoelectricPointCheckbox,
+      charge_density: chargeDensityCheckbox,
+      charge: chargeCheckbox,
+    };
+
+    let columns = []
+
+    columns.push({ label: "Sequence" })
+    if (lengthCheckbox) columns.push({ label: "Length" })
+    if (molecularWeightCheckbox) columns.push({ label: "Molecular Weight" })
+    if (isoelectricPointCheckbox) columns.push({ label: "Isoelectric Point" })
+    if (chargeDensityCheckbox) columns.push({ label: "Charge Density" })
+    if (chargeCheckbox) columns.push({ label: "Charge" })
+    
+    // columns.push({ name: "id", label: "Sequence", options: { filter: true, sort: false } })
+    // if (lengthCheckbox) columns.push({ name: "length", label: "Length", options: { filter: false, sort: true } })
+    // if (molecularWeightCheckbox) columns.push({ name: "molecular_weight", label: "Molecular Weight", options: { filter: false, sort: true } })
+    // if (isoelectricPointCheckbox) columns.push({ name:  "isoelectric_point", label: "Isoelectric Point", options: { filter: false, sort: true } })
+    // if (chargeDensityCheckbox) columns.push({ name: "charge_density", label: "Charge Density", options: { filter: false, sort: true } })
+    // if (chargeCheckbox) columns.push({ name: "charge", label: "Charge", options: { filter: false, sort: true } })
+
+    setColumns(columns)
 
     const post = {
-        "data": textInput,
-        options
-    }
+      data: textInput,
+      options,
+    };
 
-    console.log(post)
+    const res = await phisicochemical(post);
+
+    setLoading(false);
+    setData(res);
   };
 
   return (
