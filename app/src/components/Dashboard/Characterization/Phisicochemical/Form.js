@@ -61,23 +61,16 @@ const Form = ({ setData, setColumns }) => {
       charge: chargeCheckbox,
     };
 
-    let columns = []
+    let columns = [];
 
-    columns.push({ label: "Sequence" })
-    if (lengthCheckbox) columns.push({ label: "Length" })
-    if (molecularWeightCheckbox) columns.push({ label: "Molecular Weight" })
-    if (isoelectricPointCheckbox) columns.push({ label: "Isoelectric Point" })
-    if (chargeDensityCheckbox) columns.push({ label: "Charge Density" })
-    if (chargeCheckbox) columns.push({ label: "Charge" })
-    
-    // columns.push({ name: "id", label: "Sequence", options: { filter: true, sort: false } })
-    // if (lengthCheckbox) columns.push({ name: "length", label: "Length", options: { filter: false, sort: true } })
-    // if (molecularWeightCheckbox) columns.push({ name: "molecular_weight", label: "Molecular Weight", options: { filter: false, sort: true } })
-    // if (isoelectricPointCheckbox) columns.push({ name:  "isoelectric_point", label: "Isoelectric Point", options: { filter: false, sort: true } })
-    // if (chargeDensityCheckbox) columns.push({ name: "charge_density", label: "Charge Density", options: { filter: false, sort: true } })
-    // if (chargeCheckbox) columns.push({ name: "charge", label: "Charge", options: { filter: false, sort: true } })
+    columns.push({ label: "Sequence" });
+    if (lengthCheckbox) columns.push({ label: "Length" });
+    if (molecularWeightCheckbox) columns.push({ label: "Molecular Weight" });
+    if (isoelectricPointCheckbox) columns.push({ label: "Isoelectric Point" });
+    if (chargeDensityCheckbox) columns.push({ label: "Charge Density" });
+    if (chargeCheckbox) columns.push({ label: "Charge" });
 
-    setColumns(columns)
+    setColumns(columns);
 
     const post = {
       data: textInput,

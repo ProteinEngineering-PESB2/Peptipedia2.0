@@ -7,3 +7,11 @@ export const phisicochemical = async (post) => {
 
     return result
 }
+
+export const geneOntology = async (post) => {
+    const { data } = await axios.post('/api/gene_ontology', post)
+
+    const { result } = data
+
+    return result
+}

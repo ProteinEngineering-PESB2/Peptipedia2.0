@@ -3,10 +3,10 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const PhisicochemicalForm = ({ setData, setColumns }) => {
+const GeneOntologyForm = ({ setColumns, setData }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item lg={6} sx={{ margin: "auto" }}>
+      <Grid item lg={6} xs={12} sx={{ margin: "auto" }}>
         <Paper
           sx={{
             p: 2,
@@ -14,11 +14,11 @@ const PhisicochemicalForm = ({ setData, setColumns }) => {
             flexDirection: "column",
           }}
         >
-          <Form setData={setData} setColumns={setColumns} />
+          <Form setColumns={setColumns} setData={setData}/>
         </Paper>
       </Grid>
     </Grid>
   );
 };
 
-export default PhisicochemicalForm;
+export default GeneOntologyForm;
