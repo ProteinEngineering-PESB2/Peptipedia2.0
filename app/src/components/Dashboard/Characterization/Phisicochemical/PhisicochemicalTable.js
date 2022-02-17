@@ -1,21 +1,14 @@
 import { useEffect } from 'react'
 
-import MUIDataTable from 'mui-datatables'
-
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
 import $ from 'jquery'
 
-const options = {
-    selectableRowsHideCheckboxes: true,
-    expandableRowsOnClick: true
-};
-
 const PhisicochemicalTable = ({ data, columns }) => {   
     
     useEffect(() => {
-        $("#example").DataTable({
+        $("#table").DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
@@ -31,7 +24,7 @@ const PhisicochemicalTable = ({ data, columns }) => {
                         p: 2
                     }}
                 >
-                    <table id="example" className='table table-striped table-hover text-center'>
+                    <table id="table" className='table table-striped table-hover text-center'>
                         <thead>
                             <tr>
                                 {columns.map((column) => {
@@ -57,13 +50,6 @@ const PhisicochemicalTable = ({ data, columns }) => {
                         </tbody>
                     </table>
                 </Paper>
-
-                {/* <MUIDataTable
-                    title={"Phisicochemical Characterization"}
-                    data={data}
-                    columns={columns}
-                    options={options}
-                /> */}
             </Grid>
         </Grid>
     )
