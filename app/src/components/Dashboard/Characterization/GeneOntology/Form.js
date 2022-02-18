@@ -13,7 +13,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { geneOntology } from '../../../../services/characterizations'
 
-const Form = ({ setColumns, setData }) => {
+const Form = ({ setData }) => {
   const [textInput, setTextInput] = useState("");
   const [molecularFunctionCheckbox, setMolecularFunctionCheckbox] =
     useState(true);
@@ -52,15 +52,6 @@ const Form = ({ setColumns, setData }) => {
         celular_component: celularComponentCheckbox,
       },
     };
-
-    let columns = []
-
-    columns.push({ label: "Sequence" })
-    if (molecularFunctionCheckbox) columns.push({ label: "Molecular Function" })
-    if (biologicalProcessCheckbox) columns.push({ label: "Biological Process" })
-    if (celularComponentCheckbox) columns.push({ label: "Celular Component" })
-
-    setColumns(columns)
 
     const res = await geneOntology(post)
 

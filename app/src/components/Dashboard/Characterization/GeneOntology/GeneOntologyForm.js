@@ -14,7 +14,7 @@ const GeneOntologyForm = ({ setColumns, setData }) => {
             flexDirection: "column",
           }}
         >
-          <Form setColumns={setColumns} setData={setData}/>
+          <Form setData={setData}/>
         </Paper>
       </Grid>
     </Grid>

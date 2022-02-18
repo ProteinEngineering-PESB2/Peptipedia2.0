@@ -65,9 +65,12 @@ const Form = ({ setData, setColumns }) => {
 
     columns.push({ name: "id", label: "Sequence" });
     if (lengthCheckbox) columns.push({ name: "length", label: "Length" });
-    if (molecularWeightCheckbox) columns.push({ name: "molecular_weight", label: "Molecular Weight" });
-    if (isoelectricPointCheckbox) columns.push({ name: "isoelectric_point", label: "Isoelectric Point" });
-    if (chargeDensityCheckbox) columns.push({ name: "charge_density", label: "Charge Density" });
+    if (molecularWeightCheckbox)
+      columns.push({ name: "molecular_weight", label: "Molecular Weight" });
+    if (isoelectricPointCheckbox)
+      columns.push({ name: "isoelectric_point", label: "Isoelectric Point" });
+    if (chargeDensityCheckbox)
+      columns.push({ name: "charge_density", label: "Charge Density" });
     if (chargeCheckbox) columns.push({ name: "charge", label: "Charge" });
 
     setColumns(columns);
@@ -96,67 +99,53 @@ const Form = ({ setData, setColumns }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Stack direction="row" spacing={2}>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={chargeDensityCheckbox}
-                    onChange={handleChangeChargeDensityCheckbox}
-                  />
-                }
-                label="Charge Density"
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={molecularWeightCheckbox}
-                    onChange={handleChangeMolecularWeightCheckbox}
-                  />
-                }
-                label="Molecular Weight"
-              />
-            </FormGroup>
-          </Stack>
-        </Grid>
-        <Grid item xs={12}>
-          <Stack direction="row" spacing={2}>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isoelectricPointCheckbox}
-                    onChange={handleChangeIsoelectricPointCheckbox}
-                  />
-                }
-                label="Isoelectric Point"
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={lengthCheckbox}
-                    onChange={handleChangeLengthCheckbox}
-                  />
-                }
-                label="Length"
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={chargeCheckbox}
-                    onChange={handleChangeChargeCheckbox}
-                  />
-                }
-                label="Charge"
-              />
-            </FormGroup>
-          </Stack>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={chargeDensityCheckbox}
+                  onChange={handleChangeChargeDensityCheckbox}
+                />
+              }
+              label="Charge Density"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={chargeCheckbox}
+                  onChange={handleChangeChargeCheckbox}
+                />
+              }
+              label="Charge"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={lengthCheckbox}
+                  onChange={handleChangeLengthCheckbox}
+                />
+              }
+              label="Length"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isoelectricPointCheckbox}
+                  onChange={handleChangeIsoelectricPointCheckbox}
+                />
+              }
+              label="Isoelectric Point"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={molecularWeightCheckbox}
+                  onChange={handleChangeMolecularWeightCheckbox}
+                />
+              }
+              label="Molecular Weight"
+            />
+          </FormGroup>
         </Grid>
         <Grid item xs={12} sx={{ marginTop: 2 }}>
           {loading ? (

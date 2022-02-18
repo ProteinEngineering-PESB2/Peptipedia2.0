@@ -12,10 +12,10 @@ const Phisicochemical = () => {
     return (
         <>
         <Grid container spacing={5}>
-            <Grid item>
+            <Grid item lg={12} xs={12}>
                 <PhisicochemicalForm setData={setData} setColumns={setColumns}/>
             </Grid>
-            {data.length > 0 && <Grid item lg={12}><PhisicochemicalTable data={data} columns={columns}/></Grid> }
+            {data.length > 0 && <Grid item lg={12} xs={12}><PhisicochemicalTable data={data} columns={columns}/></Grid> }
         </Grid>
         </>
     )

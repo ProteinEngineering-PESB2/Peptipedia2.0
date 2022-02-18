@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
@@ -15,6 +13,8 @@ const PhisicochemicalTable = ({ data, columns }) => {
         <Paper
           sx={{
             p: 2,
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <DataTable data={data} columns={columns} title={title} />
