@@ -15,7 +15,7 @@ const Alignment = () => {
     <>
       <Grid container spacing={5}>
         <Grid item lg={12} xs={12}>
-          <Typography variant="h5">Sequence Alignment</Typography>
+          <Typography variant="h4">Sequence Alignment</Typography>
         </Grid>
         <Grid item lg={12} xs={12}>
           <AlignmentForm
