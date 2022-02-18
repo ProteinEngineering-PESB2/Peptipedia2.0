@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography";
 
 import AlignmentForm from "./AlignmentForm";
@@ -24,14 +25,31 @@ const Alignment = () => {
           />
         </Grid>
         {data.length > 0 ? (
-          <Grid item lg={12} xs={12}>
+          <>
+          {alignmentType === "blast" && <Blast data={data}/>}
+          {alignmentType === "msa" && <MSA data={data}/>}
+          </>
+        ) : ""}
+      </Grid>
+      {/* <Grid item lg={12} xs={12}>
+        <Typography variant="h4">Sequence Alignment</Typography>
+      </Grid>
+      <Grid item lg={12} xs={12}>
+        <AlignmentForm
+          setAlignmentType={setAlignmentType}
+          setData={setData}
+        />
+      </Grid>
+      <Grid item lg={12} xs={12}>
+        {data.length > 0 ? (
+          <>
             {alignmentType === "blast" && <Blast data={data} />}
             {alignmentType === "msa" && <MSA data={data} />}
-          </Grid>
+          </>
         ) : (
           ""
         )}
-      </Grid>
+      </Grid> */}
     </>
   );
 };
