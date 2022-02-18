@@ -12,14 +12,19 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
-import LoadingButton from '@mui/lab/LoadingButton'
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from "@mui/icons-material/Save";
 
-import { blastText, blastFile, msaText, msaFile } from '../../../services/alignments'
+import {
+  blastText,
+  blastFile,
+  msaText,
+  msaFile,
+} from "../../../services/alignments";
 
 const Input = styled("input")({
   display: "none",
@@ -30,7 +35,7 @@ const Form = ({ setAlignmentType, setData }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleChangeAlignmentTypeForm = (e) => {
     setAlignmentTypeForm(e.target.value);
@@ -38,8 +43,8 @@ const Form = ({ setAlignmentType, setData }) => {
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);
-    setTextInput("")
-    setFileInput(null)
+    setTextInput("");
+    setFileInput(null);
   };
 
   const handleChangeTextInput = (e) => {
@@ -53,55 +58,55 @@ const Form = ({ setAlignmentType, setData }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    let post
-    let res
+    let post;
+    let res;
 
-    setLoading(true)
-    setData([])
+    setLoading(true);
+    setData([]);
 
     if (fileType === "text") {
       post = {
-        "data": textInput
-      }
+        data: textInput,
+      };
     } else if (fileType === "file") {
-      post = new FormData()
-      post.append("file", fileInput)
+      post = new FormData();
+      post.append("file", fileInput);
     }
 
     if (alignmentTypeForm === "blast") {
       if (fileType === "text") {
-        res = await blastText(post)
+        res = await blastText(post);
       } else if (fileType === "file") {
-        res = await blastFile(post)
+        res = await blastFile(post);
       }
 
-      const { path } = res
+      const { path } = res;
 
-      const { data } = await axios.get(path)
-      
-      setLoading(false)
-      setAlignmentType(alignmentTypeForm)
-      setData(data)
+      const { data } = await axios.get(path);
+
+      setLoading(false);
+      setAlignmentType(alignmentTypeForm);
+      setData(data);
     } else if (alignmentTypeForm === "msa") {
       if (fileType === "text") {
-        res = await msaText(post)
+        res = await msaText(post);
       } else if (fileType === "file") {
-        res = await msaFile(post)
+        res = await msaFile(post);
       }
 
-      let result = []
+      let result = [];
 
       res.map((data) => {
         result.push({
           id: data.id,
           label: `${data.label.substring(0, 12)}`,
-          sequence: data.sequence
-        })
-      })
+          sequence: data.sequence,
+        });
+      });
 
-      setAlignmentType(alignmentTypeForm)
-      setData(result)
-      setLoading(false)
+      setAlignmentType(alignmentTypeForm);
+      setData(result);
+      setLoading(false);
     }
   };
 
@@ -192,12 +197,22 @@ const Form = ({ setAlignmentType, setData }) => {
         <Grid item xs={12} sx={{ marginTop: 2 }}>
           {loading ? (
             <Stack direction="row" spacing={2}>
-              <LoadingButton loading variant="contained" color="primary" startIcon={<SaveIcon/>} loadingPosition="start">
+              <LoadingButton
+                loading
+                variant="contained"
+                color="primary"
+                startIcon={<SaveIcon />}
+                loadingPosition="start"
+              >
                 Loading...
               </LoadingButton>
             </Stack>
           ) : (
-            <Button type="submit" variant="contained" disabled={textInput === "" && fileInput === null}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={textInput === "" && fileInput === null}
+            >
               run alignment
             </Button>
           )}

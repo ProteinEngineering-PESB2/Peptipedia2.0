@@ -62,8 +62,8 @@ const GeneOntologyTable = ({ data }) => {
             <Paper
               sx={{
                 p: 2,
-                display: 'flex',
-                flexDirection: 'column'
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <Autocomplete
@@ -81,8 +81,8 @@ const GeneOntologyTable = ({ data }) => {
             <Paper
               sx={{
                 p: 2,
-                display: 'flex',
-                flexDirection: 'column'
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <Autocomplete

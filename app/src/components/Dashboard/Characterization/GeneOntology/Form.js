@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 
 import SaveIcon from "@mui/icons-material/Save";
 
-import { geneOntology } from '../../../../services/characterizations'
+import { geneOntology } from "../../../../services/characterizations";
 
 const Form = ({ setData }) => {
   const [textInput, setTextInput] = useState("");
@@ -42,7 +42,7 @@ const Form = ({ setData }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true)
+    setLoading(true);
 
     const post = {
       data: textInput,
@@ -53,11 +53,11 @@ const Form = ({ setData }) => {
       },
     };
 
-    const res = await geneOntology(post)
+    const res = await geneOntology(post);
 
-    setData(res)
+    setData(res);
 
-    setLoading(false)
+    setLoading(false);
   };
 
   return (

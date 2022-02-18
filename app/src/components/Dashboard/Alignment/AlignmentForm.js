@@ -6,7 +6,7 @@ import Form from "./Form";
 const AlignmentForm = ({ setAlignmentType, setData }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={8} lg={6} sx={{ margin: 'start' }}>
+      <Grid item xs={12} md={8} lg={6} sx={{ margin: "start" }}>
         <Paper
           sx={{
             p: 2,
@@ -14,7 +14,7 @@ const AlignmentForm = ({ setAlignmentType, setData }) => {
             flexDirection: "column",
           }}
         >
-          <Form setAlignmentType={setAlignmentType} setData={setData}/>
+          <Form setAlignmentType={setAlignmentType} setData={setData} />
         </Paper>
       </Grid>
     </Grid>

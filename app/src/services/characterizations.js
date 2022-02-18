@@ -1,17 +1,17 @@
-import axios from 'axios'
+import axios from "axios";
 
 export const phisicochemical = async (post) => {
-    const { data } = await axios.post(`/api/phisicochemical`, post)
+  const { data } = await axios.post(`/api/phisicochemical`, post);
 
-    const { result } = data
+  const { result } = data;
 
-    return result
-}
+  return result;
+};
 
 export const geneOntology = async (post) => {
-    const { data } = await axios.post('/api/gene_ontology', post)
+  const { data } = await axios.post("/api/gene_ontology", post);
 
-    const { result } = data
+  const { result } = data;
 
-    return result
-}
+  return result;
+};

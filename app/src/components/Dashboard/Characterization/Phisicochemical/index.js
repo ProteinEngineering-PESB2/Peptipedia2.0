@@ -1,28 +1,32 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import Grid from '@mui/material/Grid'
-import Typography from "@mui/material/Typography"
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
-import PhisicochemicalForm from './PhisicochemicalForm'
-import PhisicochemicalTable from './PhisicochemicalTable'
+import PhisicochemicalForm from "./PhisicochemicalForm";
+import PhisicochemicalTable from "./PhisicochemicalTable";
 
 const Phisicochemical = () => {
-    const [data, setData] = useState([])
-    const [columns, setColumns] = useState([])
+  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([]);
 
-    return (
-        <>
-        <Grid container spacing={5}>
-            <Grid item lg={12} xs={12}>
-                <Typography variant="h5">Phisicochemical Characterization</Typography>
-            </Grid>
-            <Grid item lg={12} xs={12}>
-                <PhisicochemicalForm setData={setData} setColumns={setColumns}/>
-            </Grid>
-            {data.length > 0 && <Grid item lg={12} xs={12}><PhisicochemicalTable data={data} columns={columns}/></Grid> }
+  return (
+    <>
+      <Grid container spacing={5}>
+        <Grid item lg={12} xs={12}>
+          <Typography variant="h5">Phisicochemical Characterization</Typography>
         </Grid>
-        </>
-    )
-}
+        <Grid item lg={12} xs={12}>
+          <PhisicochemicalForm setData={setData} setColumns={setColumns} />
+        </Grid>
+        {data.length > 0 && (
+          <Grid item lg={12} xs={12}>
+            <PhisicochemicalTable data={data} columns={columns} />
+          </Grid>
+        )}
+      </Grid>
+    </>
+  );
+};
 
-export default Phisicochemical
+export default Phisicochemical;

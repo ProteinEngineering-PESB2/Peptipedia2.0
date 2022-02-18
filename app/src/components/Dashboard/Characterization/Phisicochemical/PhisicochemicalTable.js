@@ -6,15 +6,14 @@ import DataTable from "../../DataTable";
 const title = "Phisicochemical Characterization";
 
 const PhisicochemicalTable = ({ data, columns }) => {
-
   return (
     <Grid container spacing={3}>
       <Grid item lg={12} xs={12}>
         <Paper
           sx={{
             p: 2,
-            display: 'flex',
-            flexDirection: 'column',
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <DataTable data={data} columns={columns} title={title} />
