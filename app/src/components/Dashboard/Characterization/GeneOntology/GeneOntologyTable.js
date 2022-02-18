@@ -16,7 +16,7 @@ const GeneOntologyTable = ({ data }) => {
     useState("");
   const [inputSequencesAutocomplete, setInputSequencesAutocomplete] =
     useState("");
-    const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let types = [];
@@ -35,7 +35,7 @@ const GeneOntologyTable = ({ data }) => {
     setSequencesAutocomplete(sequences);
     setValueSequencesAutocomplete(sequences[0]);
 
-    setLoading(false)
+    setLoading(false);
   }, []);
 
   const handleChangeValueTypesAutocomplete = (e, newValue) => {
@@ -59,29 +59,51 @@ const GeneOntologyTable = ({ data }) => {
       {loading === false && (
         <Grid container spacing={2}>
           <Grid item lg={3} xs={12}>
-            <Autocomplete
-              disablePortal
-              value={valueTypesAutocomplete}
-              onChange={handleChangeValueTypesAutocomplete}
-              inputValue={inputTypesAutocomplete}
-              onInputChange={handleChangeInputTypesAutocomplete}
-              options={typesAutocomplete}
-              renderInput={(params) => <TextField {...params} label="Type" />}
-            />
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column'
+              }}
+            >
+              <Autocomplete
+                disablePortal
+                value={valueTypesAutocomplete}
+                onChange={handleChangeValueTypesAutocomplete}
+                inputValue={inputTypesAutocomplete}
+                onInputChange={handleChangeInputTypesAutocomplete}
+                options={typesAutocomplete}
+                renderInput={(params) => <TextField {...params} label="Type" />}
+              />
+            </Paper>
           </Grid>
           <Grid item lg={5} xs={12}>
-            <Autocomplete
-              disablePortal
-              value={valueSequencesAutocomplete}
-              onChange={handleChangeValueSequencesAutocomplete}
-              inputValue={inputSequencesAutocomplete}
-              onInputChange={handleChangeInputSequencesAutocomplete}
-              options={sequencesAutocomplete}
-              renderInput={(params) => <TextField {...params} label="Sequence" />}
-            />
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column'
+              }}
+            >
+              <Autocomplete
+                disablePortal
+                value={valueSequencesAutocomplete}
+                onChange={handleChangeValueSequencesAutocomplete}
+                inputValue={inputSequencesAutocomplete}
+                onInputChange={handleChangeInputSequencesAutocomplete}
+                options={sequencesAutocomplete}
+                renderInput={(params) => (
+                  <TextField {...params} label="Sequence" />
+                )}
+              />
+            </Paper>
           </Grid>
           <Grid item lg={12}>
-            <Table type={valueTypesAutocomplete} sequence={valueSequencesAutocomplete} data={data}/>
+            <Table
+              type={valueTypesAutocomplete}
+              sequence={valueSequencesAutocomplete}
+              data={data}
+            />
           </Grid>
         </Grid>
       )}

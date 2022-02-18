@@ -63,12 +63,12 @@ const Form = ({ setData, setColumns }) => {
 
     let columns = [];
 
-    columns.push({ label: "Sequence" });
-    if (lengthCheckbox) columns.push({ label: "Length" });
-    if (molecularWeightCheckbox) columns.push({ label: "Molecular Weight" });
-    if (isoelectricPointCheckbox) columns.push({ label: "Isoelectric Point" });
-    if (chargeDensityCheckbox) columns.push({ label: "Charge Density" });
-    if (chargeCheckbox) columns.push({ label: "Charge" });
+    columns.push({ name: "id", label: "Sequence" });
+    if (lengthCheckbox) columns.push({ name: "length", label: "Length" });
+    if (molecularWeightCheckbox) columns.push({ name: "molecular_weight", label: "Molecular Weight" });
+    if (isoelectricPointCheckbox) columns.push({ name: "isoelectric_point", label: "Isoelectric Point" });
+    if (chargeDensityCheckbox) columns.push({ name: "charge_density", label: "Charge Density" });
+    if (chargeCheckbox) columns.push({ name: "charge", label: "Charge" });
 
     setColumns(columns);
 

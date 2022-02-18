@@ -11,7 +11,7 @@ const Phisicochemical = () => {
 
     return (
         <>
-        <Grid container spacing={4}>
+        <Grid container spacing={5}>
             <Grid item>
                 <PhisicochemicalForm setData={setData} setColumns={setColumns}/>
             </Grid>

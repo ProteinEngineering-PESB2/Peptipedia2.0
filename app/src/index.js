@@ -7,17 +7,6 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'proseqviewer/dist/assets/proseqviewer.css'
 
-// DataTables
-import 'datatables.net-buttons-dt/css/buttons.dataTables.min.css'
-import "datatables.net-buttons/js/dataTables.buttons.js"
-import "datatables.net-buttons/js/buttons.colVis.js"
-import "datatables.net-buttons/js/buttons.flash.js"
-import "datatables.net-buttons/js/buttons.html5.js"
-import "datatables.net-buttons/js/buttons.print.js"
-import 'datatables.net-dt/css/jquery.dataTables.min.css'
-import 'datatables.net-dt/js/dataTables.dataTables.js'
-import 'jquery/dist/jquery.min.js'
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
