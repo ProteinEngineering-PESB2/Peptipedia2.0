@@ -13,7 +13,7 @@ const GeneOntology = () => {
     <>
       <Grid container spacing={5}>
         <Grid item lg={12} xs={12}>
-          <Typography variant="h5">Gene Ontology Characterization</Typography>
+          <Typography variant="h4">Gene Ontology Characterization</Typography>
         </Grid>
         <Grid item lg={12}>
           <GeneOntologyForm setData={setData} />

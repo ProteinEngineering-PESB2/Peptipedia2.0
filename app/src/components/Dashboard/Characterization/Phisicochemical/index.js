@@ -14,7 +14,7 @@ const Phisicochemical = () => {
     <>
       <Grid container spacing={5}>
         <Grid item lg={12} xs={12}>
-          <Typography variant="h5">Phisicochemical Characterization</Typography>
+          <Typography variant="h4">Phisicochemical Characterization</Typography>
         </Grid>
         <Grid item lg={12} xs={12}>
           <PhisicochemicalForm setData={setData} setColumns={setColumns} />
