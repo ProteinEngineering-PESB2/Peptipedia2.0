@@ -57,6 +57,7 @@ const Form = ({ setAlignmentType, setData }) => {
     let res
 
     setLoading(true)
+    setData([])
 
     if (fileType === "text") {
       post = {
@@ -98,9 +99,9 @@ const Form = ({ setAlignmentType, setData }) => {
         })
       })
 
-      setLoading(false)
       setAlignmentType(alignmentTypeForm)
       setData(result)
+      setLoading(false)
     }
   };
 

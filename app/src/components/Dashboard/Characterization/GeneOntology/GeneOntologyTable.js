@@ -36,7 +36,7 @@ const GeneOntologyTable = ({ data }) => {
     setValueSequencesAutocomplete(sequences[0]);
 
     setLoading(false);
-  }, []);
+  }, [data]);
 
   const handleChangeValueTypesAutocomplete = (e, newValue) => {
     setValueTypesAutocomplete(newValue);

@@ -6,7 +6,7 @@ import Form from "./Form";
 const AlignmentForm = ({ setAlignmentType, setData }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={8} lg={6} sx={{ margin: 'auto' }}>
+      <Grid item xs={12} md={8} lg={6} sx={{ margin: 'start' }}>
         <Paper
           sx={{
             p: 2,

@@ -1,6 +1,6 @@
 import { ProSeqViewer } from 'proseqviewer/dist'
 
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -10,7 +10,6 @@ const options = {
 }
 
 const MSA = ({ data }) => {
-
     useEffect(() => {
         const psv = new ProSeqViewer("psv")
         psv.draw({ sequences: data, options })

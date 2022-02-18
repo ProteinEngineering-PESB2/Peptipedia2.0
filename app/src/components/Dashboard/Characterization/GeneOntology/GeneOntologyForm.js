@@ -3,10 +3,10 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const GeneOntologyForm = ({ setColumns, setData }) => {
+const GeneOntologyForm = ({ setData }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item lg={6} xs={12} sx={{ margin: "auto" }}>
+      <Grid item lg={6} xs={12} sx={{ margin: "start" }}>
         <Paper
           sx={{
             p: 2,

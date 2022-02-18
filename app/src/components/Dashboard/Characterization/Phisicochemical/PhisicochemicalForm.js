@@ -6,7 +6,7 @@ import Form from "./Form";
 const PhisicochemicalForm = ({ setData, setColumns }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item lg={6} xs={12} sx={{ margin: "auto" }}>
+      <Grid item lg={6} xs={12} sx={{ margin: "start" }}>
         <Paper
           sx={{
             p: 2,
