@@ -4,9 +4,8 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 const DataTable = ({ data, columns }) => {
-
   return (
-    <div className="ag-theme-alpine" style={{ width: "100%", height: 400 }}>
+    <div className="ag-theme-alpine" style={{ width: "100%", height: 550 }}>
       <AgGridReact
         rowData={data}
         columnDefs={columns}
