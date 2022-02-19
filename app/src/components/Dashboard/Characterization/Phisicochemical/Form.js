@@ -14,7 +14,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { phisicochemical } from "../../../../services/characterizations";
 
-const Form = ({ setData, setColumns }) => {
+const Form = ({ setData, setColumns, setHeaders }) => {
   const [lengthCheckbox, setLengthCheckbox] = useState(true);
   const [molecularWeightCheckbox, setMolecularWeightCheckbox] = useState(true);
   const [isoelectricPointCheckbox, setIsoelectricPointCheckbox] =
@@ -63,17 +63,36 @@ const Form = ({ setData, setColumns }) => {
 
     let columns = [];
 
-    columns.push({ name: "id", label: "Sequence" });
-    if (lengthCheckbox) columns.push({ name: "length", label: "Length" });
+    columns.push({ field: "id", sortable: true, filter: true });
+    if (lengthCheckbox)
+      columns.push({ field: "length", sortable: true, filter: true });
     if (molecularWeightCheckbox)
-      columns.push({ name: "molecular_weight", label: "Molecular Weight" });
+      columns.push({ field: "molecular_weight", sortable: true, filter: true });
     if (isoelectricPointCheckbox)
-      columns.push({ name: "isoelectric_point", label: "Isoelectric Point" });
+      columns.push({
+        field: "isoelectric_point",
+        sortable: true,
+        filter: true,
+      });
     if (chargeDensityCheckbox)
-      columns.push({ name: "charge_density", label: "Charge Density" });
-    if (chargeCheckbox) columns.push({ name: "charge", label: "Charge" });
+      columns.push({ field: "charge_density", sortable: true, filter: true });
+    if (chargeCheckbox)
+      columns.push({ field: "charge", sortable: true, filter: true });
+
+    let headers = [];
+
+    headers.push({ label: "Sequence", key: "id" });
+    if (lengthCheckbox) headers.push({ label: "Length", key: "length" });
+    if (molecularWeightCheckbox)
+      headers.push({ label: "Molecular Weight", key: "molecular_weight" });
+    if (isoelectricPointCheckbox)
+      headers.push({ label: "Isoelectric Point", key: "isoelectric_point" });
+    if (chargeDensityCheckbox)
+      headers.push({ label: "Charge Density", key: "charge_density" });
+    if (chargeCheckbox) headers.push({ label: "Charge", key: "charge" });
 
     setColumns(columns);
+    setHeaders(headers);
 
     const post = {
       data: textInput,

@@ -39,11 +39,12 @@ const Table = ({ type, sequence, data }) => {
   return (
     <>
       {loading === false && (
-        <DataTable
-          data={results}
-          columns={columns}
-          title="Gene Ontology Characterization"
-        />
+        <></>
+        // <DataTable
+        //   data={results}
+        //   columns={columns}
+        //   title="Gene Ontology Characterization"
+        // />
       )}
     </>
   );
