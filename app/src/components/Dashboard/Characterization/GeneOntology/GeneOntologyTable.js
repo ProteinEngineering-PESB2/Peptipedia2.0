@@ -57,7 +57,7 @@ const GeneOntologyTable = ({ data }) => {
   return (
     <>
       {loading === false && (
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item lg={3} xs={12}>
             <Paper
               sx={{

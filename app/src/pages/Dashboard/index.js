@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,8 +9,6 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 // import Typography from "@mui/material/Typography";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -85,7 +83,7 @@ const TestDashboard = () => {
           <Main open={true}>
             <DrawerHeader />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <RenderSection section={section}/>
+              <RenderSection section={section} />
               {/* <Grid container spacing={5}>
                 <Grid item lg={12} xs={12}>
                   <Grid container spacing={3}>
