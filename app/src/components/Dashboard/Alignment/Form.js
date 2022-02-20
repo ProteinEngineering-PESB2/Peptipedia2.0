@@ -96,7 +96,7 @@ const Form = ({ setAlignmentType, setData }) => {
 
       let result = [];
 
-      res.map((data) => {
+      res.forEach((data) => {
         result.push({
           id: data.id,
           label: `${data.label.substring(0, 12)}`,

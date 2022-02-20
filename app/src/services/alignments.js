@@ -12,7 +12,7 @@ export const blastFile = async (post) => {
   return data;
 };
 
-export const msaText = async (post) => {
+export const msaText = async (post) => {   
   const { data } = await axios.post("/api/msa", post);
 
   const { result } = data;
