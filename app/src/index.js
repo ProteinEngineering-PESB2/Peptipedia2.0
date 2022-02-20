@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-// import 'bootswatch/dist/zephyr/bootstrap.min.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "proseqviewer/dist/assets/proseqviewer.css";
 
