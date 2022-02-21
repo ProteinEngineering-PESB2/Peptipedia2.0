@@ -14,7 +14,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { phisicochemical } from "../../../../services/characterizations";
 
-const Form = ({ setData, setColumns, setHeaders }) => {
+const Form = ({ setData, setColumns }) => {
   const [lengthCheckbox, setLengthCheckbox] = useState(true);
   const [molecularWeightCheckbox, setMolecularWeightCheckbox] = useState(true);
   const [isoelectricPointCheckbox, setIsoelectricPointCheckbox] =
@@ -63,36 +63,14 @@ const Form = ({ setData, setColumns, setHeaders }) => {
 
     let columns = [];
 
-    columns.push({ field: "id", sortable: true, filter: true });
-    if (lengthCheckbox)
-      columns.push({ field: "length", sortable: true, filter: true });
-    if (molecularWeightCheckbox)
-      columns.push({ field: "molecular_weight", sortable: true, filter: true });
-    if (isoelectricPointCheckbox)
-      columns.push({
-        field: "isoelectric_point",
-        sortable: true,
-        filter: true,
-      });
-    if (chargeDensityCheckbox)
-      columns.push({ field: "charge_density", sortable: true, filter: true });
-    if (chargeCheckbox)
-      columns.push({ field: "charge", sortable: true, filter: true });
-
-    let headers = [];
-
-    headers.push({ label: "Sequence", key: "id" });
-    if (lengthCheckbox) headers.push({ label: "Length", key: "length" });
-    if (molecularWeightCheckbox)
-      headers.push({ label: "Molecular Weight", key: "molecular_weight" });
-    if (isoelectricPointCheckbox)
-      headers.push({ label: "Isoelectric Point", key: "isoelectric_point" });
-    if (chargeDensityCheckbox)
-      headers.push({ label: "Charge Density", key: "charge_density" });
-    if (chargeCheckbox) headers.push({ label: "Charge", key: "charge" });
+    columns.push("Id");
+    if (lengthCheckbox) columns.push("Length");
+    if (molecularWeightCheckbox) columns.push("Molecular Weight");
+    if (isoelectricPointCheckbox) columns.push("Isoelectric Point");
+    if (chargeDensityCheckbox) columns.push("Charge Density");
+    if (chargeCheckbox) columns.push("Charge");
 
     setColumns(columns);
-    setHeaders(headers);
 
     const post = {
       data: textInput,
@@ -101,8 +79,21 @@ const Form = ({ setData, setColumns, setHeaders }) => {
 
     const res = await phisicochemical(post);
 
+    let newData = [];
+    res.forEach((r) => {
+      let array = [];
+      array.push(r.id);
+      if (r.length) array.push(r.length);
+      if (r.molecular_weight) array.push(r.molecular_weight);
+      if (r.isoelectric_point) array.push(r.isoelectric_point);
+      if (r.charge_density) array.push(r.charge_density);
+      if (r.charge) array.push(r.charge);
+
+      newData.push(array);
+    });
+
     setLoading(false);
-    setData(res);
+    setData(newData);
   };
 
   return (

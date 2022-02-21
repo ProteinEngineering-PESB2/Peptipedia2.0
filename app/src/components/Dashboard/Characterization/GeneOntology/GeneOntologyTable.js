@@ -17,7 +17,6 @@ const GeneOntologyTable = ({ data }) => {
   const [inputSequencesAutocomplete, setInputSequencesAutocomplete] =
     useState("");
   const [columns, setColumns] = useState([]);
-  const [headers, setHeaders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,26 +28,19 @@ const GeneOntologyTable = ({ data }) => {
     data[0].prediction.map((i) => sequences.push(i.id_seq));
 
     let stateColumns = [];
-    let stateHeaders = [];
 
     const dataColumns = Object.keys(data[0].prediction[0].results[0]);
     dataColumns.forEach((column) => {
-      stateColumns.push({ field: column, filter: true, sortable: true });
-      stateHeaders.push({
-        label: column.charAt(0).toUpperCase() + column.slice(1),
-        key: column,
-      });
+      stateColumns.push(column.charAt(0).toUpperCase() + column.slice(1));
     });
 
-    stateColumns.push({ field: "AmiGO 2", minWidth: 520 });
-    stateHeaders.push({ label: "AmiGO 2", key: "AmiGO 2" });
+    stateColumns.push("AmiGO 2");
 
     setTypesAutocomplete(types);
     setValueTypesAutocomplete(types[0]);
     setSequencesAutocomplete(sequences);
     setValueSequencesAutocomplete(sequences[0]);
     setColumns(stateColumns);
-    setHeaders(stateHeaders);
 
     setLoading(false);
   }, [data]);
@@ -118,7 +110,6 @@ const GeneOntologyTable = ({ data }) => {
             sequence={valueSequencesAutocomplete}
             data={data}
             columns={columns}
-            headers={headers}
           />
         </Grid>
       )}

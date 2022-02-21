@@ -1,19 +1,17 @@
-import { AgGridReact } from "ag-grid-react";
+import MUIDataTable from "mui-datatables";
 
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+const options = {
+  selectableRowsHideCheckboxes: true,
+};
 
-const DataTable = ({ data, columns }) => {
+const DataTable = ({ title, data, columns }) => {
   return (
-    <div className="ag-theme-alpine" style={{ width: "100%", height: 550 }}>
-      <AgGridReact
-        rowData={data}
-        columnDefs={columns}
-        pagination={true}
-        paginationPageSize={10}
-        paginationAutoPageSize={true}
-      ></AgGridReact>
-    </div>
+    <MUIDataTable
+      title={title}
+      data={data}
+      columns={columns}
+      options={options}
+    />
   );
 };
 

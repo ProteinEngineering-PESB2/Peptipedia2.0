@@ -9,7 +9,6 @@ import PhisicochemicalTable from "./PhisicochemicalTable";
 const Phisicochemical = () => {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
-  const [headers, setHeaders] = useState([])
 
   return (
     <>
@@ -18,11 +17,11 @@ const Phisicochemical = () => {
           <Typography variant="h4">Phisicochemical Characterization</Typography>
         </Grid>
         <Grid item lg={12} xs={12}>
-          <PhisicochemicalForm setData={setData} setColumns={setColumns} setHeaders={setHeaders}/>
+          <PhisicochemicalForm setData={setData} setColumns={setColumns} />
         </Grid>
         {data.length > 0 && (
           <Grid item lg={12} xs={12}>
-            <PhisicochemicalTable data={data} columns={columns} headers={headers} />
+            <PhisicochemicalTable data={data} columns={columns} />
           </Grid>
         )}
       </Grid>

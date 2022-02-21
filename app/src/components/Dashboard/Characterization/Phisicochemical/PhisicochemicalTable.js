@@ -1,12 +1,9 @@
-import { CSVLink } from "react-csv";
-
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
 import DataTable from "../../DataTable";
 
-const PhisicochemicalTable = ({ data, columns, headers }) => {
+const PhisicochemicalTable = ({ data, columns }) => {
   return (
     <Grid container spacing={3}>
       <Grid item lg={12} xs={12}>
@@ -17,19 +14,12 @@ const PhisicochemicalTable = ({ data, columns, headers }) => {
             flexDirection: "column",
           }}
         >
-          <DataTable data={data} columns={columns} />
-        </Paper>
-      </Grid>
-      <Grid item lg={12} xs={12}>
-        <Button variant="contained" color="primary">
-          <CSVLink
+          <DataTable
+            title={"Phisicochemical Characterization Table"}
             data={data}
-            headers={headers}
-            style={{ color: "#fff", textDecoration: "none" }}
-          >
-            Export as CSV
-          </CSVLink>
-        </Button>
+            columns={columns}
+          />
+        </Paper>
       </Grid>
     </Grid>
   );

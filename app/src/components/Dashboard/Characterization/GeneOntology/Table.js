@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import { CSVLink } from "react-csv";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import DataTable from "../../DataTable";
 
-const Table = ({ type, sequence, data, columns, headers }) => {
+const Table = ({ type, sequence, data, columns }) => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,12 +20,23 @@ const Table = ({ type, sequence, data, columns, headers }) => {
       if (d.type === type) {
         d.prediction.forEach((i) => {
           if (i.id_seq === sequence) {
-            // setResults(i.results);
             i.results.forEach((r) => {
-              newResults.push({
-                ...r,
-                "AmiGO 2": `http://amigo.geneontology.org/amigo/term/${r.id_go}`,
-              });
+              let array = [
+                r.id_go,
+                r.probability,
+                r.term,
+                <Button>
+                  <a
+                    href={`http://amigo.geneontology.org/amigo/term/${r.id_go}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <VisibilityIcon />
+                  </a>
+                </Button>,
+              ];
+              newResults.push(array);
+              array = [];
             });
           }
         });
@@ -46,19 +58,12 @@ const Table = ({ type, sequence, data, columns, headers }) => {
                 flexDirection: "column",
               }}
             >
-              <DataTable data={results} columns={columns} />
-            </Paper>
-          </Grid>
-          <Grid item lg={12} xs={12}>
-            <Button variant="contained" color="primary">
-              <CSVLink
+              <DataTable
+                title={"Gene Ontology Characterization Table"}
                 data={results}
-                headers={headers}
-                style={{ color: "#fff", textDecoration: "none" }}
-              >
-                Export as CSV
-              </CSVLink>
-            </Button>
+                columns={columns}
+              />
+            </Paper>
           </Grid>
         </>
       )}
