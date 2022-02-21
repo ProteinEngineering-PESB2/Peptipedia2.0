@@ -68,6 +68,15 @@ const ListItems = ({ setSection }) => {
             </ListItemButton>
           </List>
         </Collapse>
+        <ListItemButton
+          sx={{ pl: 2 }}
+          onClick={() => setSection("codifications")}
+        >
+          <ListItemIcon>
+            <AppsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Codifications" />
+        </ListItemButton>
       </List>
     </List>
   );
