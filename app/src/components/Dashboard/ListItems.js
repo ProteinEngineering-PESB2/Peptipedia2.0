@@ -66,6 +66,17 @@ const ListItems = ({ setSection }) => {
               </ListItemIcon>
               <ListItemText primary="Gene Ontology" />
             </ListItemButton>
+            <ListItemButton
+              sx={{
+                pl: 4
+              }}
+              onClick={() => setSection("pfam")}
+            >
+              <ListItemIcon>
+                <DoubleArrowIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Pfam"/>
+            </ListItemButton>
           </List>
         </Collapse>
         <ListItemButton

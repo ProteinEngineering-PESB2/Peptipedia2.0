@@ -15,3 +15,11 @@ export const geneOntology = async (post) => {
 
   return result;
 };
+
+export const pfam = async (post) => {
+  const { data } = await axios.post("/api/pfam", post);
+
+  const { result } = data;
+
+  return result;
+};
