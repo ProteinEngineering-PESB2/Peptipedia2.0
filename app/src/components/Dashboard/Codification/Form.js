@@ -13,7 +13,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { codificationForText } from "../../../services/codifications";
 
-const Form = ({ setData }) => {
+const Form = ({ setFileName }) => {
   const [textInput, setTextInput] = useState();
   const [oneHotEncodingCheckbox, setOneHotEncodingCheckbox] = useState(true);
   const [
@@ -56,7 +56,7 @@ const Form = ({ setData }) => {
 
     const res = await codificationForText(post);
 
-    setData(res);
+    setFileName(res);
     setLoading(false);
   };
 

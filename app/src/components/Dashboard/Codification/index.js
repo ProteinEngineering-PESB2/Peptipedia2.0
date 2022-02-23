@@ -7,7 +7,7 @@ import CodificationForm from "./CodificationForm";
 import CodificationContent from "./CodificationContent";
 
 const Codification = () => {
-    const [data, setData] = useState([])
+    const [fileName, setFileName] = useState("")
 
   return (
     <>
@@ -16,10 +16,10 @@ const Codification = () => {
           <Typography variant="h4">Codifications</Typography>
         </Grid>
         <Grid item lg={12} xs={12}>
-          <CodificationForm setData={setData} />
+          <CodificationForm setFileName={setFileName}/>
         </Grid>
         <Grid item lg={12} xs={12}>
-            {data.length > 0 && <CodificationContent data={data}/>}
+          {fileName !== "" && <CodificationContent fileName={fileName}/>}
         </Grid>
       </Grid>
     </>

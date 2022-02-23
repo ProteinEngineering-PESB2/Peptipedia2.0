@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const CodificationForm = ({ setData }) => {
+const CodificationForm = ({ setFileName }) => {
   return (
     <>
       <Grid container spacing={3}>
@@ -15,7 +15,7 @@ const CodificationForm = ({ setData }) => {
               flexDirection: "column",
             }}
           >
-            <Form setData={setData} />
+            <Form setFileName={setFileName} />
           </Paper>
         </Grid>
       </Grid>

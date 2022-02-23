@@ -86,7 +86,7 @@ const ListItems = ({ setSection }) => {
           <ListItemIcon>
             <AppsIcon />
           </ListItemIcon>
-          <ListItemText primary="Codifications" />
+          <ListItemText primary="Codification" />
         </ListItemButton>
       </List>
     </List>
