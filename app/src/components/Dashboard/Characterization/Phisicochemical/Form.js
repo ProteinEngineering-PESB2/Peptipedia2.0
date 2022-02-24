@@ -2,19 +2,32 @@ import { useState } from "react";
 
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
+import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+
+import { styled } from "@mui/material/styles";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import SaveIcon from "@mui/icons-material/Save";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { phisicochemical } from "../../../../services/characterizations";
 
+const Input = styled("input")({
+  display: "none",
+});
+
 const Form = ({ setData, setColumns }) => {
+  const [fileType, setFileType] = useState("text");
+  const [fileInput, setFileInput] = useState(null);
   const [lengthCheckbox, setLengthCheckbox] = useState(true);
   const [molecularWeightCheckbox, setMolecularWeightCheckbox] = useState(true);
   const [isoelectricPointCheckbox, setIsoelectricPointCheckbox] =
@@ -23,6 +36,14 @@ const Form = ({ setData, setColumns }) => {
   const [chargeCheckbox, setChargeCheckbox] = useState(true);
   const [textInput, setTextInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleChangeFileType = (e) => {
+    setFileType(e.target.value);
+  };
+
+  const handleChangeFileInput = (e) => {
+    setFileInput(e.target.files[0]);
+  };
 
   const handleChangeLengthCheckbox = (e) => {
     setLengthCheckbox(e.target.checked);
@@ -53,14 +74,6 @@ const Form = ({ setData, setColumns }) => {
 
     setLoading(true);
 
-    const options = {
-      length: lengthCheckbox,
-      molecular_weight: molecularWeightCheckbox,
-      isoelectric_point: isoelectricPointCheckbox,
-      charge_density: chargeDensityCheckbox,
-      charge: chargeCheckbox,
-    };
-
     let columns = [];
 
     columns.push("Id");
@@ -72,12 +85,37 @@ const Form = ({ setData, setColumns }) => {
 
     setColumns(columns);
 
-    const post = {
-      data: textInput,
-      options,
-    };
+    let post;
+    let res;
 
-    const res = await phisicochemical(post);
+    if (fileType === "text") {
+      post = {
+        data: textInput,
+        options: {
+          length: lengthCheckbox ? 1 : 0,
+          molecular_weight: molecularWeightCheckbox ? 1 : 0,
+          isoelectric_point: isoelectricPointCheckbox ? 1 : 0,
+          charge_density: chargeDensityCheckbox ? 1 : 0,
+          charge: chargeCheckbox ? 1 : 0,
+        },
+      };
+    } else if (fileType === "file") {
+      const options = new Blob([
+        JSON.stringify({
+          length: lengthCheckbox ? 1 : 0,
+          molecular_weight: molecularWeightCheckbox ? 1 : 0,
+          isoelectric_point: isoelectricPointCheckbox ? 1 : 0,
+          charge_density: chargeDensityCheckbox ? 1 : 0,
+          charge: chargeCheckbox ? 1 : 0,
+        }),
+      ]);
+
+      post = new FormData()
+      post.append("file", fileInput)
+      post.append("options", options)
+    }
+
+    res = await phisicochemical(post);
 
     let newData = [];
     res.forEach((r) => {
@@ -100,14 +138,55 @@ const Form = ({ setData, setColumns }) => {
     <form onSubmit={onSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <TextField
-            label="Enter Amino Acid sequences"
-            multiline
-            rows={5}
-            sx={{ width: "100%" }}
-            onChange={handleChangeTextInput}
-          />
+          <FormControl>
+            <FormLabel id="label-file-type">File Type</FormLabel>
+            <RadioGroup row aria-labelledby="label-file-type">
+              <FormControlLabel
+                label="Text"
+                control={<Radio />}
+                value="text"
+                checked={fileType === "text"}
+                onChange={handleChangeFileType}
+              />
+              <FormControlLabel
+                label="File"
+                control={<Radio />}
+                value="file"
+                checked={fileType === "file"}
+                onChange={handleChangeFileType}
+              />
+            </RadioGroup>
+          </FormControl>
         </Grid>
+        {fileType === "text" && (
+          <Grid item xs={12}>
+            <TextField
+              label="Enter Amino Acid sequences"
+              multiline
+              rows={5}
+              sx={{ width: "100%" }}
+              onChange={handleChangeTextInput}
+            />
+          </Grid>
+        )}
+        {fileType === "file" && (
+          <Grid item xs={12}>
+            <label htmlFor="contained-button-file">
+              <Input
+                id="contained-button-file"
+                type="file"
+                onChange={handleChangeFileInput}
+              />
+              <Button
+                variant="outlined"
+                component="span"
+                endIcon={<CloudUploadIcon />}
+              >
+                Upload Fasta
+              </Button>
+            </label>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <FormGroup>
             <FormControlLabel

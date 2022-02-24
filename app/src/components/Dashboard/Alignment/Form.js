@@ -19,12 +19,7 @@ import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 
-import {
-  blastText,
-  blastFile,
-  msaText,
-  msaFile,
-} from "../../../services/alignments";
+import { blast, msa } from "../../../services/alignments";
 
 const Input = styled("input")({
   display: "none",
@@ -74,11 +69,7 @@ const Form = ({ setAlignmentType, setData }) => {
     }
 
     if (alignmentTypeForm === "blast") {
-      if (fileType === "text") {
-        res = await blastText(post);
-      } else if (fileType === "file") {
-        res = await blastFile(post);
-      }
+      res = await blast(post);
 
       const { path } = res;
 
@@ -88,11 +79,7 @@ const Form = ({ setAlignmentType, setData }) => {
       setAlignmentType(alignmentTypeForm);
       setData(data);
     } else if (alignmentTypeForm === "msa") {
-      if (fileType === "text") {
-        res = await msaText(post);
-      } else if (fileType === "file") {
-        res = await msaFile(post);
-      }
+      res = await msa(post);
 
       let result = [];
 

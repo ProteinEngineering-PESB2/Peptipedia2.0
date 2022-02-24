@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const codificationForText = async (post) => {
+export const codification = async (post) => {
   const { data } = await axios.post("/api/codification", post);
 
   const { result } = data;

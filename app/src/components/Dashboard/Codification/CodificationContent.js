@@ -1,15 +1,9 @@
 import axios from "axios";
 
-import { useEffect } from "react";
-
 import Button from "@mui/material/Button"
 import Grid from "@mui/material/Grid";
 
 const CodificationContent = ({ fileName }) => {
-
-  useEffect(() => {
-    console.log(fileName)
-  })
 
   const onClickDownloadAsZip = async () => {
     const res = await axios.get(`/files/${fileName}`, { responseType: 'blob' })
