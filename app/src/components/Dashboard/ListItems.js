@@ -16,6 +16,7 @@ import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 const ListItems = ({ setSection }) => {
   const [expandItemCharacterizations, setExpandItemCharacterizations] =
     useState(false);
+  const [expandItemAlignments, setExpandItemAlignments] = useState(false);
 
   return (
     <List
@@ -28,12 +29,32 @@ const ListItems = ({ setSection }) => {
       }
     >
       <List component="div" disablePadding>
-        <ListItemButton sx={{ pl: 2 }} onClick={() => setSection("alignments")}>
+        <ListItemButton
+          sx={{ pl: 2 }}
+          onClick={() => setExpandItemAlignments(!expandItemAlignments)}
+        >
           <ListItemIcon>
             <FormatAlignCenterIcon />
           </ListItemIcon>
           <ListItemText primary="Alignment" />
+          {expandItemAlignments ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
+        <Collapse in={expandItemAlignments} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => setSection("blast")}>
+              <ListItemIcon>
+                <DoubleArrowIcon />
+              </ListItemIcon>
+              <ListItemText primary="Blast" />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => setSection("msa")}>
+              <ListItemIcon>
+                <DoubleArrowIcon />
+              </ListItemIcon>
+              <ListItemText primary="MSA" />
+            </ListItemButton>
+          </List>
+        </Collapse>
         <ListItemButton
           sx={{ pl: 2 }}
           onClick={() =>
@@ -68,14 +89,14 @@ const ListItems = ({ setSection }) => {
             </ListItemButton>
             <ListItemButton
               sx={{
-                pl: 4
+                pl: 4,
               }}
               onClick={() => setSection("pfam")}
             >
               <ListItemIcon>
-                <DoubleArrowIcon/>
+                <DoubleArrowIcon />
               </ListItemIcon>
-              <ListItemText primary="Pfam"/>
+              <ListItemText primary="Pfam" />
             </ListItemButton>
           </List>
         </Collapse>

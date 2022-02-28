@@ -1,4 +1,5 @@
-import Alignment from "./Alignment";
+import Blast from "./Alignment/Blast/index";
+import MSA from "./Alignment/MSA/index";
 import GeneOntology from "./Characterization/GeneOntology";
 import Phisicochemical from "./Characterization/Phisicochemical";
 import Pfam from "./Characterization/Pfam";
@@ -7,11 +8,12 @@ import Codification from "./Codification";
 const RenderSection = ({ section }) => {
   return (
     <>
-      {section === "alignments" && <Alignment />}
+      {section === "blast" && <Blast />}
+      {section === "msa" && <MSA />}
       {section === "phisicochemical" && <Phisicochemical />}
       {section === "gene_ontology" && <GeneOntology />}
       {section === "codifications" && <Codification />}
-      {section === "pfam" && <Pfam/>}
+      {section === "pfam" && <Pfam />}
     </>
   );
 };
