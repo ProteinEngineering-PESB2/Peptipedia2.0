@@ -25,7 +25,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setAlignmentType, setData }) => {
+const Form = ({ setAlignmentType, setData, setError, setSeverity }) => {
   const [alignmentTypeForm, setAlignmentTypeForm] = useState("blast");
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
@@ -69,31 +69,43 @@ const Form = ({ setAlignmentType, setData }) => {
     }
 
     if (alignmentTypeForm === "blast") {
-      res = await blast(post);
+      try {
+        res = await blast(post);
 
-      const { path } = res;
+        const { path } = res;
 
-      const { data } = await axios.get(path);
+        const { data } = await axios.get(path);
 
-      setLoading(false);
-      setAlignmentType(alignmentTypeForm);
-      setData(data);
+        setLoading(false);
+        setAlignmentType(alignmentTypeForm);
+        setData(data);
+      } catch (error) {
+        setSeverity("error");
+        setError("Error aligning the sequence.");
+        setLoading(false);
+      }
     } else if (alignmentTypeForm === "msa") {
-      res = await msa(post);
+      try {
+        res = await msa(post);
 
-      let result = [];
+        let result = [];
 
-      res.forEach((data) => {
-        result.push({
-          id: data.id,
-          label: `${data.label.substring(0, 12)}`,
-          sequence: data.sequence,
+        res.forEach((data) => {
+          result.push({
+            id: data.id,
+            label: `${data.label.substring(0, 12)}`,
+            sequence: data.sequence,
+          });
         });
-      });
 
-      setAlignmentType(alignmentTypeForm);
-      setData(result);
-      setLoading(false);
+        setAlignmentType(alignmentTypeForm);
+        setData(result);
+        setLoading(false);
+      } catch (error) {
+        setSeverity("error");
+        setError("Error aligning the sequences.");
+        setLoading(false);
+      }
     }
   };
 
