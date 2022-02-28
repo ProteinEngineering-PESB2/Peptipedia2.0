@@ -79,6 +79,7 @@ const Form = ({
     e.preventDefault();
 
     setLoading(true);
+    setData([]);
 
     let columns = [];
 

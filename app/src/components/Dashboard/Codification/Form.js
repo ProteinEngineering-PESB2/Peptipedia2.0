@@ -67,6 +67,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
     e.preventDefault();
 
     setLoading(true);
+    setFileName("");
 
     let post;
 

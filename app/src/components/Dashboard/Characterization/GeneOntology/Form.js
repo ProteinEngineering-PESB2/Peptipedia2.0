@@ -64,6 +64,7 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
     e.preventDefault();
 
     setLoading(true);
+    setData([]);
 
     let post;
 
