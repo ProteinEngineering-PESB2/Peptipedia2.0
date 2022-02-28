@@ -24,7 +24,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setFileName }) => {
+const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
@@ -93,10 +93,17 @@ const Form = ({ setFileName }) => {
       post.append("options", options);
     }
 
-    const res = await codification(post)
+    try {
+      const res = await codification(post);
 
-    setFileName(res);
-    setLoading(false);
+      setFileName(res);
+      setLoading(false);
+    } catch (error) {
+      setSeverity("error");
+      setError("Error when coding sequences");
+      setOpenSnackbar(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -201,7 +208,15 @@ const Form = ({ setFileName }) => {
               </LoadingButton>
             </Stack>
           ) : (
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={
+                oneHotEncodingCheckbox === false &&
+                phisicochemicalPropertiesCheckbox === false &&
+                digitalSignalProcessingCheckbox === false
+              }
+            >
               Run Codifications
             </Button>
           )}

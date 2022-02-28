@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const PfamForm = ({ setData }) => {
+const PfamForm = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
   return (
     <>
       <Grid container spacing={3}>
@@ -15,7 +15,12 @@ const PfamForm = ({ setData }) => {
               flexDirection: "column",
             }}
           >
-            <Form setData={setData}/>
+            <Form
+              setData={setData}
+              setOpenSnackbar={setOpenSnackbar}
+              setError={setError}
+              setSeverity={setSeverity}
+            />
           </Paper>
         </Grid>
       </Grid>

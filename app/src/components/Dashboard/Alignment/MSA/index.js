@@ -10,13 +10,21 @@ import Snackbar from "../../Snackbar";
 
 const MSA = () => {
   const [data, setData] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState("");
   const [severity, setSeverity] = useState("");
 
   return (
     <>
       <Grid container spacing={5}>
-        {error.length > 0 && <Snackbar severity={severity} message={error} />}
+        {error.length > 0 && (
+          <Snackbar
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+            severity={severity}
+            message={error}
+          />
+        )}
         <Grid item lg={12} xs={12}>
           <Typography variant="h4">MSA Alignment</Typography>
         </Grid>
@@ -25,9 +33,10 @@ const MSA = () => {
             setData={setData}
             setError={setError}
             setSeverity={setSeverity}
+            setOpenSnackbar={setOpenSnackbar}
           />
         </Grid>
-        {data.length > 0 && <MSAContent data={data}/>}
+        {data.length > 0 && <MSAContent data={data} />}
       </Grid>
     </>
   );

@@ -5,18 +5,35 @@ import Typography from "@mui/material/Typography";
 
 import GeneOntologyForm from "./GeneOntologyForm";
 import GeneOntologyTable from "./GeneOntologyTable";
+import SnackbarComponent from "../../Snackbar";
 
 const GeneOntology = () => {
   const [data, setData] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [error, setError] = useState("");
+  const [severity, setSeverity] = useState("");
 
   return (
     <>
       <Grid container spacing={5}>
+        {error.length > 0 && (
+          <SnackbarComponent
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+            message={error}
+            severity={severity}
+          />
+        )}
         <Grid item lg={12} xs={12}>
           <Typography variant="h4">Gene Ontology Characterization</Typography>
         </Grid>
         <Grid item lg={12} xs={12}>
-          <GeneOntologyForm setData={setData} />
+          <GeneOntologyForm
+            setData={setData}
+            setOpenSnackbar={setOpenSnackbar}
+            setError={setError}
+            setSeverity={setSeverity}
+          />
         </Grid>
         {data.length > 0 && (
           <Grid item lg={12} xs={12}>

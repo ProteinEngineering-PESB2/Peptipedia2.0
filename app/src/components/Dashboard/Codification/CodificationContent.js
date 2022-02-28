@@ -2,6 +2,7 @@ import axios from "axios";
 
 import Button from "@mui/material/Button"
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography"
 
 const CodificationContent = ({ fileName }) => {
 
@@ -18,6 +19,9 @@ const CodificationContent = ({ fileName }) => {
   return (
     <>
       <Grid container spacing={3}>
+        <Grid item lg={12} xs={12}>
+          <Typography variant="h6">Download Encodings</Typography>
+        </Grid>
           <Grid item lg={3} xs={12}>
             <Button variant="contained" color="primary" onClick={onClickDownloadAsZip}>Download as Zip</Button>
           </Grid>

@@ -22,7 +22,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData }) => {
+const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
   const [fileType, setFileType] = useState("text");
   const [fileInput, setFileInput] = useState(null);
   const [textInput, setTextInput] = useState("");
@@ -30,6 +30,8 @@ const Form = ({ setData }) => {
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);
+    setFileInput(null);
+    setTextInput("");
   };
 
   const handleChangeFileInput = (e) => {
@@ -56,11 +58,17 @@ const Form = ({ setData }) => {
       post.append("file", fileInput);
     }
 
-    const res = await pfam(post);
-
-    setData(res);
-
-    setLoading(false);
+    try {
+      const res = await pfam(post);
+      console.log(res)
+      setData(res);
+      setLoading(false);
+    } catch (error) {
+      setSeverity("error");
+      setError("Error in characterizing the sequences");
+      setOpenSnackbar(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -131,7 +139,11 @@ const Form = ({ setData }) => {
                 </LoadingButton>
               </Stack>
             ) : (
-              <Button type="submit" variant="contained">
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={fileInput === null && textInput === ""}
+              >
                 run characterization
               </Button>
             )}

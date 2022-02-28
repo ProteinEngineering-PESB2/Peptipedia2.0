@@ -24,11 +24,10 @@ const Input = styled("input")({
   display: "none",
 });
 
-
-const Form = ({ setData }) => {
+const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
-  const [fileInput, setFileInput] = useState(null)
+  const [fileInput, setFileInput] = useState(null);
   const [molecularFunctionCheckbox, setMolecularFunctionCheckbox] =
     useState(true);
   const [biologicalProcessCheckbox, setBiologicalProcessCheckbox] =
@@ -46,8 +45,8 @@ const Form = ({ setData }) => {
   };
 
   const handleChangeFileInput = (e) => {
-    setFileInput(e.target.files[0])
-  }
+    setFileInput(e.target.files[0]);
+  };
 
   const handleChangeMolecularFunctionCheckbox = (e) => {
     setMolecularFunctionCheckbox(e.target.checked);
@@ -66,7 +65,7 @@ const Form = ({ setData }) => {
 
     setLoading(true);
 
-    let post
+    let post;
 
     if (fileType === "text") {
       post = {
@@ -86,16 +85,23 @@ const Form = ({ setData }) => {
         }),
       ]);
 
-      post = new FormData()
-      post.append("file", fileInput)
-      post.append("options", options)
+      post = new FormData();
+      post.append("file", fileInput);
+      post.append("options", options);
     }
 
-    const res = await geneOntology(post);
+    try {
+      const res = await geneOntology(post);
 
-    setData(res);
+      setData(res);
 
-    setLoading(false);
+      setLoading(false);
+    } catch (error) {
+      setSeverity("error");
+      setError("error in characterizing the sequences");
+      setOpenSnackbar(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -200,7 +206,15 @@ const Form = ({ setData }) => {
               </LoadingButton>
             </Stack>
           ) : (
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={
+                molecularFunctionCheckbox === false &&
+                biologicalProcessCheckbox === false &&
+                celularComponentCheckbox === false
+              }
+            >
               run characterization
             </Button>
           )}

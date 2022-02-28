@@ -1,13 +1,10 @@
-import { useState } from "react";
-
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
 const vertical = "top";
 const horizontal = "center";
 
-const SnackbarComponent = ({ severity, message }) => {
-  const [open, setOpen] = useState(true);
+const SnackbarComponent = ({ open, setOpen, severity, message }) => {
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

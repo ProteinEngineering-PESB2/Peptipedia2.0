@@ -25,7 +25,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData, setError, setSeverity }) => {
+const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
@@ -75,6 +75,7 @@ const Form = ({ setData, setError, setSeverity }) => {
     } catch (error) {
       setSeverity("error");
       setError("Error aligning the sequence.");
+      setOpenSnackbar(true);
       setLoading(false);
     }
   };

@@ -25,7 +25,13 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData, setColumns }) => {
+const Form = ({
+  setData,
+  setColumns,
+  setOpenSnackbar,
+  setError,
+  setSeverity,
+}) => {
   const [fileType, setFileType] = useState("text");
   const [fileInput, setFileInput] = useState(null);
   const [lengthCheckbox, setLengthCheckbox] = useState(true);
@@ -110,28 +116,35 @@ const Form = ({ setData, setColumns }) => {
         }),
       ]);
 
-      post = new FormData()
-      post.append("file", fileInput)
-      post.append("options", options)
+      post = new FormData();
+      post.append("file", fileInput);
+      post.append("options", options);
     }
 
-    res = await phisicochemical(post);
+    try {
+      res = await phisicochemical(post);
 
-    let newData = [];
-    res.forEach((r) => {
-      let array = [];
-      array.push(r.id);
-      if (r.length) array.push(r.length);
-      if (r.molecular_weight) array.push(r.molecular_weight);
-      if (r.isoelectric_point) array.push(r.isoelectric_point);
-      if (r.charge_density) array.push(r.charge_density);
-      if (r.charge) array.push(r.charge);
+      let newData = [];
+      res.forEach((r) => {
+        let array = [];
+        array.push(r.id);
+        if (r.length) array.push(r.length);
+        if (r.molecular_weight) array.push(r.molecular_weight);
+        if (r.isoelectric_point) array.push(r.isoelectric_point);
+        if (r.charge_density) array.push(r.charge_density);
+        if (r.charge) array.push(r.charge);
 
-      newData.push(array);
-    });
+        newData.push(array);
+      });
 
-    setLoading(false);
-    setData(newData);
+      setData(newData);
+      setLoading(false);
+    } catch (error) {
+      setSeverity("error");
+      setError("Error in characterizing the sequences");
+      setOpenSnackbar(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -250,7 +263,17 @@ const Form = ({ setData, setColumns }) => {
               </LoadingButton>
             </Stack>
           ) : (
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={
+                chargeDensityCheckbox === false &&
+                chargeCheckbox === false &&
+                lengthCheckbox === false &&
+                isoelectricPointCheckbox === false &&
+                molecularWeightCheckbox === false
+              }
+            >
               run characterization
             </Button>
           )}
