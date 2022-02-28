@@ -24,10 +24,10 @@ const Pfam = () => {
             severity={severity}
           />
         )}
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4">Pfam Characterization</Typography>
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <PfamForm
             setData={setData}
             setOpenSnackbar={setOpenSnackbar}
@@ -35,7 +35,7 @@ const Pfam = () => {
             setSeverity={setSeverity}
           />
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           {data.length > 0 && <PfamTable data={data} />}
         </Grid>
       </Grid>

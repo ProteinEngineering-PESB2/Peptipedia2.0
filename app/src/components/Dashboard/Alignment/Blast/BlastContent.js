@@ -31,12 +31,12 @@ const BlastContent = ({ data }) => {
 
   return (
     <>
-      <Grid item lg={12} xs={12}>
+      <Grid item lg={12} md={12} xs={12}>
         <Grid container spacing={3}>
-          <Grid item lg={12} xs={12}>
+          <Grid item lg={12} md={12} xs={12}>
             <Typography variant="h6">Blast Multiple Alignments</Typography>
           </Grid>
-          <Grid item lg={7} xs={12}>
+          <Grid item lg={7} md={12} xs={12}>
             <Paper
               sx={{
                 p: 2,
@@ -51,7 +51,7 @@ const BlastContent = ({ data }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3} marginTop={0}>
-          <Grid item lg={2} xs={6}>
+          <Grid item lg={2} md={3} xs={6}>
             <Button
               variant="contained"
               color="primary"
@@ -62,7 +62,7 @@ const BlastContent = ({ data }) => {
               Export as PNG
             </Button>
           </Grid>
-          <Grid item lg={2} xs={6}>
+          <Grid item lg={2} md={3} xs={6}>
             <Button
               variant="contained"
               color="primary"

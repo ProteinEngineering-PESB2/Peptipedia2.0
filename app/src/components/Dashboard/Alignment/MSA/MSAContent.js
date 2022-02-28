@@ -27,9 +27,9 @@ const MSAContent = ({ data }) => {
   });
 
   return (
-    <Grid item lg={12} xs={12}>
+    <Grid item lg={12} md={12} xs={12}>
       <Grid container spacing={3}>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h6">Multiple Sequence Alignment</Typography>
         </Grid>
         <Grid item xs={12}>
@@ -43,7 +43,7 @@ const MSAContent = ({ data }) => {
             <ComponentPrint ref={componentRef} />
           </Paper>
         </Grid>
-        <Grid item lg={2} xs={6}>
+        <Grid item lg={2} md={3} xs={6}>
           <Button
             variant="contained"
             color="primary"
@@ -52,7 +52,7 @@ const MSAContent = ({ data }) => {
             Export as PNG
           </Button>
         </Grid>
-        <Grid item lg={2} xs={6}>
+        <Grid item lg={2} md={3} xs={6}>
           <Button
             variant="contained"
             color="primary"

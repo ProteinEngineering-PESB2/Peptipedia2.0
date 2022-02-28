@@ -24,10 +24,10 @@ const GeneOntology = () => {
             severity={severity}
           />
         )}
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4">Gene Ontology Characterization</Typography>
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <GeneOntologyForm
             setData={setData}
             setOpenSnackbar={setOpenSnackbar}
@@ -36,7 +36,7 @@ const GeneOntology = () => {
           />
         </Grid>
         {data.length > 0 && (
-          <Grid item lg={12} xs={12}>
+          <Grid item lg={12} md={12} xs={12}>
             <GeneOntologyTable data={data} />
           </Grid>
         )}

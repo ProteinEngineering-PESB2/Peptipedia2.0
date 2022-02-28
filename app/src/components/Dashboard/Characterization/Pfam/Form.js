@@ -60,7 +60,7 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
 
     try {
       const res = await pfam(post);
-      console.log(res)
+      console.log(res);
       setData(res);
       setLoading(false);
     } catch (error) {

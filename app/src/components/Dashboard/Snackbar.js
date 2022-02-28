@@ -5,7 +5,6 @@ const vertical = "top";
 const horizontal = "center";
 
 const SnackbarComponent = ({ open, setOpen, severity, message }) => {
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;

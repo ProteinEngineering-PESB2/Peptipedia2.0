@@ -25,10 +25,10 @@ const Phisicochemical = () => {
             severity={severity}
           />
         )}
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4">Phisicochemical Characterization</Typography>
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <PhisicochemicalForm
             setData={setData}
             setColumns={setColumns}
@@ -38,7 +38,7 @@ const Phisicochemical = () => {
           />
         </Grid>
         {data.length > 0 && (
-          <Grid item lg={12} xs={12}>
+          <Grid item lg={12} md={12} xs={12}>
             <PhisicochemicalTable data={data} columns={columns} />
           </Grid>
         )}

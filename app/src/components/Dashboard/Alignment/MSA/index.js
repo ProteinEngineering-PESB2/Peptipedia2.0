@@ -25,10 +25,10 @@ const MSA = () => {
             message={error}
           />
         )}
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4">MSA Alignment</Typography>
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <MSAForm
             setData={setData}
             setError={setError}

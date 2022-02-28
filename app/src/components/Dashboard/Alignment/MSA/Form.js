@@ -79,7 +79,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
     } catch (error) {
       setSeverity("error");
       setError("Error aligning the sequences.");
-      setOpenSnackbar(true)
+      setOpenSnackbar(true);
       setLoading(false);
     }
   };

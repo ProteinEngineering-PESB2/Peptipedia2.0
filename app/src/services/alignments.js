@@ -7,7 +7,7 @@ export const blast = async (post) => {
 };
 
 export const msa = async (post) => {
-  const { data } = await axios.post("/api/msaa", post);
+  const { data } = await axios.post("/api/msa", post);
 
   const { result } = data;
 

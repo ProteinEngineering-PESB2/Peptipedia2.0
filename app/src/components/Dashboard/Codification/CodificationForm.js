@@ -3,7 +3,12 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const CodificationForm = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
+const CodificationForm = ({
+  setFileName,
+  setOpenSnackbar,
+  setError,
+  setSeverity,
+}) => {
   return (
     <>
       <Grid container spacing={3}>
