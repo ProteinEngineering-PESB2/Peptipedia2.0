@@ -1,5 +1,5 @@
-import Blast from "./Alignment/Blast/index";
-import MSA from "./Alignment/MSA/index";
+import Blast from "./Alignment/Blast";
+import MSA from "./Alignment/MSA";
 import GeneOntology from "./Characterization/GeneOntology";
 import Phisicochemical from "./Characterization/Phisicochemical";
 import Pfam from "./Characterization/Pfam";
