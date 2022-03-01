@@ -24,10 +24,10 @@ const Codification = () => {
             severity={severity}
           />
         )}
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4">Codifications</Typography>
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <CodificationForm
             setFileName={setFileName}
             setOpenSnackbar={setOpenSnackbar}
@@ -35,7 +35,7 @@ const Codification = () => {
             setSeverity={setSeverity}
           />
         </Grid>
-        <Grid item lg={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           {fileName !== "" && <CodificationContent fileName={fileName} />}
         </Grid>
       </Grid>

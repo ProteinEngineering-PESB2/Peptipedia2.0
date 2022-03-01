@@ -12,6 +12,7 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 
 const ListItems = ({ setSection }) => {
   const [expandItemCharacterizations, setExpandItemCharacterizations] =
@@ -108,6 +109,15 @@ const ListItems = ({ setSection }) => {
             <AppsIcon />
           </ListItemIcon>
           <ListItemText primary="Codification" />
+        </ListItemButton>
+        <ListItemButton
+          sx={{ pl: 2 }}
+          onClick={() => setSection("advanced-search")}
+        >
+          <ListItemIcon>
+            <ManageSearchIcon />
+          </ListItemIcon>
+          <ListItemText primary="Advanced Search" />
         </ListItemButton>
       </List>
     </List>
