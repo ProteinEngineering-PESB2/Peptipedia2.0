@@ -2,78 +2,104 @@ import { useState } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import { initialFields } from "./Fields/initialFields";
+
+// Fields
+import LengthField from "./Fields/LengthField";
+import MolecularWeightField from "./Fields/MolecularWeightField";
+import IsoelectricPointField from "./Fields/IsoelectricPointField";
+import ChargeField from "./Fields/ChargeField";
+import ChargeDensityField from "./Fields/ChargeDensityField";
+import ActivityField from "./Fields/ActivityField";
+import TaxonomyField from "./Fields/TaxonomyField";
+import DatabaseField from "./Fields/DatabaseField";
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 let fields = initialFields;
 
 const Form = () => {
-  const [optionsValue, setOptionsValue] = useState(fields[0]);
-  const [options, setOptions] = useState(fields);
+  const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleChangeOptionsValue = (e, newValue) => {
-    setOptionsValue(newValue);
-  };
+    setOptionsValue([...newValue]);
 
-  const addField = ({ label }) => {
-    setSelectedOptions([...selectedOptions, label]);
-    fields = fields.filter((f) => f.label !== label);
-    setOptions(fields);
-    setOptionsValue(fields[0]);
+    const selected = [];
+    newValue.map((n) => {
+      selected.push(n.label);
+    });
+
+    setSelectedOptions(selected);
   };
 
   const onReset = () => {
-    fields = initialFields;
-    setOptions(fields);
-    setOptionsValue(fields[0]);
     setSelectedOptions([]);
+    setOptionsValue([]);
   };
 
   return (
     <Grid container spacing={3}>
-      <Grid item lg={12}>
-        <Grid
-          container
-          spacing={3}
-          sx={{ dispay: "flex", alignItems: "center" }}
-        >
-          <Grid item lg={2.5}>
-            <Autocomplete
-              disablePortal
-              options={options}
-              renderInput={(params) => <TextField {...params} label="Fields" />}
-              value={optionsValue}
-              onChange={handleChangeOptionsValue}
-            />
+      <Grid item lg={12} xs={12}>
+        <Grid item lg={4} xs={12}>
+          <Autocomplete
+            multiple
+            options={fields}
+            disableCloseOnSelect
+            renderOption={(props, option, { selected }) => (
+              <li {...props}>
+                <Checkbox
+                  icon={icon}
+                  checkedIcon={checkedIcon}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
+                {option.label}
+              </li>
+            )}
+            renderInput={(params) => <TextField {...params} label="Fields" />}
+            value={optionsValue}
+            onChange={handleChangeOptionsValue}
+          />
+        </Grid>
+      </Grid>
+      {selectedOptions.includes("Length") && <LengthField />}
+      {selectedOptions.includes("Molecular Weight") && <MolecularWeightField />}
+      {selectedOptions.includes("Isoelectric Point") && (
+        <IsoelectricPointField />
+      )}
+      {selectedOptions.includes("Charge") && <ChargeField />}
+      {selectedOptions.includes("Charge Density") && <ChargeDensityField />}
+      {selectedOptions.includes("Activity") && <ActivityField />}
+      {selectedOptions.includes("Taxonomy") && <TaxonomyField />}
+      {selectedOptions.includes("Database") && <DatabaseField />}
+      <Grid item lg={12} xs={12}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button variant="contained" size="large" sx={{ width: "100%" }}>
+              Seach
+            </Button>
           </Grid>
-          <Grid item lg={2}>
+          <Grid item xs={6}>
             <Button
               variant="contained"
               size="large"
-              onClick={() => addField(optionsValue)}
-              disabled={optionsValue ? false : true}
+              color="error"
+              onClick={onReset}
+              sx={{ width: "100%" }}
             >
-              <AddBoxIcon />
+              Reset
             </Button>
           </Grid>
         </Grid>
-      </Grid>
-      {selectedOptions.map((s) => (
-        <h1>{s}</h1>
-      ))}
-      <Grid item lg={12}>
-        <Stack direction="row" spacing={2}>
-          <Button variant="contained">Seach</Button>
-          <Button variant="contained" color="error" onClick={onReset}>
-            Reset
-          </Button>
-        </Stack>
       </Grid>
     </Grid>
   );

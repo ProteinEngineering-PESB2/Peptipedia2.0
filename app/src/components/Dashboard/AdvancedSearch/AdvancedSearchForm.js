@@ -15,7 +15,7 @@ const AdvancedSearchForm = () => {
               flexDirection: "column",
             }}
           >
-            <Form/>
+            <Form />
           </Paper>
         </Grid>
       </Grid>
