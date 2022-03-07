@@ -1,4 +1,4 @@
-export const initialFields = [
+export const fields = [
     { label: "Length" },
     { label: "Molecular Weight" },
     { label: "Isoelectric Point" },

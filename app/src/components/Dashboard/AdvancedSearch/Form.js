@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
-import { initialFields } from "./Fields/initialFields";
+import { fields } from "./Fields/fields";
 
 // Fields
 import LengthField from "./Fields/LengthField";
@@ -24,11 +24,14 @@ import DatabaseField from "./Fields/DatabaseField";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-let fields = initialFields;
-
 const Form = () => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [valueLength, setValueLength] = useState([20, 100]);
+  const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
+  const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
+  const [valueCharge, setValueCharge] = useState([20, 100]);
+  const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
 
   const handleChangeOptionsValue = (e, newValue) => {
     setOptionsValue([...newValue]);
@@ -44,6 +47,14 @@ const Form = () => {
   const onReset = () => {
     setSelectedOptions([]);
     setOptionsValue([]);
+  };
+
+  const onSearch = () => {
+    console.log(valueLength);
+    console.log(valueMolecularWeight);
+    console.log(valueIsoelectricPoint);
+    console.log(valueCharge);
+    console.log(valueChargeDensity);
   };
 
   return (
@@ -71,20 +82,48 @@ const Form = () => {
           />
         </Grid>
       </Grid>
-      {selectedOptions.includes("Length") && <LengthField />}
-      {selectedOptions.includes("Molecular Weight") && <MolecularWeightField />}
-      {selectedOptions.includes("Isoelectric Point") && (
-        <IsoelectricPointField />
+      {selectedOptions.includes("Length") && (
+        <LengthField
+          valueLength={valueLength}
+          setValueLength={setValueLength}
+        />
       )}
-      {selectedOptions.includes("Charge") && <ChargeField />}
-      {selectedOptions.includes("Charge Density") && <ChargeDensityField />}
+      {selectedOptions.includes("Molecular Weight") && (
+        <MolecularWeightField
+          valueMolecularWeight={valueMolecularWeight}
+          setValueMolecularWeight={setValueMolecularWeight}
+        />
+      )}
+      {selectedOptions.includes("Isoelectric Point") && (
+        <IsoelectricPointField
+          valueIsoelectricPoint={valueIsoelectricPoint}
+          setValueIsoelectricPoint={setValueIsoelectricPoint}
+        />
+      )}
+      {selectedOptions.includes("Charge") && (
+        <ChargeField
+          valueCharge={valueCharge}
+          setValueCharge={setValueCharge}
+        />
+      )}
+      {selectedOptions.includes("Charge Density") && (
+        <ChargeDensityField
+          valueChargeDensity={valueChargeDensity}
+          setValueChargeDensity={setValueChargeDensity}
+        />
+      )}
       {selectedOptions.includes("Activity") && <ActivityField />}
       {selectedOptions.includes("Taxonomy") && <TaxonomyField />}
       {selectedOptions.includes("Database") && <DatabaseField />}
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Button variant="contained" size="large" sx={{ width: "100%" }}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ width: "100%" }}
+              onClick={onSearch}
+            >
               Seach
             </Button>
           </Grid>
