@@ -9,14 +9,12 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 import { styled } from "@mui/material/styles";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 
-import SaveIcon from "@mui/icons-material/Save";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { phisicochemical } from "../../../../services/characterizations";
@@ -251,33 +249,37 @@ const Form = ({
           </FormGroup>
         </Grid>
         <Grid item xs={12} sx={{ marginTop: 2 }}>
-          {loading ? (
-            <Stack direction="row" spacing={2}>
-              <LoadingButton
-                loading
-                variant="contained"
-                color="primary"
-                startIcon={<SaveIcon />}
-                loadingPosition="start"
-              >
-                Loading...
-              </LoadingButton>
-            </Stack>
-          ) : (
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={
-                chargeDensityCheckbox === false &&
-                chargeCheckbox === false &&
-                lengthCheckbox === false &&
-                isoelectricPointCheckbox === false &&
-                molecularWeightCheckbox === false
-              }
-            >
-              run characterization
-            </Button>
-          )}
+          <Grid container spacing={2}>
+            <Grid item lg={12} md={12} xs={12}>
+              {loading ? (
+                <LoadingButton
+                  loading
+                  variant="contained"
+                  color="primary"
+                  sx={{ width: "100%" }}
+                  size="medium"
+                >
+                  Loading{" "}
+                </LoadingButton>
+              ) : (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    chargeDensityCheckbox === false &&
+                    chargeCheckbox === false &&
+                    lengthCheckbox === false &&
+                    isoelectricPointCheckbox === false &&
+                    molecularWeightCheckbox === false
+                  }
+                  size="medium"
+                  sx={{ width: "100%" }}
+                >
+                  run characterization
+                </Button>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </form>

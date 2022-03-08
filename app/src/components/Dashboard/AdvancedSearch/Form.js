@@ -153,20 +153,20 @@ const Form = () => {
       )}
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item lg={6} md={6} xs={6}>
             <Button
               variant="contained"
-              size="large"
+              size="medium"
               sx={{ width: "100%" }}
               onClick={onSearch}
             >
               Seach
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item lg={6} md={6} xs={6}>
             <Button
               variant="contained"
-              size="large"
+              size="medium"
               color="error"
               onClick={onReset}
               sx={{ width: "100%" }}

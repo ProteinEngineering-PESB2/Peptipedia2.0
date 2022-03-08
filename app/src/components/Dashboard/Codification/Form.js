@@ -10,13 +10,11 @@ import Grid from "@mui/material/Grid";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import SaveIcon from "@mui/icons-material/Save";
 
 import { codification } from "../../../services/codifications";
 
@@ -196,31 +194,35 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
           </FormGroup>
         </Grid>
         <Grid item xs={12} sx={{ marginTop: 2 }}>
-          {loading ? (
-            <Stack direction="row" spacing={2}>
-              <LoadingButton
-                loading
-                variant="contained"
-                color="primary"
-                startIcon={<SaveIcon />}
-                loadingPosition="start"
-              >
-                Loading...
-              </LoadingButton>
-            </Stack>
-          ) : (
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={
-                oneHotEncodingCheckbox === false &&
-                phisicochemicalPropertiesCheckbox === false &&
-                digitalSignalProcessingCheckbox === false
-              }
-            >
-              Run Codifications
-            </Button>
-          )}
+          <Grid container spacing={2}>
+            <Grid item lg={12} md={12} xs={12}>
+              {loading ? (
+                <LoadingButton
+                  loading
+                  variant="contained"
+                  color="primary"
+                  sx={{ width: "100%" }}
+                  size="medium"
+                >
+                  Loading{" "}
+                </LoadingButton>
+              ) : (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    oneHotEncodingCheckbox === false &&
+                    phisicochemicalPropertiesCheckbox === false &&
+                    digitalSignalProcessingCheckbox === false
+                  }
+                  sx={{ width: "100%" }}
+                  size="medium"
+                >
+                  Run Codifications
+                </Button>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </form>

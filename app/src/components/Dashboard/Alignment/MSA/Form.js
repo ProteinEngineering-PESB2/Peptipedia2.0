@@ -15,7 +15,6 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import SaveIcon from "@mui/icons-material/Save";
 
 import { msa } from "../../../../services/alignments";
 
@@ -144,27 +143,31 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
           </Grid>
         )}
         <Grid item xs={12} sx={{ marginTop: 2 }}>
-          {loading ? (
-            <Stack direction="row" spacing={2}>
-              <LoadingButton
-                loading
-                variant="contained"
-                color="primary"
-                startIcon={<SaveIcon />}
-                loadingPosition="start"
-              >
-                Loading...
-              </LoadingButton>
-            </Stack>
-          ) : (
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={textInput === "" && fileInput === null}
-            >
-              run alignment
-            </Button>
-          )}
+          <Grid container spacing={2}>
+            <Grid item lg={12} md={12} xs={12}>
+              {loading ? (
+                <LoadingButton
+                  loading
+                  variant="contained"
+                  color="primary"
+                  sx={{ width: "100%" }}
+                  size="medium"
+                >
+                  Loading{" "}
+                </LoadingButton>
+              ) : (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={textInput === "" && fileInput === null}
+                  sx={{ width: "100%" }}
+                  size="medium"
+                >
+                  run alignment
+                </Button>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </form>
