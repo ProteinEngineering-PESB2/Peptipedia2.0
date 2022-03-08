@@ -9,7 +9,7 @@ const LengthField = ({
   valueLength,
   setValueLength,
   logicOperatorValueForLength,
-  setLogicOperatorValueForLength,
+  setLogicOperatorValueForLength
 }) => {
   const handleChangeValueLength = (e, newValue) => {
     setValueLength(newValue);

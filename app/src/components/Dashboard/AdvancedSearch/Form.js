@@ -22,6 +22,7 @@ import TaxonomyField from "./Fields/TaxonomyField";
 import DatabaseField from "./Fields/DatabaseField";
 import GeneOntologyField from "./Fields/GeneOntologyField";
 import PfamField from "./Fields/PfamField";
+import PatentField from "./Fields/PatentField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -35,6 +36,7 @@ const Form = () => {
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
+  const [valuePatent, setValuePatent] = useState([]);
   const [valueActivities, setValueActivities] = useState([]);
   const [valueTaxonomies, setValueTaxonomies] = useState([]);
   const [valueDatabases, setValueDatabases] = useState([]);
@@ -57,6 +59,8 @@ const Form = () => {
     logicOperatorValueForChargeDensity,
     setLogicOperatorValueForChargeDensity,
   ] = useState("AND");
+  const [logicOperatorValueForPatent, setLogicOperatorValueForPatent] =
+    useState("AND");
   const [logicOperatorValueForActivity, setLogicOperatorValueForActivity] =
     useState("AND");
   const [logicOperatorValueForTaxonomy, setLogicOperatorValueForTaxonomy] =
@@ -86,18 +90,7 @@ const Form = () => {
     setOptionsValue([]);
   };
 
-  const onSearch = () => {
-    console.log(logicOperatorValueForLength);
-    console.log(logicOperatorValueForMolecularWeight);
-    console.log(logicOperatorValueForIsoelectricPoint);
-    console.log(logicOperatorValueForCharge);
-    console.log(logicOperatorValueForChargeDensity);
-    console.log(logicOperatorValueForActivity);
-    console.log(logicOperatorValueForTaxonomy);
-    console.log(logicOperatorValueForDatabase);
-    console.log(logicOperatorValueForGeneOntology);
-    console.log(logicOperatorValueForPfam);
-  };
+  const onSearch = () => {};
 
   return (
     <Grid container spacing={3}>
@@ -174,6 +167,14 @@ const Form = () => {
           setLogicOperatorValueForChargeDensity={
             setLogicOperatorValueForChargeDensity
           }
+        />
+      )}
+      {selectedOptions.includes("Patent") && (
+        <PatentField
+          valuePatent={valuePatent}
+          setValuePatent={setValuePatent}
+          logicOperatorValueForPatent={logicOperatorValueForPatent}
+          setLogicOperatorValueForPatent={setLogicOperatorValueForPatent}
         />
       )}
       {selectedOptions.includes("Activity") && (
