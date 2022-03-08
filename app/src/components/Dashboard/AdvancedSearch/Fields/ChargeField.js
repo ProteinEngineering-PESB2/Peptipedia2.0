@@ -9,7 +9,7 @@ const ChargeField = ({ valueCharge, setValueCharge }) => {
   };
 
   return (
-    <Grid item lg={12} xs={12}>
+    <Grid item lg={12} md={12} xs={12}>
       <FormControl variant="standard" sx={{ width: "100%" }}>
         <FormLabel id="label-charge">Charge</FormLabel>
         <Slider

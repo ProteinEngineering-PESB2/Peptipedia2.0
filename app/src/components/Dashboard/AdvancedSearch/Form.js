@@ -71,8 +71,8 @@ const Form = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item lg={12} xs={12}>
-        <Grid item lg={4} xs={12}>
+      <Grid item lg={12} md={12} xs={12}>
+        <Grid item lg={12} md={12} xs={12}>
           <Autocomplete
             multiple
             options={fields}
