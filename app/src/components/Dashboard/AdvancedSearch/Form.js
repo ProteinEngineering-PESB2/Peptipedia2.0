@@ -29,6 +29,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const Form = () => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+
   const [valueLength, setValueLength] = useState([20, 100]);
   const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
@@ -40,11 +41,14 @@ const Form = () => {
   const [valueGeneOntology, setValueGeneOnotology] = useState([]);
   const [valuePfam, setValuePfam] = useState([]);
 
+  const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
+    useState("AND");
+
   const handleChangeOptionsValue = (e, newValue) => {
     setOptionsValue([...newValue]);
 
     const selected = [];
-    newValue.map((n) => {
+    newValue.forEach((n) => {
       selected.push(n.label);
     });
 
@@ -67,6 +71,8 @@ const Form = () => {
     console.log(valueDatabases);
     console.log(valueGeneOntology);
     console.log(valuePfam);
+
+    console.log(logicOperatorValueForLength)
   };
 
   return (
@@ -98,6 +104,8 @@ const Form = () => {
         <LengthField
           valueLength={valueLength}
           setValueLength={setValueLength}
+          logicOperatorValueForLength={logicOperatorValueForLength}
+          setLogicOperatorValueForLength={setLogicOperatorValueForLength}
         />
       )}
       {selectedOptions.includes("Molecular Weight") && (
