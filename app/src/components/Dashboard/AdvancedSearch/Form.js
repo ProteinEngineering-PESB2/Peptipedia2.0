@@ -20,6 +20,8 @@ import ChargeDensityField from "./Fields/ChargeDensityField";
 import ActivityField from "./Fields/ActivityField";
 import TaxonomyField from "./Fields/TaxonomyField";
 import DatabaseField from "./Fields/DatabaseField";
+import GeneOntologyField from "./Fields/GeneOntologyField";
+import PfamField from "./Fields/PfamField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -63,8 +65,8 @@ const Form = () => {
     console.log(valueActivities);
     console.log(valueTaxonomies);
     console.log(valueDatabases);
-    // console.log(valueGeneOntology);
-    // console.log(valuePfam);
+    console.log(valueGeneOntology);
+    console.log(valuePfam);
   };
 
   return (
@@ -139,6 +141,15 @@ const Form = () => {
           valueDatabases={valueDatabases}
           setValueDatabases={setValueDatabases}
         />
+      )}
+      {selectedOptions.includes("Gene Ontology") && (
+        <GeneOntologyField
+          valueGeneOntology={valueGeneOntology}
+          setValueGeneOntology={setValueGeneOnotology}
+        />
+      )}
+      {selectedOptions.includes("Pfam") && (
+        <PfamField valuePfam={valuePfam} setValuePfam={setValuePfam} />
       )}
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>
