@@ -12,11 +12,17 @@ const activites = [
   { name: "Activity six" },
 ];
 
-const DatabaseField = () => {
+const DatabaseField = ({ valueDatabases, setValueDatabases }) => {
+  const handleChangeValueDatabases = (e, newValue) => {
+    setValueDatabases([...newValue]);
+  };
+
   return (
     <Grid item lg={12} xs={12}>
       <FormControl variant="standard" sx={{ width: "100%" }}>
         <Autocomplete
+          value={valueDatabases}
+          onChange={handleChangeValueDatabases}
           multiple
           options={activites}
           disableCloseOnSelect

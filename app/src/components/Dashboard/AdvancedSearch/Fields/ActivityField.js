@@ -12,11 +12,17 @@ const activites = [
   { name: "Activity six" },
 ];
 
-const ActivityField = () => {
+const ActivityField = ({ valueActivities, setValueActivities }) => {
+  const handleChangeValueActivities = (e, newValue) => {
+    setValueActivities([...newValue]);
+  };
+
   return (
     <Grid item lg={12} xs={12}>
       <FormControl variant="standard" sx={{ width: "100%" }}>
         <Autocomplete
+          value={valueActivities}
+          onChange={handleChangeValueActivities}
           multiple
           options={activites}
           disableCloseOnSelect

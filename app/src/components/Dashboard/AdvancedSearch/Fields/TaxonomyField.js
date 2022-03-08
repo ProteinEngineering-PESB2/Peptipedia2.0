@@ -12,11 +12,17 @@ const activites = [
   { name: "Activity six" },
 ];
 
-const TaxonomyField = () => {
+const TaxonomyField = ({ valueTaxonomies, setValueTaxonomies }) => {
+  const handleChangeValueTaxonomies = (e, newValue) => {
+    setValueTaxonomies([...newValue]);
+  };
+
   return (
     <Grid item lg={12} xs={12}>
       <FormControl variant="standard" sx={{ width: "100%" }}>
         <Autocomplete
+          value={valueTaxonomies}
+          onChange={handleChangeValueTaxonomies}
           multiple
           options={activites}
           disableCloseOnSelect

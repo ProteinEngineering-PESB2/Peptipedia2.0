@@ -32,6 +32,11 @@ const Form = () => {
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
+  const [valueActivities, setValueActivities] = useState([]);
+  const [valueTaxonomies, setValueTaxonomies] = useState([]);
+  const [valueDatabases, setValueDatabases] = useState([]);
+  const [valueGeneOntology, setValueGeneOnotology] = useState([]);
+  const [valuePfam, setValuePfam] = useState([]);
 
   const handleChangeOptionsValue = (e, newValue) => {
     setOptionsValue([...newValue]);
@@ -55,6 +60,11 @@ const Form = () => {
     console.log(valueIsoelectricPoint);
     console.log(valueCharge);
     console.log(valueChargeDensity);
+    console.log(valueActivities);
+    console.log(valueTaxonomies);
+    console.log(valueDatabases);
+    // console.log(valueGeneOntology);
+    // console.log(valuePfam);
   };
 
   return (
@@ -112,9 +122,24 @@ const Form = () => {
           setValueChargeDensity={setValueChargeDensity}
         />
       )}
-      {selectedOptions.includes("Activity") && <ActivityField />}
-      {selectedOptions.includes("Taxonomy") && <TaxonomyField />}
-      {selectedOptions.includes("Database") && <DatabaseField />}
+      {selectedOptions.includes("Activity") && (
+        <ActivityField
+          valueActivities={valueActivities}
+          setValueActivities={setValueActivities}
+        />
+      )}
+      {selectedOptions.includes("Taxonomy") && (
+        <TaxonomyField
+          valueTaxonomies={valueTaxonomies}
+          setValueTaxonomies={setValueTaxonomies}
+        />
+      )}
+      {selectedOptions.includes("Database") && (
+        <DatabaseField
+          valueDatabases={valueDatabases}
+          setValueDatabases={setValueDatabases}
+        />
+      )}
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>
           <Grid item xs={6}>

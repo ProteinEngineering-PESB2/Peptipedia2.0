@@ -5,8 +5,8 @@ export const fields = [
     { label: "Charge" },
     { label: "Charge Density" },
     { label: "Activity" },
+    { label: "Taxonomy" },
     { label: "Database" },
     { label: "Gene Ontology" },
     { label: "Pfam" },
-    { label: "Taxonomy" },
 ]
