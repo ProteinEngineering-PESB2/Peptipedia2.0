@@ -43,8 +43,6 @@ const Form = () => {
   const [valueGeneOntology, setValueGeneOnotology] = useState([]);
   const [valuePfam, setValuePfam] = useState([]);
 
-  const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
-    useState("AND");
   const [
     logicOperatorValueForMolecularWeight,
     setLogicOperatorValueForMolecularWeight,
@@ -121,8 +119,6 @@ const Form = () => {
         <LengthField
           valueLength={valueLength}
           setValueLength={setValueLength}
-          logicOperatorValueForLength={logicOperatorValueForLength}
-          setLogicOperatorValueForLength={setLogicOperatorValueForLength}
         />
       )}
       {selectedOptions.includes("Molecular Weight") && (
@@ -135,6 +131,7 @@ const Form = () => {
           setLogicOperatorValueForMolecularWeight={
             setLogicOperatorValueForMolecularWeight
           }
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Isoelectric Point") && (
@@ -147,6 +144,7 @@ const Form = () => {
           setLogicOperatorValueForIsoelectricPoint={
             setLogicOperatorValueForIsoelectricPoint
           }
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Charge") && (
@@ -155,6 +153,7 @@ const Form = () => {
           setValueCharge={setValueCharge}
           logicOperatorValueForCharge={logicOperatorValueForCharge}
           setLogicOperatorValueForCharge={setLogicOperatorValueForCharge}
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Charge Density") && (
@@ -167,6 +166,7 @@ const Form = () => {
           setLogicOperatorValueForChargeDensity={
             setLogicOperatorValueForChargeDensity
           }
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Patent") && (
@@ -175,6 +175,7 @@ const Form = () => {
           setValuePatent={setValuePatent}
           logicOperatorValueForPatent={logicOperatorValueForPatent}
           setLogicOperatorValueForPatent={setLogicOperatorValueForPatent}
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Activity") && (
@@ -183,6 +184,7 @@ const Form = () => {
           setValueActivities={setValueActivities}
           logicOperatorValueForActivity={logicOperatorValueForActivity}
           setLogicOperatorValueForActivity={setLogicOperatorValueForActivity}
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Taxonomy") && (
@@ -191,6 +193,7 @@ const Form = () => {
           setValueTaxonomies={setValueTaxonomies}
           logicOperatorValueForTaxonomy={logicOperatorValueForTaxonomy}
           setLogicOperatorValueForTaxonomy={setLogicOperatorValueForTaxonomy}
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Database") && (
@@ -199,6 +202,7 @@ const Form = () => {
           setValueDatabases={setValueDatabases}
           logicOperatorValueForDatabase={logicOperatorValueForDatabase}
           setLogicOperatorValueForDatabase={setLogicOperatorValueForDatabase}
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Gene Ontology") && (
@@ -209,6 +213,7 @@ const Form = () => {
           setLogicOperatorValueForGeneOntology={
             setLogicOperatorValueForGeneOntology
           }
+          selectedOptions={selectedOptions}
         />
       )}
       {selectedOptions.includes("Pfam") && (
@@ -217,6 +222,7 @@ const Form = () => {
           setValuePfam={setValuePfam}
           logicOperatorValueForPfam={logicOperatorValueForPfam}
           setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
+          selectedOptions={selectedOptions}
         />
       )}
       <Grid item lg={12} xs={12}>

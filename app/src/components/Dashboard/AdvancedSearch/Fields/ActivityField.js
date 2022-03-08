@@ -19,6 +19,7 @@ const ActivityField = ({
   setValueActivities,
   logicOperatorValueForActivity,
   setLogicOperatorValueForActivity,
+  selectedOptions,
 }) => {
   const handleChangeValueActivities = (e, newValue) => {
     setValueActivities([...newValue]);
@@ -26,38 +27,57 @@ const ActivityField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      <Grid container spacing={2}>
-        <Grid item lg={2.6} xs={4}>
-          <Select
-            value={logicOperatorValueForActivity}
-            onChange={({ target }) =>
-              setLogicOperatorValueForActivity(target.value)
-            }
-            label="Operator"
-            displayEmpty
-            inputProps={{ "aria-label": "Without label" }}
-            sx={{ width: "100%" }}
-          >
-            <MenuItem value="AND">AND</MenuItem>
-            <MenuItem value="OR">OR</MenuItem>
-          </Select>
+      {selectedOptions.includes("Length") ||
+      selectedOptions.includes("Molecular Weight") ||
+      selectedOptions.includes("Isoelectric Point") ||
+      selectedOptions.includes("Charge") ||
+      selectedOptions.includes("Charge Density") ||
+      selectedOptions.includes("Patent") ? (
+        <Grid container spacing={2}>
+          <Grid item lg={2.6} xs={4}>
+            <Select
+              value={logicOperatorValueForActivity}
+              onChange={({ target }) =>
+                setLogicOperatorValueForActivity(target.value)
+              }
+              label="Operator"
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              sx={{ width: "100%" }}
+            >
+              <MenuItem value="AND">AND</MenuItem>
+              <MenuItem value="OR">OR</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item lg={9} xs={8}>
+            <FormControl variant="standard" sx={{ width: "100%" }}>
+              <Autocomplete
+                value={valueActivities}
+                onChange={handleChangeValueActivities}
+                multiple
+                options={activites}
+                disableCloseOnSelect
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField {...params} label="Activity" />
+                )}
+              />
+            </FormControl>
+          </Grid>
         </Grid>
-        <Grid item lg={9} xs={8}>
-          <FormControl variant="standard" sx={{ width: "100%" }}>
-            <Autocomplete
-              value={valueActivities}
-              onChange={handleChangeValueActivities}
-              multiple
-              options={activites}
-              disableCloseOnSelect
-              getOptionLabel={(option) => option.name}
-              renderInput={(params) => (
-                <TextField {...params} label="Activity" />
-              )}
-            />
-          </FormControl>
-        </Grid>
-      </Grid>
+      ) : (
+        <FormControl variant="standard" sx={{ width: "100%" }}>
+          <Autocomplete
+            value={valueActivities}
+            onChange={handleChangeValueActivities}
+            multiple
+            options={activites}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => <TextField {...params} label="Activity" />}
+          />
+        </FormControl>
+      )}
     </Grid>
   );
 };

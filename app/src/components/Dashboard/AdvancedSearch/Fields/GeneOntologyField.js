@@ -19,6 +19,7 @@ const GeneOntologyField = ({
   setValueGeneOntology,
   logicOperatorValueForGeneOntology,
   setLogicOperatorValueForGeneOntology,
+  selectedOptions,
 }) => {
   const handleChangeValueGeneOntology = (e, newValue) => {
     setValueGeneOntology([...newValue]);
@@ -26,38 +27,62 @@ const GeneOntologyField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      <Grid container spacing={2}>
-        <Grid item lg={2.6} xs={4}>
-          <Select
-            value={logicOperatorValueForGeneOntology}
-            onChange={({ target }) =>
-              setLogicOperatorValueForGeneOntology(target.value)
-            }
-            label="Operator"
-            displayEmpty
-            inputProps={{ "aria-label": "Without label" }}
-            sx={{ width: "100%" }}
-          >
-            <MenuItem value="AND">AND</MenuItem>
-            <MenuItem value="OR">OR</MenuItem>
-          </Select>
+      {selectedOptions.includes("Length") ||
+      selectedOptions.includes("Molecular Weight") ||
+      selectedOptions.includes("IsoelectricPoint") ||
+      selectedOptions.includes("Charge") ||
+      selectedOptions.includes("Charge Density") ||
+      selectedOptions.includes("Patent") ||
+      selectedOptions.includes("Activity") ||
+      selectedOptions.includes("Taxonomy") ||
+      selectedOptions.includes("Database") ? (
+        <Grid container spacing={2}>
+          <Grid item lg={2.6} xs={4}>
+            <Select
+              value={logicOperatorValueForGeneOntology}
+              onChange={({ target }) =>
+                setLogicOperatorValueForGeneOntology(target.value)
+              }
+              label="Operator"
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              sx={{ width: "100%" }}
+            >
+              <MenuItem value="AND">AND</MenuItem>
+              <MenuItem value="OR">OR</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item lg={9} xs={8}>
+            <FormControl variant="standard" sx={{ width: "100%" }}>
+              <Autocomplete
+                value={valueGeneOntology}
+                onChange={handleChangeValueGeneOntology}
+                multiple
+                options={activites}
+                disableCloseOnSelect
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField {...params} label="Gene Ontology" />
+                )}
+              />
+            </FormControl>
+          </Grid>
         </Grid>
-        <Grid item lg={9} xs={8}>
-          <FormControl variant="standard" sx={{ width: "100%" }}>
-            <Autocomplete
-              value={valueGeneOntology}
-              onChange={handleChangeValueGeneOntology}
-              multiple
-              options={activites}
-              disableCloseOnSelect
-              getOptionLabel={(option) => option.name}
-              renderInput={(params) => (
-                <TextField {...params} label="Gene Ontology" />
-              )}
-            />
-          </FormControl>
-        </Grid>
-      </Grid>
+      ) : (
+        <FormControl variant="standard" sx={{ width: "100%" }}>
+          <Autocomplete
+            value={valueGeneOntology}
+            onChange={handleChangeValueGeneOntology}
+            multiple
+            options={activites}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => (
+              <TextField {...params} label="Gene Ontology" />
+            )}
+          />
+        </FormControl>
+      )}
     </Grid>
   );
 };
