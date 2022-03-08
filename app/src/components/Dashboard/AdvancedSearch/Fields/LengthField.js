@@ -18,7 +18,7 @@ const LengthField = ({
   return (
     <Grid item lg={12} md={12} xs={12}>
       <Grid container spacing={2}>
-        <Grid item lg={3} xs={4}>
+        <Grid item lg={2.6} xs={4}>
           <Select
             value={logicOperatorValueForLength}
             onChange={({ target }) =>
@@ -27,6 +27,7 @@ const LengthField = ({
             label="Operator"
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
+            sx={{ width: '100%' }}
           >
             <MenuItem value="AND">AND</MenuItem>
             <MenuItem value="OR">OR</MenuItem>

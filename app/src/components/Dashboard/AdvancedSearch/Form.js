@@ -43,6 +43,32 @@ const Form = () => {
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
+  const [
+    logicOperatorValueForMolecularWeight,
+    setLogicOperatorValueForMolecularWeight,
+  ] = useState("AND");
+  const [
+    logicOperatorValueForIsoelectricPoint,
+    setLogicOperatorValueForIsoelectricPoint,
+  ] = useState("AND");
+  const [logicOperatorValueForCharge, setLogicOperatorValueForCharge] =
+    useState("AND");
+  const [
+    logicOperatorValueForChargeDensity,
+    setLogicOperatorValueForChargeDensity,
+  ] = useState("AND");
+  const [logicOperatorValueForActivity, setLogicOperatorValueForActivity] =
+    useState("AND");
+  const [logicOperatorValueForTaxonomy, setLogicOperatorValueForTaxonomy] =
+    useState("AND");
+  const [logicOperatorValueForDatabase, setLogicOperatorValueForDatabase] =
+    useState("AND");
+  const [
+    logicOperatorValueForGeneOntology,
+    setLogicOperatorValueForGeneOntology,
+  ] = useState("AND");
+  const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
+    useState("AND");
 
   const handleChangeOptionsValue = (e, newValue) => {
     setOptionsValue([...newValue]);
@@ -61,18 +87,16 @@ const Form = () => {
   };
 
   const onSearch = () => {
-    console.log(valueLength);
-    console.log(valueMolecularWeight);
-    console.log(valueIsoelectricPoint);
-    console.log(valueCharge);
-    console.log(valueChargeDensity);
-    console.log(valueActivities);
-    console.log(valueTaxonomies);
-    console.log(valueDatabases);
-    console.log(valueGeneOntology);
-    console.log(valuePfam);
-
-    console.log(logicOperatorValueForLength)
+    console.log(logicOperatorValueForLength);
+    console.log(logicOperatorValueForMolecularWeight);
+    console.log(logicOperatorValueForIsoelectricPoint);
+    console.log(logicOperatorValueForCharge);
+    console.log(logicOperatorValueForChargeDensity);
+    console.log(logicOperatorValueForActivity);
+    console.log(logicOperatorValueForTaxonomy);
+    console.log(logicOperatorValueForDatabase);
+    console.log(logicOperatorValueForGeneOntology);
+    console.log(logicOperatorValueForPfam);
   };
 
   return (
@@ -112,52 +136,87 @@ const Form = () => {
         <MolecularWeightField
           valueMolecularWeight={valueMolecularWeight}
           setValueMolecularWeight={setValueMolecularWeight}
+          logicOperatorValueForMolecularWeight={
+            logicOperatorValueForMolecularWeight
+          }
+          setLogicOperatorValueForMolecularWeight={
+            setLogicOperatorValueForMolecularWeight
+          }
         />
       )}
       {selectedOptions.includes("Isoelectric Point") && (
         <IsoelectricPointField
           valueIsoelectricPoint={valueIsoelectricPoint}
           setValueIsoelectricPoint={setValueIsoelectricPoint}
+          logicOperatorValueForIsoelectricPoint={
+            logicOperatorValueForIsoelectricPoint
+          }
+          setLogicOperatorValueForIsoelectricPoint={
+            setLogicOperatorValueForIsoelectricPoint
+          }
         />
       )}
       {selectedOptions.includes("Charge") && (
         <ChargeField
           valueCharge={valueCharge}
           setValueCharge={setValueCharge}
+          logicOperatorValueForCharge={logicOperatorValueForCharge}
+          setLogicOperatorValueForCharge={setLogicOperatorValueForCharge}
         />
       )}
       {selectedOptions.includes("Charge Density") && (
         <ChargeDensityField
           valueChargeDensity={valueChargeDensity}
           setValueChargeDensity={setValueChargeDensity}
+          logicOperatorValueForChargeDensity={
+            logicOperatorValueForChargeDensity
+          }
+          setLogicOperatorValueForChargeDensity={
+            setLogicOperatorValueForChargeDensity
+          }
         />
       )}
       {selectedOptions.includes("Activity") && (
         <ActivityField
           valueActivities={valueActivities}
           setValueActivities={setValueActivities}
+          logicOperatorValueForActivity={logicOperatorValueForActivity}
+          setLogicOperatorValueForActivity={setLogicOperatorValueForActivity}
         />
       )}
       {selectedOptions.includes("Taxonomy") && (
         <TaxonomyField
           valueTaxonomies={valueTaxonomies}
           setValueTaxonomies={setValueTaxonomies}
+          logicOperatorValueForTaxonomy={logicOperatorValueForTaxonomy}
+          setLogicOperatorValueForTaxonomy={setLogicOperatorValueForTaxonomy}
         />
       )}
       {selectedOptions.includes("Database") && (
         <DatabaseField
           valueDatabases={valueDatabases}
           setValueDatabases={setValueDatabases}
+          logicOperatorValueForDatabase={logicOperatorValueForDatabase}
+          setLogicOperatorValueForDatabase={setLogicOperatorValueForDatabase}
         />
       )}
       {selectedOptions.includes("Gene Ontology") && (
         <GeneOntologyField
           valueGeneOntology={valueGeneOntology}
           setValueGeneOntology={setValueGeneOnotology}
+          logicOperatorValueForGeneOntology={logicOperatorValueForGeneOntology}
+          setLogicOperatorValueForGeneOntology={
+            setLogicOperatorValueForGeneOntology
+          }
         />
       )}
       {selectedOptions.includes("Pfam") && (
-        <PfamField valuePfam={valuePfam} setValuePfam={setValuePfam} />
+        <PfamField
+          valuePfam={valuePfam}
+          setValuePfam={setValuePfam}
+          logicOperatorValueForPfam={logicOperatorValueForPfam}
+          setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
+        />
       )}
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>

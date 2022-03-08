@@ -1,6 +1,8 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
 const activites = [
@@ -12,24 +14,50 @@ const activites = [
   { name: "Activity six" },
 ];
 
-const ActivityField = ({ valueActivities, setValueActivities }) => {
+const ActivityField = ({
+  valueActivities,
+  setValueActivities,
+  logicOperatorValueForActivity,
+  setLogicOperatorValueForActivity,
+}) => {
   const handleChangeValueActivities = (e, newValue) => {
     setValueActivities([...newValue]);
   };
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      <FormControl variant="standard" sx={{ width: "100%" }}>
-        <Autocomplete
-          value={valueActivities}
-          onChange={handleChangeValueActivities}
-          multiple
-          options={activites}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.name}
-          renderInput={(params) => <TextField {...params} label="Activity" />}
-        />
-      </FormControl>
+      <Grid container spacing={2}>
+        <Grid item lg={2.6} xs={4}>
+          <Select
+            value={logicOperatorValueForActivity}
+            onChange={({ target }) =>
+              setLogicOperatorValueForActivity(target.value)
+            }
+            label="Operator"
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+            sx={{ width: "100%" }}
+          >
+            <MenuItem value="AND">AND</MenuItem>
+            <MenuItem value="OR">OR</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item lg={9} xs={8}>
+          <FormControl variant="standard" sx={{ width: "100%" }}>
+            <Autocomplete
+              value={valueActivities}
+              onChange={handleChangeValueActivities}
+              multiple
+              options={activites}
+              disableCloseOnSelect
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField {...params} label="Activity" />
+              )}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
