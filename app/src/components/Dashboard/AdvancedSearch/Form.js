@@ -86,6 +86,27 @@ const Form = () => {
   const onReset = () => {
     setSelectedOptions([]);
     setOptionsValue([]);
+    setValueLength([20, 100]);
+    setValueMolecularWeight([20, 100]);
+    setValueIsoelectricPoint([20, 100]);
+    setValueCharge([20, 100]);
+    setValueChargeDensity([20, 100]);
+    setValuePatent([]);
+    setValueActivities([]);
+    setValueTaxonomies([]);
+    setValueDatabases([]);
+    setValueGeneOnotology([]);
+    setValuePfam([]);
+    setLogicOperatorValueForMolecularWeight("AND");
+    setLogicOperatorValueForIsoelectricPoint("AND");
+    setLogicOperatorValueForCharge("AND");
+    setLogicOperatorValueForChargeDensity("AND");
+    setLogicOperatorValueForPatent("AND");
+    setLogicOperatorValueForActivity("AND");
+    setLogicOperatorValueForTaxonomy("AND");
+    setLogicOperatorValueForDatabase("AND");
+    setLogicOperatorValueForGeneOntology("AND");
+    setLogicOperatorValueForPfam("AND");
   };
 
   const onSearch = () => {};
