@@ -12,7 +12,6 @@ const columns = [
   "Class",
   "Evalue",
   "Id_accession",
-  "Type",
   "Pfam",
 ];
 
@@ -33,7 +32,6 @@ const Table = ({ data, autocompleteValue }) => {
           new_data.push(r_data.Class);
           new_data.push(r_data.Evalue);
           new_data.push(r_data.Id_accession);
-          new_data.push(r_data.Type);
           new_data.push(
             <Button>
               <a
