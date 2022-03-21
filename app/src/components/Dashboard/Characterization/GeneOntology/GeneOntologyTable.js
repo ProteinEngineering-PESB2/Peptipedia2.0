@@ -65,7 +65,7 @@ const GeneOntologyTable = ({ data }) => {
     <>
       {loading === false && (
         <Grid container spacing={3}>
-          <Grid item lg={3} xs={12}>
+          <Grid item lg={3} md={4} xs={12}>
             <Paper
               sx={{
                 p: 2,
@@ -84,7 +84,7 @@ const GeneOntologyTable = ({ data }) => {
               />
             </Paper>
           </Grid>
-          <Grid item lg={5} xs={12}>
+          <Grid item lg={5} md={4} xs={12}>
             <Paper
               sx={{
                 p: 2,

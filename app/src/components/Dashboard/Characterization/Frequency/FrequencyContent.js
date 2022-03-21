@@ -34,7 +34,7 @@ const FrequencyContent = ({ data }) => {
         <div></div>
       ) : (
         <Grid container spacing={3}>
-          <Grid item lg={5} xs={12}>
+          <Grid item lg={5} md={4} xs={12}>
             <Paper
               sx={{
                 p: 2,
@@ -53,17 +53,7 @@ const FrequencyContent = ({ data }) => {
               />
             </Paper>
           </Grid>
-          <Grid item lg={10} xs={12}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Chart data={data} autocompleteValue={autocompleteValue} />
-            </Paper>
-          </Grid>
+          <Chart data={data} autocompleteValue={autocompleteValue} />
         </Grid>
       )}
     </>
