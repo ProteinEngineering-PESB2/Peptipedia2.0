@@ -103,12 +103,12 @@ const ListItems = ({ setSection }) => {
               sx={{
                 pl: 4,
               }}
-              onClick={() => setSection("frequency-analysis")}
+              onClick={() => setSection("frequency")}
             >
               <ListItemIcon>
                 <DoubleArrowIcon />
               </ListItemIcon>
-              <ListItemText primary="Frequency analysis" />
+              <ListItemText primary="Frequency" />
             </ListItemButton>
           </List>
         </Collapse>

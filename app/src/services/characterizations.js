@@ -23,3 +23,11 @@ export const pfam = async (post) => {
 
   return result;
 };
+
+export const frequency = async (post) => {
+  const { data } = await axios.post("/api/frequency", post);
+
+  const { result } = data;
+
+  return result;
+};
