@@ -10,7 +10,7 @@ const ChargeDensityField = ({
   setValueChargeDensity,
   logicOperatorValueForChargeDensity,
   setLogicOperatorValueForChargeDensity,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValueChargeDensity = (e, newValue) => {
     setValueChargeDensity(newValue);
@@ -18,10 +18,7 @@ const ChargeDensityField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ||
-      selectedOptions.includes("Molecular Weight") ||
-      selectedOptions.includes("Isoelectric Point") ||
-      selectedOptions.includes("Charge") ? (
+      {index !== 0 ? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select

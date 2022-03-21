@@ -10,7 +10,7 @@ const MolecularWeightField = ({
   setValueMolecularWeight,
   logicOperatorValueForMolecularWeight,
   setLogicOperatorValueForMolecularWeight,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValueMolecularWeight = (e, newValue) => {
     setValueMolecularWeight(newValue);
@@ -18,7 +18,7 @@ const MolecularWeightField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ? (
+      {index !== 0 ? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select

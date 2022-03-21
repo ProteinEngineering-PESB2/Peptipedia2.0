@@ -43,6 +43,7 @@ const Form = () => {
   const [valueGeneOntology, setValueGeneOnotology] = useState([]);
   const [valuePfam, setValuePfam] = useState([]);
 
+  const [logicOperatorValueForLength, setLogicOperatorValueForLength] = useState("AND")
   const [
     logicOperatorValueForMolecularWeight,
     setLogicOperatorValueForMolecularWeight,
@@ -109,7 +110,9 @@ const Form = () => {
     setLogicOperatorValueForPfam("AND");
   };
 
-  const onSearch = () => {};
+  const onSearch = () => {
+    console.log(selectedOptions);
+  };
 
   return (
     <Grid container spacing={3}>
@@ -136,116 +139,143 @@ const Form = () => {
           />
         </Grid>
       </Grid>
-      {selectedOptions.includes("Length") && (
-        <LengthField
-          valueLength={valueLength}
-          setValueLength={setValueLength}
-        />
-      )}
-      {selectedOptions.includes("Molecular Weight") && (
-        <MolecularWeightField
-          valueMolecularWeight={valueMolecularWeight}
-          setValueMolecularWeight={setValueMolecularWeight}
-          logicOperatorValueForMolecularWeight={
-            logicOperatorValueForMolecularWeight
-          }
-          setLogicOperatorValueForMolecularWeight={
-            setLogicOperatorValueForMolecularWeight
-          }
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Isoelectric Point") && (
-        <IsoelectricPointField
-          valueIsoelectricPoint={valueIsoelectricPoint}
-          setValueIsoelectricPoint={setValueIsoelectricPoint}
-          logicOperatorValueForIsoelectricPoint={
-            logicOperatorValueForIsoelectricPoint
-          }
-          setLogicOperatorValueForIsoelectricPoint={
-            setLogicOperatorValueForIsoelectricPoint
-          }
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Charge") && (
-        <ChargeField
-          valueCharge={valueCharge}
-          setValueCharge={setValueCharge}
-          logicOperatorValueForCharge={logicOperatorValueForCharge}
-          setLogicOperatorValueForCharge={setLogicOperatorValueForCharge}
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Charge Density") && (
-        <ChargeDensityField
-          valueChargeDensity={valueChargeDensity}
-          setValueChargeDensity={setValueChargeDensity}
-          logicOperatorValueForChargeDensity={
-            logicOperatorValueForChargeDensity
-          }
-          setLogicOperatorValueForChargeDensity={
-            setLogicOperatorValueForChargeDensity
-          }
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Patent") && (
-        <PatentField
-          valuePatent={valuePatent}
-          setValuePatent={setValuePatent}
-          logicOperatorValueForPatent={logicOperatorValueForPatent}
-          setLogicOperatorValueForPatent={setLogicOperatorValueForPatent}
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Activity") && (
-        <ActivityField
-          valueActivities={valueActivities}
-          setValueActivities={setValueActivities}
-          logicOperatorValueForActivity={logicOperatorValueForActivity}
-          setLogicOperatorValueForActivity={setLogicOperatorValueForActivity}
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Taxonomy") && (
-        <TaxonomyField
-          valueTaxonomies={valueTaxonomies}
-          setValueTaxonomies={setValueTaxonomies}
-          logicOperatorValueForTaxonomy={logicOperatorValueForTaxonomy}
-          setLogicOperatorValueForTaxonomy={setLogicOperatorValueForTaxonomy}
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Database") && (
-        <DatabaseField
-          valueDatabases={valueDatabases}
-          setValueDatabases={setValueDatabases}
-          logicOperatorValueForDatabase={logicOperatorValueForDatabase}
-          setLogicOperatorValueForDatabase={setLogicOperatorValueForDatabase}
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Gene Ontology") && (
-        <GeneOntologyField
-          valueGeneOntology={valueGeneOntology}
-          setValueGeneOntology={setValueGeneOnotology}
-          logicOperatorValueForGeneOntology={logicOperatorValueForGeneOntology}
-          setLogicOperatorValueForGeneOntology={
-            setLogicOperatorValueForGeneOntology
-          }
-          selectedOptions={selectedOptions}
-        />
-      )}
-      {selectedOptions.includes("Pfam") && (
-        <PfamField
-          valuePfam={valuePfam}
-          setValuePfam={setValuePfam}
-          logicOperatorValueForPfam={logicOperatorValueForPfam}
-          setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
-          selectedOptions={selectedOptions}
-        />
-      )}
+      {selectedOptions.map((option, index) => {
+        return (
+          <>
+            {option === "Length" && (
+              <LengthField
+                valueLength={valueLength}
+                setValueLength={setValueLength}
+                logicOperatorValueForLength={logicOperatorValueForLength}
+                setLogicOperatorValueForLength={setLogicOperatorValueForLength}
+                index={index}
+              />
+            )}
+            {option === "Molecular Weight" && (
+              <MolecularWeightField
+                valueMolecularWeight={valueMolecularWeight}
+                setValueMolecularWeight={setValueMolecularWeight}
+                logicOperatorValueForMolecularWeight={
+                  logicOperatorValueForMolecularWeight
+                }
+                setLogicOperatorValueForMolecularWeight={
+                  setLogicOperatorValueForMolecularWeight
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Isoelectric Point" && (
+              <IsoelectricPointField
+                valueIsoelectricPoint={valueIsoelectricPoint}
+                setValueIsoelectricPoint={setValueIsoelectricPoint}
+                logicOperatorValueForIsoelectricPoint={
+                  logicOperatorValueForIsoelectricPoint
+                }
+                setLogicOperatorValueForIsoelectricPoint={
+                  setLogicOperatorValueForIsoelectricPoint
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Charge" && (
+              <ChargeField
+                valueCharge={valueCharge}
+                setValueCharge={setValueCharge}
+                logicOperatorValueForCharge={logicOperatorValueForCharge}
+                setLogicOperatorValueForCharge={setLogicOperatorValueForCharge}
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Charge Density" && (
+              <ChargeDensityField
+                valueChargeDensity={valueChargeDensity}
+                setValueChargeDensity={setValueChargeDensity}
+                logicOperatorValueForChargeDensity={
+                  logicOperatorValueForChargeDensity
+                }
+                setLogicOperatorValueForChargeDensity={
+                  setLogicOperatorValueForChargeDensity
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Patent" && (
+              <PatentField
+                valuePatent={valuePatent}
+                setValuePatent={setValuePatent}
+                logicOperatorValueForPatent={logicOperatorValueForPatent}
+                setLogicOperatorValueForPatent={setLogicOperatorValueForPatent}
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Activity" && (
+              <ActivityField
+                valueActivities={valueActivities}
+                setValueActivities={setValueActivities}
+                logicOperatorValueForActivity={logicOperatorValueForActivity}
+                setLogicOperatorValueForActivity={
+                  setLogicOperatorValueForActivity
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Taxonomy" && (
+              <TaxonomyField
+                valueTaxonomies={valueTaxonomies}
+                setValueTaxonomies={setValueTaxonomies}
+                logicOperatorValueForTaxonomy={logicOperatorValueForTaxonomy}
+                setLogicOperatorValueForTaxonomy={
+                  setLogicOperatorValueForTaxonomy
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Database" && (
+              <DatabaseField
+                valueDatabases={valueDatabases}
+                setValueDatabases={setValueDatabases}
+                logicOperatorValueForDatabase={logicOperatorValueForDatabase}
+                setLogicOperatorValueForDatabase={
+                  setLogicOperatorValueForDatabase
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Gene Ontology" && (
+              <GeneOntologyField
+                valueGeneOntology={valueGeneOntology}
+                setValueGeneOntology={setValueGeneOnotology}
+                logicOperatorValueForGeneOntology={
+                  logicOperatorValueForGeneOntology
+                }
+                setLogicOperatorValueForGeneOntology={
+                  setLogicOperatorValueForGeneOntology
+                }
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+            {option === "Pfam" && (
+              <PfamField
+                valuePfam={valuePfam}
+                setValuePfam={setValuePfam}
+                logicOperatorValueForPfam={logicOperatorValueForPfam}
+                setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
+                selectedOptions={selectedOptions}
+                index={index}
+              />
+            )}
+          </>
+        );
+      })}
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>
           <Grid item lg={6} md={6} xs={6}>

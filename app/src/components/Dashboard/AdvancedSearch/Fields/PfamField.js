@@ -19,7 +19,7 @@ const PfamField = ({
   setValuePfam,
   logicOperatorValueForPfam,
   setLogicOperatorValueForPfam,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValuePfam = (e, newValue) => {
     setValuePfam([...newValue]);
@@ -27,16 +27,7 @@ const PfamField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ||
-      selectedOptions.includes("Molecular Weight") ||
-      selectedOptions.includes("IsoelectricPoint") ||
-      selectedOptions.includes("Charge") ||
-      selectedOptions.includes("Charge Density") ||
-      selectedOptions.includes("Patent") ||
-      selectedOptions.includes("Activity") ||
-      selectedOptions.includes("Taxonomy") ||
-      selectedOptions.includes("Database") ||
-      selectedOptions.includes("Gene Ontology") ? (
+      {index !== 0 ? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select

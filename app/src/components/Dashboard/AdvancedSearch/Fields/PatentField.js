@@ -19,7 +19,7 @@ const PatentField = ({
   setValuePatent,
   logicOperatorValueForPatent,
   setLogicOperatorValueForPatent,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValuePatent = (e, newValue) => {
     setValuePatent([...newValue]);
@@ -27,11 +27,7 @@ const PatentField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ||
-      selectedOptions.includes("Molecular Weight") ||
-      selectedOptions.includes("Isoelectric Point") ||
-      selectedOptions.includes("Charge") ||
-      selectedOptions.includes("Charge Density") ? (
+      {index !== 0 ? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select

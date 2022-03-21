@@ -10,7 +10,7 @@ const IsoelectricPointField = ({
   setValueIsoelectricPoint,
   logicOperatorValueForIsoelectricPoint,
   setLogicOperatorValueForIsoelectricPoint,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValueIsoelectricPoint = (e, newValue) => {
     setValueIsoelectricPoint(newValue);
@@ -18,8 +18,7 @@ const IsoelectricPointField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ||
-      selectedOptions.includes("Molecular Weight") ? (
+      {index !== 0 ? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select

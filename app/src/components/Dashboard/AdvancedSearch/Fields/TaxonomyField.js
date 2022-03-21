@@ -19,7 +19,7 @@ const TaxonomyField = ({
   setValueTaxonomies,
   logicOperatorValueForTaxonomy,
   setLogicOperatorValueForTaxonomy,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValueTaxonomies = (e, newValue) => {
     setValueTaxonomies([...newValue]);
@@ -27,13 +27,7 @@ const TaxonomyField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ||
-      selectedOptions.includes("Molecular Weight") ||
-      selectedOptions.includes("Isoelectric Point") ||
-      selectedOptions.includes("Charge") ||
-      selectedOptions.includes("Charge Density") ||
-      selectedOptions.includes("Patent") ||
-      selectedOptions.includes("Activity") ? (
+      {index !== 0? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select

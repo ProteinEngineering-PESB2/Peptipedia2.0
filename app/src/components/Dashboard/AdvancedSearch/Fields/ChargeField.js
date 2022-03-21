@@ -10,7 +10,7 @@ const ChargeField = ({
   setValueCharge,
   logicOperatorValueForCharge,
   setLogicOperatorValueForCharge,
-  selectedOptions,
+  index
 }) => {
   const handleChangeValueCharge = (e, newValue) => {
     setValueCharge(newValue);
@@ -18,9 +18,7 @@ const ChargeField = ({
 
   return (
     <Grid item lg={12} md={12} xs={12}>
-      {selectedOptions.includes("Length") ||
-      selectedOptions.includes("Molecular Weight") ||
-      selectedOptions.includes("Isoelectric Point") ? (
+      {index !== 0 ? (
         <Grid container spacing={2}>
           <Grid item lg={2.6} xs={4}>
             <Select
