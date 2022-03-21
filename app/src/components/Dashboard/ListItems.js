@@ -99,6 +99,17 @@ const ListItems = ({ setSection }) => {
               </ListItemIcon>
               <ListItemText primary="Pfam" />
             </ListItemButton>
+            <ListItemButton
+              sx={{
+                pl: 4,
+              }}
+              onClick={() => setSection("frequency-analysis")}
+            >
+              <ListItemIcon>
+                <DoubleArrowIcon />
+              </ListItemIcon>
+              <ListItemText primary="Frequency analysis" />
+            </ListItemButton>
           </List>
         </Collapse>
         <ListItemButton
