@@ -134,7 +134,32 @@ const Form = () => {
       if (index === 0) {
         return `(${range[0]} < ${field} < ${range[1]})`;
       } else {
-        return ` ${selectedOperators[index-1]} (${range[0]} < ${field} < ${range[1]})`;
+        return ` ${selectedOperators[index - 1]} (${range[0]} < ${field} < ${
+          range[1]
+        })`;
+      }
+    }
+  };
+
+  const selectInput = (field, selections, index, selectedOperators) => {
+    let selectionsString = "";
+    selections.forEach((value, index) => {
+      if (index === 0) {
+        selectionsString += `(${value.name})`;
+      } else {
+        selectionsString += ` OR (${value.name})`;
+      }
+    });
+
+    if (selectedOperators.length === 0) {
+      return `(${field} = (${selectionsString}))`;
+    } else {
+      if (index === 0) {
+        return `(${field} = (${selectionsString}))`;
+      } else {
+        return ` ${
+          selectedOperators[index - 1]
+        } (${field} = (${selectionsString}))`;
       }
     }
   };
@@ -166,31 +191,81 @@ const Form = () => {
   };
 
   const onSearch = () => {
-    const selectedOperators = []
+    const selectedOperators = [];
 
     selectedOptions.forEach((value, index) => {
       if (index !== 0) {
-        if (value === "Length") selectedOperators.push(logicOperatorValueForLength)
-        if (value === "Molecular Weight") selectedOperators.push(logicOperatorValueForMolecularWeight)
-        if (value === "Isoelectric Point") selectedOperators.push(logicOperatorValueForIsoelectricPoint)
-        if (value === "Charge") selectedOperators.push(logicOperatorValueForCharge)
-        if (value === "Charge Density") selectedOperators.push(logicOperatorValueForChargeDensity)
+        if (value === "Length")
+          selectedOperators.push(logicOperatorValueForLength);
+        if (value === "Molecular Weight")
+          selectedOperators.push(logicOperatorValueForMolecularWeight);
+        if (value === "Isoelectric Point")
+          selectedOperators.push(logicOperatorValueForIsoelectricPoint);
+        if (value === "Charge")
+          selectedOperators.push(logicOperatorValueForCharge);
+        if (value === "Charge Density")
+          selectedOperators.push(logicOperatorValueForChargeDensity);
+        if (value === "Patent")
+          selectedOperators.push(logicOperatorValueForPatent);
+        if (value === "Activity")
+          selectedOperators.push(logicOperatorValueForActivity);
+        if (value === "Taxonomy")
+          selectedOperators.push(logicOperatorValueForTaxonomy);
+        if (value === "Database")
+          selectedOperators.push(logicOperatorValueForDatabase);
+        if (value === "Gene Ontology")
+          selectedOperators.push(logicOperatorValueForGeneOntology);
+        if (value === "Pfam") selectedOperators.push(logicOperatorValueForPfam);
       }
-    })
+    });
 
     let query = "";
     selectedOptions.forEach((value, index) => {
-      if (value === "Length") query += rangeInput(value, valueLength, index, selectedOperators);
+      if (value === "Length")
+        query += rangeInput(value, valueLength, index, selectedOperators);
       if (value === "Molecular Weight")
-        query += rangeInput(value, valueMolecularWeight, index, selectedOperators);
+        query += rangeInput(
+          value,
+          valueMolecularWeight,
+          index,
+          selectedOperators
+        );
       if (value === "Isoelectric Point")
-        query += rangeInput(value, valueIsoelectricPoint, index, selectedOperators);
-      if (value === "Charge") query += rangeInput(value, valueCharge, index, selectedOperators);
+        query += rangeInput(
+          value,
+          valueIsoelectricPoint,
+          index,
+          selectedOperators
+        );
+      if (value === "Charge")
+        query += rangeInput(value, valueCharge, index, selectedOperators);
       if (value === "Charge Density")
-        query += rangeInput(value, valueChargeDensity, index, selectedOperators);
-
-      console.log(query)
+        query += rangeInput(
+          value,
+          valueChargeDensity,
+          index,
+          selectedOperators
+        );
+      if (value === "Patent")
+        query += selectInput(value, valuePatent, index, selectedOperators);
+      if (value === "Activity")
+        query += selectInput(value, valueActivities, index, selectedOperators);
+      if (value === "Taxonomy")
+        query += selectInput(value, valueTaxonomies, index, selectedOperators);
+      if (value === "Database")
+        query += selectInput(value, valueDatabases, index, selectedOperators);
+      if (value === "Gene Ontology")
+        query += selectInput(
+          value,
+          valueGeneOntology,
+          index,
+          selectedOperators
+        );
+      if (value === "Pfam")
+        query += selectInput(value, valuePfam, index, selectedOperators);
     });
+
+    console.log(query);
   };
 
   return (
