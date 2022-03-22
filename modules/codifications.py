@@ -26,7 +26,7 @@ class codification:
         self.one_hot_encoding = options["one_hot_encoding"]
         self.phisicochemical_properties = options["phisicochemical_properties"]
         self.digital_signal_processing = options["digital_signal_processing"]
-        
+
     def create_df(self, data):
         #Toma un texto fasta y lo transforma en un dataframe
         self.records = [">"+i for i in data.split(">")[1:]]
@@ -46,12 +46,13 @@ class codification:
         return self.data.sequence.str.len().max()
 
     def process(self):
-        if(self.one_hot_encoding):
+        if self.one_hot_encoding:
             os.system("python3 modules/encoding_strategies/encoding_one_hot.py {} {} {}".format(self.temp_csv, self.results_folder+'/', self.max_length*20))
-        if(self.phisicochemical_properties):
+        if self.phisicochemical_properties:
             os.system("python3 modules/encoding_strategies/encoding_using_physicochemical_properties.py {} modules/encoding_strategies/encoding_AAIndex/ {} {}".format(self.temp_csv, self.results_folder + '/', self.max_length))
-        if(self.digital_signal_processing):
+        if self.digital_signal_processing:
             os.system("python3 modules/encoding_strategies/encoding_using_Fourier_Transform.py {} {}".format(self.results_folder+"/physicochemical_properties/", self.results_folder+'/'))
+
         self.compress()
         return self.rand_name + ".zip"
     
