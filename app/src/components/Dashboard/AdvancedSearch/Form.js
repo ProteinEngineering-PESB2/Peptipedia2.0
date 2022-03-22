@@ -200,7 +200,27 @@ const Form = ({ queries, setQueries }) => {
     let query = "";
 
     if (queryText.length > 0) {
-      query = queryText;
+      let new_query = "";
+      for (let i = 0; i < queryText.length; i++) {
+        if (queryText[i] === "#") {
+          if (
+            parseInt(queryText[i + 1]) > 0 &&
+            parseInt(queryText[i + 1]) <= queries.length
+          ) {
+            new_query += queries[parseInt(queryText[i + 1]) - 1];
+          } else {
+            new_query = queryText;
+            break;
+          }
+        } else {
+          if (queryText[i - 1] === "#") {
+            continue;
+          } else {
+            new_query += queryText[i];
+          }
+        }
+      }
+      query = new_query;
     } else {
       const selectedOperators = [];
 
@@ -285,6 +305,8 @@ const Form = ({ queries, setQueries }) => {
         if (value === "Pfam")
           query += selectInput(value, valuePfam, index, selectedOperators);
       });
+
+      query = `(${query})`;
     }
 
     setQueries(queries.concat(query));
