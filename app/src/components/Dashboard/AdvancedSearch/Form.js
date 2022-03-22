@@ -27,9 +27,10 @@ import PatentField from "./Fields/PatentField";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const Form = () => {
+const Form = ({ queries, setQueries }) => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [queryText, setQueryText] = useState("");
 
   const [valueLength, setValueLength] = useState([20, 100]);
   const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
@@ -73,6 +74,10 @@ const Form = () => {
   ] = useState("AND");
   const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
     useState("AND");
+
+  const handleChangeQueryText = (e) => {
+    setQueryText(e.target.value);
+  };
 
   // Fields
   const handleChangeValueLength = (e, newValue) => {
@@ -188,84 +193,102 @@ const Form = () => {
     setLogicOperatorValueForDatabase("AND");
     setLogicOperatorValueForGeneOntology("AND");
     setLogicOperatorValueForPfam("AND");
+    setQueryText("");
   };
 
   const onSearch = () => {
-    const selectedOperators = [];
-
-    selectedOptions.forEach((value, index) => {
-      if (index !== 0) {
-        if (value === "Length")
-          selectedOperators.push(logicOperatorValueForLength);
-        if (value === "Molecular Weight")
-          selectedOperators.push(logicOperatorValueForMolecularWeight);
-        if (value === "Isoelectric Point")
-          selectedOperators.push(logicOperatorValueForIsoelectricPoint);
-        if (value === "Charge")
-          selectedOperators.push(logicOperatorValueForCharge);
-        if (value === "Charge Density")
-          selectedOperators.push(logicOperatorValueForChargeDensity);
-        if (value === "Patent")
-          selectedOperators.push(logicOperatorValueForPatent);
-        if (value === "Activity")
-          selectedOperators.push(logicOperatorValueForActivity);
-        if (value === "Taxonomy")
-          selectedOperators.push(logicOperatorValueForTaxonomy);
-        if (value === "Database")
-          selectedOperators.push(logicOperatorValueForDatabase);
-        if (value === "Gene Ontology")
-          selectedOperators.push(logicOperatorValueForGeneOntology);
-        if (value === "Pfam") selectedOperators.push(logicOperatorValueForPfam);
-      }
-    });
-
     let query = "";
-    selectedOptions.forEach((value, index) => {
-      if (value === "Length")
-        query += rangeInput(value, valueLength, index, selectedOperators);
-      if (value === "Molecular Weight")
-        query += rangeInput(
-          value,
-          valueMolecularWeight,
-          index,
-          selectedOperators
-        );
-      if (value === "Isoelectric Point")
-        query += rangeInput(
-          value,
-          valueIsoelectricPoint,
-          index,
-          selectedOperators
-        );
-      if (value === "Charge")
-        query += rangeInput(value, valueCharge, index, selectedOperators);
-      if (value === "Charge Density")
-        query += rangeInput(
-          value,
-          valueChargeDensity,
-          index,
-          selectedOperators
-        );
-      if (value === "Patent")
-        query += selectInput(value, valuePatent, index, selectedOperators);
-      if (value === "Activity")
-        query += selectInput(value, valueActivities, index, selectedOperators);
-      if (value === "Taxonomy")
-        query += selectInput(value, valueTaxonomies, index, selectedOperators);
-      if (value === "Database")
-        query += selectInput(value, valueDatabases, index, selectedOperators);
-      if (value === "Gene Ontology")
-        query += selectInput(
-          value,
-          valueGeneOntology,
-          index,
-          selectedOperators
-        );
-      if (value === "Pfam")
-        query += selectInput(value, valuePfam, index, selectedOperators);
-    });
 
-    console.log(query);
+    if (queryText.length > 0) {
+      query = queryText;
+    } else {
+      const selectedOperators = [];
+
+      selectedOptions.forEach((value, index) => {
+        if (index !== 0) {
+          if (value === "Length")
+            selectedOperators.push(logicOperatorValueForLength);
+          if (value === "Molecular Weight")
+            selectedOperators.push(logicOperatorValueForMolecularWeight);
+          if (value === "Isoelectric Point")
+            selectedOperators.push(logicOperatorValueForIsoelectricPoint);
+          if (value === "Charge")
+            selectedOperators.push(logicOperatorValueForCharge);
+          if (value === "Charge Density")
+            selectedOperators.push(logicOperatorValueForChargeDensity);
+          if (value === "Patent")
+            selectedOperators.push(logicOperatorValueForPatent);
+          if (value === "Activity")
+            selectedOperators.push(logicOperatorValueForActivity);
+          if (value === "Taxonomy")
+            selectedOperators.push(logicOperatorValueForTaxonomy);
+          if (value === "Database")
+            selectedOperators.push(logicOperatorValueForDatabase);
+          if (value === "Gene Ontology")
+            selectedOperators.push(logicOperatorValueForGeneOntology);
+          if (value === "Pfam")
+            selectedOperators.push(logicOperatorValueForPfam);
+        }
+      });
+
+      selectedOptions.forEach((value, index) => {
+        if (value === "Length")
+          query += rangeInput(value, valueLength, index, selectedOperators);
+        if (value === "Molecular Weight")
+          query += rangeInput(
+            value,
+            valueMolecularWeight,
+            index,
+            selectedOperators
+          );
+        if (value === "Isoelectric Point")
+          query += rangeInput(
+            value,
+            valueIsoelectricPoint,
+            index,
+            selectedOperators
+          );
+        if (value === "Charge")
+          query += rangeInput(value, valueCharge, index, selectedOperators);
+        if (value === "Charge Density")
+          query += rangeInput(
+            value,
+            valueChargeDensity,
+            index,
+            selectedOperators
+          );
+        if (value === "Patent")
+          query += selectInput(value, valuePatent, index, selectedOperators);
+        if (value === "Activity")
+          query += selectInput(
+            value,
+            valueActivities,
+            index,
+            selectedOperators
+          );
+        if (value === "Taxonomy")
+          query += selectInput(
+            value,
+            valueTaxonomies,
+            index,
+            selectedOperators
+          );
+        if (value === "Database")
+          query += selectInput(value, valueDatabases, index, selectedOperators);
+        if (value === "Gene Ontology")
+          query += selectInput(
+            value,
+            valueGeneOntology,
+            index,
+            selectedOperators
+          );
+        if (value === "Pfam")
+          query += selectInput(value, valuePfam, index, selectedOperators);
+      });
+    }
+
+    setQueries(queries.concat(query));
+    onReset();
   };
 
   return (
@@ -276,6 +299,7 @@ const Form = () => {
             multiple
             options={fields}
             disableCloseOnSelect
+            disabled={queryText.length > 0 ? true : false}
             renderOption={(props, option, { selected }) => (
               <li {...props}>
                 <Checkbox
@@ -444,6 +468,8 @@ const Form = () => {
           rows={5}
           label="Query"
           disabled={selectedOptions.length === 0 ? false : true}
+          value={queryText}
+          onChange={handleChangeQueryText}
           sx={{ width: "100%" }}
         />
       </Grid>
@@ -455,7 +481,36 @@ const Form = () => {
               size="medium"
               sx={{ width: "100%" }}
               onClick={onSearch}
-              disabled={selectedOptions.length === 0 ? true : false}
+              disabled={
+                selectedOptions.length === 0
+                  ? queryText.length === 0
+                    ? true
+                    : false
+                  : false ||
+                    (selectedOptions.includes("Patent") &&
+                      valuePatent.length === 0)
+                  ? true
+                  : false ||
+                    (selectedOptions.includes("Activity") &&
+                      valueActivities.length === 0)
+                  ? true
+                  : false ||
+                    (selectedOptions.includes("Taxonomy") &&
+                      valueTaxonomies.length === 0)
+                  ? true
+                  : false ||
+                    (selectedOptions.includes("Database") &&
+                      valueDatabases.length === 0)
+                  ? true
+                  : false ||
+                    (selectedOptions.includes("Gene Ontology") &&
+                      valueGeneOntology.length === 0)
+                  ? true
+                  : false ||
+                    (selectedOptions.includes("Pfam") && valuePfam.length === 0)
+                  ? true
+                  : false
+              }
             >
               ADD
             </Button>

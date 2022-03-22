@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const AdvancedSearchForm = () => {
+const AdvancedSearchForm = ({ queries, setQueries }) => {
   return (
     <>
       <Grid container spacing={3}>
@@ -15,7 +15,7 @@ const AdvancedSearchForm = () => {
               flexDirection: "column",
             }}
           >
-            <Form />
+            <Form queries={queries} setQueries={setQueries}/>
           </Paper>
         </Grid>
       </Grid>

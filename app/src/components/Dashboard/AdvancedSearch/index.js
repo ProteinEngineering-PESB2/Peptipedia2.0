@@ -1,9 +1,14 @@
+import { useState } from "react";
+
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import AdvancedSearchForm from "./AdvancedSearchForm";
+import AdvancedSearchContent from "./AdvancedSearchContent";
 
 const AdvancedSearch = () => {
+  const [queries, setQueries] = useState([]);
+
   return (
     <>
       <Grid container spacing={3}>
@@ -11,9 +16,13 @@ const AdvancedSearch = () => {
           <Typography variant="h4">Advanced Search</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
-          <AdvancedSearchForm />
+          <AdvancedSearchForm queries={queries} setQueries={setQueries} />
         </Grid>
-        <Grid item lg={12} md={12} xs={12}></Grid>
+        {queries.length > 0 && (
+          <Grid item lg={12} md={12} xs={12}>
+            <AdvancedSearchContent queries={queries} setQueries={setQueries}/>
+          </Grid>
+        )}
       </Grid>
     </>
   );
