@@ -1,0 +1,222 @@
+===================================
+Predict_Property standalone package
+(v1.01) 2018.10.01 
+===================================
+
+Title:
+Predict_Property: a Standalone Package for Protein Structure Property Prediction
+
+Abstract:
+This package predicts Secondary Structure Element (SS3 and SS8), Solvent Accessibility (ACC), Order/Disorder prediction (DISO), and TransMembrane topology (TM2 and TM8) for the input protein using either pure sequence information or evolutionary profile information. 
+
+Author: 
+Sheng Wang
+
+Email:
+realbigws@gmail.com
+
+
+
+============
+Publication:
+============
+
+[1]
+RaptorX-Property: a Web Server for Protein Structure Property Prediction
+       Sheng Wang#*, Wei Li*, Shiwang Liu, Jinbo Xu#
+                                            Nucleic Acids Research, 2016
+
+[2]
+Protein Secondary Structure Prediction Using Deep Convolutional Neural Fields
+       Sheng Wang#, Jian Peng, Jianzhu Ma, Jinbo Xu#
+                                            Scientific Reports, 2016
+
+[3]
+AUCpreD: Proteome-level Protein Disorder Prediction by AUC-maximized Deep Convolutional Neural Fields
+       Sheng Wang#, Jianzhu Ma, Jinbo Xu#
+                                            ECCB, 2016
+                                            Bioinformatics, 2016
+
+[4]
+AUC-maximized Deep Convolutional Neural Fields for Protein Sequence Labeling
+       Sheng Wang, Siqi Sun, Jinbo Xu#
+                                            ECML/PKDD, 2016
+
+[5]
+PredMP: a web server for de novo prediction and visualization of membrane proteins
+       Sheng Wang#, Shiyang Fei, Zongan Wang, Yu Li, Jinbo Xu, Feng Zhao#, Xin Gao#
+                                            Bioinformatics, 2018
+
+
+========
+Install:
+========
+
+1. download the package
+git clone https://github.com/realbigws/Predict_Property
+
+--------------
+
+2. compile
+
+cd source_code/
+	make
+cd ../
+
+--------------
+
+3. the package to generate evolutionary profile information in TGT format could be found at:
+    https://github.com/realbigws/TGT_Package
+
+
+
+======
+Usage:
+======
+
+
+#----------- Predict_Property --------------#
+
+Predict_Property v1.02 [Mar-05-2019]
+    Predict protein local properties using sequence or profile information
+
+USAGE:  ./Predict_Property.sh <-i input_fasta | input_tgt> [-o out_root]
+                              [-t diso_thres] [-T topo_thres] [-H home]
+
+Options:
+
+***** required arguments *****
+-i input_fasta :  input protein sequence file in FASTA format
+(or)
+-i input_tgt   :  input protein profile file in TGT format
+
+***** optional arguments *****
+-o out_root    :  default output would the current directory.
+                  [default = './${input_name}_PROP']
+
+-t diso_thres  :  threshold to determine disordered residue. [default = 0.5]
+
+-T topo_thres  :  threshold to determine transmembrane residue. [default = 0.5]
+
+-H home        :  home directory of Predict_Property.sh
+                  [default = ~/GitBucket/Predict_Property]
+
+
+
+#------------ AUCpreD -----------------------#
+
+AUCpreD v1.04 [Oct-01-2018]
+    Predict order/disorder regions using sequence or profile information
+
+USAGE:  ./AUCpreD.sh <-i input_fasta | input_tgt> [-o out_root]
+                     [-t threshold] [-k keep_file] [-l real_label] [-H home]
+
+Options:
+
+***** required arguments *****
+-i input_fasta :  input protein sequence file in FASTA format
+(or)
+-i input_tgt   :  input protein profile file in TGT format
+
+***** optional arguments *****
+-o out_root    :  default output would be XXXX.diso_MODE at the current directory,
+                  where XXXX is the input name, and MODE is profile or noprof.
+                  [default = './' ]
+
+-t threshold   :  threshold to determine disordered residue. [default = 0.5]
+
+-k keep_file   :  keep the intermediate files if its value is 1 [default = 0]
+
+-l real_label  :  real Order/Disorder label file, in three lines [default = null]
+
+-H home        :  home directory of AUCpreD.sh
+                  [default = ~/GitBucket/Predict_Property]
+
+
+
+#------------ PDBTM_Topology_Pred ------------#
+
+PDBTM_Topology_Pred v1.05 [Mar-05-2019]
+    Predict PDBTM Topology labels using sequence or profile information
+
+USAGE:  ./PDBTM_Topology_Pred.sh <-i input_fasta | input_tgt> [-o out_root]
+                  [-t threshold] [-k keep_file] [-l real_label] [-H home]
+
+Options:
+
+***** required arguments *****
+-i input_fasta :  input protein sequence file in FASTA format
+(or)
+-i input_tgt   :  input protein profile file in TGT format
+
+***** optional arguments *****
+-o out_root    :  default output would be XXXX.topo_MODE at the current directory,
+                  where XXXX is the input name, and MODE is profile or noprof.
+                  we also output XXXX.topo_simp for simplified result.
+                  [default = './' ]
+
+-t threshold   :  threshold to determine transmembrane residue. [default = 0.5]
+
+-k keep_file   :  keep the intermediate files if its value is 1 [default = 0]
+
+-l real_label  :  real PDBTM Topology label file, in  three lines [default = null]
+
+-H home        :  home directory of PDBTM_Topology_Pred.sh
+                  [default = ~/GitBucket/Predict_Property]
+
+
+
+
+========
+Example:
+========
+
+#-> 1. Predict_Property
+./Predict_Property.sh -i example/1pazA.tgt
+
+
+#-> 2. AUCpreD
+./AUCpreD.sh -i example/T0530.tgt
+
+
+#-> 3. PDBTM_Topology_Pred
+./PDBTM_Topology_Pred.sh -i example/1bhaA.tgt
+
+
+
+
+=============
+Output files:
+=============
+
+1. overall detailed results:
+	SeqID.all
+
+e.g., file 'T0530.all' in tmp/T0530/ folder. This file contains all the detail prediction results for Secondary Structure Element (SS3 and SS8), Solvent Accessibility (ACC), Order/Disorder prediction (DISO), and TransMembrane topology (TM2 and TM8).
+
+------------------
+
+2. detailed results in separate files:
+	SeqID.ss3
+	SeqID.ss8
+	SeqID.acc
+	SeqID.tm2
+	SeqID.tm8
+	SeqID.diso
+
+These files contain the detail prediction results in the form of probability.
+
+------------------
+
+3. simple results in separate files:
+	SeqID.ss3_simp
+	SeqID.ss8_simp
+	SeqID.acc_simp
+	SeqID.tm2_simp
+	SeqID.tm8_simp
+	SeqID.diso_simp
+
+These files contain the simple prediction results in one line.
+
+------------------
+
