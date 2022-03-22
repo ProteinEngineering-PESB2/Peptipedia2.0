@@ -7,15 +7,11 @@ import Select from "@mui/material/Select";
 
 const LengthField = ({
   valueLength,
-  setValueLength,
+  handleChangeValueLength,
   logicOperatorValueForLength,
-  setLogicOperatorValueForLength,
+  handleChangeLogicOperatorLength,
   index,
 }) => {
-  const handleChangeValueLength = (e, newValue) => {
-    setValueLength(newValue);
-  };
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index === 0 ? (
@@ -35,9 +31,7 @@ const LengthField = ({
           <Grid item lg={2.6} xs={4}>
             <Select
               value={logicOperatorValueForLength}
-              onChange={({ target }) =>
-                setLogicOperatorValueForLength(target.value)
-              }
+              onChange={handleChangeLogicOperatorLength}
               label="Operator"
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}

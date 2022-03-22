@@ -43,7 +43,8 @@ const Form = () => {
   const [valueGeneOntology, setValueGeneOnotology] = useState([]);
   const [valuePfam, setValuePfam] = useState([]);
 
-  const [logicOperatorValueForLength, setLogicOperatorValueForLength] = useState("AND")
+  const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
+    useState("AND");
   const [
     logicOperatorValueForMolecularWeight,
     setLogicOperatorValueForMolecularWeight,
@@ -73,6 +74,48 @@ const Form = () => {
   const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
     useState("AND");
 
+  // Fields
+  const handleChangeValueLength = (e, newValue) => {
+    setValueLength(newValue);
+  };
+
+  const handleChangeValueMolecularWeight = (e, newValue) => {
+    setValueMolecularWeight(newValue);
+  };
+
+  const handleChangeValueIsoelectricPoint = (e, newValue) => {
+    setValueIsoelectricPoint(newValue);
+  };
+
+  const handleChangeValueCharge = (e, newValue) => {
+    setValueCharge(newValue);
+  };
+
+  const handleChangeValueChargeDensity = (e, newValue) => {
+    setValueChargeDensity(newValue);
+  };
+
+  // Operators
+  const handleChangeLogicOperatorLength = (e) => {
+    setLogicOperatorValueForLength(e.target.value);
+  };
+
+  const handleChangeLogicOperatorMolecularWeight = (e) => {
+    setLogicOperatorValueForMolecularWeight(e.target.value);
+  };
+
+  const handleChangeLogicOperatorIsoelectricPoint = (e) => {
+    setLogicOperatorValueForIsoelectricPoint(e.target.value);
+  };
+
+  const handleChangeLogicOperatorCharge = (e) => {
+    setLogicOperatorValueForCharge(e.target.value);
+  };
+
+  const handleChangeLogicOperatorChargeDensity = (e) => {
+    setLogicOperatorValueForChargeDensity(e.target.value);
+  };
+
   const handleChangeOptionsValue = (e, newValue) => {
     setOptionsValue([...newValue]);
 
@@ -82,6 +125,18 @@ const Form = () => {
     });
 
     setSelectedOptions(selected);
+  };
+
+  const rangeInput = (field, range, index, selectedOperators) => {
+    if (selectedOperators.length === 0) {
+      return `(${range[0]} < ${field} < ${range[1]})`;
+    } else {
+      if (index === 0) {
+        return `(${range[0]} < ${field} < ${range[1]})`;
+      } else {
+        return ` ${selectedOperators[index-1]} (${range[0]} < ${field} < ${range[1]})`;
+      }
+    }
   };
 
   const onReset = () => {
@@ -111,7 +166,31 @@ const Form = () => {
   };
 
   const onSearch = () => {
-    console.log(selectedOptions);
+    const selectedOperators = []
+
+    selectedOptions.forEach((value, index) => {
+      if (index !== 0) {
+        if (value === "Length") selectedOperators.push(logicOperatorValueForLength)
+        if (value === "Molecular Weight") selectedOperators.push(logicOperatorValueForMolecularWeight)
+        if (value === "Isoelectric Point") selectedOperators.push(logicOperatorValueForIsoelectricPoint)
+        if (value === "Charge") selectedOperators.push(logicOperatorValueForCharge)
+        if (value === "Charge Density") selectedOperators.push(logicOperatorValueForChargeDensity)
+      }
+    })
+
+    let query = "";
+    selectedOptions.forEach((value, index) => {
+      if (value === "Length") query += rangeInput(value, valueLength, index, selectedOperators);
+      if (value === "Molecular Weight")
+        query += rangeInput(value, valueMolecularWeight, index, selectedOperators);
+      if (value === "Isoelectric Point")
+        query += rangeInput(value, valueIsoelectricPoint, index, selectedOperators);
+      if (value === "Charge") query += rangeInput(value, valueCharge, index, selectedOperators);
+      if (value === "Charge Density")
+        query += rangeInput(value, valueChargeDensity, index, selectedOperators);
+
+      console.log(query)
+    });
   };
 
   return (
@@ -145,21 +224,25 @@ const Form = () => {
             {option === "Length" && (
               <LengthField
                 valueLength={valueLength}
-                setValueLength={setValueLength}
+                handleChangeValueLength={handleChangeValueLength}
                 logicOperatorValueForLength={logicOperatorValueForLength}
-                setLogicOperatorValueForLength={setLogicOperatorValueForLength}
+                handleChangeLogicOperatorLength={
+                  handleChangeLogicOperatorLength
+                }
                 index={index}
               />
             )}
             {option === "Molecular Weight" && (
               <MolecularWeightField
                 valueMolecularWeight={valueMolecularWeight}
-                setValueMolecularWeight={setValueMolecularWeight}
+                handleChangeValueMolecularWeight={
+                  handleChangeValueMolecularWeight
+                }
                 logicOperatorValueForMolecularWeight={
                   logicOperatorValueForMolecularWeight
                 }
-                setLogicOperatorValueForMolecularWeight={
-                  setLogicOperatorValueForMolecularWeight
+                handleChangeLogicOperatorMolecularWeight={
+                  handleChangeLogicOperatorMolecularWeight
                 }
                 selectedOptions={selectedOptions}
                 index={index}
@@ -168,12 +251,14 @@ const Form = () => {
             {option === "Isoelectric Point" && (
               <IsoelectricPointField
                 valueIsoelectricPoint={valueIsoelectricPoint}
-                setValueIsoelectricPoint={setValueIsoelectricPoint}
+                handleChangeValueIsoelectricPoint={
+                  handleChangeValueIsoelectricPoint
+                }
                 logicOperatorValueForIsoelectricPoint={
                   logicOperatorValueForIsoelectricPoint
                 }
-                setLogicOperatorValueForIsoelectricPoint={
-                  setLogicOperatorValueForIsoelectricPoint
+                handleChangeLogicOperatorIsoelectricPoint={
+                  handleChangeLogicOperatorIsoelectricPoint
                 }
                 selectedOptions={selectedOptions}
                 index={index}
@@ -182,9 +267,11 @@ const Form = () => {
             {option === "Charge" && (
               <ChargeField
                 valueCharge={valueCharge}
-                setValueCharge={setValueCharge}
+                handleChangeValueCharge={handleChangeValueCharge}
                 logicOperatorValueForCharge={logicOperatorValueForCharge}
-                setLogicOperatorValueForCharge={setLogicOperatorValueForCharge}
+                handleChangeLogicOperatorCharge={
+                  handleChangeLogicOperatorCharge
+                }
                 selectedOptions={selectedOptions}
                 index={index}
               />
@@ -192,12 +279,12 @@ const Form = () => {
             {option === "Charge Density" && (
               <ChargeDensityField
                 valueChargeDensity={valueChargeDensity}
-                setValueChargeDensity={setValueChargeDensity}
+                handleChangeValueChargeDensity={handleChangeValueChargeDensity}
                 logicOperatorValueForChargeDensity={
                   logicOperatorValueForChargeDensity
                 }
-                setLogicOperatorValueForChargeDensity={
-                  setLogicOperatorValueForChargeDensity
+                handleChangeLogicOperatorChargeDensity={
+                  handleChangeLogicOperatorChargeDensity
                 }
                 selectedOptions={selectedOptions}
                 index={index}
@@ -276,6 +363,15 @@ const Form = () => {
           </>
         );
       })}
+      <Grid item lg={12} md={12} xs={12}>
+        <TextField
+          multiline
+          rows={5}
+          label="Query"
+          disabled={selectedOptions.length === 0 ? false : true}
+          sx={{ width: "100%" }}
+        />
+      </Grid>
       <Grid item lg={12} xs={12}>
         <Grid container spacing={2}>
           <Grid item lg={6} md={6} xs={6}>
@@ -284,8 +380,9 @@ const Form = () => {
               size="medium"
               sx={{ width: "100%" }}
               onClick={onSearch}
+              disabled={selectedOptions.length === 0 ? true : false}
             >
-              Seach
+              ADD
             </Button>
           </Grid>
           <Grid item lg={6} md={6} xs={6}>

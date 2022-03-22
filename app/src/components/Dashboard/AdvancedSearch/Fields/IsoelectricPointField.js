@@ -7,15 +7,11 @@ import Slider from "@mui/material/Slider";
 
 const IsoelectricPointField = ({
   valueIsoelectricPoint,
-  setValueIsoelectricPoint,
+  handleChangeValueIsoelectricPoint,
   logicOperatorValueForIsoelectricPoint,
-  setLogicOperatorValueForIsoelectricPoint,
-  index
+  handleChangeLogicOperatorIsoelectricPoint,
+  index,
 }) => {
-  const handleChangeValueIsoelectricPoint = (e, newValue) => {
-    setValueIsoelectricPoint(newValue);
-  };
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -23,9 +19,7 @@ const IsoelectricPointField = ({
           <Grid item lg={2.6} xs={4}>
             <Select
               value={logicOperatorValueForIsoelectricPoint}
-              onChange={({ target }) =>
-                setLogicOperatorValueForIsoelectricPoint(target.value)
-              }
+              onChange={handleChangeLogicOperatorIsoelectricPoint}
               label="Operator"
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}

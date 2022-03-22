@@ -7,15 +7,11 @@ import Slider from "@mui/material/Slider";
 
 const ChargeDensityField = ({
   valueChargeDensity,
-  setValueChargeDensity,
+  handleChangeValueChargeDensity,
   logicOperatorValueForChargeDensity,
-  setLogicOperatorValueForChargeDensity,
-  index
+  handleChangeLogicOperatorChargeDensity,
+  index,
 }) => {
-  const handleChangeValueChargeDensity = (e, newValue) => {
-    setValueChargeDensity(newValue);
-  };
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -23,9 +19,7 @@ const ChargeDensityField = ({
           <Grid item lg={2.6} xs={4}>
             <Select
               value={logicOperatorValueForChargeDensity}
-              onChange={({ target }) =>
-                setLogicOperatorValueForChargeDensity(target.value)
-              }
+              onChange={handleChangeLogicOperatorChargeDensity}
               label="Operator"
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}

@@ -7,15 +7,11 @@ import Slider from "@mui/material/Slider";
 
 const ChargeField = ({
   valueCharge,
-  setValueCharge,
+  handleChangeValueCharge,
   logicOperatorValueForCharge,
-  setLogicOperatorValueForCharge,
-  index
+  handleChangeLogicOperatorCharge,
+  index,
 }) => {
-  const handleChangeValueCharge = (e, newValue) => {
-    setValueCharge(newValue);
-  };
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -23,9 +19,7 @@ const ChargeField = ({
           <Grid item lg={2.6} xs={4}>
             <Select
               value={logicOperatorValueForCharge}
-              onChange={({ target }) =>
-                setLogicOperatorValueForCharge(target.value)
-              }
+              onChange={handleChangeLogicOperatorCharge}
               label="Operator"
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}

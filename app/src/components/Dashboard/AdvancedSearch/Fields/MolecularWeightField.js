@@ -7,15 +7,11 @@ import Slider from "@mui/material/Slider";
 
 const MolecularWeightField = ({
   valueMolecularWeight,
-  setValueMolecularWeight,
+  handleChangeValueMolecularWeight,
   logicOperatorValueForMolecularWeight,
-  setLogicOperatorValueForMolecularWeight,
-  index
+  handleChangeLogicOperatorMolecularWeight,
+  index,
 }) => {
-  const handleChangeValueMolecularWeight = (e, newValue) => {
-    setValueMolecularWeight(newValue);
-  };
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -23,9 +19,7 @@ const MolecularWeightField = ({
           <Grid item lg={2.6} xs={4}>
             <Select
               value={logicOperatorValueForMolecularWeight}
-              onChange={({ target }) =>
-                setLogicOperatorValueForMolecularWeight(target.value)
-              }
+              onChange={handleChangeLogicOperatorMolecularWeight}
               label="Operator"
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
