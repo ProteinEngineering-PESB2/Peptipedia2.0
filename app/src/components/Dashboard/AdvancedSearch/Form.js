@@ -200,20 +200,13 @@ const Form = ({ queries, setQueries }) => {
     let query = "";
 
     if (queryText.length > 0) {
-      let close = false;
       for (let i = 0; i < queryText.length; i++) {
-        if (close === false) {
-          query = queryText;
-          break;
-        }
-
         if (queryText[i] === "#") {
           let position = "";
           for (let j = i + 1; j < queryText.length; j++) {
             if (parseInt(queryText[j]) > 0) {
               position += queryText[j];
             } else {
-              close = true;
               break;
             }
           }
@@ -221,10 +214,13 @@ const Form = ({ queries, setQueries }) => {
           if (position.length > 0) {
             if (parseInt(position) <= queries.length) {
               query += queries[parseInt(position) - 1];
+            } else {
+              query = queryText;
+              break;
             }
           }
         } else {
-          if (parseInt(queryText[i]) > 0) {
+          if (parseInt(queryText[i]) >= 0) {
             continue;
           } else {
             query += queryText[i];
