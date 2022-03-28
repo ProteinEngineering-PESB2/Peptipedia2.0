@@ -97,7 +97,7 @@ class unsupervised_algorithms(object):
             self.response.update({"clustering_process": "ERROR"})
 
         return self.response
-    
+
     def create_df(self, data):
         # Toma un texto fasta y lo transforma en un dataframe
         self.records = [">" + i for i in data.split(">")[1:]]
