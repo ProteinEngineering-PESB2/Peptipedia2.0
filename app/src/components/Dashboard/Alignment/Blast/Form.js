@@ -94,14 +94,14 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                 checked={fileType === "text"}
                 onChange={handleChangeFileType}
                 value="text"
-                control={<Radio />}
+                control={<Radio/>}
                 label="Text"
               />
               <FormControlLabel
                 checked={fileType === "file"}
                 onChange={handleChangeFileType}
                 value="file"
-                control={<Radio />}
+                control={<Radio/>}
                 label="File"
               />
             </RadioGroup>
@@ -145,8 +145,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                 <LoadingButton
                   loading
                   variant="contained"
-                  color="primary"
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
                 >
                   Loading{" "}
@@ -156,7 +155,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                   type="submit"
                   variant="contained"
                   disabled={textInput === "" && fileInput === null}
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
                 >
                   run alignment

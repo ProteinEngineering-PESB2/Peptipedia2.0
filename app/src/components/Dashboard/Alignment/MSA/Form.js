@@ -150,7 +150,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                   loading
                   variant="contained"
                   color="primary"
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
                 >
                   Loading{" "}
@@ -160,7 +160,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                   type="submit"
                   variant="contained"
                   disabled={textInput === "" && fileInput === null}
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
                 >
                   run alignment

@@ -11,6 +11,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import HomeIcon from '@mui/icons-material/Home';
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 
@@ -22,13 +23,20 @@ const ListItems = ({ setSection }) => {
   return (
     <List
       component="nav"
-      aria-labelledby="tools-sub-header"
-      subheader={
-        <ListSubheader component="div" id="tools-sub-header">
-          Tools
-        </ListSubheader>
-      }
     >
+      <ListSubheader>Dashboard</ListSubheader>
+      <List component="div" disablePadding>
+        <ListItemButton
+          sx={{ pl: 2 }}
+          onClick={() => setSection("home")}
+        >
+          <ListItemIcon>
+            <HomeIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Home"/>
+        </ListItemButton>
+      </List>
+      <ListSubheader>Tools</ListSubheader>
       <List component="div" disablePadding>
         <ListItemButton
           sx={{ pl: 2 }}

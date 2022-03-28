@@ -9,11 +9,12 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
-// import Typography from "@mui/material/Typography";
+import Typography from "@mui/material/Typography";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 
@@ -21,12 +22,19 @@ import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import ListItems from "../../components/Dashboard/ListItems";
 import RenderSection from "../../components/Dashboard/RenderSection";
 
-import { AppBar, DrawerHeader, Main } from "../../components/Dashboard/utils";
+import {
+  AppBar,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+  DrawerHeader,
+  Main,
+} from "../../components/Dashboard/utils";
 
 const TestDashboard = () => {
   const mdTheme = createTheme();
   const [open, setOpen] = useState(false);
-  const [section, setSection] = useState("");
+  const [section, setSection] = useState("home");
   const theme = useTheme();
   const drawerWidth = 240;
 
@@ -53,6 +61,23 @@ const TestDashboard = () => {
               >
                 <MenuIcon />
               </IconButton>
+              <Typography
+                variant="h4"
+                noWrap
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, fontWeight: 'bold' }}
+              >
+                Peptipedia
+              </Typography>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search..."
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
             </Toolbar>
           </AppBar>
           <Drawer

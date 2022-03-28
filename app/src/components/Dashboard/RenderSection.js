@@ -1,3 +1,4 @@
+import Home from "./Home";
 import Blast from "./Alignment/Blast";
 import MSA from "./Alignment/MSA";
 import GeneOntology from "./Characterization/GeneOntology";
@@ -10,6 +11,7 @@ import AdvancedSearch from "./AdvancedSearch";
 const RenderSection = ({ section }) => {
   return (
     <>
+      {section === "home" && <Home/>}
       {section === "blast" && <Blast />}
       {section === "msa" && <MSA />}
       {section === "phisicochemical" && <Phisicochemical />}
