@@ -10,7 +10,7 @@ const FAQs = () => {
     <>
       <Typography
         variant="h4"
-        style={{ fontWeight: "bold", textAlign: "start" }}
+        style={{ fontWeight: "bold", textAlign: "center" }}
       >
         FAQs
       </Typography>

@@ -6,15 +6,15 @@ import Typography from "@mui/material/Typography";
 const Contact = () => {
   return (
     <>
-      <Grid item lg={12}>
+      <Grid item lg={12} xs={12}>
         <Typography
           variant="h4"
-          style={{ fontWeight: "bold", textAlign: "start" }}
+          style={{ fontWeight: "bold", textAlign: "center" }}
         >
           Contact Us
         </Typography>
         <Grid container spacing={2} sx={{ marginTop: 0 }}>
-          <Grid item lg={6}>
+          <Grid item lg={6} xs={12}>
             <TextField
               margin="normal"
               required
@@ -24,7 +24,7 @@ const Contact = () => {
               name="username"
             />
           </Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} xs={12}>
             <TextField
               margin="normal"
               required
@@ -35,7 +35,7 @@ const Contact = () => {
               type="email"
             />
           </Grid>
-          <Grid item lg={12}>
+          <Grid item lg={12} xs={12}>
             <TextField
               margin="normal"
               required
@@ -45,7 +45,7 @@ const Contact = () => {
               name="subject"
             />
           </Grid>
-          <Grid item lg={12}>
+          <Grid item lg={12} xs={12}>
             <TextField
               margin="normal"
               required
@@ -57,7 +57,7 @@ const Contact = () => {
               rows={6}
             />
           </Grid>
-          <Grid item lg={2}>
+          <Grid item lg={2} xs={12}>
             <Button variant="contained" size="large" sx={{ width: '100%', backgroundColor: "#2962ff" }}>
                 Send Email
             </Button>

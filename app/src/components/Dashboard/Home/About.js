@@ -8,12 +8,12 @@ const About = () => {
     <>
       <Typography
         variant="h4"
-        style={{ fontWeight: "bold", textAlign: "start" }}
+        style={{ fontWeight: "bold", textAlign: "center" }}
       >
         About Us
       </Typography>
       <Grid container spacing={3}>
-        <Grid item lg={7}>
+        <Grid item lg={7} xs={12}>
           <Typography sx={{ marginTop: 3 }}>
             <p className="lead" style={{ textAlign: "justify" }}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -41,8 +41,8 @@ const About = () => {
             </p>
           </Typography>
         </Grid>
-        <Grid item lg={5} sx={{ display: "flex", alignItems: "center" }}>
-          <img src={Fornite} alt="header" style={{ height: "22rem" }}/>
+        <Grid item lg={5} xs={12} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <img src={Fornite} alt="header" style={{ height: "18rem" }}/>
         </Grid>
       </Grid>
     </>
