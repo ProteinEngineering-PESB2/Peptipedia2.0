@@ -46,8 +46,9 @@ const MSAContent = ({ data }) => {
         <Grid item lg={2} md={3} xs={6}>
           <Button
             variant="contained"
-            color="primary"
+            size="medium"
             onClick={() => exportComponentAsPNG(componentRef)}
+            sx={{ backgroundColor: "#2962ff", width: "100%" }}
           >
             Export as PNG
           </Button>
@@ -55,8 +56,9 @@ const MSAContent = ({ data }) => {
         <Grid item lg={2} md={3} xs={6}>
           <Button
             variant="contained"
-            color="primary"
             onClick={() => exportComponentAsJPEG(componentRef)}
+            size="medium"
+            sx={{ backgroundColor: "#2962ff", width: "100%" }}
           >
             Export as JPG
           </Button>

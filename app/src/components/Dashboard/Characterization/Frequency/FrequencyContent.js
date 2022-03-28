@@ -34,7 +34,7 @@ const FrequencyContent = ({ data }) => {
         <div></div>
       ) : (
         <Grid container spacing={3}>
-          <Grid item lg={5} md={4} xs={12}>
+          <Grid item lg={5} md={6} xs={12}>
             <Paper
               sx={{
                 p: 2,

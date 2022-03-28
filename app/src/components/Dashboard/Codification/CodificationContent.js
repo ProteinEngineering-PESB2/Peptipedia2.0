@@ -24,8 +24,8 @@ const CodificationContent = ({ fileName }) => {
         <Grid item lg={3} xs={12}>
           <Button
             variant="contained"
-            color="primary"
             onClick={onClickDownloadAsZip}
+            sx={{ backgroundColor: "#2962ff" }}
           >
             Download as Zip
           </Button>

@@ -215,7 +215,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
                     phisicochemicalPropertiesCheckbox === false &&
                     digitalSignalProcessingCheckbox === false
                   }
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
                 >
                   Run Codifications

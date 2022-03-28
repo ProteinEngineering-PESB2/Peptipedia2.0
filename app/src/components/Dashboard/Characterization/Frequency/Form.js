@@ -138,7 +138,7 @@ const Form = ({ setData }) => {
                     type="submit"
                     variant="contained"
                     disabled={fileInput === null && textInput === ""}
-                    sx={{ width: "100%" }}
+                    sx={{ width: "100%", backgroundColor: "#2962ff" }}
                     size="medium"
                   >
                     run characterization

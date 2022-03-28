@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";    
-import { CSVLink } from "react-csv"
+import { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
 
 import Plot from "react-plotly.js";
 
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
@@ -11,25 +11,25 @@ const Chart = ({ data, autocompleteValue }) => {
   const [loading, setLoading] = useState(true);
   const [x, setX] = useState([]);
   const [y, setY] = useState([]);
-  const [csvData, setCSVData] = useState([])
+  const [csvData, setCSVData] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     const keys = [];
     const values = [];
-    const csv = []
+    const csv = [];
     data.forEach((d) => {
       if (d.id_seq === autocompleteValue) {
         for (const [key, value] of Object.entries(d.counts)) {
           keys.push(key);
           values.push(value);
-          csv.push([key, value])
+          csv.push([key, value]);
         }
       }
     });
     setX(keys);
     setY(values);
-    setCSVData(csv)
+    setCSVData(csv);
     setLoading(false);
   }, [data, autocompleteValue]);
 
@@ -39,7 +39,7 @@ const Chart = ({ data, autocompleteValue }) => {
         <div></div>
       ) : (
         <>
-          <Grid item lg={10} xs={12}>
+          <Grid item lg={12} xs={12}>
             <Paper
               sx={{
                 p: 2,
@@ -53,6 +53,9 @@ const Chart = ({ data, autocompleteValue }) => {
                     x,
                     y,
                     type: "bar",
+                    marker: {
+                      color: "#2962ff"
+                    }
                   },
                 ]}
                 layout={{
@@ -65,8 +68,15 @@ const Chart = ({ data, autocompleteValue }) => {
               />
             </Paper>
           </Grid>
-          <Grid item lg={12} xs={12}>
-            <Button variant="contained" size="large"><CSVLink data={csvData} style={{ color: "#fff", textDecoration: "none" }}>Download as CSV</CSVLink></Button>
+          <Grid item lg={3} md={4} xs={12}>
+            <Button variant="contained" size="large" sx={{ backgroundColor: "#2962ff", width: '100%' }}>
+              <CSVLink
+                data={csvData}
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                Download as CSV
+              </CSVLink>
+            </Button>
           </Grid>
         </>
       )}

@@ -273,7 +273,7 @@ const Form = ({
                     molecularWeightCheckbox === false
                   }
                   size="medium"
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                 >
                   run characterization
                 </Button>
