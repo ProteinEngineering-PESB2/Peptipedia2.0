@@ -200,27 +200,37 @@ const Form = ({ queries, setQueries }) => {
     let query = "";
 
     if (queryText.length > 0) {
-      let new_query = "";
+      let close = false;
       for (let i = 0; i < queryText.length; i++) {
+        if (close === false) {
+          query = queryText;
+          break;
+        }
+
         if (queryText[i] === "#") {
-          if (
-            parseInt(queryText[i + 1]) > 0 &&
-            parseInt(queryText[i + 1]) <= queries.length
-          ) {
-            new_query += queries[parseInt(queryText[i + 1]) - 1];
-          } else {
-            new_query = queryText;
-            break;
+          let position = "";
+          for (let j = i + 1; j < queryText.length; j++) {
+            if (parseInt(queryText[j]) > 0) {
+              position += queryText[j];
+            } else {
+              close = true;
+              break;
+            }
+          }
+
+          if (position.length > 0) {
+            if (parseInt(position) <= queries.length) {
+              query += queries[parseInt(position) - 1];
+            }
           }
         } else {
-          if (queryText[i - 1] === "#") {
+          if (parseInt(queryText[i]) > 0) {
             continue;
           } else {
-            new_query += queryText[i];
+            query += queryText[i];
           }
         }
       }
-      query = new_query;
     } else {
       const selectedOperators = [];
 
