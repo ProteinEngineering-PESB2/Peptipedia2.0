@@ -21,7 +21,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData }) => {
+const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
@@ -44,7 +44,7 @@ const Form = ({ setData }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true)
+    setLoading(true);
     let post;
 
     if (fileType === "text") {
@@ -58,12 +58,14 @@ const Form = ({ setData }) => {
 
     try {
       const res = await frequency(post);
-      setData(res)
+      setData(res);
+      setLoading(false);
     } catch (error) {
-      console.log(error);
+      setSeverity("error");
+      setError("Service not available at this time.");
+      setOpenSnackbar(true);
+      setLoading(false);
     }
-    
-    setLoading(false)
   };
 
   return (

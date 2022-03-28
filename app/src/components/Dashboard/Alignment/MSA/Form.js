@@ -77,7 +77,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
       setLoading(false);
     } catch (error) {
       setSeverity("error");
-      setError("Error aligning the sequences.");
+      setError("Service not available at this time.");
       setOpenSnackbar(true);
       setLoading(false);
     }

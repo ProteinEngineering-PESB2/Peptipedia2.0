@@ -97,7 +97,7 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
       setLoading(false);
     } catch (error) {
       setSeverity("error");
-      setError("error in characterizing the sequences");
+      setError("Service not available at this time.");
       setOpenSnackbar(true);
       setLoading(false);
     }

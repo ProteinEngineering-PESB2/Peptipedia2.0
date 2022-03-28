@@ -99,7 +99,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
       setLoading(false);
     } catch (error) {
       setSeverity("error");
-      setError("Error when coding sequences");
+      setError("Service not available at this time.");
       setOpenSnackbar(true);
       setLoading(false);
     }
