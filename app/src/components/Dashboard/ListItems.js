@@ -127,7 +127,7 @@ const ListItems = ({ setSection }) => {
           <ListItemIcon>
             <AppsIcon />
           </ListItemIcon>
-          <ListItemText primary="Codification" />
+          <ListItemText primary="Encoding" />
         </ListItemButton>
         <ListItemButton
           sx={{ pl: 2 }}

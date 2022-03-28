@@ -10,11 +10,12 @@ const FAQs = () => {
     <>
       <Typography
         variant="h4"
+        sx={{ marginBottom: 3 }}
         style={{ fontWeight: "bold", textAlign: "center" }}
       >
         FAQs
       </Typography>
-      <Accordion sx={{ marginTop: 3 }}>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
