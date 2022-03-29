@@ -15,7 +15,7 @@
 
 Claudio
 
- - Mejorar home, incluir about us, tutoriales y submit sequences, contacto,.
+ - Mejorar home, incluir about us, tutoriales y submit sequences, contacto.
  - Agregar un formulario de clustering de secuencias. 
  - Generar gráficos y disponer de información relevante sobre la base de datos.
  
@@ -38,10 +38,12 @@ David
 ## Instalación y ejecución de la aplicación.
 
 La aplicación utiliza docker-compose para manejar imagenes de la api y la aplicación web. Es necesario tener instalado docker en la máquina en la que se ejecutará la aplicación.
+
 En la carpeta principal:
 
 ```
 docker-compose up
 ```
 (Ver instrucciones de docker-compose para mas opciones).
+
 Acceder a la aplicación en el navegador, en la dirección localhost:3000.
