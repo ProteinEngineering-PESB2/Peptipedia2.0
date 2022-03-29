@@ -1,0 +1,7 @@
+Flask
+flask-cors
+pandas
+modlamp
+biopython
+scipy
+matplotlib
