@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "proseqviewer/dist/assets/proseqviewer.css";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";

@@ -16,7 +16,7 @@ const Services = () => {
           Services
         </Typography>
         <Grid container spacing={3} sx={{ marginTop: 3 }}>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={4} md={6} xs={12}>
             <div className="card ho">
               <div className="card-body d-flex flex-column align-items-center justify-content-center text-center">
                 <AccessAlarmIcon fontSize="large" />
@@ -29,7 +29,7 @@ const Services = () => {
               </div>
             </div>
           </Grid>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={4} md={6} xs={12}>
             <div className="card ho text-white" style={{ backgroundColor: "#2962ff" }}>
               <div className="card-body d-flex flex-column align-items-center justify-content-center text-center">
                 <AccessAlarmIcon fontSize="large" />
@@ -42,7 +42,7 @@ const Services = () => {
               </div>
             </div>
           </Grid>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={4} md={6} xs={12}>
             <div className="card ho">
               <div className="card-body d-flex flex-column align-items-center justify-content-center text-center">
                 <AccessAlarmIcon fontSize="large" />
@@ -55,7 +55,7 @@ const Services = () => {
               </div>
             </div>
           </Grid>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={4} md={6} xs={12}>
             <div className="card ho text-white" style={{ backgroundColor: "#2962ff" }}>
               <div className="card-body d-flex flex-column align-items-center justify-content-center text-center">
                 <AccessAlarmIcon fontSize="large" />
