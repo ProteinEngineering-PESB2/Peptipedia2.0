@@ -4,6 +4,7 @@ import Header from "./Header";
 import About from "./About";
 // import Statistics from "./Statistics";
 import Services from "./Services";
+import Team from "./Team";
 import FAQs from "./FAQs";
 import Contact from "./Contact";
 
@@ -22,6 +23,9 @@ const Home = () => {
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Services/>
+      </Grid>
+      <Grid container spacing={3} sx={{ marginTop: 5 }}>
+        <Team/>
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>
