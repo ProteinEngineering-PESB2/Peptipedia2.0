@@ -14,8 +14,8 @@ import Claudio from "../../../assets/claudio.jpeg";
 const CardProfile = () => {
   return (
     <>
-      <Card sx={{ width: "85%" }}>
-        <CardMedia component="img" height="260" image={Claudio} alt="profile" />
+      <Card sx={{ width: "95%" }}>
+        <CardMedia component="img" height="320" image={Claudio} alt="profile" />
         <CardContent sx={{ textAlign: "center" }}>
           <Typography gutterButton variant="h5" component="div">
             Claudio Guevara

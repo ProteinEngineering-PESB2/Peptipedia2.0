@@ -39,10 +39,11 @@ const Team = () => {
           disableButtonsControls
           disableDotsControls
           responsive={responsive}
-          animationDuration={2000}
+          animationDuration={1500}
           infinite
-          autoPlayInterval={2000}
+          autoPlayInterval={2500}
           items={items}
+          paddingLeft={15}
         />
       </Grid>
     </>
