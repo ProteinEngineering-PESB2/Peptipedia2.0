@@ -6,6 +6,7 @@ import Phisicochemical from "./Characterization/Phisicochemical";
 import Pfam from "./Characterization/Pfam";
 import Frequency from "./Characterization/Frequency";
 import Codification from "./Codification";
+import Clustering from "./Clustering";
 import AdvancedSearch from "./AdvancedSearch";
 
 const RenderSection = ({ section }) => {
@@ -19,6 +20,7 @@ const RenderSection = ({ section }) => {
       {section === "pfam" && <Pfam />}
       {section === "frequency" && <Frequency/>}
       {section === "codifications" && <Codification />}
+      {section === "clustering" && <Clustering/>}
       {section === "advanced-search" && <AdvancedSearch/>}
     </>
   );

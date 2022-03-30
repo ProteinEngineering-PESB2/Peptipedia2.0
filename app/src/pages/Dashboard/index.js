@@ -34,7 +34,7 @@ import {
 const TestDashboard = () => {
   const mdTheme = createTheme();
   const [open, setOpen] = useState(false);
-  const [section, setSection] = useState("home");
+  const [section, setSection] = useState("clustering");
   const theme = useTheme();
   const drawerWidth = 240;
 

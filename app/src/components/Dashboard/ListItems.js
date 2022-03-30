@@ -11,9 +11,10 @@ import AppsIcon from "@mui/icons-material/Apps";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import WorkspacesIcon from "@mui/icons-material/Workspaces";
 
 const ListItems = ({ setSection }) => {
   const [expandItemCharacterizations, setExpandItemCharacterizations] =
@@ -21,19 +22,14 @@ const ListItems = ({ setSection }) => {
   const [expandItemAlignments, setExpandItemAlignments] = useState(false);
 
   return (
-    <List
-      component="nav"
-    >
+    <List component="nav">
       <ListSubheader>Dashboard</ListSubheader>
       <List component="div" disablePadding>
-        <ListItemButton
-          sx={{ pl: 2 }}
-          onClick={() => setSection("home")}
-        >
+        <ListItemButton sx={{ pl: 2 }} onClick={() => setSection("home")}>
           <ListItemIcon>
-            <HomeIcon/>
+            <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary="Home"/>
+          <ListItemText primary="Home" />
         </ListItemButton>
       </List>
       <ListSubheader>Tools</ListSubheader>
@@ -128,6 +124,12 @@ const ListItems = ({ setSection }) => {
             <AppsIcon />
           </ListItemIcon>
           <ListItemText primary="Encoding" />
+        </ListItemButton>
+        <ListItemButton sx={{ pl: 2 }} onClick={() => setSection("clustering")}>
+          <ListItemIcon>
+            <WorkspacesIcon />
+          </ListItemIcon>
+          <ListItemText primary="Clustering" />
         </ListItemButton>
         <ListItemButton
           sx={{ pl: 2 }}

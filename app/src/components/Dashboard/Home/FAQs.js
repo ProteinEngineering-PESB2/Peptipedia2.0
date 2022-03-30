@@ -10,7 +10,7 @@ const FAQs = () => {
     <>
       <Typography
         variant="h4"
-        sx={{ marginBottom: 3 }}
+        sx={{ marginBottom: 4 }}
         style={{ fontWeight: "bold", textAlign: "center" }}
       >
         FAQs
