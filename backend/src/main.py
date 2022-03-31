@@ -2,7 +2,7 @@ from modules.alignment_module import alignment
 from modules.msa_module import multiple_sequence_alignment
 from modules.phisicochemical_module import modlamp_descriptor
 from modules.characterizator import gene_ontology
-from modules.codifications import codification
+from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 
@@ -41,7 +41,12 @@ def api_alignment():
     elif(post_file != None):
         data = post_file["file"]
         is_file = True
-    align = alignment(data, temp_folder, static_folder, is_file, is_json)
+
+    align = alignment(data, temp_folder, static_folder, is_file, is_json, 1)
+    check = align.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = align.execute_blastp()
     return {"path": result.replace("./", "/")}
 
@@ -67,7 +72,12 @@ def api_msa():
     elif(post_file != None):
         data = post_file["file"]
         is_file = True
-    msa = multiple_sequence_alignment(data, temp_folder, is_file, is_json)
+
+    msa = multiple_sequence_alignment(data, temp_folder, is_file, is_json, 5, 3)
+    check = msa.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = msa.execute_clustalo()
     return {"result": result}
 
@@ -86,7 +96,11 @@ def api_phisicochemical():
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
 
-    modlamp = modlamp_descriptor(data, options, temp_folder, is_file, is_json)
+    modlamp = modlamp_descriptor(data, options, temp_folder, is_file, is_json, 200)
+    check = modlamp.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = modlamp.execute_modlamp()
     return {"result": result}
 
@@ -105,7 +119,11 @@ def api_gene_ontology():
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
 
-    go = gene_ontology(data, options, temp_folder, is_file, is_json)
+    go = gene_ontology(data, options, temp_folder, is_file, is_json, 200)
+    check = go.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = go.process()
     go.delete_file()
     return {"result": result}
@@ -122,12 +140,18 @@ def api_pfam():
     elif(post_file != None):
         data = post_file["file"]
         is_file = True
-    pf = pfam(data, temp_folder, is_file, is_json)
+
+    pf = pfam(data, temp_folder, is_file, is_json, 200)
+    check = pf.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = pf.process()
     return {"result": result}
 
-@server.route('/api/codification/', methods=["POST"])
-def api_codification():
+#@server.route('/api/codification/', methods=["POST"])
+@server.route('/api/encoding/', methods=["POST"])
+def api_encoding():
     if(request.json != None):
         post_data = request.json
         is_json = True
@@ -140,7 +164,12 @@ def api_codification():
         file = request.files
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
-    code = codification(data, options, temp_folder, is_file, is_json)
+
+    code = encoding(data, options, temp_folder, is_file, is_json, 200)
+    check = code.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = code.process()
     return {"result": result}
 
@@ -156,7 +185,12 @@ def api_frequency():
         is_file = True
         file = request.files
         data = file["file"]
-    frequency_object = frequency_analysis(data, temp_folder, is_file, is_json)
+
+    frequency_object = frequency_analysis(data, temp_folder, is_file, is_json, 200)
+    check = frequency_object.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
     result = frequency_object.exec_process()
     return {"result": result}
 

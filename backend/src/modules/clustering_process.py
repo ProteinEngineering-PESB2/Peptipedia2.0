@@ -2,6 +2,7 @@ import random
 import pandas as pd
 from clustering_methods import clustering_algorithm, evaluation_performances
 from encoding_strategies import run_fft_encoding, run_one_hot, run_physicochemical_properties
+from modules.verify_fasta import verify_fasta
 
 class unsupervised_algorithms(object):
 

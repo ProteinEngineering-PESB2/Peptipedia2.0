@@ -1,8 +1,9 @@
 import os
 from random import random
+from modules.verify_fasta import verify_fasta
 
 class alignment:
-    def __init__(self, data, temp_folder, static_folder, is_file, is_json):
+    def __init__(self, data, temp_folder, static_folder, is_file, is_json, max_sequences):
         self.data = data
         self.fasta_folder = temp_folder
         self.fasta_file = "{}.fasta".format(str(round(random()*10**20)))
@@ -12,6 +13,10 @@ class alignment:
             self.create_file()
         elif(is_file):
             self.save_file()
+        self.check = verify_fasta(self.fasta_path, max_sequences).verify()
+
+    def get_check(self):
+        return self.check
 
     def create_file(self):
         f = open(self.fasta_path, "w")

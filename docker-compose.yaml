@@ -2,10 +2,16 @@ version: "3.3"
 services:
   backend:
     build: ./backend/
+    volumes:
+      -  ./backend/src/main.py:/app/src/main.py
+      -  ./backend/src/modules:/app/src/modules
     ports:
-    - "8001:8001"
+      - "8001:8001"
   app :
     build: ./app/
+    volumes:
+      - ./app/public:/app/public
+      - ./app/src:/app/src
     depends_on:
       - "backend"
     ports:

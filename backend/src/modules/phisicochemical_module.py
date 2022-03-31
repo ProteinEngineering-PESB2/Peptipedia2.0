@@ -2,8 +2,10 @@ from modlamp.descriptors import GlobalDescriptor
 from random import random
 from Bio import SeqIO
 import os
+from modules.verify_fasta import verify_fasta
+
 class modlamp_descriptor:
-    def __init__(self, data, options, temp_folder, is_file, is_json):
+    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences):
         self.length = options["length"]
         self.molecular_weight = options["molecular_weight"]
         self.isoelectric_point = options["isoelectric_point"]
@@ -19,6 +21,11 @@ class modlamp_descriptor:
             self.create_file()
         elif(is_file):
             self.save_file()
+        self.check = verify_fasta(self.fasta_path, max_sequences).verify()
+
+    def get_check(self):
+        return self.check
+        
 
     def create_file(self):
         f = open(self.fasta_path, "w")

@@ -2,10 +2,11 @@ from random import random
 import os
 from Bio import SeqIO
 import numpy as np
+from modules.verify_fasta import verify_fasta
 
 class frequency_analysis(object):
 
-    def __init__(self, data, temp_folder, is_file, is_json):
+    def __init__(self, data, temp_folder, is_file, is_json, max_sequences):
         self.data = data
         self.temp_folder = temp_folder
         self.is_file = is_file
@@ -22,6 +23,11 @@ class frequency_analysis(object):
             self.create_file()
         elif self.is_file:
             self.save_file()
+        self.check = verify_fasta(self.fasta_path, max_sequences).verify()
+
+    def get_check(self):
+        return self.check
+        
 
     def create_file(self):
         f = open(self.fasta_path, "w")
@@ -49,4 +55,12 @@ class frequency_analysis(object):
             sequence = str(record.seq)
             id_sequence = record.id
             dict_counts_seq.append({"id_seq": id_sequence, "counts": self.count_canonical_residues(sequence)})
+        self.delete_file()
         return dict_counts_seq
+
+
+    def delete_file(self):
+        try:
+            os.remove(self.fasta_path)
+        except Exception as e:
+            print(e)

@@ -1,9 +1,10 @@
 from random import random
 import os
 import subprocess
+from modules.verify_fasta import verify_fasta
 
 class multiple_sequence_alignment:
-    def __init__(self, data, temp_folder, is_file, is_json):
+    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_sequences):
         self.data = data
         self.fasta_folder = temp_folder
         self.fasta_file = "{}.fasta".format(str(round(random()*10**20)))
@@ -13,6 +14,12 @@ class multiple_sequence_alignment:
             self.create_file()
         elif(is_file):
             self.save_file()
+            
+        self.check = verify_fasta(self.fasta_path, max_sequences, min_number_sequences = min_sequences).verify()
+
+    def get_check(self):
+        return self.check
+        
 
     def create_file(self):
         f = open(self.fasta_path, "w")
@@ -43,6 +50,7 @@ class multiple_sequence_alignment:
         return result
         
     def delete_file(self):
+        os.remove(self.fasta_path)
         try:
             os.remove(self.fasta_path)
         except Exception as e:
