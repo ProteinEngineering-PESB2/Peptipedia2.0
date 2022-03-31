@@ -27,7 +27,7 @@ const Form = () => {
   const [secondaryStructureCheckbox, setSecondaryStructureCheckbox] =
     useState(true);
   const [volumeCheckbox, setVolumeCheckbox] = useState(true);
-  const [algorithmValue, setAlgorithmValue] = useState("");
+  const [algorithmValue, setAlgorithmValue] = useState("Kmeans");
   const [kvalue, setKvalue] = useState(0);
   const [linkage, setLinkage] = useState(0);
   const [affinity, setAffinity] = useState(0);
@@ -133,15 +133,17 @@ const Form = () => {
                   }
                   label="Phisicochemical Properties"
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={fftCheckbox}
-                      onChange={handleChangeFFTCheckbox}
-                    />
-                  }
-                  label="FFT"
-                />
+                {phisicochemicalPropertiesCheckbox === true && (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={fftCheckbox}
+                        onChange={handleChangeFFTCheckbox}
+                      />
+                    }
+                    label="FFT"
+                  />
+                )}
               </FormGroup>
             </FormControl>
           </Grid>
