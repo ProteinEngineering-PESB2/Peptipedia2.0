@@ -37,7 +37,7 @@ class pfam:
 
     def process(self):
         self.output_file = self.temp_file.replace("fasta", "pfam")
-        os.system("pfam_scan.pl -dir /app/databases/ -fasta {} > {}".format(self.temp_file, self.output_file))
+        os.system("pfam_scan.pl -dir /app/install_requisites/databases/ -fasta {} > {}".format(self.temp_file, self.output_file))
         f = open(self.output_file, "r")
         text = f.read().split("\n\n")[-1]
         f.close()
