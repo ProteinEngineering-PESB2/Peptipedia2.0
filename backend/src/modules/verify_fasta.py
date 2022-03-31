@@ -17,13 +17,13 @@ class verify_fasta:
                     if self.is_protein():
                         return {"status": "success"}
                     else:
-                        return {"status": "error", "description": "not proteins"}
+                        return {"status": "error", "description": "Not proteins"}
                 else:
-                    return {"status": "error", "description": "too few sequences"}
+                    return {"status": "error", "description": "Too few sequences"}
             else:
-                return {"status": "error", "description": "too much sequences"}
+                return {"status": "error", "description": "Too much sequences"}
         else:
-            return {"status": "error", "description": "not a fasta file / ascii error"}
+            return {"status": "error", "description": "Not a fasta file / ASCII error"}
 
     def is_fasta(self):
         return any(self.fasta)
