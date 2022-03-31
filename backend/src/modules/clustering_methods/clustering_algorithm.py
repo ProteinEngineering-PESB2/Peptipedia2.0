@@ -21,7 +21,8 @@ class aplicateClustering(object):
             self.labels = self.model.labels_
             self.number_groups = len(list(set(self.labels)))
             self.response_apply = 0
-        except:
+        except Exception as e:
+            print(e)
             self.response_apply =  1
             pass
 

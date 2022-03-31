@@ -15,10 +15,12 @@ class gene_ontology:
         self.fasta_file = "{}.fasta".format(str(round(random()*10**20)))
         self.fasta_path = "{}/{}".format(self.fasta_folder, self.fasta_file)
         self.output_path = self.fasta_path.replace(".fasta", ".result")
+
         if(is_json):
             self.create_file()
         elif(is_file):
             self.save_file()
+        
         self.check = verify_fasta(self.fasta_path, max_sequences).verify()
 
     def get_check(self):

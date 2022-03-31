@@ -9,7 +9,8 @@ class evaluationClustering(object):
             siluetas = metrics.silhouette_score(dataSet, labelsResponse, metric='euclidean')
             davies = metrics.davies_bouldin_score(dataSet, labelsResponse)
             response = [calinski, siluetas, davies]
-        except:
+        except Exception as e:
+            print(e)
             calinski = "ERROR"
             siluetas = "ERROR"
             davies = "ERROR"

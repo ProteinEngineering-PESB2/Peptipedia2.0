@@ -14,7 +14,7 @@ class run_fft_encoding(object):
         self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group",
                               "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
         self.dataset_cluster = pd.read_csv(
-            "{}{}/data_component.csv".format(self.path_encoders, self.list_clusters[self.type_property]))
+            "{}{}/data_component.csv".format(self.path_encoders, self.type_property))
         self.df_encoding = None
         self.df_fft_encoding = None
 
@@ -82,11 +82,12 @@ class run_fft_encoding(object):
 
         matrix_encoding = []
         index_data = []
-
+        print(self.df_encoding)
+        self.df_encoding.reset_index(inplace=True, drop=True)
         for i in range(len(self.df_encoding)):
             # get a sequences
             sequence_encoding = [self.df_encoding[key][i] for key in self.df_encoding.keys() if key[0] == "P"]
-            index_data.append(self.df_encoding['id'][i])
+            index_data.append(self.df_encoding['id_sequence'][i])
 
             number_sample = len(sequence_encoding)
 

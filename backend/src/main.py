@@ -5,6 +5,7 @@ from modules.characterizator import gene_ontology
 from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
+from modules.clustering_process import unsupervised_algorithms
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -194,5 +195,31 @@ def api_frequency():
     result = frequency_object.exec_process()
     return {"result": result}
 
+
+@server.route('/api/clustering/', methods=["POST"])
+def api_clustering():
+    if(request.json != None):
+        post_data = request.json
+        is_json = True
+        is_file = False
+        data = post_data["data"]
+        options = post_data["options"]
+    else:
+        is_json = False
+        is_file = True
+        file = request.files
+        data = file["file"]
+        options = eval(file["options"].read().decode("utf-8"))
+
+    clustering_object = unsupervised_algorithms(data, options, temp_folder, is_file, is_json, 200)
+
+    check = clustering_object.get_check()
+    if(check["status"] == "error"):
+        print(check)
+        return check
+    result = clustering_object.process_by_options()
+    print({"result": result})
+    return {"result": result}
+
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8001)
+    server.run(host='0.0.0.0', port=8001, debug=True)
