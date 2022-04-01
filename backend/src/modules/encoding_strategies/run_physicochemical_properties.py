@@ -8,7 +8,7 @@ class run_physicochemical_properties(object):
         self.selected_property = selected_property
         self.zero_padding = zero_padding
         self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group", "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
-        self.dataset_cluster = pd.read_csv("{}{}/data_component.csv".format(path_input_cluster, self.list_clusters[self.selected_property]))
+        self.dataset_cluster = pd.read_csv("{}{}/data_component.csv".format(path_input_cluster, self.selected_property))
         self.df_encoding = None
 
     def encoding_data_paralel(self, dataset):
@@ -68,6 +68,8 @@ class run_physicochemical_properties(object):
         pool = mp.Pool(cpu_number)
         print("Ejecutando Codificacion...")
         self.df_encoding = pd.concat(pool.map(self.encoding_data_paralel, df_split))
+        print(self.df_encoding)
+        self.df_encoding.rename(columns={"id_sequence": "id"}, inplace=True)
         pool.close()
         pool.join()
 
