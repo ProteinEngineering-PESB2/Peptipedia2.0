@@ -26,7 +26,7 @@ const Phisicochemical = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Phisicochemical Characterization</Typography>
+          <Typography variant="h4">Physicochemical Characterization</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <PhisicochemicalForm

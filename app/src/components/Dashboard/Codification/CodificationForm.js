@@ -6,7 +6,7 @@ import Form from "./Form";
 const CodificationForm = ({
   setFileName,
   setOpenSnackbar,
-  setError,
+  setMessage,
   setSeverity,
 }) => {
   return (
@@ -23,7 +23,7 @@ const CodificationForm = ({
             <Form
               setFileName={setFileName}
               setOpenSnackbar={setOpenSnackbar}
-              setError={setError}
+              setMessage={setMessage}
               setSeverity={setSeverity}
             />
           </Paper>

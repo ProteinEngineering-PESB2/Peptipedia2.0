@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import { useState } from "react";
 
 import Button from "@mui/material/Button";
@@ -22,7 +24,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
+const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
@@ -55,6 +57,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
 
   const handleChangePhisicochemicalPropertiesCheckbox = (e) => {
     setPhisicochemicalPropertiesCheckbox(e.target.checked);
+    if (e.target.checked === false) setDigitalSignalProcessingCheckbox(false)
   };
 
   const handleChangeDigitalSignalProcessingCheckbox = (e) => {
@@ -65,7 +68,6 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
     e.preventDefault();
 
     setLoading(true);
-    setFileName("");
 
     let post;
 
@@ -93,13 +95,26 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
     }
 
     try {
-      const res = await codification(post);
+      const fileName = await codification(post);
 
-      setFileName(res);
+      const res = await axios.get(`/files/${fileName}`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "codifications.zip");
+      document.body.appendChild(link);
+      link.click();
+
+      setSeverity("success");
+      setMessage("Download completed.");
+      setOpenSnackbar(true);
+
       setLoading(false);
     } catch (error) {
       setSeverity("error");
-      setError("Service not available at this time.");
+      setMessage("Service not available at this time.");
       setOpenSnackbar(true);
       setLoading(false);
     }
@@ -178,7 +193,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
                   onChange={handleChangePhisicochemicalPropertiesCheckbox}
                 />
               }
-              label="Phisicochemical Properties"
+              label="Physicochemical Properties"
             ></FormControlLabel>
           </FormGroup>
           <FormGroup>
@@ -187,6 +202,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
                 <Checkbox
                   checked={digitalSignalProcessingCheckbox}
                   onChange={handleChangeDigitalSignalProcessingCheckbox}
+                  disabled={phisicochemicalPropertiesCheckbox ? false : true}
                 />
               }
               label="Digital Signal Processing"
@@ -218,7 +234,7 @@ const Form = ({ setFileName, setOpenSnackbar, setError, setSeverity }) => {
                   sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
                 >
-                  Run Codifications
+                  Run Encodings
                 </Button>
               )}
             </Grid>
