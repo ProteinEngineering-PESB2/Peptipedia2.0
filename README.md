@@ -10,7 +10,8 @@
  - Frequency: Caracteriza de acuerdo a las frecuencias aminoacídicas. Pendiente: Gráfico global.
  - Encoding: Codifica las secuencias de acuerdo a one hot encoding, propiedades físico químicas y fft. Pendiente: Arreglar la dependencia de fft con las propiedades físico químicas. 
  - Búsqueda avanzada: Formulario de búsqueda, permite generar queries y llevar a cabo consultas complejas. Pendiente: Conectar a la BD mediante una api y programar los joins correspondientes.
-
+ - Clustering: Realiza clustering de secuencias empleando codificaciones, propiedades y algoritmos deseados. Pentiende: Corregir las codificaciones one hot encoding y physicochemical properties.
+ 
 ## Tareas a realizar.
 
 Claudio
@@ -42,6 +43,7 @@ La aplicación utiliza docker-compose para manejar imagenes de la api y la aplic
 En la carpeta principal:
 
 ```
+docker-compose build
 docker-compose up
 ```
 (Ver instrucciones de docker-compose para mas opciones).
