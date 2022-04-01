@@ -3,7 +3,12 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const ClusteringForm = () => {
+const ClusteringForm = ({
+  setRes,
+  setMessage,
+  setSeverity,
+  setOpenSnackbar,
+}) => {
   return (
     <>
       <Grid container spacing={3}>
@@ -15,7 +20,12 @@ const ClusteringForm = () => {
               flexDirection: "column",
             }}
           >
-            <Form />
+            <Form
+              setRes={setRes}
+              setOpenSnackbar={setOpenSnackbar}
+              setMessage={setMessage}
+              setSeverity={setSeverity}
+            />
           </Paper>
         </Grid>
       </Grid>
