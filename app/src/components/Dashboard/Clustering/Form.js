@@ -1,82 +1,34 @@
 import { useState } from "react";
 
-import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
+import LoadingButton from "@mui/lab/LoadingButton";
+
 const Form = () => {
-  const [oneHotEncodingCheckbox, setOneHotEncodingCheckbox] = useState(true);
-  const [
-    phisicochemicalPropertiesCheckbox,
-    setPhisicochemicalPropertiesCheckbox,
-  ] = useState(true);
-  const [fftCheckbox, setFFTCheckbox] = useState(true);
-  const [alphaStructureCheckbox, setAlphaStructureCheckbox] = useState(true);
-  const [betaStructureCheckbox, setBetaStructureCheckbox] = useState(true);
-  const [energeticCheckbox, setEnergeticCheckbox] = useState(true);
-  const [hydropathyCheckbox, setHydropathyCheckbox] = useState(true);
-  const [hydrophobicityCheckbox, setHydrophobicityCheckbox] = useState(true);
-  const [indexCheckbox, setIndexCheckbox] = useState(true);
-  const [secondaryStructureCheckbox, setSecondaryStructureCheckbox] =
-    useState(true);
-  const [volumeCheckbox, setVolumeCheckbox] = useState(true);
-  const [algorithmValue, setAlgorithmValue] = useState("");
+  const [encodingTypeValue, setEncodingTypeValue] =
+    useState("one_hot_encoding");
+  const [propertyValue, setPropertyValue] = useState("alpha-structure_group");
+  const [algorithmValue, setAlgorithmValue] = useState("Kmeans");
   const [kvalue, setKvalue] = useState(0);
   const [linkage, setLinkage] = useState(0);
   const [affinity, setAffinity] = useState(0);
   const [minSamples, setMinSamples] = useState(0);
   const [xi, setXi] = useState(0);
   const [minClusterSize, setMinClusterSize] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const handleChangeOneHotEncodingCheckbox = (e) => {
-    setOneHotEncodingCheckbox(e.target.checked);
+  const handleChangeEncodingType = (e) => {
+    setEncodingTypeValue(e.target.value);
   };
 
-  const handleChangePhisicochemicalPropertiesCheckbox = (e) => {
-    setPhisicochemicalPropertiesCheckbox(e.target.checked);
-  };
-
-  const handleChangeFFTCheckbox = (e) => {
-    setFFTCheckbox(e.target.checked);
-  };
-
-  const handleChangeAlphaStructureCheckbox = (e) => {
-    setAlphaStructureCheckbox(e.target.checked);
-  };
-
-  const handleChangeBetaStructureCheckbox = (e) => {
-    setBetaStructureCheckbox(e.target.checked);
-  };
-
-  const handleChangeEnergeticCheckbox = (e) => {
-    setEnergeticCheckbox(e.target.checked);
-  };
-
-  const handleChangeHydropathyCheckbox = (e) => {
-    setHydropathyCheckbox(e.target.value);
-  };
-
-  const handleChangeHydrophobicityCheckbox = (e) => {
-    setHydrophobicityCheckbox(e.target.value);
-  };
-
-  const handleChangeIndexCheckbox = (e) => {
-    setIndexCheckbox(e.target.checked);
-  };
-
-  const handleChangeSecondaryStructureCheckbox = (e) => {
-    setSecondaryStructureCheckbox(e.target.checked);
-  };
-
-  const handleChangeVolumeCheckbox = (e) => {
-    setVolumeCheckbox(e.target.checked);
+  const handleChangePropertyValue = (e) => {
+    setPropertyValue(e.target.value);
   };
 
   const handleChangeAlgorithmValue = (e) => {
@@ -107,128 +59,62 @@ const Form = () => {
     setMinClusterSize(e.target.value);
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    setLoading(true)
+
+    setLoading(false)
+  }
+
   return (
     <>
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid container spacing={2}>
-          <Grid item lg={12} md={12} xs={12}>
-            <FormControl>
-              <FormLabel id="encoding-label">Encoding Type</FormLabel>
-              <FormGroup aria-labelledby="encoding-label">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={oneHotEncodingCheckbox}
-                      onChange={handleChangeOneHotEncodingCheckbox}
-                    />
-                  }
-                  label="One Hot Encoding"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={phisicochemicalPropertiesCheckbox}
-                      onChange={handleChangePhisicochemicalPropertiesCheckbox}
-                    />
-                  }
-                  label="Phisicochemical Properties"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={fftCheckbox}
-                      onChange={handleChangeFFTCheckbox}
-                    />
-                  }
-                  label="FFT"
-                />
-              </FormGroup>
+          <Grid item lg={6} md={6} xs={12}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="encoding-type-label">Encoding Type</InputLabel>
+              <Select
+                aria-labelledby="encoding-type-label"
+                label="Encoding Type"
+                value={encodingTypeValue}
+                onChange={handleChangeEncodingType}
+              >
+                <MenuItem value="one_hot_encoding">One Hot Encoding</MenuItem>
+                <MenuItem value="phisicochemical_properties">
+                  Phisicochemical Properties
+                </MenuItem>
+                <MenuItem value="digital_signal_processing">
+                  Digital Signal Processing
+                </MenuItem>
+              </Select>
             </FormControl>
           </Grid>
-          {phisicochemicalPropertiesCheckbox === true && (
-            <Grid item lg={12} md={12} xs={12}>
-              <FormControl>
-                <FormLabel id="select-property-label">
-                  Select Phisicochemical Properties
-                </FormLabel>
-                <FormGroup aria-labelledby="select-property-label">
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={alphaStructureCheckbox}
-                        onChange={handleChangeAlphaStructureCheckbox}
-                      />
-                    }
-                    label="Alpha Structure"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={betaStructureCheckbox}
-                        onChange={handleChangeBetaStructureCheckbox}
-                      />
-                    }
-                    label="Beta Structure"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={energeticCheckbox}
-                        onChange={handleChangeEnergeticCheckbox}
-                      />
-                    }
-                    label="Energetic"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={hydropathyCheckbox}
-                        onChange={handleChangeHydropathyCheckbox}
-                      />
-                    }
-                    label="Hidropathy"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={hydrophobicityCheckbox}
-                        onChange={handleChangeHydrophobicityCheckbox}
-                      />
-                    }
-                    label="Hydrophobicity"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={indexCheckbox}
-                        onChange={handleChangeIndexCheckbox}
-                      />
-                    }
-                    label="Index"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={secondaryStructureCheckbox}
-                        onChange={handleChangeSecondaryStructureCheckbox}
-                      />
-                    }
-                    label="Secondary Structure"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={volumeCheckbox}
-                        onChange={handleChangeVolumeCheckbox}
-                      />
-                    }
-                    label="Volume"
-                  />
-                </FormGroup>
-              </FormControl>
-            </Grid>
-          )}
-          <Grid item lg={12} md={12} xs={12}>
+          <Grid item lg={6} md={6} xs={12}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="property-label">Property</InputLabel>
+              <Select
+                aria-labelledby="property-label"
+                label="Property"
+                value={propertyValue}
+                onChange={handleChangePropertyValue}
+              >
+                <MenuItem value="alpha-structure_group">
+                  Alpha Structure
+                </MenuItem>
+                <MenuItem value="beta-structure_group">Beta Structure</MenuItem>
+                <MenuItem value="energetic_group">Energetic</MenuItem>
+                <MenuItem value="hydropathy_group">Hydropathy</MenuItem>
+                <MenuItem value="hydrophobicity_group">Hydrophobicity</MenuItem>
+                <MenuItem value="index_group">Index</MenuItem>
+                <MenuItem value="secondary_structure_properties_group">
+                  Secondary Structure
+                </MenuItem>
+                <MenuItem value="volume_group">Volume</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="algorithm-select-label">Algorithm</InputLabel>
               <Select
@@ -248,74 +134,110 @@ const Form = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={12} md={12} xs={12}>
-            {algorithmValue === "Kmeans" ||
-            algorithmValue === "Birch" ||
-            algorithmValue === "Agglomerative" ? (
+          {algorithmValue === "Kmeans" ||
+          algorithmValue === "Birch" ||
+          algorithmValue === "Agglomerative" ? (
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 placeholder="K-Value"
                 label="K-Value"
                 type="number"
                 value={kvalue}
                 onChange={handleChangeKvalue}
+                color="warning"
+                focused
               />
-            ) : (
-              <></>
-            )}
-          </Grid>
+            </Grid>
+          ) : (
+            <></>
+          )}
           {algorithmValue === "Agglomerative" && (
             <>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Linkage"
                   label="Linkage"
                   type="number"
                   value={linkage}
                   onChange={handleChangeLinkage}
+                  color="warning"
+                  focused
                 />
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Affinity"
                   label="Affinity"
                   type="number"
                   value={affinity}
                   onChange={handleChangeAffinity}
+                  color="warning"
+                  focused
                 />
               </Grid>
             </>
           )}
-          {algorithmValue === "Optics" && (
+          {algorithmValue === "Optics" ? (
             <>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Min Samples"
                   label="Min Samples"
                   type="number"
                   value={minSamples}
                   onChange={handleChangeMinSamples}
+                  color="warning"
+                  focused
                 />
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Xi"
                   label="Xi"
                   type="number"
                   value={xi}
                   onChange={handleChangeXi}
+                  color="warning"
+                  focused
                 />
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Min Cluster Size"
                   label="Min Cluster Size"
                   type="number"
                   value={minClusterSize}
                   onChange={handleChangeMinClusterSize}
+                  color="warning"
+                  focused
                 />
               </Grid>
             </>
+          ) : (
+            <></>
           )}
+          <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 2 }}>
+            {loading ? (
+              <LoadingButton
+                loading
+                variant="contained"
+                color="primary"
+                sx={{ width: "100%" }}
+                size="medium"
+              >
+                Loading{" "}
+              </LoadingButton>
+            ) : (
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                size="medium"
+              >
+                Run Clustering
+              </Button>
+            )}
+          </Grid>
         </Grid>
       </form>
     </>
