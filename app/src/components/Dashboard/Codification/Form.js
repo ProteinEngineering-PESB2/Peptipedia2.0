@@ -57,6 +57,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
 
   const handleChangePhisicochemicalPropertiesCheckbox = (e) => {
     setPhisicochemicalPropertiesCheckbox(e.target.checked);
+    if (e.target.checked === false) setDigitalSignalProcessingCheckbox(false)
   };
 
   const handleChangeDigitalSignalProcessingCheckbox = (e) => {
@@ -201,6 +202,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
                 <Checkbox
                   checked={digitalSignalProcessingCheckbox}
                   onChange={handleChangeDigitalSignalProcessingCheckbox}
+                  disabled={phisicochemicalPropertiesCheckbox ? false : true}
                 />
               }
               label="Digital Signal Processing"
