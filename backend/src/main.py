@@ -6,7 +6,7 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
-
+from modules.database import database
 from flask import Flask, request
 from flask_cors import CORS
 import os
@@ -46,7 +46,6 @@ def api_alignment():
     align = alignment(data, temp_folder, static_folder, is_file, is_json, 1)
     check = align.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = align.execute_blastp()
     return {"path": result.replace("./", "/")}
@@ -77,7 +76,6 @@ def api_msa():
     msa = multiple_sequence_alignment(data, temp_folder, is_file, is_json, 5, 3)
     check = msa.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = msa.execute_clustalo()
     return {"result": result}
@@ -100,7 +98,6 @@ def api_phisicochemical():
     modlamp = modlamp_descriptor(data, options, temp_folder, is_file, is_json, 200)
     check = modlamp.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = modlamp.execute_modlamp()
     return {"result": result}
@@ -123,7 +120,6 @@ def api_gene_ontology():
     go = gene_ontology(data, options, temp_folder, is_file, is_json, 200)
     check = go.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = go.process()
     go.delete_file()
@@ -145,7 +141,6 @@ def api_pfam():
     pf = pfam(data, temp_folder, is_file, is_json, 200)
     check = pf.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = pf.process()
     return {"result": result}
@@ -169,7 +164,6 @@ def api_encoding():
     code = encoding(data, options, temp_folder, is_file, is_json, 200)
     check = code.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = code.process()
     return {"result": result}
@@ -190,7 +184,6 @@ def api_frequency():
     frequency_object = frequency_analysis(data, temp_folder, is_file, is_json, 200)
     check = frequency_object.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = frequency_object.exec_process()
     return {"result": result}
@@ -198,7 +191,6 @@ def api_frequency():
 
 @server.route('/api/clustering/', methods=["POST"])
 def api_clustering():
-    print(request.json)
     if(request.json != None):
         post_data = request.json
         is_json = True
@@ -211,18 +203,23 @@ def api_clustering():
         file = request.files
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
-    print(options)
     clustering_object = unsupervised_algorithms(data, options, temp_folder, is_file, is_json, 200, 10)
 
     check = clustering_object.get_check()
     if(check["status"] == "error"):
-        print(check)
         return check
     result = clustering_object.process_by_options()
-    print({"result": result})
+    print(result)
     return {"result": result}
     """
     return {"result": "true"}"""
+
+@server.route('/api/search/', methods=["POST"])
+def api_search():
+    db = database()
+    result = db.select_peptides(min_length = 40, max_length = 110)
+
+    return result
 
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=8001, debug=True)

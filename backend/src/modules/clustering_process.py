@@ -76,25 +76,25 @@ class unsupervised_algorithms:
                         return {"status": "error", "description": "Parameter affinity not valid"}
 
                 if(param == "min_samples"):
-                    if type(self.options["params"]["optics"]) != int and type(self.options["params"]["optics"]) != float:
+                    if type(self.options["params"]["min_samples"]) != int and type(self.options["params"]["min_samples"]) != float:
                         return {"status": "error", "description": "Parameter min_samples not valid"}
-                    if type(self.options["params"]["optics"]) == int and self.options["params"]["optics"] < 1:
+                    if type(self.options["params"]["min_samples"]) == int and self.options["params"]["min_samples"] < 1:
                         return {"status": "error", "description": "Parameter min_samples not valid"}
-                    if type(self.options["params"]["optics"]) == float and (self.options["params"]["optics"] > 1 or self.options["params"]["optics"] < 0):
+                    if type(self.options["params"]["min_samples"]) == float and (self.options["params"]["min_samples"] > 1 or self.options["params"]["optics"] < 0):
                         return {"status": "error", "description": "Parameter min_samples not valid"}
 
                 if(param == "xi"):
                     if type(self.options["params"]["xi"]) != float:
-                        return {"status": "error", "description": "Parameter min_samples not valid"}
+                        return {"status": "error", "description": "Parameter xi not valid"}
                     if self.options["params"]["xi"] < 0 or self.options["params"]["xi"] > 1:
-                        return {"status": "error", "description": "Parameter min_samples not valid"}
+                        return {"status": "error", "description": "Parameter xi not valid"}
 
                 if(param == "min_cluster_size"):
                     if type(self.options["params"]["min_cluster_size"]) != int and type(self.options["params"]["min_cluster_size"]) != float:
                         return {"status": "error", "description": "Parameter min_cluster_size not valid"}
                     if type(self.options["params"]["min_cluster_size"]) == int and self.options["params"]["min_cluster_size"] < 1:
                         return {"status": "error", "description": "Parameter min_cluster_size not valid"}
-                    if type(self.options["params"]["min_cluster_size"]) == float and (self.options["params"]["optics"] > 1 or self.options["params"]["min_cluster_size"] < 0):
+                    if type(self.options["params"]["min_cluster_size"]) == float and (self.options["params"]["min_cluster_size"] > 1 or self.options["params"]["min_cluster_size"] < 0):
                         return {"status": "error", "description": "Parameter min_cluster_size not valid"}
         return {"status": "success"}
 

@@ -5,3 +5,7 @@ modlamp
 biopython
 scipy
 matplotlib
+sqlalchemy
+mysqlclient
+mysql-connector-python
+PyMySQL

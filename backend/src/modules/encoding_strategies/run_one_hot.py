@@ -57,7 +57,10 @@ class run_one_hot(object):
         header = ["P_" + str(i) for i in range(len(matrix_encoding[0]))]
 
         dataset_export = pd.DataFrame(matrix_encoding)
+        dataset.reset_index(drop=True, inplace=True)
         dataset_export["id"] = dataset["id"]
+        print(dataset)
+        print(dataset_export)
         return dataset_export
 
     def run_parallel_encoding(self):
