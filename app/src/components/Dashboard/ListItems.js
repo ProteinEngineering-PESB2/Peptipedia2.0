@@ -14,6 +14,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import TransformIcon from '@mui/icons-material/Transform';
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 
 const ListItems = ({ setSection }) => {
@@ -81,7 +82,7 @@ const ListItems = ({ setSection }) => {
               <ListItemIcon>
                 <DoubleArrowIcon />
               </ListItemIcon>
-              <ListItemText primary="Phisicochemical" />
+              <ListItemText primary="Physicochemical" />
             </ListItemButton>
             <ListItemButton
               sx={{ pl: 4 }}
@@ -121,7 +122,7 @@ const ListItems = ({ setSection }) => {
           onClick={() => setSection("codifications")}
         >
           <ListItemIcon>
-            <AppsIcon />
+            <TransformIcon />
           </ListItemIcon>
           <ListItemText primary="Encoding" />
         </ListItemButton>

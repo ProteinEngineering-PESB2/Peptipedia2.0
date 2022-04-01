@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
+import FormControl from "@mui/material/FormControl"
 import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
 import Paper from "@mui/material/Paper";
+import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField";
 
 import Table from "./Table";
@@ -10,7 +14,6 @@ import Table from "./Table";
 const GeneOntologyTable = ({ data }) => {
   const [typesAutocomplete, setTypesAutocomplete] = useState([]);
   const [valueTypesAutocomplete, setValueTypesAutocomplete] = useState("");
-  const [inputTypesAutocomplete, setInputTypesAutocomplete] = useState("");
   const [sequencesAutocomplete, setSequencesAutocomplete] = useState([]);
   const [valueSequencesAutocomplete, setValueSequencesAutocomplete] =
     useState("");
@@ -45,12 +48,8 @@ const GeneOntologyTable = ({ data }) => {
     setLoading(false);
   }, [data]);
 
-  const handleChangeValueTypesAutocomplete = (e, newValue) => {
-    setValueTypesAutocomplete(newValue);
-  };
-
-  const handleChangeInputTypesAutocomplete = (e, newInputValue) => {
-    setInputTypesAutocomplete(newInputValue);
+  const handleChangeValueTypesAutocomplete = (e) => {
+    setValueTypesAutocomplete(e.target.value);
   };
 
   const handleChangeValueSequencesAutocomplete = (e, newValue) => {
@@ -73,15 +72,23 @@ const GeneOntologyTable = ({ data }) => {
                 flexDirection: "column",
               }}
             >
-              <Autocomplete
-                disablePortal
-                value={valueTypesAutocomplete}
-                onChange={handleChangeValueTypesAutocomplete}
-                inputValue={inputTypesAutocomplete}
-                onInputChange={handleChangeInputTypesAutocomplete}
-                options={typesAutocomplete}
-                renderInput={(params) => <TextField {...params} label="Type" />}
-              />
+              <FormControl>
+                <InputLabel id="type-label">Type</InputLabel>
+                <Select
+                  aria-labelledby="type-label"
+                  label="Type"
+                  value={valueTypesAutocomplete}
+                  onChange={handleChangeValueTypesAutocomplete}
+                >
+                  {typesAutocomplete.map((t) => (
+                    <MenuItem value={t} key={t}>
+                      {t === "molecular_function" && "Molecular Function"}
+                      {t === "biological_process" && "Biological Process"}
+                      {t === "celular_component" && "Celular Component"}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Paper>
           </Grid>
           <Grid item lg={5} md={4} xs={12}>
