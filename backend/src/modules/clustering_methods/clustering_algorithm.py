@@ -64,11 +64,12 @@ class aplicateClustering(object):
     def aplicateDBSCAN(self):
 
         try:
-            self.model = DBSCAN(eps=0.3, min_samples=10).fit(self.dataSet)
+            self.model = DBSCAN(eps=0.5, min_samples=5).fit(self.dataSet)
             self.labels = self.model.labels_
             self.number_groups = len(list(set(self.labels)))
             self.response_apply = 0
-        except:
+        except Exception as e:
+            print(e)
             self.response_apply = 1
             pass
     #metodo que permite aplicar MeanShift clustering...

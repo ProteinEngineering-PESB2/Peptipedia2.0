@@ -45,11 +45,15 @@ class unsupervised_algorithms:
         if (self.options["algorithm"] not in self.algorithms_options):
             return {"status": "error", "description": "Algorithm option not valid"}
 
-        if (set(self.options["params"].keys()) != set(self.params_options[self.options["algorithm"]])):
-            return {"status": "error", "description": "Missed parameters; {}".format(
-                set(self.params_options[self.options["algorithm"]]) - set(self.options["params"].keys())
-            )}
+        if ("params" in self.options.keys()):
+            if (set(self.options["params"].keys()) != set(self.params_options[self.options["algorithm"]])):
+                return {"status": "error", "description": "Missed parameters; {}".format(
+                    set(self.params_options[self.options["algorithm"]]) - set(self.options["params"].keys())
+                )}
         if self.options["algorithm"] in self.params_options.keys():
+            if "params" not in self.options:
+                return {"status": "error", "description": "Params not specified"}
+
             for param in self.options["params"]:
                 if param not in self.params_options[self.options["algorithm"]]:
                     return {"status": "error", "description": "Parameter option not valid"}
@@ -108,6 +112,7 @@ class unsupervised_algorithms:
             one_hot_encoding = run_one_hot.run_one_hot(self.data, self.get_longest())
             one_hot_encoding.run_parallel_encoding()
             self.dataset_encoded = one_hot_encoding.df_encoding
+            print(self.dataset_encoded)
 
         elif encoding_option == "phisicochemical_properties":
             selected_property = self.options['selected_property']

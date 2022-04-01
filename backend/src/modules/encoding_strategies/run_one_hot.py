@@ -25,7 +25,6 @@ class run_one_hot(object):
         return residues, dict_residues
 
     def encoding_data(self, dataset):
-
         # prepare data for encoding
         residues, dict_residues = self.prepare_data()
 
@@ -57,8 +56,8 @@ class run_one_hot(object):
 
         header = ["P_" + str(i) for i in range(len(matrix_encoding[0]))]
 
-        dataset_export = pd.DataFrame(matrix_encoding, columns=header)
-
+        dataset_export = pd.DataFrame(matrix_encoding)
+        dataset_export["id"] = dataset["id"]
         return dataset_export
 
     def run_parallel_encoding(self):
@@ -68,10 +67,15 @@ class run_one_hot(object):
 
         print('Dividiendo dataframe entre {} cores'.format(cpu_number))
         df_split = np.array_split(self.dataset, cpu_number)
-
+        
         pool = mp.Pool(cpu_number)
         print("Ejecutando Codificacion...")
         self.df_encoding = pd.concat(pool.map(self.encoding_data, df_split))
+        self.df_encoding.rename(columns=dict( (col, "P_" + str(col)) for col in self.df_encoding.columns if type(col) == int), inplace=True)
+        self.df_encoding.fillna(0, inplace=True)
+        self.df_encoding.round(0)
+        self.df_encoding = self.df_encoding.astype(int, errors='ignore')
+        print(self.df_encoding)
         pool.close()
         pool.join()
 
