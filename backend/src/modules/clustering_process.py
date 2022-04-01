@@ -5,7 +5,7 @@ from modules.encoding_strategies import run_fft_encoding, run_one_hot, run_physi
 from modules.verify_fasta import verify_fasta
 import json
 class unsupervised_algorithms:
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences):
+    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_sequences):
         self.data = data
         self.options = options
         self.temp_folder = temp_folder
@@ -18,7 +18,7 @@ class unsupervised_algorithms:
         elif(is_file):
             self.save_file()
         self.path_config_aaindex_encoder = 'modules/encoding_strategies/encoding_AAIndex/'
-        self.check = verify_fasta(self.fasta_path, max_sequences).verify()
+        self.check = verify_fasta(self.fasta_path, max_sequences, min_number_sequences = min_sequences).verify()
         if(self.check == {"status": "success"}):
             self.check = self.check_options()
 
@@ -49,7 +49,6 @@ class unsupervised_algorithms:
             return {"status": "error", "description": "Missed parameters; {}".format(
                 set(self.params_options[self.options["algorithm"]]) - set(self.options["params"].keys())
             )}
-
         if self.options["algorithm"] in self.params_options.keys():
             for param in self.options["params"]:
                 if param not in self.params_options[self.options["algorithm"]]:
@@ -93,7 +92,6 @@ class unsupervised_algorithms:
                         return {"status": "error", "description": "Parameter min_cluster_size not valid"}
                     if type(self.options["params"]["min_cluster_size"]) == float and (self.options["params"]["optics"] > 1 or self.options["params"]["min_cluster_size"] < 0):
                         return {"status": "error", "description": "Parameter min_cluster_size not valid"}
-
         return {"status": "success"}
 
     def get_check(self):

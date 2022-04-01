@@ -198,6 +198,7 @@ def api_frequency():
 
 @server.route('/api/clustering/', methods=["POST"])
 def api_clustering():
+    print(request.json)
     if(request.json != None):
         post_data = request.json
         is_json = True
@@ -210,8 +211,8 @@ def api_clustering():
         file = request.files
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
-
-    clustering_object = unsupervised_algorithms(data, options, temp_folder, is_file, is_json, 200)
+    print(options)
+    clustering_object = unsupervised_algorithms(data, options, temp_folder, is_file, is_json, 200, 10)
 
     check = clustering_object.get_check()
     if(check["status"] == "error"):
@@ -220,6 +221,8 @@ def api_clustering():
     result = clustering_object.process_by_options()
     print({"result": result})
     return {"result": result}
+    """
+    return {"result": "true"}"""
 
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=8001, debug=True)
