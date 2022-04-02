@@ -2,7 +2,7 @@ from sklearn.decomposition import PCA
 from sklearn.decomposition import KernelPCA
 
 class transformer(object):
-    
+
     def apply_pca_data(self, dataset):
 
         #instance of PCA
