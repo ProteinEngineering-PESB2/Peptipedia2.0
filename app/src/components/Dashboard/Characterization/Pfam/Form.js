@@ -59,11 +59,19 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
 
     try {
       const res = await pfam(post);
-      setData(res);
-      setLoading(false);
+
+      if (res.status) {
+        setSeverity("error");
+        setError(res.description);
+        setLoading(false);
+        setOpenSnackbar(true);
+      } else {
+        setLoading(false);
+        setData(res.result);
+      }
     } catch (error) {
       setSeverity("error");
-      setError("Service not available at this time.");
+      setError("Service not available");
       setOpenSnackbar(true);
       setLoading(false);
     }

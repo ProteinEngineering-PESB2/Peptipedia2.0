@@ -201,6 +201,91 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
         }
       }
     } else if (fileType === "file") {
+      let optionsValue;
+      if (
+        encodingTypeValue === "phisicochemical_properties" ||
+        encodingTypeValue === "digital_signal_processing"
+      ) {
+        if (algorithmValue === "kmeans" || algorithmValue === "birch") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+            params: {
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "agglomerative") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+            params: {
+              linkage: linkage,
+              affinity: affinity,
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "optics") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+            params: {
+              min_samples: parseFloat(minSamples),
+              xi: parseFloat(xi),
+              min_cluster_size: parseFloat(minClusterSize),
+            },
+          };
+        } else {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+          };
+        }
+      } else if (encodingTypeValue === "one_hot_encoding") {
+        if (algorithmValue === "kmeans" || algorithmValue === "birch") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+            params: {
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "agglomerative") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+            params: {
+              linkage: linkage,
+              affinity: affinity,
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "optics") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+            params: {
+              min_samples: parseFloat(minSamples),
+              xi: parseFloat(xi),
+              min_cluster_size: parseFloat(minClusterSize),
+            },
+          };
+        } else {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+          };
+        }
+      }
+
+      const options = new Blob([JSON.stringify(optionsValue)]);
+
+      post = new FormData();
+      post.append("file", fileInput);
+      post.append("options", options);
     }
 
     try {
@@ -465,7 +550,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                 variant="contained"
                 sx={{ width: "100%", backgroundColor: "#2962ff" }}
                 size="medium"
-                disabled={textInput === "" ? true : false}
+                disabled={textInput === "" && fileInput === null ? true : false}
               >
                 Run Clustering
               </Button>

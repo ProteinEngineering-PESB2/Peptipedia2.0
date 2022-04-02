@@ -123,26 +123,33 @@ const Form = ({
     try {
       res = await phisicochemical(post);
 
-      let newData = [];
-      res.forEach((r) => {
-        let array = [];
-        array.push(r.id);
-        if (r.length) array.push(r.length);
-        if (r.molecular_weight) array.push(r.molecular_weight);
-        if (r.isoelectric_point) array.push(r.isoelectric_point);
-        if (r.charge_density) array.push(r.charge_density);
-        if (r.charge) array.push(r.charge);
+      if (res.status) {
+        setSeverity("error");
+        setError(res.description);
+        setLoading(false);
+        setOpenSnackbar(true);
+      } else {
+        let newData = [];
+        res.result.forEach((r) => {
+          let array = [];
+          array.push(r.id);
+          if (r.length) array.push(r.length);
+          if (r.molecular_weight) array.push(r.molecular_weight);
+          if (r.isoelectric_point) array.push(r.isoelectric_point);
+          if (r.charge_density) array.push(r.charge_density);
+          if (r.charge) array.push(r.charge);
 
-        newData.push(array);
-      });
+          newData.push(array);
+        });
 
-      setData(newData);
-      setLoading(false);
+        setLoading(false);
+        setData(newData);
+      }
     } catch (error) {
       setSeverity("error");
-      setError("Service not available at this time.");
-      setOpenSnackbar(true);
+      setError("Service not available");
       setLoading(false);
+      setOpenSnackbar(true);
     }
   };
 

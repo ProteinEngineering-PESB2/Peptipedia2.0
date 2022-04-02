@@ -65,15 +65,22 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
     try {
       res = await blast(post);
 
-      const { path } = res;
+      if (res.status) {
+        setSeverity("error");
+        setError(res.description);
+        setLoading(false);
+        setOpenSnackbar(true);
+      } else {
+        const { path } = res;
 
-      const { data } = await axios.get(path);
+        const { data } = await axios.get(path);
 
-      setLoading(false);
-      setData(data);
+        setLoading(false);
+        setData(data);
+      }
     } catch (error) {
       setSeverity("error");
-      setError("Service not available at this time.");
+      setError("Service not available");
       setOpenSnackbar(true);
       setLoading(false);
     }
@@ -94,14 +101,14 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                 checked={fileType === "text"}
                 onChange={handleChangeFileType}
                 value="text"
-                control={<Radio/>}
+                control={<Radio />}
                 label="Text"
               />
               <FormControlLabel
                 checked={fileType === "file"}
                 onChange={handleChangeFileType}
                 value="file"
-                control={<Radio/>}
+                control={<Radio />}
                 label="File"
               />
             </RadioGroup>
