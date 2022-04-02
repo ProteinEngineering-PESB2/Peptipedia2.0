@@ -15,13 +15,23 @@ class model_algorithm(object):
         self.training_performances = response_training.response_training_model()
 
     #training method support by cross validation
-    #type_dataset: 
+    #type_dataset: used to estimated performance:
+    #   1 -> binary dataset
+    #   2 -> multiclass dataset
+    #   3 -> regresion model
     def trainingMethod(self, type_dataset):
 
         self.model = self.model.fit(self.dataset, self.target)
-        self.training_performances.training_using_cross_validation(self.model, self.algorithm,  self.validation)
 
-        if type_dataset == 1:  # binary
-            self.training_performances.estimatedMetricsPerformance(self.dataset, self.target)
+        if type_dataset == 1:
+            metrics_list =['accuracy', 'recall', 'precision', 'f1']
+            response = self.training_performances.estimated_performance_class(self.dataset, self.target, self.model, self.validation, metrics_list)
+            return response
+        elif type_dataset == 2:
+            metric_list = ['accuracy', 'f1_weighted', 'recall_weighted', 'precision_weighted']
+            response = self.training_performances.estimated_performance_class(self.dataset, self.target, self.model, self.validation, metric_list)
+            return response
         else:
-            self.training_performances.estimatedMetricsPerformanceMultilabels(self.dataset, self.target)
+            metric_list = ['r2', 'neg_median_absolute_error', 'neg_root_mean_squared_error']
+            response = self.training_performances.estimated_metric_regresion_models(self.dataset, self.target, self.model, self.validation, metric_list)
+            return response
