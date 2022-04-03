@@ -24,7 +24,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = () => {
+const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
@@ -110,7 +110,7 @@ const Form = () => {
               selected_property: propertyValue,
               algorithm: algorithmValue,
               params: {
-                k_value: parseInt(kvalue),
+                k_value: parseFloat(kvalue),
               },
             },
           };
@@ -123,8 +123,8 @@ const Form = () => {
               algorithm: algorithmValue,
               params: {
                 linkage: linkage,
-                affinaty: affinity,
-                k_value: parseInt(kvalue),
+                affinity: affinity,
+                k_value: parseFloat(kvalue),
               },
             },
           };
@@ -136,9 +136,9 @@ const Form = () => {
               selected_property: propertyValue,
               algorithm: algorithmValue,
               params: {
-                min_samples: parseInt(minSamples),
-                xi: parseInt(xi),
-                min_cluster_size: parseInt(minClusterSize),
+                min_samples: parseFloat(minSamples),
+                xi: parseFloat(xi),
+                min_cluster_size: parseFloat(minClusterSize),
               },
             },
           };
@@ -160,7 +160,7 @@ const Form = () => {
               encoding: encodingTypeValue,
               algorithm: algorithmValue,
               params: {
-                k_value: parseInt(kvalue),
+                k_value: parseFloat(kvalue),
               },
             },
           };
@@ -172,8 +172,8 @@ const Form = () => {
               algorithm: algorithmValue,
               params: {
                 linkage: linkage,
-                affinaty: affinity,
-                k_value: parseInt(kvalue),
+                affinity: affinity,
+                k_value: parseFloat(kvalue),
               },
             },
           };
@@ -184,9 +184,9 @@ const Form = () => {
               encoding: encodingTypeValue,
               algorithm: algorithmValue,
               params: {
-                min_samples: parseInt(minSamples),
-                xi: parseInt(xi),
-                min_cluster_size: parseInt(minClusterSize),
+                min_samples: parseFloat(minSamples),
+                xi: parseFloat(xi),
+                min_cluster_size: parseFloat(minClusterSize),
               },
             },
           };
@@ -201,12 +201,112 @@ const Form = () => {
         }
       }
     } else if (fileType === "file") {
+      let optionsValue;
+      if (
+        encodingTypeValue === "phisicochemical_properties" ||
+        encodingTypeValue === "digital_signal_processing"
+      ) {
+        if (algorithmValue === "kmeans" || algorithmValue === "birch") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+            params: {
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "agglomerative") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+            params: {
+              linkage: linkage,
+              affinity: affinity,
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "optics") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+            params: {
+              min_samples: parseFloat(minSamples),
+              xi: parseFloat(xi),
+              min_cluster_size: parseFloat(minClusterSize),
+            },
+          };
+        } else {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            selected_property: propertyValue,
+            algorithm: algorithmValue,
+          };
+        }
+      } else if (encodingTypeValue === "one_hot_encoding") {
+        if (algorithmValue === "kmeans" || algorithmValue === "birch") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+            params: {
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "agglomerative") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+            params: {
+              linkage: linkage,
+              affinity: affinity,
+              k_value: parseFloat(kvalue),
+            },
+          };
+        } else if (algorithmValue === "optics") {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+            params: {
+              min_samples: parseFloat(minSamples),
+              xi: parseFloat(xi),
+              min_cluster_size: parseFloat(minClusterSize),
+            },
+          };
+        } else {
+          optionsValue = {
+            encoding: encodingTypeValue,
+            algorithm: algorithmValue,
+          };
+        }
+      }
+
+      const options = new Blob([JSON.stringify(optionsValue)]);
+
+      post = new FormData();
+      post.append("file", fileInput);
+      post.append("options", options);
     }
 
-    const res = await clustering(post);
-    console.log(res);
+    try {
+      const data = await clustering(post);
 
-    setLoading(false);
+      if (data.status) {
+        setSeverity("error");
+        setMessage(data.description);
+        setOpenSnackbar(true);
+        setLoading(false);
+      } else {
+        setRes(data.result);
+        setLoading(false);
+      }
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service not available at this time.");
+      setOpenSnackbar(true);
+
+      setLoading(false);
+    }
   };
 
   return (
@@ -342,15 +442,11 @@ const Form = () => {
               <TextField
                 placeholder="K-Value"
                 label="K-Value"
-                type="number"
                 value={kvalue}
                 onChange={handleChangeKvalue}
                 color="warning"
                 focused
                 sx={{ width: "100%" }}
-                inputProps={{
-                  min: 2,
-                }}
               />
             </Grid>
           ) : (
@@ -375,7 +471,11 @@ const Form = () => {
                 </FormControl>
               </Grid>
               <Grid item lg={6} md={6} xs={12}>
-                <FormControl sx={{ width: "100%" }} color="warning" focused={linkage === "ward" ? false : true}>
+                <FormControl
+                  sx={{ width: "100%" }}
+                  color="warning"
+                  focused={linkage === "ward" ? false : true}
+                >
                   <InputLabel id="affinity-label">Affinity</InputLabel>
                   <Select
                     aria-labelledby="affinity-label"
@@ -400,46 +500,33 @@ const Form = () => {
                 <TextField
                   placeholder="Min Samples"
                   label="Min Samples"
-                  type="number"
                   value={minSamples}
                   onChange={handleChangeMinSamples}
                   color="warning"
                   focused
                   sx={{ width: "100%" }}
-                  inputProps={{
-                    min: 0,
-                  }}
                 />
               </Grid>
               <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Xi"
                   label="Xi"
-                  type="number"
                   value={xi}
                   onChange={handleChangeXi}
                   color="warning"
                   focused
                   sx={{ width: "100%" }}
-                  inputProps={{
-                    min: 0,
-                    max: 1,
-                  }}
                 />
               </Grid>
               <Grid item lg={6} md={6} xs={12}>
                 <TextField
                   placeholder="Min Cluster Size"
                   label="Min Cluster Size"
-                  type="number"
                   value={minClusterSize}
                   onChange={handleChangeMinClusterSize}
                   color="warning"
                   focused
                   sx={{ width: "100%" }}
-                  inputProps={{
-                    min: 0,
-                  }}
                 />
               </Grid>
             </>
@@ -463,7 +550,7 @@ const Form = () => {
                 variant="contained"
                 sx={{ width: "100%", backgroundColor: "#2962ff" }}
                 size="medium"
-                disabled={textInput === "" ? true : false}
+                disabled={textInput === "" && fileInput === null ? true : false}
               >
                 Run Clustering
               </Button>

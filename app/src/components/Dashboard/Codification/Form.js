@@ -57,7 +57,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
 
   const handleChangePhisicochemicalPropertiesCheckbox = (e) => {
     setPhisicochemicalPropertiesCheckbox(e.target.checked);
-    if (e.target.checked === false) setDigitalSignalProcessingCheckbox(false)
+    if (e.target.checked === false) setDigitalSignalProcessingCheckbox(false);
   };
 
   const handleChangeDigitalSignalProcessingCheckbox = (e) => {
@@ -97,24 +97,30 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
     try {
       const fileName = await codification(post);
 
-      const res = await axios.get(`/files/${fileName}`, {
-        responseType: "blob",
-      });
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "codifications.zip");
-      document.body.appendChild(link);
-      link.click();
+      if (fileName.status) {
+        setSeverity("error");
+        setMessage(fileName.description);
+        setLoading(false);
+        setOpenSnackbar(true);
+      } else {
+        const res = await axios.get(`/files/${fileName.result}`, {
+          responseType: "blob",
+        });
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "codifications.zip");
+        document.body.appendChild(link);
+        link.click();
 
-      setSeverity("success");
-      setMessage("Download completed.");
-      setOpenSnackbar(true);
-
-      setLoading(false);
+        setSeverity("success");
+        setMessage("Download completed.");
+        setLoading(false);
+        setOpenSnackbar(true);
+      }
     } catch (error) {
       setSeverity("error");
-      setMessage("Service not available at this time.");
+      setMessage("Service not available");
       setOpenSnackbar(true);
       setLoading(false);
     }

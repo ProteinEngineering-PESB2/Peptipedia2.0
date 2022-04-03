@@ -63,21 +63,28 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
     try {
       res = await msa(post);
 
-      let result = [];
+      if (res.status) {
+        setSeverity("error");
+        setError(res.description);
+        setLoading(false);
+        setOpenSnackbar(true);
+      } else {
+        let result = [];
 
-      res.forEach((data) => {
-        result.push({
-          id: data.id,
-          label: `${data.label.substring(0, 12)}`,
-          sequence: data.sequence,
+        res.result.forEach((data) => {
+          result.push({
+            id: data.id,
+            label: `${data.label.substring(0, 12)}`,
+            sequence: data.sequence,
+          });
         });
-      });
 
-      setData(result);
-      setLoading(false);
+        setLoading(false);
+        setData(result);
+      }
     } catch (error) {
       setSeverity("error");
-      setError("Service not available at this time.");
+      setError("Service not available");
       setOpenSnackbar(true);
       setLoading(false);
     }
