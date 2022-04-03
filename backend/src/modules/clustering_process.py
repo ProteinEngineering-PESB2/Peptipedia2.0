@@ -1,28 +1,14 @@
-import random
+from random import random
 import pandas as pd
 from modules.clustering_methods import clustering_algorithm, evaluation_performances
 from modules.encoding_strategies import run_fft_encoding, run_one_hot, run_physicochemical_properties
-from modules.verify_fasta import verify_fasta
+from modules.tool import config_tool
 import json
-class unsupervised_algorithms:
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_sequences):
-        self.data = data
-        self.options = options
-        self.temp_folder = temp_folder
-        self.rand_name = str(round(random.random() * 10 ** 20))
-        self.csv_path = "{}/{}_data_to_process.csv".format(self.temp_folder, self.rand_name)
-        self.fasta_path = self.csv_path.replace("csv", "fasta")
-        self.dataset_encoded = None
-        if(is_json):
-            self.create_file()
-        elif(is_file):
-            self.save_file()
-        self.path_config_aaindex_encoder = 'modules/encoding_strategies/encoding_AAIndex/'
-        self.check = verify_fasta(self.fasta_path, max_sequences, min_number_sequences = min_sequences).verify()
-        if(self.check == {"status": "success"}):
-            self.check = self.check_options()
+from scipy import stats
 
-    def check_options(self):
+class unsupervised_algorithms(config_tool):
+    def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
+        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
         self.encoding_options = ["one_hot_encoding", "phisicochemical_properties", "digital_signal_processing"]
         self.properties_options = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group",
                                     "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
@@ -33,7 +19,15 @@ class unsupervised_algorithms:
             "agglomerative": ["linkage", "affinity", "k_value"],
             "optics": ["min_samples", "xi", "min_cluster_size"]
         }
+        self.dataset_encoded_path = "{}/{}.csv".format(static_folder, str(round(random()*10**20)))
+        self.options = options        
+        self.dataset_encoded = None
+        self.is_normal = True   
+        self.path_config_aaindex_encoder = 'modules/encoding_strategies/encoding_AAIndex/'
+        if(self.get_check == {"status": "success"}):
+            self.check = self.check_options()
 
+    def check_options(self):
         if self.options["encoding"] not in self.encoding_options:
             return {"status": "error", "description": "Encoding option not valid"}
 
@@ -97,9 +91,6 @@ class unsupervised_algorithms:
                     if type(self.options["params"]["min_cluster_size"]) == float and (self.options["params"]["min_cluster_size"] > 1 or self.options["params"]["min_cluster_size"] < 0):
                         return {"status": "error", "description": "Parameter min_cluster_size not valid"}
         return {"status": "success"}
-
-    def get_check(self):
-        return self.check
 
     def get_longest(self):
         return self.data.sequence.str.len().max()
@@ -167,6 +158,7 @@ class unsupervised_algorithms:
         self.response = {}
 
         self.dataset_encoded["label"] = list(clustering_process.labels)
+        self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
         data_json = json.loads(self.dataset_encoded[["id", "label"]].to_json(orient = "records"))
 
         if clustering_process.response_apply == 0: #Success
@@ -178,6 +170,10 @@ class unsupervised_algorithms:
             performances_dict = {"calinski": performances[0], "siluetas": performances[1], "dalvies": performances[2]}
             self.response.update({"performance": performances_dict})
             self.response.update({"resume": counts})
+            self.response.update({"encoding_path": self.dataset_encoded_path})
+            self.verify_normality()
+            self.response.update({"is_normal": self.is_normal})
+
         else: #Error
             self.response.update({"status": "error"})
         return self.response
@@ -194,10 +190,11 @@ class unsupervised_algorithms:
             data.append(row)
         return pd.DataFrame(data)
 
-    def create_file(self):
-        f = open(self.fasta_path, "w")
-        f.write(self.data)
-        f.close()
-
-    def save_file(self):
-        self.data.save(self.fasta_path)
+    def verify_normality(self):
+        self.dataset_verify = self.dataset_encoded[[col for col in self.dataset_encoded.columns if "P_" in col]]
+        for col in self.dataset_verify.columns:
+            result = stats.shapiro(self.dataset_verify[col])
+            pvalue = result.pvalue
+            if (pvalue > 0.05):
+                self.is_normal = False
+        

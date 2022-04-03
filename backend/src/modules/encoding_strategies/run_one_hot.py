@@ -10,7 +10,6 @@ class run_one_hot(object):
         self.df_encoding = None
 
     def create_vector(self, residue, dict_residues):
-
         vector_encoding = [0 for x in range(20)]
         vector_encoding[dict_residues[residue]] = 1
         return vector_encoding
@@ -59,8 +58,6 @@ class run_one_hot(object):
         dataset_export = pd.DataFrame(matrix_encoding)
         dataset.reset_index(drop=True, inplace=True)
         dataset_export["id"] = dataset["id"]
-        print(dataset)
-        print(dataset_export)
         return dataset_export
 
     def run_parallel_encoding(self):
@@ -78,7 +75,6 @@ class run_one_hot(object):
         self.df_encoding.fillna(0, inplace=True)
         self.df_encoding.round(0)
         self.df_encoding = self.df_encoding.astype(int, errors='ignore')
-        print(self.df_encoding)
         pool.close()
         pool.join()
 

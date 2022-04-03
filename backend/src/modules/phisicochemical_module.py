@@ -2,38 +2,16 @@ from modlamp.descriptors import GlobalDescriptor
 from random import random
 from Bio import SeqIO
 import os
-from modules.verify_fasta import verify_fasta
+from modules.tool import config_tool
 
-class modlamp_descriptor:
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences):
+class modlamp_descriptor(config_tool):
+    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
         self.length = options["length"]
         self.molecular_weight = options["molecular_weight"]
         self.isoelectric_point = options["isoelectric_point"]
         self.charge_density = options["charge_density"]
         self.charge = options["charge"]
-
-        self.data = data
-        self.fasta_folder = temp_folder
-        self.fasta_file = "{}.fasta".format(str(round(random()*10**20)))
-        self.fasta_path = "{}/{}".format(self.fasta_folder, self.fasta_file)
-        self.output_path = "{}/alignments/{}".format(self.fasta_folder, self.fasta_file.replace(".fasta", ".align"))
-        if(is_json):
-            self.create_file()
-        elif(is_file):
-            self.save_file()
-        self.check = verify_fasta(self.fasta_path, max_sequences).verify()
-
-    def get_check(self):
-        return self.check
-        
-
-    def create_file(self):
-        f = open(self.fasta_path, "w")
-        f.write(self.data)
-        f.close()
-
-    def save_file(self):
-        self.data.save(self.fasta_path)
+        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
 
     def execute_modlamp(self):
         records = SeqIO.parse(self.fasta_path, "fasta")

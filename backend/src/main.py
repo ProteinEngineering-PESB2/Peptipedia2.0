@@ -6,6 +6,7 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
+from modules.pca_process import pca_process
 from modules.database import database
 from flask import Flask, request
 from flask_cors import CORS
@@ -203,23 +204,28 @@ def api_clustering():
         file = request.files
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
-    clustering_object = unsupervised_algorithms(data, options, temp_folder, is_file, is_json, 200, 10)
+    clustering_object = unsupervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, 200, 5)
 
     check = clustering_object.get_check()
     if(check["status"] == "error"):
         return check
     result = clustering_object.process_by_options()
-    print(result)
     return {"result": result}
-    """
-    return {"result": "true"}"""
+
+@server.route('/api/pca/', methods=["POST"])
+def api_pca():
+    if(request.json != None):
+        post_data = request.json
+    params = post_data["params"]
+    pca = pca_process(params, static_folder, temp_folder)
+    result = pca.apply_pca()
+    return {"result": result}
 
 @server.route('/api/search/', methods=["POST"])
 def api_search():
     db = database()
     result = db.select_peptides(min_length = 40, max_length = 110)
-
-    return result
+    return {"result": result}
 
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=8001, debug=True)

@@ -82,7 +82,6 @@ class run_fft_encoding(object):
 
         matrix_encoding = []
         index_data = []
-        print(self.df_encoding)
         self.df_encoding.reset_index(inplace=True, drop=True)
         for i in range(len(self.df_encoding)):
             # get a sequences

@@ -1,34 +1,12 @@
 from random import random
 import os
 import subprocess
-from modules.verify_fasta import verify_fasta
+from modules.tool import config_tool
 
-class multiple_sequence_alignment:
-    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_sequences):
-        self.data = data
-        self.fasta_folder = temp_folder
-        self.fasta_file = "{}.fasta".format(str(round(random()*10**20)))
-        self.fasta_path = "{}/{}".format(self.fasta_folder, self.fasta_file)
-        self.output_path = "{}/alignments/{}".format(self.fasta_folder, self.fasta_file.replace(".fasta", ".align"))
-        if(is_json):
-            self.create_file()
-        elif(is_file):
-            self.save_file()
-            
-        self.check = verify_fasta(self.fasta_path, max_sequences, min_number_sequences = min_sequences).verify()
+class multiple_sequence_alignment(config_tool):
+    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences):
+        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
 
-    def get_check(self):
-        return self.check
-        
-
-    def create_file(self):
-        f = open(self.fasta_path, "w")
-        f.write(self.data)
-        f.close()
-
-    def save_file(self):
-        self.data.save(self.fasta_path)
-    
     def execute_clustalo(self):
         command = "clustalo -i {}".format(self.fasta_path)
         output = subprocess.check_output(command, shell=True)
@@ -48,10 +26,3 @@ class multiple_sequence_alignment:
             result.append(dictionary)
         self.delete_file()
         return result
-        
-    def delete_file(self):
-        os.remove(self.fasta_path)
-        try:
-            os.remove(self.fasta_path)
-        except Exception as e:
-            print(e)

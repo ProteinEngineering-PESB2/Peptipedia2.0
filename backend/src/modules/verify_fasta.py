@@ -42,10 +42,7 @@ class verify_fasta:
 
     def is_protein(self):
         alphabet = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y',
-                    'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y',
-                    'X', 'B', 'Z', 'J',
-                    'x', 'b', 'z', 'j'
-                    ]
+                    'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y']
         for record in self.fasta:
             for letter in str(record.seq):
                 if letter not in alphabet:

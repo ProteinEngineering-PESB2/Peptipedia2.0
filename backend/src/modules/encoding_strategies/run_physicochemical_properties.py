@@ -68,7 +68,6 @@ class run_physicochemical_properties(object):
         pool = mp.Pool(cpu_number)
         print("Ejecutando Codificacion...")
         self.df_encoding = pd.concat(pool.map(self.encoding_data_paralel, df_split))
-        print(self.df_encoding)
         self.df_encoding.rename(columns={"id_sequence": "id"}, inplace=True)
         pool.close()
         pool.join()
