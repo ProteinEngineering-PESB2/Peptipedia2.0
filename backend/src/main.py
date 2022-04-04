@@ -7,7 +7,6 @@ from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
 from modules.pca_process import pca_process
-from modules.database import database
 from modules.interface import interface
 
 from flask import Flask, request
@@ -133,8 +132,7 @@ def api_pca():
 
 @server.route('/api/search/', methods=["POST"])
 def api_search():
-    db = database()
-    result = db.select_peptides(min_length = 40, max_length = 110)
+    result = interface.parse_search_query(request)
     return {"result": result}
 
 if __name__ == '__main__':
