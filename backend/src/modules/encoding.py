@@ -2,52 +2,25 @@ import pandas as pd
 from random import random
 import os
 from modules.verify_fasta import verify_fasta
-class encoding:
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences):
-        self.temp_folder = temp_folder 
+from modules.tool import config_tool
+
+from modules.encoding_strategies.run_one_hot import run_one_hot
+from modules.encoding_strategies.run_physicochemical_properties import run_physicochemical_properties
+from modules.encoding_strategies.run_fft_encoding import run_fft_encoding
+
+class encoding(config_tool):
+    def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
+        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
         self.rand_name = str(round(random()*10**20))
         self.results_folder = "files/{}".format(self.rand_name)
         os.mkdir(self.results_folder)
 
-        self.temp_csv = "{}/{}_codifications.csv".format(self.temp_folder, self.rand_name)
-        self.fasta_path = self.temp_csv.replace("csv", "fasta")
-
-        self.data = data
-
         self.one_hot_encoding = options["one_hot_encoding"]
         self.phisicochemical_properties = options["phisicochemical_properties"]
         self.digital_signal_processing = options["digital_signal_processing"]
-
-        if(is_json):
-            self.create_file()
-        if(is_file):
-            self.save_file()
-        
-        self.check = verify_fasta(self.fasta_path, max_sequences).verify()
-
-    def get_check(self):
-        return self.check
-        
-    def create_df(self, data):
-        #Toma un texto fasta y lo transforma en un dataframe
-        self.records = [">"+i for i in data.split(">")[1:]]
-        data = []
-        for i in self.records:
-            splitted = i.split("\n")
-            id = splitted[0]
-            sequence = "".join(splitted[1:])
-            row = {"id": id, "sequence": sequence}
-            data.append(row)
-        return pd.DataFrame(data)
-
-    def save_file(self):
-        self.data.save(self.fasta_path)
-
-    def create_file(self):
-        f = open(self.fasta_path, "w")
-        f.write(self.data)
-        f.close()
-
+        self.temp_csv = "{}/{}_codifications.csv".format(self.fasta_folder, self.rand_name)
+        self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group", "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
+        self.path_config_aaindex_encoder = path_aa_index
     def get_longest(self):
         return self.data.sequence.str.len().max()
 
@@ -55,28 +28,31 @@ class encoding:
         f = open(self.fasta_path, "r")
         self.data = self.create_df(f.read())
         f.close()
-        self.data.to_csv(self.temp_csv, index=False)
-        self.max_length = self.get_longest()
         if self.one_hot_encoding:
-            os.system("python3 modules/encoding_strategies/encoding_one_hot.py {} {} {}".format(self.temp_csv, self.results_folder+'/', self.max_length*20))
+            print("One Hot encoding")
+            one_hot = run_one_hot(self.data)
+            result = one_hot.run_parallel_encoding()
+            result.to_csv("{}/one_hot_encoding.csv".format(self.results_folder))
         if self.phisicochemical_properties:
-            os.system("python3 modules/encoding_strategies/encoding_using_physicochemical_properties.py {} modules/encoding_strategies/encoding_AAIndex/ {} {}".format(self.temp_csv, self.results_folder + '/', self.max_length))
+            print("Physicochemical properties")
+            os.mkdir("{}/physicochemical_properties".format(self.results_folder))
+            for selected_property in self.list_clusters:
+                physicochemical_encoding = run_physicochemical_properties(self.data, selected_property, self.path_config_aaindex_encoder)
+                result = physicochemical_encoding.run_parallel_encoding()
+                result.to_csv("{}/physicochemical_properties/{}.csv".format(self.results_folder, selected_property))
         if self.digital_signal_processing:
-            os.system("python3 modules/encoding_strategies/encoding_using_Fourier_Transform.py {} {}".format(self.results_folder+"/physicochemical_properties/", self.results_folder+'/'))
+            print("Digital signal processing")
+            os.mkdir("{}/digital_signal_processing".format(self.results_folder))
+            for selected_property in self.list_clusters:
+                fft_encoding = run_fft_encoding(self.data, selected_property, self.path_config_aaindex_encoder)
+                fft_encoding.run_parallel_encoding()
+                result = fft_encoding.appy_fft()
+                result.to_csv("{}/digital_signal_processing/{}.csv".format(self.results_folder, selected_property))
         self.compress()
-        self.delete_file()
         return self.rand_name + ".zip"
     
     def compress(self):
-        os.system("zip -r {}.zip {}/".format(self.results_folder, self.results_folder))
-        os.system("rm -r {}".format(self.results_folder))
+        command = "zip -r {}.zip {}/".format(self.results_folder, self.results_folder)
+        print(command)
+        os.system(command)
         
-    def delete_file(self):
-        try:
-            os.remove(self.fasta_path)
-        except Exception as e:
-            print(e)
-        try:
-            os.remove(self.temp_csv)
-        except Exception as e:
-            print(e)

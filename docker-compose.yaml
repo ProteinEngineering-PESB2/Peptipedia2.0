@@ -5,6 +5,7 @@ services:
     volumes:
       -  ./backend/src/main.py:/app/src/main.py
       -  ./backend/src/modules:/app/src/modules
+      -  ./backend/src/config.ini:/app/src/config.ini
     ports:
       - "8001:8001"
   app :

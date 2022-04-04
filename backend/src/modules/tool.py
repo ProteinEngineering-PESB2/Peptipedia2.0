@@ -1,7 +1,7 @@
 import os
 from random import random
 from modules.verify_fasta import verify_fasta
-
+import pandas as pd
 class config_tool:
     def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
         self.data = data
@@ -45,3 +45,15 @@ class config_tool:
             f.write(record)
             self.ids.append(record.split("\n")[0])
         f.close()
+
+    def create_df(self, fasta):
+        #Toma un texto fasta y lo transforma en un dataframe
+        self.records = [">"+i for i in fasta.split(">")[1:]]
+        data = []
+        for i in self.records:
+            splitted = i.split("\n")
+            id = splitted[0]
+            sequence = "".join(splitted[1:])
+            row = {"id": id, "sequence": sequence}
+            data.append(row)
+        return pd.DataFrame(data)

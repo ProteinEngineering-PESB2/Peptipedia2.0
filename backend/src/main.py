@@ -8,14 +8,21 @@ from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
 from modules.pca_process import pca_process
 from modules.database import database
+
 from flask import Flask, request
 from flask_cors import CORS
+
 import os
+import configparser
 
-static_folder = "./files"
-temp_folder = "./temp_files"
+config = configparser.ConfigParser()
+config.read("config.ini")
+
+static_folder = config["folders"]["static_folder"]
+temp_folder =  config["folders"]["temp_folder"]
+alignments = config["folders"]["alignments_folder"]
+path_aa_index = config["folders"]["path_aa_index"]
 server = Flask(__name__, static_folder=static_folder)
-
 CORS(server)
 
 try:
@@ -44,22 +51,12 @@ def api_alignment():
         data = post_file["file"]
         is_file = True
 
-    align = alignment(data, temp_folder, static_folder, is_file, is_json, 1)
+    align = alignment(data, temp_folder, static_folder, is_file, is_json, int(config["blast"]["max_sequences"]), int(config["blast"]["min_sequences"]))
     check = align.get_check()
     if(check["status"] == "error"):
         return check
     result = align.execute_blastp()
     return {"path": result.replace("./", "/")}
-
-@server.route('/api/delete_file/', methods=["POST"])
-def api_delete_file():
-    post_data = request.json
-    file = "." + post_data["data"]
-    try:
-        os.remove(file)
-        return {"status": "success"}
-    except Exception as e:
-        return {"status": "Error", "exception": e}
 
 @server.route('/api/msa/', methods=["POST"])
 def api_msa():
@@ -74,7 +71,7 @@ def api_msa():
         data = post_file["file"]
         is_file = True
 
-    msa = multiple_sequence_alignment(data, temp_folder, is_file, is_json, 5, 3)
+    msa = multiple_sequence_alignment(data, temp_folder, is_file, is_json, int(config["msa"]["max_sequences"]), int(config["msa"]["min_sequences"]))
     check = msa.get_check()
     if(check["status"] == "error"):
         return check
@@ -96,7 +93,7 @@ def api_phisicochemical():
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
 
-    modlamp = modlamp_descriptor(data, options, temp_folder, is_file, is_json, 200)
+    modlamp = modlamp_descriptor(data, options, temp_folder, is_file, is_json, int(config["physicochemical"]["max_sequences"]), int(config["physicochemical"]["min_sequences"]))
     check = modlamp.get_check()
     if(check["status"] == "error"):
         return check
@@ -118,7 +115,7 @@ def api_gene_ontology():
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
 
-    go = gene_ontology(data, options, temp_folder, is_file, is_json, 200)
+    go = gene_ontology(data, options, temp_folder, is_file, is_json, int(config["gene_ontology"]["max_sequences"]), int(config["gene_ontology"]["min_sequences"]))
     check = go.get_check()
     if(check["status"] == "error"):
         return check
@@ -139,14 +136,13 @@ def api_pfam():
         data = post_file["file"]
         is_file = True
 
-    pf = pfam(data, temp_folder, is_file, is_json, 200)
+    pf = pfam(data, temp_folder, is_file, is_json, int(config["pfam"]["max_sequences"]), int(config["pfam"]["min_sequences"]))
     check = pf.get_check()
     if(check["status"] == "error"):
         return check
     result = pf.process()
     return {"result": result}
 
-#@server.route('/api/codification/', methods=["POST"])
 @server.route('/api/encoding/', methods=["POST"])
 def api_encoding():
     if(request.json != None):
@@ -162,7 +158,7 @@ def api_encoding():
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
 
-    code = encoding(data, options, temp_folder, is_file, is_json, 200)
+    code = encoding(data, options, static_folder, temp_folder, is_file, is_json, int(config["encoding"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
     check = code.get_check()
     if(check["status"] == "error"):
         return check
@@ -182,13 +178,12 @@ def api_frequency():
         file = request.files
         data = file["file"]
 
-    frequency_object = frequency_analysis(data, temp_folder, is_file, is_json, 200)
+    frequency_object = frequency_analysis(data, temp_folder, is_file, is_json, int(config["frequency"]["max_sequences"]), int(config["frequency"]["min_sequences"]))
     check = frequency_object.get_check()
     if(check["status"] == "error"):
         return check
     result = frequency_object.exec_process()
     return {"result": result}
-
 
 @server.route('/api/clustering/', methods=["POST"])
 def api_clustering():
@@ -204,7 +199,7 @@ def api_clustering():
         file = request.files
         data = file["file"]
         options = eval(file["options"].read().decode("utf-8"))
-    clustering_object = unsupervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, 200, 5)
+    clustering_object = unsupervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
 
     check = clustering_object.get_check()
     if(check["status"] == "error"):
