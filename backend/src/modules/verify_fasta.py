@@ -7,6 +7,7 @@ class verify_fasta:
         self.min_number_sequences = min_number_sequences
         try:
             self.fasta = list(SeqIO.parse(self.path, "fasta"))
+            SeqIO.write(self.fasta, self.path, "fasta")
         except:
             self.fasta = [False]
 

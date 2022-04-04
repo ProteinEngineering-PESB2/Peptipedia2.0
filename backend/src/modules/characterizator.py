@@ -31,34 +31,41 @@ class gene_ontology(config_tool):
 
     def find_and_load_data(self):
         results = []
-
         if(self.molecular_function):
-            mf = pd.read_csv(self.output_path + ".MFO.txt", header=None, sep="\t")
-            mf.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
-            mfs = mf.id_seq.unique()
-            mf_array = []
-            for mfi in mfs:
-                temp = mf[mf.id_seq == mfi][["id_go", "probability", "term"]]
-                mf_array.append({"id_seq": mfi, "results": temp.to_dict("records")})
-            results.append({"type": "molecular_function", "prediction": mf_array})
+            try:
+                mf = pd.read_csv(self.output_path + ".MFO.txt", header=None, sep="\t")
+                mf.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
+                mfs = mf.id_seq.unique()
+                mf_array = []
+                for mfi in mfs:
+                    temp = mf[mf.id_seq == mfi][["id_go", "probability", "term"]]
+                    mf_array.append({"id_seq": mfi, "results": temp.to_dict("records")})
+                results.append({"type": "molecular_function", "prediction": mf_array})
+            except:
+                print("No result for molecular function")
 
         if(self.biological_process):
-            bp = pd.read_csv(self.output_path + ".BPO.txt", header=None, sep="\t")
-            bp.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
-            bps = mf.id_seq.unique()
-            bp_array = []
-            for bpi in bps:
-                temp = bp[bp.id_seq == bpi][["id_go", "probability", "term"]]
-                bp_array.append({"id_seq": bpi, "results": temp.to_dict("records")})
-            results.append({"type": "biological_process", "prediction": bp_array})
-
+            try:
+                bp = pd.read_csv(self.output_path + ".BPO.txt", header=None, sep="\t")
+                bp.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
+                bps = mf.id_seq.unique()
+                bp_array = []
+                for bpi in bps:
+                    temp = bp[bp.id_seq == bpi][["id_go", "probability", "term"]]
+                    bp_array.append({"id_seq": bpi, "results": temp.to_dict("records")})
+                results.append({"type": "biological_process", "prediction": bp_array})
+            except:
+                print("No result for biological process")
         if(self.celular_component):
-            cc = pd.read_csv(self.output_path + ".CCO.txt", header=None, sep="\t")
-            cc.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
-            ccs = cc.id_seq.unique()
-            cc_array = []
-            for cci in ccs:
-                temp = cc[cc.id_seq == cci][["id_go", "probability", "term"]]
-                cc_array.append({"id_seq": cci, "results": temp.to_dict("records")})
-            results.append({"type": "celular_component", "prediction": cc_array})
+            try:
+                cc = pd.read_csv(self.output_path + ".CCO.txt", header=None, sep="\t")
+                cc.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
+                ccs = cc.id_seq.unique()
+                cc_array = []
+                for cci in ccs:
+                    temp = cc[cc.id_seq == cci][["id_go", "probability", "term"]]
+                    cc_array.append({"id_seq": cci, "results": temp.to_dict("records")})
+                results.append({"type": "celular_component", "prediction": cc_array})
+            except:
+                print("No result for biological process")
         return results
