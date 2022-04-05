@@ -54,8 +54,8 @@ const Chart = ({ data, autocompleteValue }) => {
                     y,
                     type: "bar",
                     marker: {
-                      color: "#2962ff"
-                    }
+                      color: "#2962ff",
+                    },
                   },
                 ]}
                 layout={{
@@ -69,7 +69,15 @@ const Chart = ({ data, autocompleteValue }) => {
             </Paper>
           </Grid>
           <Grid item lg={3} md={4} xs={12}>
-            <Button variant="contained" size="large" sx={{ backgroundColor: "#2962ff", width: '100%' }}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: "#2962ff",
+                width: "100%",
+                ":hover": { backgroundColor: "#2962ff" },
+              }}
+            >
               <CSVLink
                 data={csvData}
                 style={{ color: "#fff", textDecoration: "none" }}

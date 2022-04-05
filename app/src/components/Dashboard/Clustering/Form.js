@@ -297,7 +297,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
         setOpenSnackbar(true);
         setLoading(false);
       } else {
-        console.log(data.result)
+        console.log(data.result);
         setRes(data.result);
         setLoading(false);
       }
@@ -551,7 +551,11 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#2962ff",
+                  ":hover": { backgroundColor: "#2962ff" },
+                }}
                 size="medium"
                 disabled={textInput === "" && fileInput === null ? true : false}
               >

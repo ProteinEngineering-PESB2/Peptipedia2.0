@@ -507,7 +507,11 @@ const Form = ({ queries, setQueries }) => {
             <Button
               variant="contained"
               size="medium"
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                backgroundColor: "#2962ff",
+                ":hover": { backgroundColor: "#2962ff" },
+              }}
               onClick={onSearch}
               disabled={
                 selectedOptions.length === 0

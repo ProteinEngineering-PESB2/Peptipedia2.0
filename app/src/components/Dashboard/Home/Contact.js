@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -58,8 +58,16 @@ const Contact = () => {
             />
           </Grid>
           <Grid item lg={2} xs={12}>
-            <Button variant="contained" size="large" sx={{ width: '100%', backgroundColor: "#2962ff" }}>
-                Send Email
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                width: "100%",
+                backgroundColor: "#2962ff",
+                ":hover": { backgroundColor: "#2962ff" },
+              }}
+            >
+              Send Email
             </Button>
           </Grid>
         </Grid>

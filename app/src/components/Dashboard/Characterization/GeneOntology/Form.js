@@ -219,7 +219,11 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
                     biologicalProcessCheckbox === false &&
                     celularComponentCheckbox === false
                   }
-                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
                   size="medium"
                 >
                   run characterization

@@ -48,7 +48,11 @@ const MSAContent = ({ data }) => {
             variant="contained"
             size="medium"
             onClick={() => exportComponentAsPNG(componentRef)}
-            sx={{ backgroundColor: "#2962ff", width: "100%" }}
+            sx={{
+              backgroundColor: "#2962ff",
+              width: "100%",
+              ":hover": { backgroundColor: "#2962ff" },
+            }}
           >
             Export as PNG
           </Button>
@@ -58,7 +62,11 @@ const MSAContent = ({ data }) => {
             variant="contained"
             onClick={() => exportComponentAsJPEG(componentRef)}
             size="medium"
-            sx={{ backgroundColor: "#2962ff", width: "100%" }}
+            sx={{
+              backgroundColor: "#2962ff",
+              width: "100%",
+              ":hover": { backgroundColor: "#2962ff" },
+            }}
           >
             Export as JPG
           </Button>

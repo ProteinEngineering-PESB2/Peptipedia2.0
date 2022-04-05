@@ -237,7 +237,11 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
                     phisicochemicalPropertiesCheckbox === false &&
                     digitalSignalProcessingCheckbox === false
                   }
-                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
                   size="medium"
                 >
                   Run Encodings

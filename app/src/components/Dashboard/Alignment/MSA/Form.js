@@ -167,7 +167,11 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                   type="submit"
                   variant="contained"
                   disabled={textInput === "" && fileInput === null}
-                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
                   size="medium"
                 >
                   run alignment

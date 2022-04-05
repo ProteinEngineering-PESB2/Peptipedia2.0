@@ -71,7 +71,11 @@ const BlastContent = ({ data, path }) => {
                 exportComponentAsPNG(componentBlastMultipleAlignmentsRef)
               }
               size="medium"
-              sx={{ backgroundColor: "#2962ff", width: "100%" }}
+              sx={{
+                backgroundColor: "#2962ff",
+                width: "100%",
+                ":hover": { backgroundColor: "#2962ff" },
+              }}
             >
               Export as PNG
             </Button>
@@ -83,7 +87,11 @@ const BlastContent = ({ data, path }) => {
                 exportComponentAsJPEG(componentBlastMultipleAlignmentsRef)
               }
               size="medium"
-              sx={{ backgroundColor: "#2962ff", width: "100%" }}
+              sx={{
+                backgroundColor: "#2962ff",
+                width: "100%",
+                ":hover": { backgroundColor: "#2962ff" },
+              }}
             >
               Export as JPG
             </Button>
