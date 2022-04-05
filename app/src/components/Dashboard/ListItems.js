@@ -6,6 +6,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
+import Typography from "@mui/material/Typography";
 
 import AppsIcon from "@mui/icons-material/Apps";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
@@ -31,30 +32,29 @@ const ListItems = ({ section, setSection }) => {
           sx={{
             pl: 2,
             margin: "6px 14px",
-            padding: "10px",
+            padding: "9px",
             borderRadius: "8px",
             backgroundColor: section === "home" ? "#2962ff" : "#fff",
             color: section === "home" ? "#fff" : "#000",
             "&:hover": {
               background: "#2962ff",
-              color: "#fff"
+              color: "#fff",
             },
           }}
           onClick={() => setSection("home")}
         >
-          <ListItemIcon>
-            <HomeIcon
-              sx={{
-                color: section === "home" && "#fff",
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
+          <HomeIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography sx={{ fontWeight: section === "home" && "bold" }}>
+              Home
+            </Typography>
+          </ListItemText>
         </ListItemButton>
       </List>
       <ListSubheader>Tools</ListSubheader>
       <List component="div" disablePadding>
         <ListItemButton
+          disableRipple
           sx={{ pl: 2 }}
           onClick={() => setExpandItemAlignments(!expandItemAlignments)}
         >
@@ -76,17 +76,17 @@ const ListItems = ({ section, setSection }) => {
                 color: section === "blast" ? "#fff" : "#000",
                 "&:hover": {
                   background: "#2962ff",
-                  color: "#fff"
+                  color: "#fff",
                 },
               }}
               onClick={() => setSection("blast")}
             >
-              <ListItemIcon>
-                <DoubleArrowIcon
-                  sx={{ color: section === "blast" && "#fff" }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Blast" sx={{ marginLeft: -1.8 }} />
+              <DoubleArrowIcon />
+              <ListItemText sx={{ marginLeft: 2 }}>
+                <Typography sx={{ fontWeight: section === "blast" && "bold" }}>
+                  Blast
+                </Typography>
+              </ListItemText>
             </ListItemButton>
             <ListItemButton
               disableRipple
@@ -98,18 +98,22 @@ const ListItems = ({ section, setSection }) => {
                 color: section === "msa" ? "#fff" : "#000",
                 "&:hover": {
                   background: "#2962ff",
+                  color: "#fff",
                 },
               }}
               onClick={() => setSection("msa")}
             >
-              <ListItemIcon>
-                <DoubleArrowIcon sx={{ color: section === "msa" && "#fff" }} />
-              </ListItemIcon>
-              <ListItemText primary="MSA" sx={{ marginLeft: -1.8 }} />
+              <DoubleArrowIcon />
+              <ListItemText sx={{ marginLeft: 2 }}>
+                <Typography sx={{ fontWeight: section === "msa" && "bold" }}>
+                  MSA
+                </Typography>
+              </ListItemText>
             </ListItemButton>
           </List>
         </Collapse>
         <ListItemButton
+          disableRipple
           sx={{ pl: 2 }}
           onClick={() =>
             setExpandItemCharacterizations(!expandItemCharacterizations)
@@ -134,21 +138,19 @@ const ListItems = ({ section, setSection }) => {
                 color: section === "phisicochemical" ? "#fff" : "#000",
                 "&:hover": {
                   background: "#2962ff",
+                  color: "#fff",
                 },
               }}
               onClick={() => setSection("phisicochemical")}
             >
-              <ListItemIcon>
-                <DoubleArrowIcon
-                  sx={{
-                    color: section === "phisicochemical" && "#fff",
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary="Physicochemical"
-                sx={{ marginLeft: -1.8 }}
-              />
+              <DoubleArrowIcon />
+              <ListItemText sx={{ marginLeft: 2 }}>
+                <Typography
+                  sx={{ fontWeight: section === "phisicochemical" && "bold" }}
+                >
+                  Physicochemical
+                </Typography>
+              </ListItemText>
             </ListItemButton>
             <ListItemButton
               disableRipple
@@ -161,18 +163,19 @@ const ListItems = ({ section, setSection }) => {
                 color: section === "gene_ontology" ? "#fff" : "#000",
                 "&:hover": {
                   background: "#2962ff",
+                  color: "#fff",
                 },
               }}
               onClick={() => setSection("gene_ontology")}
             >
-              <ListItemIcon>
-                <DoubleArrowIcon
-                  sx={{
-                    color: section === "gene_ontology" && "#fff",
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Gene Ontology" sx={{ marginLeft: -1.8 }} />
+              <DoubleArrowIcon />
+              <ListItemText sx={{ marginLeft: 2 }}>
+                <Typography
+                  sx={{ fontWeight: section === "gene_ontology" && "bold" }}
+                >
+                  Gene Ontology
+                </Typography>
+              </ListItemText>
             </ListItemButton>
             <ListItemButton
               disableRipple
@@ -184,18 +187,17 @@ const ListItems = ({ section, setSection }) => {
                 color: section === "pfam" ? "#fff" : "#000",
                 "&:hover": {
                   background: "#2962ff",
+                  color: "#fff",
                 },
               }}
               onClick={() => setSection("pfam")}
             >
-              <ListItemIcon>
-                <DoubleArrowIcon
-                  sx={{
-                    color: section === "pfam" && "#fff",
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Pfam" sx={{ marginLeft: -1.8 }} />
+              <DoubleArrowIcon />
+              <ListItemText sx={{ marginLeft: 2 }}>
+                <Typography sx={{ fontWeight: section === "pfam" && "bold" }}>
+                  Pfam
+                </Typography>
+              </ListItemText>
             </ListItemButton>
             <ListItemButton
               disableRipple
@@ -207,75 +209,94 @@ const ListItems = ({ section, setSection }) => {
                 color: section === "frequency" ? "#fff" : "#000",
                 "&:hover": {
                   background: "#2962ff",
+                  color: "#fff",
                 },
               }}
               onClick={() => setSection("frequency")}
             >
-              <ListItemIcon>
-                <DoubleArrowIcon
-                  sx={{
-                    color: section === "frequency" && "#fff",
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Frequency" sx={{ marginLeft: -1.8 }} />
+              <DoubleArrowIcon />
+              <ListItemText sx={{ marginLeft: 2 }}>
+                <Typography
+                  sx={{ fontWeight: section === "frequency" && "bold" }}
+                >
+                  Frequency
+                </Typography>
+              </ListItemText>
             </ListItemButton>
           </List>
         </Collapse>
         <ListItemButton
+          disableRipple
           sx={{
             pl: 2,
             margin: "6px 14px",
-            padding: "10px",
+            padding: "9px",
             borderRadius: "8px",
             backgroundColor: section === "codifications" ? "#2962ff" : "#fff",
             color: section === "codifications" ? "#fff" : "#000",
             "&:hover": {
               background: "#2962ff",
+              color: "#fff",
             },
           }}
           onClick={() => setSection("codifications")}
         >
-          <ListItemIcon>
-            <TransformIcon
-              sx={{
-                color: section === "codifications" && "#fff",
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Encoding" />
+          <TransformIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3.4 }}>
+            <Typography
+              sx={{ fontWeight: section === "codifications" && "bold" }}
+            >
+              Encoding
+            </Typography>
+          </ListItemText>
         </ListItemButton>
         <ListItemButton
+          disableRipple
           sx={{
             pl: 2,
             margin: "6px 14px",
-            padding: "10px",
+            padding: "9px",
             borderRadius: "8px",
             backgroundColor: section === "clustering" ? "#2962ff" : "#fff",
             color: section === "clustering" ? "#fff" : "#000",
             "&:hover": {
               background: "#2962ff",
+              color: "#fff",
             },
           }}
           onClick={() => setSection("clustering")}
         >
-          <ListItemIcon>
-            <WorkspacesIcon
-              sx={{
-                color: section === "clustering" && "#fff",
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Clustering" />
+          <WorkspacesIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3.4 }}>
+            <Typography sx={{ fontWeight: section === "clustering" && "bold" }}>
+              Clustering
+            </Typography>
+          </ListItemText>
         </ListItemButton>
         <ListItemButton
-          sx={{ pl: 2 }}
+          disableRipple
+          sx={{
+            pl: 2,
+            margin: "6px 14px",
+            padding: "9px",
+            borderRadius: "8px",
+            backgroundColor: section === "advanced-search" ? "#2962ff" : "#fff",
+            color: section === "advanced-search" ? "#fff" : "#000",
+            "&:hover": {
+              background: "#2962ff",
+              color: "#fff",
+            },
+          }}
           onClick={() => setSection("advanced-search")}
         >
-          <ListItemIcon>
-            <ManageSearchIcon />
-          </ListItemIcon>
-          <ListItemText primary="Advanced Search" />
+          <ManageSearchIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3.4 }}>
+            <Typography
+              sx={{ fontWeight: section === "advanced-search" && "bold" }}
+            >
+              Advanced Search
+            </Typography>
+          </ListItemText>
         </ListItemButton>
       </List>
     </List>
