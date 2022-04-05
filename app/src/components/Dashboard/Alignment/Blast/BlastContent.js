@@ -1,3 +1,4 @@
+import axios from "axios";
 import blasterjs from "biojs-vis-blasterjs";
 
 import { useEffect, useRef, forwardRef } from "react";
@@ -17,7 +18,7 @@ const ComponentBlastMultipleAlignments = forwardRef((props, ref) => (
   </div>
 ));
 
-const BlastContent = ({ data }) => {
+const BlastContent = ({ data, path }) => {
   const componentBlastMultipleAlignmentsRef = useRef();
 
   useEffect(() => {
@@ -28,6 +29,18 @@ const BlastContent = ({ data }) => {
       singleAlignment: "blast-single-alignment",
     });
   });
+
+  const downloadBlast = async () => {
+    const res = await axios.get(path, {
+      responseType: "blob",
+    });
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "result.txt");
+    document.body.appendChild(link);
+    link.click();
+  };
 
   return (
     <>
@@ -104,6 +117,18 @@ const BlastContent = ({ data }) => {
             >
               <div id="blast-single-alignment"></div>
             </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#2962ff",
+                ":hover": { backgroundColor: "#2962ff" },
+              }}
+              onClick={downloadBlast}
+            >
+              Download Blast
+            </Button>
           </Grid>
         </Grid>
       </Grid>

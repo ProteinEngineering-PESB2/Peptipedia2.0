@@ -10,6 +10,7 @@ import Snackbar from "../../Snackbar";
 
 const Blast = () => {
   const [data, setData] = useState([]);
+  const [path, setPath] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState("");
   const [severity, setSeverity] = useState("");
@@ -34,9 +35,10 @@ const Blast = () => {
             setOpenSnackbar={setOpenSnackbar}
             setError={setError}
             setSeverity={setSeverity}
+            setPath={setPath}
           />
         </Grid>
-        {data.length > 0 && <BlastContent data={data} />}
+        {data.length > 0 && <BlastContent data={data} path={path} />}
       </Grid>
     </>
   );
