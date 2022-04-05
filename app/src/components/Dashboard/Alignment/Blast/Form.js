@@ -119,7 +119,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
             <TextField
               label="Enter Amino Acid sequences"
               multiline
-              rows={5}
+              rows={15}
               sx={{ width: "100%" }}
               onChange={handleChangeTextInput}
             />
