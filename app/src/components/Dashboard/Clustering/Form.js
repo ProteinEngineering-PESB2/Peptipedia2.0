@@ -297,6 +297,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
         setOpenSnackbar(true);
         setLoading(false);
       } else {
+        console.log(data.result)
         setRes(data.result);
         setLoading(false);
       }
@@ -485,8 +486,8 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                     disabled={linkage === "ward" ? true : false}
                   >
                     <MenuItem value="euclidean">Euclidean</MenuItem>
-                    <MenuItem value="I1">I1</MenuItem>
-                    <MenuItem value="I2">I2</MenuItem>
+                    <MenuItem value="l1">L1</MenuItem>
+                    <MenuItem value="l2">L2</MenuItem>
                     <MenuItem value="manhattan">Manhattan</MenuItem>
                     <MenuItem value="cosine">Cosine</MenuItem>
                   </Select>
