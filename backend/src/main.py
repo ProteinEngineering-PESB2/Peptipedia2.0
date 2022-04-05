@@ -135,5 +135,10 @@ def api_search():
     result = interface.parse_search_query(request)
     return {"result": result}
 
+@server.route('/api/mapping/', methods=["POST"])
+def api_mapping():
+    result = interface.parse_mapping(request)
+    return {"result": result}
+
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=8001, debug=True)

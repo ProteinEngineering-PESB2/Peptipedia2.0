@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import pandas as pd
 import pymysql
 import json
@@ -64,3 +64,18 @@ class database:
         else:
             data = json.loads(data.to_json(orient="records"))
         return {"data": data, "count": n_items}
+
+    def map_sequence(self, substr):
+        select = "select p.idpeptide from peptide p where p.sequence like '%{}%' limit 40;".format(substr)
+        print(select)
+        data = pd.read_sql(text(select), self.conn)
+
+        count = "select COUNT(p.idpeptide) from peptide p where p.sequence like '%{}%';".format(substr)
+        n_items = int(pd.read_sql(text(count), self.conn)["COUNT(p.idpeptide)"].values)
+        print(n_items)
+        if(n_items == 0):
+            data = None
+        else:
+            data = json.loads(data.to_json(orient="records"))
+        return {"data": data, "count": n_items}
+    

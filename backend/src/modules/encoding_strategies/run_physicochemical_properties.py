@@ -25,6 +25,9 @@ class run_physicochemical_properties(encoder):
     def encoding_sequence(self, sequence, value_property):
         sequence_encoding = []
         for residue in sequence:
-            residue_index = self.residues.index(residue)
-            sequence_encoding.append(value_property[residue_index])
+            try:
+                residue_index = self.residues.index(residue)
+                sequence_encoding.append(value_property[residue_index])
+            except:
+                print("Residue {} not found".format(residue))
         return sequence_encoding

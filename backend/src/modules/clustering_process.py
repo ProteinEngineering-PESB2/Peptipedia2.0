@@ -55,7 +55,9 @@ class unsupervised_algorithms(config_tool):
         return self.data.sequence.str.len().max()
 
     def process_encoding_stage(self):
-        self.data = self.create_df(self.data)
+        f = open(self.fasta_path, "r")
+        self.data = self.create_df(f.read())
+        f.close()
         encoding_option = self.options['encoding']
 
         if encoding_option == "one_hot_encoding":
