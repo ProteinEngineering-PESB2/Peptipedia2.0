@@ -1,5 +1,6 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import Typography from "@mui/material/Typography"
 
 const vertical = "top";
 const horizontal = "center";
@@ -22,7 +23,7 @@ const SnackbarComponent = ({ open, setOpen, severity, message }) => {
       onClose={handleClose}
     >
       <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
-        {message}
+        <Typography sx={{ fontWeight: "bold", fontSize: "1.07rem" }}>{message}</Typography>
       </Alert>
     </Snackbar>
   );

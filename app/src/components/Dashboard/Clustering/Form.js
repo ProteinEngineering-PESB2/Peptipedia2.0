@@ -339,7 +339,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
               <TextField
                 label="Enter Amino Acid sequences"
                 multiline
-                rows={5}
+                rows={15}
                 sx={{ width: "100%" }}
                 onChange={handleChangeTextInput}
               />
@@ -533,7 +533,9 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           ) : (
             <></>
           )}
-          <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 2 }}>
+        </Grid>
+        <Grid container sx={{ marginTop: 2 }} spacing={2}>
+          <Grid item lg={3} md={4} xs={12}>
             {loading ? (
               <LoadingButton
                 loading
