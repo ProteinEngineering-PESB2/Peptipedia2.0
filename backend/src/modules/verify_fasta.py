@@ -13,18 +13,28 @@ class verify_fasta:
 
     def verify(self):
         if self.is_fasta():
-            if self.less_than_n():
-                if self.more_than_n():
-                    if self.is_protein():
-                        return {"status": "success"}
+            if self.unique_ids():
+                if self.less_than_n():
+                    if self.more_than_n():
+                        if self.is_protein():
+                            return {"status": "success"}
+                        else:
+                            return {"status": "error", "description": "Not proteins"}
                     else:
-                        return {"status": "error", "description": "Not proteins"}
+                        return {"status": "error", "description": "Too few sequences"}
                 else:
-                    return {"status": "error", "description": "Too few sequences"}
+                    return {"status": "error", "description": "Too much sequences"}
             else:
-                return {"status": "error", "description": "Too much sequences"}
+                return {"status": "error", "description": "Duplicate ids"}
         else:
             return {"status": "error", "description": "Not a fasta file / ASCII error"}
+
+
+    def unique_ids(self):
+        ids = [sequence.id for sequence in self.fasta]
+        if len(set(ids)) == len(ids):
+            return True
+        return False
 
     def is_fasta(self):
         return any(self.fasta)
@@ -43,7 +53,9 @@ class verify_fasta:
 
     def is_protein(self):
         alphabet = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y',
-                    'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y']
+                    'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y',
+                    'X', 'B', 'Z','J',
+                    'x', 'b', 'z' 'j', '*']
         for record in self.fasta:
             for letter in str(record.seq):
                 if letter not in alphabet:

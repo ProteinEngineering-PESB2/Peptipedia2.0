@@ -1,8 +1,14 @@
 from modules.database import database
 class interface:
     def parse_information_no_options(self, request):
-        post_data = request.json
-        post_file = request.files
+        try:
+            post_data = request.json
+        except:
+            post_data = None
+        try:
+            post_file = request.files
+        except:
+            post_file = None
         is_json = False
         is_file = False
         if(post_data != None):
@@ -14,13 +20,21 @@ class interface:
         return data, is_json, is_file
     
     def parse_information_with_options(self, request):
-        if(request.json != None):
+        try:
             post_data = request.json
+        except:
+            post_data = None
+        try:
+            post_file = request.files
+        except:
+            post_file = None
+
+        if(post_data != None):
             is_json = True
             is_file = False
             data = post_data["data"]
             options = post_data["options"]
-        else:
+        elif(post_file != None):
             is_json = False
             is_file = True
             file = request.files
@@ -109,4 +123,11 @@ class interface:
                                 max_isoelectric_point = max_isoelectric_point,
                                 databases_list = databases_list,
                                 limit = limit)
+        return result
+
+    def parse_mapping(self, request):
+        substr = request.json["substr"]
+        print(substr)
+        db = database()
+        result = db.map_sequence(substr)
         return result
