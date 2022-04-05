@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{api}}//alignment_file/
+POST {{api}}/alignment
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{api}}//msa_file/
+POST {{api}}/msa_file/
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW

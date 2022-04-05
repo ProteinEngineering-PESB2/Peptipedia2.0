@@ -33,8 +33,8 @@ import {
 
 const TestDashboard = () => {
   const mdTheme = createTheme();
-  const [open, setOpen] = useState(false);
-  const [section, setSection] = useState("clustering");
+  const [open, setOpen] = useState(true);
+  const [section, setSection] = useState("home");
   const theme = useTheme();
   const drawerWidth = 240;
 
@@ -103,88 +103,16 @@ const TestDashboard = () => {
               </IconButton>
             </DrawerHeader>
             <Divider />
-            <ListItems setSection={setSection} />
+            <ListItems setSection={setSection} section={section}/>
           </Drawer>
           <Main open={true}>
             <DrawerHeader />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <RenderSection section={section} />
-              {/* <Grid container spacing={5}>
-                <Grid item lg={12} xs={12}>
-                  <Grid container spacing={3}>
-                    <Grid item lg={7} xs={12}>
-                      <Paper
-                        sx={{
-                          p: 2,
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <div className="wrapper">
-                          <div id="blast-multiple-alignments"></div>
-                        </div>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Paper
-                        sx={{
-                          p: 2,
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <div className="table-responsive">
-                          <div id="blast-alignments-table"></div>
-                        </div>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Paper
-                        sx={{
-                          p: 2,
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <div id="blast-single-alignment"></div>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid> */}
             </Container>
           </Main>
         </Box>
       </ThemeProvider>
-      {/* <Grid container spacing={5}>
-        <Grid item xs={12}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div className="wrapper border border-primary">
-                  <div id="blast-multiple-alignments"></div>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <div className="table-responsive">
-                <div id="blast-alignments-table"></div>
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div className="border border-danger">
-                <div id="blast-single-alignment"></div>
-              </div>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
     </>
   );
 };
