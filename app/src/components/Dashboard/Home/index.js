@@ -37,7 +37,7 @@ const Home = () => {
           <Contact/>
         </Grid>
       </Grid>
-      <Grid container spacing={3} sx={{ marginTop: 4 }}></Grid>
+      <Grid container spacing={3} sx={{ marginTop: 4 }}></Grid> 
     </>
   );
 };

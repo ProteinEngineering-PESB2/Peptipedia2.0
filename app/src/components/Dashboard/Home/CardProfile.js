@@ -17,7 +17,7 @@ const CardProfile = () => {
       <Card sx={{ width: "95%" }}>
         <CardMedia component="img" height="320" image={Claudio} alt="profile" />
         <CardContent sx={{ textAlign: "center" }}>
-          <Typography gutterButton variant="h5" component="div">
+          <Typography variant="h5" component="div">
             Claudio Guevara
           </Typography>
           <Typography variant="body2" color="text.secodary">
