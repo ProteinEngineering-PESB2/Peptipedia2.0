@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { pca } from "../../../services/clustering";
 
 import DataTable from "../DataTable";
+import CircularLoading from "../CircularLoading"
 
 const columns = ["Sequence", "Label"];
 
@@ -85,7 +86,7 @@ const ClusteringContent = ({ res }) => {
   return (
     <>
       {loading ? (
-        <div></div>
+        <CircularLoading/>
       ) : (
         <>
           <Grid container spacing={3}>

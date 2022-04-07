@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
 import Chart from "./Chart";
+import CircularLoading from "../../CircularLoading";
 
 const FrequencyContent = ({ data }) => {
   const [autocompleteSequences, setAutocompleteSequences] = useState([]);
@@ -31,7 +32,7 @@ const FrequencyContent = ({ data }) => {
   return (
     <>
       {loading ? (
-        <div></div>
+        <CircularLoading/>
       ) : (
         <Grid container spacing={3}>
           <Grid item lg={5} md={6} xs={12}>

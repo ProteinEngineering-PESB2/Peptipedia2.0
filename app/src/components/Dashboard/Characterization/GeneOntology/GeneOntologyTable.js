@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Autocomplete from "@mui/material/Autocomplete";
-import FormControl from "@mui/material/FormControl"
+import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
-import Select from "@mui/material/Select"
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
 import Table from "./Table";
+import CircularLoading from "../../CircularLoading";
 
 const GeneOntologyTable = ({ data }) => {
   const [typesAutocomplete, setTypesAutocomplete] = useState([]);
@@ -20,9 +22,10 @@ const GeneOntologyTable = ({ data }) => {
   const [inputSequencesAutocomplete, setInputSequencesAutocomplete] =
     useState("");
   const [columns, setColumns] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useStateIfMounted(true);
 
   useEffect(() => {
+    setLoading(true)
     let types = [];
     let sequences = [];
 
@@ -62,7 +65,9 @@ const GeneOntologyTable = ({ data }) => {
 
   return (
     <>
-      {loading === false && (
+      {loading ? (
+        <CircularLoading />
+      ) : (
         <Grid container spacing={3}>
           <Grid item lg={3} md={4} xs={12}>
             <Paper

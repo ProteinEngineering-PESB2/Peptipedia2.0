@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
 import Table from "./Table";
+import CircularLoading from "../../CircularLoading";
 
 const PfamTable = ({ data }) => {
   const [autocompleteOptions, setAutocompleteOptions] = useState([]);
@@ -13,6 +14,7 @@ const PfamTable = ({ data }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true)
     const sequences = [];
     data.forEach((d) => sequences.push(d.id));
 
@@ -27,7 +29,9 @@ const PfamTable = ({ data }) => {
 
   return (
     <>
-      {loading === false && (
+      {loading ? (
+        <CircularLoading />
+      ) : (
         <Grid container spacing={3}>
           <Grid item lg={5} md={6} xs={12}>
             <Paper
