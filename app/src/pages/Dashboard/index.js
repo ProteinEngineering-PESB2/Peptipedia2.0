@@ -65,7 +65,13 @@ const TestDashboard = () => {
                 variant="h4"
                 noWrap
                 component="div"
-                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, fontWeight: 'bold' }}
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", sm: "block" },
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+                onClick={() => setSection("home")}
               >
                 Peptipedia
               </Typography>
@@ -103,7 +109,7 @@ const TestDashboard = () => {
               </IconButton>
             </DrawerHeader>
             <Divider />
-            <ListItems setSection={setSection} section={section}/>
+            <ListItems setSection={setSection} section={section} />
           </Drawer>
           <Main open={true}>
             <DrawerHeader />
