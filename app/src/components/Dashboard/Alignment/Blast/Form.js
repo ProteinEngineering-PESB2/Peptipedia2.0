@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -28,7 +29,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useStateIfMounted(false);
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);

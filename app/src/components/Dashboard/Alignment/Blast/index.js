@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,8 +10,8 @@ import BlastContent from "./BlastContent";
 import Snackbar from "../../Snackbar";
 
 const Blast = () => {
-  const [data, setData] = useState([]);
-  const [path, setPath] = useState("");
+  const [data, setData] = useStateIfMounted([]);
+  const [path, setPath] = useStateIfMounted("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState("");
   const [severity, setSeverity] = useState("");
