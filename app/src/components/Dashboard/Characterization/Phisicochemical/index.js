@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -8,7 +9,7 @@ import PhisicochemicalTable from "./PhisicochemicalTable";
 import SnackbarComponent from "../../Snackbar";
 
 const Phisicochemical = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useStateIfMounted([]);
   const [columns, setColumns] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState("");

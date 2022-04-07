@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -8,7 +9,7 @@ import PfamTable from "./PfamTable";
 import SnackbarComponent from "../../Snackbar";
 
 const Pfam = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useStateIfMounted([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState("");
   const [severity, setSeverity] = useState("");

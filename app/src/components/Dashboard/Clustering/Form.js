@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -38,7 +39,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
   const [minSamples, setMinSamples] = useState(0);
   const [xi, setXi] = useState(0);
   const [minClusterSize, setMinClusterSize] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useStateIfMounted(false);
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);
@@ -297,7 +298,6 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
         setOpenSnackbar(true);
         setLoading(false);
       } else {
-        console.log(data.result);
         setRes(data.result);
         setLoading(false);
       }

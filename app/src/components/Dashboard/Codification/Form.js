@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -35,7 +36,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
   ] = useState(true);
   const [digitalSignalProcessingCheckbox, setDigitalSignalProcessingCheckbox] =
     useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useStateIfMounted(false);
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);

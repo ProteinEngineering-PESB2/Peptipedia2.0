@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -7,9 +7,9 @@ import CodificationForm from "./CodificationForm";
 import Snackbar from "../Snackbar";
 
 const Codification = () => {
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useStateIfMounted(false);
+  const [message, setMessage] = useStateIfMounted("");
+  const [severity, setSeverity] = useStateIfMounted("");
 
   return (
     <>
