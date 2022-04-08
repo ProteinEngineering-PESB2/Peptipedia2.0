@@ -3,11 +3,11 @@ import axios from "axios";
 export const clustering = async (post) => {
   const { data } = await axios.post("/api/clustering", post);
 
-  return data
+  return data;
 };
 
 export const pca = async (post) => {
-  const { data } = await axios.post("/api/pca", post)
+  const { data } = await axios.post("/api/pca", post);
 
-  console.log(data)
-}
+  return data.result;
+};

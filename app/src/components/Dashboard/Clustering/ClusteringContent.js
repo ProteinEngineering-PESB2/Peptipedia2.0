@@ -14,17 +14,18 @@ import Typography from "@mui/material/Typography";
 import { pca } from "../../../services/clustering";
 
 import DataTable from "../DataTable";
-import CircularLoading from "../CircularLoading"
-
-const columns = ["Sequence", "Label"];
+import CircularLoading from "../CircularLoading";
 
 const ClusteringContent = ({ res }) => {
   const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([]);
   const [values, setValues] = useState([]);
   const [labels, setLabels] = useState([]);
   const [isNormal, setIsNormal] = useState();
   const [path, setPath] = useState("");
   const [kernel, setKernel] = useState("linear");
+  const [dataScatter, setDataScatter] = useState([]);
+  const [layoutScatter, setLayoutScatter] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const ClusteringContent = ({ res }) => {
       dataTable.push([d.id, d.label]);
     });
     setData(dataTable);
+    setColumns(["Sequence", "Label"]);
 
     const valuesChart = [];
     const labelsChart = [];
@@ -58,35 +60,116 @@ const ClusteringContent = ({ res }) => {
   };
 
   const handlePCA = async () => {
-    let post 
+    let post;
 
     if (isNormal) {
       post = {
-        "params": {
-          "path": path
-        }
-      }
+        params: {
+          path: path,
+        },
+      };
     } else {
       post = {
-        "params": {
-          "path": path,
-          "kernel": kernel
-        }
-      }
+        params: {
+          path: path,
+          kernel: kernel,
+        },
+      };
     }
+
+    console.log(post)
 
     try {
-      console.log(post)
-      await pca(post)
-    } catch (error) {
+      setLoading(true);
+      const res = await pca(post);
 
-    }
+      console.log(res)
+
+      const dataTable = [];
+      const uniqueLabels = [];
+      const x_values = [];
+      const y_values = [];
+      res.forEach((r) => {
+        dataTable.push([r.id, r.label, r.X, r.Y]);
+
+        if (!uniqueLabels.includes(r.label)) {
+          uniqueLabels.push(r.label);
+        }
+
+        x_values.push(r.X);
+        y_values.push(r.Y);
+      });
+
+      const traces = [];
+
+      for (let label in uniqueLabels) {
+        const x = [];
+        const y = [];
+        const text = [];
+
+        res.forEach((r) => {
+          if (r.label === parseInt(label)) {
+            x.push(r.X);
+            y.push(r.Y);
+            text.push(r.id);
+          }
+        });
+
+        const trace = {
+          x: x,
+          y: y,
+          mode: "markers",
+          type: "scatter",
+          name: `Label ${label}`,
+          text: text,
+          marker: { size: 12 },
+        };
+
+        traces.push(trace);
+      }
+
+      let x_max = Math.max(...x_values);
+      let x_min = Math.min(...x_values);
+      let y_max = Math.max(...y_values);
+      let y_min = Math.min(...y_values);
+
+      x_max = parseInt(x_max) + 5
+      x_min = parseInt(x_min) - 5
+      y_max = parseInt(y_max) + 5
+      y_min = parseInt(y_min) - 5
+
+      const layout = {
+        xaxis: {
+          range: [x_min, x_max],
+        },
+        yaxis: {
+          range: [y_min, y_max],
+        },
+        title: "Clustering With PCA",
+        autosize: true,
+        height: 600,
+        margin: {
+          l: 50,
+          r: 50,
+          b: 100,
+          t: 100,
+          pad: 4,
+        },
+      };
+
+      setData(dataTable);
+      setDataScatter(traces);
+      setLayoutScatter(layout);
+
+      setColumns(["Sequence", "Label", "X", "Y"]);
+      setLoading(false);
+    } catch (error) {}
   };
 
   return (
     <>
       {loading ? (
-        <CircularLoading/>
+        <CircularLoading />
       ) : (
         <>
           <Grid container spacing={3}>
@@ -106,6 +189,7 @@ const ClusteringContent = ({ res }) => {
                         backgroundColor: "#2962ff",
                         width: "100%",
                         height: "100%",
+                        ":hover": { backgroundColor: "#2962ff" },
                       }}
                       size="large"
                       onClick={handlePCA}
@@ -178,7 +262,7 @@ const ClusteringContent = ({ res }) => {
             </Grid>
           </Grid>
           <Grid container spacing={3} sx={{ marginTop: 2 }}>
-            <Grid item lg={6} md={8} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
               <Paper
                 sx={{
                   p: 2,
@@ -199,7 +283,6 @@ const ClusteringContent = ({ res }) => {
                   ]}
                   layout={{
                     autosize: true,
-                    height: 400,
                     margin: { t: 0, b: 0, l: 0, r: 0 },
                   }}
                   useResizeHandler
@@ -207,6 +290,24 @@ const ClusteringContent = ({ res }) => {
                 />
               </Paper>
             </Grid>
+            {dataScatter.length > 0 && (
+              <Grid item lg={12} md={12} xs={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Plot
+                    data={dataScatter}
+                    layout={layoutScatter}
+                    useResizeHandler
+                    className="w-full"
+                  />
+                </Paper>
+              </Grid>
+            )}
           </Grid>
         </>
       )}
