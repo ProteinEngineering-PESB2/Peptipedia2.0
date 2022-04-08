@@ -55,12 +55,12 @@ def api_alignment():
 @server.route('/api/msa/', methods=["POST"])
 def api_msa():
     data, is_json, is_file = interface.parse_information_no_options(request)
-    msa = multiple_sequence_alignment(data, temp_folder, is_file, is_json, int(config["msa"]["max_sequences"]), int(config["msa"]["min_sequences"]))
+    msa = multiple_sequence_alignment(data, temp_folder, static_folder, is_file, is_json, int(config["msa"]["max_sequences"]), int(config["msa"]["min_sequences"]))
     check = msa.get_check()
     if(check["status"] == "error"):
         return check
-    result = msa.execute_clustalo()
-    return {"result": result}
+    result, distance_matrix = msa.execute_clustalo()
+    return {"result": result, "distance_matrix": distance_matrix}
 
 @server.route('/api/phisicochemical/', methods=["POST"])
 def api_phisicochemical():
@@ -132,8 +132,10 @@ def api_pca():
 
 @server.route('/api/search/', methods=["POST"])
 def api_search():
-    result = interface.parse_search_query(request)
-    return {"result": result}
+    interface.parse_search_logic(request.json)
+    #result = interface.parse_search_query(request)
+    #return {"result": result}
+    return {"result": True}
 
 @server.route('/api/mapping/', methods=["POST"])
 def api_mapping():

@@ -1,4 +1,5 @@
 from modules.database import database
+import re
 class interface:
     def parse_information_no_options(self, request):
         try:
@@ -42,92 +43,115 @@ class interface:
             options = eval(file["options"].read().decode("utf-8"))
         return data, options, is_json, is_file
 
-    def parse_search_query(self, request):
-        data = request.json
-        query = data["query"]
+    def parse_search_query(self, query):
+        where = []
         try:
-            min_length = query["min_length"]
+            where.append("p.length >= {}".format(query["min_length"]))
         except Exception as e:
-            print(e)
-            min_length = None
+            pass
         try:
-            max_length = query["max_length"]
+            where.append("p.length <= {}".format(query["max_length"]))
         except Exception as e:
-            print(e)
-            max_length = None
+            pass
+        try:
+            where.append("p.molecular_weight >= {}".format(query["min_molecular_weight"]))
+        except Exception as e:
+            pass
+        try:
+            where.append("p.molecular_weight <= {}".format(query["max_molecular_weight"]))
+        except Exception as e:
+            pass
+        try:
+            where.append("p.charge >= {}".format(query["min_charge"]))
+        except Exception as e:
+            pass
+        try:
+            max_charge = where.append("p.charge <= {}".format(query["max_charge"]))
+        except Exception as e:
+            pass
+        try:
+            min_charge_density = where.append("p.charge_density >= {}".format(query["min_charge_density"]))
+        except Exception as e:
+            pass
+        try:
+            where.append("p.charge_density <= {}".format(query["max_charge_density"]))
+        except Exception as e:
+            pass
+        try:
+            min_isoelectric_point = where.append("p.isoelectric_point >= {}".format(query["min_isoelectric_point"]))
+        except Exception as e:
+            pass
+        try:
+            where.append("p.isoelectric_point <= {}".format(query["max_isoelectric_point"]))
+        except Exception as e:
+            pass
 
-        try:
-            min_molecular_weight = query["min_molecular_weight"]
-        except Exception as e:
-            print(e)
-            min_molecular_weight = None
-        try:
-            max_molecular_weight = query["max_molecular_weight"]
-        except Exception as e:
-            print(e)
-            max_molecular_weight = None
-
-        try:
-            min_charge = query["min_charge"]
-        except Exception as e:
-            print(e)
-            min_charge = None
-        try:
-            max_charge = query["max_charge"]
-        except Exception as e:
-            print(e)
-            max_charge = None
-
-        try:
-            min_charge_density = query["min_charge_density"]
-        except Exception as e:
-            print(e)
-            min_charge_density = None
-        try:
-            max_charge_density = query["max_charge_density"]
-        except Exception as e:
-            print(e)
-            max_charge_density = None
-
-        try:
-            min_isoelectric_point = query["min_isoelectric_point"]
-        except Exception as e:
-            print(e)
-            min_isoelectric_point = None
-        try:
-            max_isoelectric_point = query["max_isoelectric_point"]
-        except Exception as e:
-            print(e)
-            max_isoelectric_point = None
-        try:
-            limit = query["limit"]
-        except Exception as e:
-            print(e)
-            limit = None
-        try:
-            databases_list = query["databases_list"]
-        except Exception as e:
-            print(e)
-            databases_list = None
-
-        db = database()
-        result = db.select_peptides(min_length = min_length, 
-                                max_length = max_length, 
-                                min_molecular_weight = min_molecular_weight, 
-                                max_molecular_weight = max_molecular_weight,
-                                min_charge = min_charge,
-                                max_charge = max_charge,
-                                min_charge_density = min_charge_density,
-                                max_charge_density = max_charge_density,
-                                min_isoelectric_point = min_isoelectric_point,
-                                max_isoelectric_point = max_isoelectric_point,
-                                databases_list = databases_list,
-                                limit = limit)
-        return result
+        if(len(where) > 0):
+            where_phrase = "where " + " and ".join(where)
+        else:
+            where_phrase = ""
+        select = "select p.idpeptide from peptide p {}".format(where_phrase)
+        return select
 
     def parse_mapping(self, request):
         substr = request.json["substr"]
-        print(substr)
         db = database()
         result = db.map_sequence(substr)
         return result
+
+    def filter_parenthesis(self, result):
+        result2 = []
+        while(result2 != result):
+            result2 = result.copy()
+            for index, res in enumerate(result):
+                try:
+                    if (result[index] == "(" and result[index + 2] == ")"):
+                        result[index] = "-"
+                        result[index+2] = "-"
+                except:
+                    pass
+            result = [i for i in result if i != "-"]
+        return result
+
+    def parse_terms(self, term):
+        response = {}
+        if "<=" in term:
+            name_term = term.split("<=")[1].strip().lower().replace(" ", "_")
+            min_value = term.split("<=")[0].strip()
+            max_value = term.split("<=")[2].strip()
+            response = {"min_" + name_term: min_value, "max_" + name_term: max_value}
+        elif ("=" in term):
+            name_term = term.split("=")[0].strip().lower().replace(" ", "_")
+            value = term.split("=")[1].strip()
+            response = {name_term: value}
+        return response
+
+    def merge_terms(self, query):
+        index = 0
+        while index < len(query):
+            if type(query[index]) == dict and query[index + 1] == "AND" and type(query[index + 2]) == dict :
+                query[index].update(query[index + 2])
+                del query[index + 1]
+                del query[index + 1]
+                index = 0
+            index +=1
+
+    def parse_search_logic(self, query):
+        logic = query["query"]
+        print(logic)
+
+        result = [term.strip() for term in re.split('({})'.format("[\(\)]"), logic) if term != ""]
+        for index, j in enumerate(result):
+            if j != "(" and j != ")" and j != "AND" and j != "OR" :
+                result[index] = self.parse_terms(j)
+        print("result:", result)
+        parsed_query = self.filter_parenthesis(result)
+        selects = []
+        print(parsed_query)
+        self.merge_terms(parsed_query)
+        for index, j in enumerate(parsed_query):
+            if type(j) == dict:
+                parsed_query[index] = self.parse_search_query(j)
+        parsed_query = self.filter_parenthesis(parsed_query)
+        print(parsed_query)
+        return parsed_query

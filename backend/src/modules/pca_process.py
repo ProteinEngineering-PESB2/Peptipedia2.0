@@ -6,15 +6,16 @@ import json
 class pca_process:
     def __init__(self, params, static_folder, temp_folder):
         self.path = params["path"]
-        self.is_normal = params["is_normal"]
-        if(not self.is_normal):
+        if "kernel" in params.keys():
             self.kernel = params["kernel"]
+        else:
+            self.kernel = None
         self.data = pd.read_csv(self.path)
         self.dataset_to_transform = self.data[[col for col in self.data.columns if "P_" in col]]
         self.transformer = transformer()
         
     def apply_pca(self):
-        if(self.is_normal):
+        if(self.kernel != None):
             pca_result = self.transformer.apply_pca_data(self.dataset_to_transform)
         else:
             pca_result = self.transformer.apply_kernel_pca(self.dataset_to_transform, self.kernel)
