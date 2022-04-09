@@ -77,13 +77,9 @@ const ClusteringContent = ({ res }) => {
       };
     }
 
-    console.log(post)
-
     try {
       setLoading(true);
       const res = await pca(post);
-
-      console.log(res)
 
       const dataTable = [];
       const uniqueLabels = [];

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -95,6 +95,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
     e.preventDefault();
 
     setLoading(true);
+    setRes();
 
     let post = {};
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { useState } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
