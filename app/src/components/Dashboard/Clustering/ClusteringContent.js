@@ -342,7 +342,7 @@ const ClusteringContent = ({ res }) => {
               </Grid>
             )}
           </Grid>
-          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+          <Grid container spacing={3} sx={{ marginTop: 2 }}>
             {loadingPCA ? (
               <CircularLoading />
             ) : (
