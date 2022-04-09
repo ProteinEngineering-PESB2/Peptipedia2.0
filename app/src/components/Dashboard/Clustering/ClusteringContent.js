@@ -1,4 +1,5 @@
 import Plot from "react-plotly.js";
+import axios from "axios";
 
 import { useEffect, useState } from "react";
 
@@ -23,10 +24,12 @@ const ClusteringContent = ({ res }) => {
   const [labels, setLabels] = useState([]);
   const [isNormal, setIsNormal] = useState();
   const [path, setPath] = useState("");
+  const [pathPCA, setPathPCA] = useState("");
   const [kernel, setKernel] = useState("linear");
   const [dataScatter, setDataScatter] = useState([]);
   const [layoutScatter, setLayoutScatter] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadingPCA, setLoadingPCA] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -60,6 +63,9 @@ const ClusteringContent = ({ res }) => {
   };
 
   const handlePCA = async () => {
+    setLoadingPCA(true);
+    setDataScatter([]);
+
     let post;
 
     if (isNormal) {
@@ -78,16 +84,14 @@ const ClusteringContent = ({ res }) => {
     }
 
     try {
-      setLoading(true);
       const res = await pca(post);
 
-      const dataTable = [];
+      setPathPCA(res.path);
+
       const uniqueLabels = [];
       const x_values = [];
       const y_values = [];
-      res.forEach((r) => {
-        dataTable.push([r.id, r.label, r.X, r.Y]);
-
+      res.result.forEach((r) => {
         if (!uniqueLabels.includes(r.label)) {
           uniqueLabels.push(r.label);
         }
@@ -103,7 +107,7 @@ const ClusteringContent = ({ res }) => {
         const y = [];
         const text = [];
 
-        res.forEach((r) => {
+        res.result.forEach((r) => {
           if (r.label === parseInt(label)) {
             x.push(r.X);
             y.push(r.Y);
@@ -129,10 +133,10 @@ const ClusteringContent = ({ res }) => {
       let y_max = Math.max(...y_values);
       let y_min = Math.min(...y_values);
 
-      x_max = parseInt(x_max) + 5
-      x_min = parseInt(x_min) - 5
-      y_max = parseInt(y_max) + 5
-      y_min = parseInt(y_min) - 5
+      x_max = parseInt(x_max) + 5;
+      x_min = parseInt(x_min) - 5;
+      y_max = parseInt(y_max) + 5;
+      y_min = parseInt(y_min) - 5;
 
       const layout = {
         xaxis: {
@@ -153,13 +157,36 @@ const ClusteringContent = ({ res }) => {
         },
       };
 
-      setData(dataTable);
       setDataScatter(traces);
       setLayoutScatter(layout);
+      setLoadingPCA(false);
+    } catch (error) {
+      setLoadingPCA(false);
+    }
+  };
 
-      setColumns(["Sequence", "Label", "X", "Y"]);
-      setLoading(false);
-    } catch (error) {}
+  const downloadClustering = async () => {
+    const res = await axios.get(path, {
+      responseType: "blob",
+    });
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "clustering.csv");
+    document.body.appendChild(link);
+    link.click();
+  };
+
+  const downloadPCA = async () => {
+    const res = await axios.get(pathPCA, {
+      responseType: "blob",
+    });
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "pca.csv");
+    document.body.appendChild(link);
+    link.click();
   };
 
   return (
@@ -169,52 +196,19 @@ const ClusteringContent = ({ res }) => {
       ) : (
         <>
           <Grid container spacing={3}>
-            <Grid item lg={3.5} md={12} xs={12}>
-              <Paper
+            <Grid item lg={12} md={12} xs={12}>
+              <Button
+                variant="contained"
                 sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
+                  backgroundColor: "#2962ff",
+                  ":hover": { backgroundColor: "#2962ff" },
                 }}
+                size="medium"
+                onClick={downloadClustering}
               >
-                <Grid container spacing={1}>
-                  <Grid item lg={5.5} xs={6}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#2962ff",
-                        width: "100%",
-                        height: "100%",
-                        ":hover": { backgroundColor: "#2962ff" },
-                      }}
-                      size="large"
-                      onClick={handlePCA}
-                    >
-                      Apply PCA
-                    </Button>
-                  </Grid>
-                  <Grid item lg={6.5} xs={6}>
-                    <FormControl fullWidth disabled={isNormal ? true : false}>
-                      <InputLabel id="kernel-label">Kernel</InputLabel>
-                      <Select
-                        labelId="kernel-label"
-                        value={kernel}
-                        onChange={handleChangeKernel}
-                        label="Kernel"
-                      >
-                        <MenuItem value="linear">Linear</MenuItem>
-                        <MenuItem value="poly">Poly</MenuItem>
-                        <MenuItem value="rbf">RBF</MenuItem>
-                        <MenuItem value="sigmoid">Sigmoid</MenuItem>
-                        <MenuItem value="cosine">Cosinie</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </Paper>
+                Download Clustering
+              </Button>
             </Grid>
-          </Grid>
-          <Grid container spacing={3} sx={{ marginTop: 1 }}>
             <Grid item lg={12} md={12} xs={12}>
               <Paper
                 sx={{
@@ -286,8 +280,23 @@ const ClusteringContent = ({ res }) => {
                 />
               </Paper>
             </Grid>
-            {dataScatter.length > 0 && (
+          </Grid>
+          <Grid container spacing={3} sx={{ marginTop: 2 }}>
+            {isNormal ? (
               <Grid item lg={12} md={12} xs={12}>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  sx={{
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
+                >
+                  Apply Pca
+                </Button>
+              </Grid>
+            ) : (
+              <Grid item lg={3.5} md={12} xs={12}>
                 <Paper
                   sx={{
                     p: 2,
@@ -295,16 +304,84 @@ const ClusteringContent = ({ res }) => {
                     flexDirection: "column",
                   }}
                 >
-                  <Plot
-                    data={dataScatter}
-                    layout={layoutScatter}
-                    useResizeHandler
-                    className="w-full"
-                  />
+                  <Grid container spacing={1}>
+                    <Grid item lg={5.5} xs={6}>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#2962ff",
+                          width: "100%",
+                          height: "100%",
+                          ":hover": { backgroundColor: "#2962ff" },
+                        }}
+                        size="large"
+                        onClick={handlePCA}
+                      >
+                        Apply PCA
+                      </Button>
+                    </Grid>
+                    <Grid item lg={6.5} xs={6}>
+                      <FormControl fullWidth disabled={isNormal ? true : false}>
+                        <InputLabel id="kernel-label">Kernel</InputLabel>
+                        <Select
+                          labelId="kernel-label"
+                          value={kernel}
+                          onChange={handleChangeKernel}
+                          label="Kernel"
+                        >
+                          <MenuItem value="linear">Linear</MenuItem>
+                          <MenuItem value="poly">Poly</MenuItem>
+                          <MenuItem value="rbf">RBF</MenuItem>
+                          <MenuItem value="sigmoid">Sigmoid</MenuItem>
+                          <MenuItem value="cosine">Cosinie</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                 </Paper>
               </Grid>
             )}
           </Grid>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+            {loadingPCA ? (
+              <CircularLoading />
+            ) : (
+              dataScatter.length > 0 && (
+                <>
+                  <Grid item lg={12} md={12} xs={12}>
+                    <Paper
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Plot
+                        data={dataScatter}
+                        layout={layoutScatter}
+                        useResizeHandler
+                        className="w-full"
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item lg={12} md={12} xs={12}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#2962ff",
+                        ":hover": { backgroundColor: "#2962ff" },
+                      }}
+                      size="medium"
+                      onClick={downloadPCA}
+                    >
+                      Download PCA
+                    </Button>
+                  </Grid>
+                </>
+              )
+            )}
+          </Grid>
+          <Grid container spacing={3} sx={{ marginTop: 4 }}></Grid>
         </>
       )}
     </>

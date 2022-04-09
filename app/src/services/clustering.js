@@ -9,5 +9,5 @@ export const clustering = async (post) => {
 export const pca = async (post) => {
   const { data } = await axios.post("/api/pca", post);
 
-  return data.result;
+  return data;
 };
