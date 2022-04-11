@@ -12,12 +12,13 @@ class database:
 
     def count_peptides(self, where):
         count_query = "select COUNT(p.idpeptide) from peptide p where " + where
-        count = pd.read_sql(count_query, self.conn)
+        print(count_query)
+        count = pd.read_sql(text(count_query), self.conn)
         count = int(count.iloc[0].values[0])
         return count
 
     def select_peptides(self, where, limit, offset):
-        query = "select p.idpeptide, p.length, p.molecular_weight, p.isoelectric_point, p.charge, p.charge_density from peptide p where" + where
+        query = "select p.idpeptide, p.sequence, p.length, p.molecular_weight, p.isoelectric_point, p.charge, p.charge_density from peptide p where" + where
         limited_query = query + " order by p.idpeptide limit {} offset {} ".format(limit, offset)
         print(limited_query)
         data = pd.read_sql(text(limited_query), self.conn)

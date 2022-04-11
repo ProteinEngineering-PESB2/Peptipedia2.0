@@ -28,7 +28,11 @@ class search():
             value = term.split("=")[1].strip().replace("{", "").replace("}", "")
             n_matches = len(value.split("AND"))
             ff = term.split("=")[0].strip()
-            value = ",".join([f for f in value.split("AND")])
+            if ("AND" in value):
+                value = ",".join([f for f in value.split("AND")])
+            else:
+                value = value
+            print(ff, value)
             if "Pfam" in ff:
                 phrase = """p.idpeptide in 
                 (select idpeptide from
@@ -53,6 +57,12 @@ class search():
                 where d.name in ({})
                 group by phdhi.idpeptide) as q 
                 where q.n_matches >= {})""".format(value, str(n_matches))
+            if "Gene Ontology" in ff:
+                phrase = """p.idpeptide in 
+                (select phg.idpeptide
+                from peptide_has_go phg join gene_ontology go on go.id_go = phg.id_go 
+                where go.term like '%{}%'
+                group by phg.idpeptide)""".format(value, str(n_matches))
             if "Sequence" in ff:
                 phrase = """p.sequence like '%{}%'""".format(value)
             phrase = phrase.replace("\n", "")
