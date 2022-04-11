@@ -1,13 +1,13 @@
 import pandas as pd
 from random import random
 import os
-from modules.tool import config_tool
+from modules.utils import config_tool
 
 class gene_ontology(config_tool):
     def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
         super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
         
-        self.output_path = self.fasta_path.replace(".fasta", ".result")
+        self.output_path = self.temp_file_path.replace(".fasta", ".result")
         self.molecular_function = options["molecular_function"]
         self.biological_process = options["biological_process"]
         self.celular_component = options["celular_component"]
@@ -24,7 +24,7 @@ class gene_ontology(config_tool):
         return ",".join(ontologies)
         
     def process(self):
-        command= "metastudent -i {} -o {} --ontologies={}".format(self.fasta_path, self.output_path, self.ontologies)
+        command= "metastudent -i {} -o {} --ontologies={}".format(self.temp_file_path, self.output_path, self.ontologies)
         os.system(command)
         result = self.find_and_load_data()
         return result

@@ -1,7 +1,7 @@
 from random import random
 import os
 import subprocess
-from modules.tool import config_tool
+from modules.utils import config_tool
 from random import random
 import pandas as pd
 import json
@@ -13,7 +13,7 @@ class multiple_sequence_alignment(config_tool):
         self.distance_matrix_file = os.path.realpath("{}/{}.dist".format(self.output_path, str(round(random()*10**20))))
 
     def execute_clustalo(self):
-        command = "clustalo -i {} -o {} --distmat-out={} --full".format(self.fasta_path, self.output_file, self.distance_matrix_file)
+        command = "clustalo -i {} -o {} --distmat-out={} --full".format(self.temp_file_path, self.output_file, self.distance_matrix_file)
         os.system(command)
 
         f = open(self.distance_matrix_file, "r")

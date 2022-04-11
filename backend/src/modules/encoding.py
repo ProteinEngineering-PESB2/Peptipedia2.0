@@ -1,8 +1,7 @@
 import pandas as pd
 from random import random
 import os
-from modules.verify_fasta import verify_fasta
-from modules.tool import config_tool
+from modules.utils import config_tool
 
 from modules.encoding_strategies.run_one_hot import run_one_hot
 from modules.encoding_strategies.run_physicochemical_properties import run_physicochemical_properties
@@ -18,14 +17,14 @@ class encoding(config_tool):
         self.one_hot_encoding = options["one_hot_encoding"]
         self.phisicochemical_properties = options["phisicochemical_properties"]
         self.digital_signal_processing = options["digital_signal_processing"]
-        self.temp_csv = "{}/{}_codifications.csv".format(self.fasta_folder, self.rand_name)
+        self.temp_csv = "{}/{}_codifications.csv".format(self.temp_folder, self.rand_name)
         self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group", "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
         self.path_config_aaindex_encoder = path_aa_index
     def get_longest(self):
         return self.data.sequence.str.len().max()
 
     def process(self):
-        f = open(self.fasta_path, "r")
+        f = open(self.temp_file_path, "r")
         self.data = self.create_df(f.read())
         f.close()
         if self.one_hot_encoding:

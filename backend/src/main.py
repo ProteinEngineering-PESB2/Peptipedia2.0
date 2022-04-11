@@ -6,8 +6,11 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
+from modules.supervised_learning import supervised_algorithms
 from modules.pca_process import pca_process
-from modules.interface import interface
+from modules.utils import interface
+from modules.search import search
+from modules.database import database
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -127,15 +130,33 @@ def api_clustering():
 @server.route('/api/pca/', methods=["POST"])
 def api_pca():
     pca = pca_process(request.json["params"], static_folder, temp_folder)
-    result = pca.apply_pca()
-    return {"result": result}
+    result, path = pca.apply_pca()
+    return {"result": result, "path": path}
+
+@server.route('/api/count/', methods=["POST"])
+def api_count():
+    db = database()
+    where, limit, offset = search(request.json).parse_search()
+    result = db.count_peptides(where)
+    return {"count": result}
 
 @server.route('/api/search/', methods=["POST"])
 def api_search():
-    interface.parse_search_logic(request.json)
-    #result = interface.parse_search_query(request)
-    #return {"result": result}
-    return {"result": True}
+    db = database()
+    where, limit, offset = search(request.json).parse_search()
+    result = db.select_peptides(where, limit, offset)
+    return {"query": result}
+
+@server.route('/api/supervised_learning/', methods=["POST"])
+def api_supervised_learning():
+    data, options, is_json, is_file = interface.parse_information_with_options(request)
+    sl = supervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
+    check = sl.get_check()
+    if(check["status"] == "error"):
+        return check
+    result = sl.run()
+    return {"result": result}
+
 
 @server.route('/api/mapping/', methods=["POST"])
 def api_mapping():

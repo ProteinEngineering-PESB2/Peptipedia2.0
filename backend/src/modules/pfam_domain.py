@@ -5,7 +5,7 @@ import time
 import pandas as pd
 import re
 import json
-from modules.tool import config_tool
+from modules.utils import config_tool
 
 class pfam(config_tool):
     def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
@@ -13,8 +13,8 @@ class pfam(config_tool):
         self.create_csv_from_fasta()
     
     def process(self):
-        self.output_file = self.temp_file.replace("fasta", "pfam")
-        os.system("pfam_scan.pl -dir /app/install_requisites/databases/ -fasta {} > {}".format(self.temp_file, self.output_file))
+        self.output_file = self.temp_csv_file.replace("fasta", "pfam")
+        os.system("pfam_scan.pl -dir /app/install_requisites/databases/ -fasta {} > {}".format(self.temp_csv_file, self.output_file))
         f = open(self.output_file, "r")
         text = f.read().split("\n\n")[-1]
         f.close()

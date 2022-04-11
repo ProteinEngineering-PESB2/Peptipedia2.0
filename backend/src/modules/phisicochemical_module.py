@@ -2,7 +2,7 @@ from modlamp.descriptors import GlobalDescriptor
 from random import random
 from Bio import SeqIO
 import os
-from modules.tool import config_tool
+from modules.utils import config_tool
 
 class modlamp_descriptor(config_tool):
     def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
@@ -14,7 +14,7 @@ class modlamp_descriptor(config_tool):
         super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
 
     def execute_modlamp(self):
-        records = SeqIO.parse(self.fasta_path, "fasta")
+        records = SeqIO.parse(self.temp_file_path, "fasta")
         response = []
         for record in records:
             sequence = str(record.seq)
@@ -31,7 +31,6 @@ class modlamp_descriptor(config_tool):
             if(self.charge):
                 dict_response["charge"] = self.get_charge(sequence)
             response.append(dict_response)
-        self.delete_file()
         return response
         
     def get_mw(self, sequence):
@@ -69,6 +68,6 @@ class modlamp_descriptor(config_tool):
 
     def delete_file(self):
         try:
-            os.remove(self.fasta_path)
+            os.remove(self.temp_file_path)
         except Exception as e:
             print(e)
