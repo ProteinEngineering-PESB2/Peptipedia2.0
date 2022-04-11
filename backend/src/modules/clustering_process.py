@@ -2,7 +2,7 @@ from random import random
 import pandas as pd
 from modules.clustering_methods import clustering_algorithm, evaluation_performances
 from modules.encoding_strategies import run_fft_encoding, run_one_hot, run_physicochemical_properties
-from modules.tool import config_tool
+from modules.utils import config_tool
 import json
 from scipy import stats
 
@@ -51,11 +51,8 @@ class unsupervised_algorithms(config_tool):
 
         return {"status": "success"}
 
-    def get_longest(self):
-        return self.data.sequence.str.len().max()
-
     def process_encoding_stage(self):
-        f = open(self.fasta_path, "r")
+        f = open(self.temp_file_path, "r")
         self.data = self.create_df(f.read())
         f.close()
         encoding_option = self.options['encoding']
@@ -139,4 +136,5 @@ class unsupervised_algorithms(config_tool):
             pvalue = result.pvalue
             if (pvalue > 0.05):
                 is_normal = False
+        print(is_normal)
         return is_normal

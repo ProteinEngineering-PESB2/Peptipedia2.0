@@ -19,6 +19,7 @@ class database:
     def select_peptides(self, where, limit, offset):
         query = "select p.idpeptide, p.length, p.molecular_weight, p.isoelectric_point, p.charge, p.charge_density from peptide p where" + where
         limited_query = query + " order by p.idpeptide limit {} offset {} ".format(limit, offset)
-        data = pd.read_sql(limited_query, self.conn)
+        print(limited_query)
+        data = pd.read_sql(text(limited_query), self.conn)
         data = json.loads(data.to_json(orient="records"))
         return {"data": data}
