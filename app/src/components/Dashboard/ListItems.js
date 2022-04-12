@@ -15,6 +15,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import PsychologyIcon from "@mui/icons-material/Psychology";
 import TransformIcon from "@mui/icons-material/Transform";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 
@@ -270,6 +271,32 @@ const ListItems = ({ section, setSection }) => {
           <ListItemText sx={{ marginLeft: 3.4 }}>
             <Typography sx={{ fontWeight: section === "clustering" && "bold" }}>
               Clustering
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton
+          disableRipple
+          sx={{
+            pl: 2,
+            margin: "6px 14px",
+            padding: "9px",
+            borderRadius: "8px",
+            backgroundColor:
+              section === "supervised-learning" ? "#2962ff" : "#fff",
+            color: section === "supervised-learning" ? "#fff" : "#000",
+            "&:hover": {
+              background: "#2962ff",
+              color: "#fff",
+            },
+          }}
+          onClick={() => setSection("supervised-learning")}
+        >
+          <PsychologyIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3.4 }}>
+            <Typography
+              sx={{ fontWeight: section === "supervised-learning" && "bold" }}
+            >
+              Supervised Learning
             </Typography>
           </ListItemText>
         </ListItemButton>

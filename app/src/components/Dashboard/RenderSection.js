@@ -7,6 +7,7 @@ import Pfam from "./Characterization/Pfam";
 import Frequency from "./Characterization/Frequency";
 import Codification from "./Codification";
 import Clustering from "./Clustering";
+import SupervisedLearning from "./SupervisedLearning";
 import AdvancedSearch from "./AdvancedSearch";
 
 const RenderSection = ({ section }) => {
@@ -21,6 +22,7 @@ const RenderSection = ({ section }) => {
       {section === "frequency" && <Frequency/>}
       {section === "codifications" && <Codification />}
       {section === "clustering" && <Clustering/>}
+      {section === "supervised-learning" && <SupervisedLearning/>}
       {section === "advanced-search" && <AdvancedSearch/>}
     </>
   );
