@@ -17,7 +17,12 @@ import { pca } from "../../../services/clustering";
 import DataTable from "../DataTable";
 import CircularLoading from "../CircularLoading";
 
-const ClusteringContent = ({ res }) => {
+const ClusteringContent = ({
+  res,
+  setMessage,
+  setSeverity,
+  setOpenSnackbar,
+}) => {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [values, setValues] = useState([]);
@@ -161,6 +166,9 @@ const ClusteringContent = ({ res }) => {
       setLayoutScatter(layout);
       setLoadingPCA(false);
     } catch (error) {
+      setSeverity("error");
+      setMessage("Error to aplicate PCA");
+      setOpenSnackbar(true);
       setLoadingPCA(false);
     }
   };
@@ -291,6 +299,7 @@ const ClusteringContent = ({ res }) => {
                     backgroundColor: "#2962ff",
                     ":hover": { backgroundColor: "#2962ff" },
                   }}
+                  onClick={handlePCA}
                 >
                   Apply Pca
                 </Button>

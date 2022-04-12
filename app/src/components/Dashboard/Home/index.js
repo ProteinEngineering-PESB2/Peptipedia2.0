@@ -12,6 +12,7 @@ const Home = () => {
   return (
     <>
       <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
         <Grid item lg={12} md={12} xs={12} sx={{ textAlign: "center" }}>
           <Header />
         </Grid>
@@ -22,10 +23,10 @@ const Home = () => {
         </Grid>
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
-        <Services/>
+        <Services />
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
-        <Team/>
+        <Team />
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>
@@ -34,10 +35,10 @@ const Home = () => {
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>
-          <Contact/>
+          <Contact />
         </Grid>
       </Grid>
-      <Grid container spacing={3} sx={{ marginTop: 4 }}></Grid> 
+      <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
     </>
   );
 };

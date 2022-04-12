@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -41,6 +41,7 @@ const Blast = () => {
         </Grid>
         {data.length > 0 && <BlastContent data={data} path={path} />}
       </Grid>
+      <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
     </>
   );
 };
