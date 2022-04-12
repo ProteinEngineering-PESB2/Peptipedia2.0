@@ -6,6 +6,7 @@ import json
 class pca_process:
     def __init__(self, params, static_folder, temp_folder):
         self.static_folder = static_folder
+        print(params)
         self.path = params["path"]
         if "kernel" in params.keys():
             self.kernel = params["kernel"]
@@ -16,7 +17,7 @@ class pca_process:
         self.transformer = transformer()
         
     def apply_pca(self):
-        if(self.kernel != None):
+        if(self.kernel == None):
             pca_result = self.transformer.apply_pca_data(self.dataset_to_transform)
         else:
             pca_result = self.transformer.apply_kernel_pca(self.dataset_to_transform, self.kernel)
