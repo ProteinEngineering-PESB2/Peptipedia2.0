@@ -42,6 +42,7 @@ const GeneOntology = () => {
           </Grid>
         )}
       </Grid>
+      <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
     </>
   );
 };
