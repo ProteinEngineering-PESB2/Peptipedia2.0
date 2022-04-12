@@ -37,6 +37,8 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);
+    setFileInput(null);
+    setTextInput("");
   };
 
   const handleChangeTextInput = (e) => {
@@ -157,8 +159,19 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
                 variant="outlined"
                 component="span"
                 endIcon={<CloudUploadIcon />}
+                color={
+                  fileInput
+                    ? fileInput.name
+                      ? "success"
+                      : "primary"
+                    : "primary"
+                }
               >
-                Upload Fasta
+                {fileInput
+                  ? fileInput.name
+                    ? fileInput.name
+                    : "Upload Fasta"
+                  : "Upload Fasta"}
               </Button>
             </label>
           </Grid>

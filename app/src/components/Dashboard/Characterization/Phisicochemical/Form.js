@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -44,6 +44,8 @@ const Form = ({
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);
+    setFileInput(null);
+    setTextInput("");
   };
 
   const handleChangeFileInput = (e) => {
@@ -201,8 +203,19 @@ const Form = ({
                 variant="outlined"
                 component="span"
                 endIcon={<CloudUploadIcon />}
+                color={
+                  fileInput
+                    ? fileInput.name
+                      ? "success"
+                      : "primary"
+                    : "primary"
+                }
               >
-                Upload Fasta
+                {fileInput
+                  ? fileInput.name
+                    ? fileInput.name
+                    : "Upload Fasta"
+                  : "Upload Fasta"}
               </Button>
             </label>
           </Grid>
@@ -281,7 +294,11 @@ const Form = ({
                     molecularWeightCheckbox === false
                   }
                   size="medium"
-                  sx={{ width: "100%", backgroundColor: "#2962ff", ":hover": { backgroundColor: "#2962ff" }, }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
                 >
                   run characterization
                 </Button>

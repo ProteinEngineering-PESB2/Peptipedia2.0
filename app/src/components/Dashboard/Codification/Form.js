@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { useState } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -174,8 +174,19 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
                 variant="outlined"
                 component="span"
                 endIcon={<CloudUploadIcon />}
+                color={
+                  fileInput
+                    ? fileInput.name
+                      ? "success"
+                      : "primary"
+                    : "primary"
+                }
               >
-                Upload Fasta
+                {fileInput
+                  ? fileInput.name
+                    ? fileInput.name
+                    : "Upload Fasta"
+                  : "Upload Fasta"}
               </Button>
             </label>
           </Grid>

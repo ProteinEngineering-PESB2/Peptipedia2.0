@@ -140,8 +140,19 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
                   variant="outlined"
                   component="span"
                   endIcon={<CloudUploadIcon />}
+                  color={
+                    fileInput
+                      ? fileInput.name
+                        ? "success"
+                        : "primary"
+                      : "primary"
+                  }
                 >
-                  Upload Fasta
+                  {fileInput
+                    ? fileInput.name
+                      ? fileInput.name
+                      : "Upload Fasta"
+                    : "Upload Fasta"}
                 </Button>
               </label>
             </Stack>

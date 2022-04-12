@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -143,8 +143,19 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                   variant="outlined"
                   component="span"
                   endIcon={<CloudUploadIcon />}
+                  color={
+                    fileInput
+                      ? fileInput.name
+                        ? "success"
+                        : "primary"
+                      : "primary"
+                  }
                 >
-                  Upload Fasta
+                  {fileInput
+                    ? fileInput.name
+                      ? fileInput.name
+                      : "Upload Fasta"
+                    : "Upload Fasta"}
                 </Button>
               </label>
             </Stack>
