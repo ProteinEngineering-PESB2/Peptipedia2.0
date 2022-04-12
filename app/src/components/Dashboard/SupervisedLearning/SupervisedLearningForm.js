@@ -3,11 +3,11 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const SupervisedLearningForm = () => {
+const SupervisedLearningForm = ({ setData }) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item lg={8} md={8} xs={12}>
+        <Grid item lg={5} md={8} xs={12}>
           <Paper
             sx={{
               p: 2,
@@ -15,7 +15,7 @@ const SupervisedLearningForm = () => {
               flexDirection: "column",
             }}
           >
-            <Form />
+            <Form setData={setData}/>
           </Paper>
         </Grid>
       </Grid>
