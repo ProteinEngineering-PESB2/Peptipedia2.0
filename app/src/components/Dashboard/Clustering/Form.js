@@ -398,8 +398,8 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                   <MenuItem value="alpha-structure_group">
                     Alpha Structure
                   </MenuItem>
-                  <MenuItem value="beta-structure_group">
-                    Beta Structure
+                  <MenuItem value="betha-structure_group">
+                    Betha Structure
                   </MenuItem>
                   <MenuItem value="energetic_group">Energetic</MenuItem>
                   <MenuItem value="hydropathy_group">Hydropathy</MenuItem>
