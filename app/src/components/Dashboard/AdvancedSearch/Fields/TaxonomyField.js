@@ -6,14 +6,11 @@ import InputLabel from "@mui/material/InputLabel";
 
 const TaxonomyField = ({
   valueTaxonomy,
-  setValueTaxonomy,
+  handleChangeValueTaxonomy,
   logicOperatorValueForTaxonomy,
   setLogicOperatorValueForTaxonomy,
   index,
 }) => {
-  const handleChangeValueTaxonomy = (e) => {
-    setValueTaxonomy(e.target.value);
-  };
 
   return (
     <Grid item lg={12} md={12} xs={12}>

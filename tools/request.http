@@ -115,3 +115,5 @@ Content-Type: application/json
         }
     }
 }
+###
+GET {{api}}/gene_ontology_list/asdsa

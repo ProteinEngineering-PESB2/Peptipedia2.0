@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -23,6 +23,8 @@ import DatabaseField from "./Fields/DatabaseField";
 import GeneOntologyField from "./Fields/GeneOntologyField";
 import PfamField from "./Fields/PfamField";
 
+import { getTaxonomies } from "../../../services/advanced_search";
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -41,6 +43,8 @@ const Form = ({ queries, setQueries }) => {
   const [valuePfam, setValuePfam] = useState("");
   const [valueActivity, setValueActivity] = useState("");
   const [valueDatabase, setValueDatabase] = useState("");
+
+  const [taxonomies, setTaxonomies] = useState([]);
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
@@ -73,6 +77,14 @@ const Form = ({ queries, setQueries }) => {
   const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
     useState("AND");
 
+  const initialDataTaxonomies = async () => {
+    await getTaxonomies("binding");
+  };
+
+  useEffect(() => {
+    initialDataTaxonomies();
+  });
+
   const handleChangeQueryText = (e) => {
     setQueryText(e.target.value);
   };
@@ -96,6 +108,11 @@ const Form = ({ queries, setQueries }) => {
 
   const handleChangeValueChargeDensity = (e, newValue) => {
     setValueChargeDensity(newValue);
+  };
+
+  const handleChangeValueTaxonomy = async (e) => {
+    await initialDataTaxonomies(e.target.value)
+    setValueTaxonomy(e.target.value);
   };
 
   // Operators
@@ -400,7 +417,7 @@ const Form = ({ queries, setQueries }) => {
             {option === "Taxonomy" && (
               <TaxonomyField
                 valueTaxonomy={valueTaxonomy}
-                setValueTaxonomy={setValueTaxonomy}
+                handleChangeValueTaxonomy={handleChangeValueTaxonomy}
                 logicOperatorValueForTaxonomy={logicOperatorValueForTaxonomy}
                 setLogicOperatorValueForTaxonomy={
                   setLogicOperatorValueForTaxonomy
