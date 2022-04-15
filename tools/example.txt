@@ -1,0 +1,25 @@
+###
+POST {{api}}/supervised_learning/
+Content-Type: application/json
+
+{
+    "data": "id,sequence,target\n1,MPRRAENWDEAEVGAEEAGVEEYGPEEDG,2\n2,GEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVN,2\n3,SREPSQVIFCNRS,2\n4,YRGHLWLFRDAGTHDGLLVNQTELFVPSLNVD,1\n5,GQPIFANITLPVYTLKE,0\n6,RCLQVVRSLVKPENYRRLDIVRSLYEDLEDHP,0\n7,NVQKDLERLTQERIAHQRMGD,0\n8,NQTELFVPSLNVDGQPIFANITLPVY,0\n9,TLKERCLQVVRSLVKPENYRRLDIVRSLYEDLEDHPNVQKD,0\n10,LERLTQERIAHQRPP,0",
+    "options":{
+        "encoding": "digital_signal_processing",
+        "selected_property": "alpha-structure_group",
+        "task": "classification",
+        "algorithm": "knn",
+        "validation": 2
+    }
+}
+
+
+Posibilidades de parámetros:
+encoding: las mismas que clustering
+selected_property: las mismas que clustering
+validation: número entero
+task: ["classification", "regression"]
+algorithm: {
+    "classification":["adaboost", "bagging", "bernoulli", "descision_tree", "gaussian_bayes", "gradient_boosting", "nu_svc", "random_forest", "svc", "knn"],
+    "regression":["adaboost", "bagging", "decision_tree", "gradient_boosting", "nu_svr", "random_forest", "svr", "knn"]
+}
