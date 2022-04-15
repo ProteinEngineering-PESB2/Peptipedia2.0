@@ -133,6 +133,16 @@ def api_pca():
     result, path = pca.apply_pca()
     return {"result": result, "path": path}
 
+@server.route('/api/supervised_learning/', methods=["POST"])
+def api_supervised_learning():
+    data, options, is_json, is_file = interface.parse_information_with_options(request)
+    sl = supervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
+    check = sl.get_check()
+    if(check["status"] == "error"):
+        return check
+    result = sl.run()
+    return {"result": result}
+
 @server.route('/api/count/', methods=["POST"])
 def api_count():
     db = database()
@@ -147,20 +157,29 @@ def api_search():
     result = db.select_peptides(where, limit, offset)
     return {"query": result}
 
-@server.route('/api/supervised_learning/', methods=["POST"])
-def api_supervised_learning():
-    data, options, is_json, is_file = interface.parse_information_with_options(request)
-    sl = supervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
-    check = sl.get_check()
-    if(check["status"] == "error"):
-        return check
-    result = sl.run()
+
+@server.route('/api/database_list/', methods=["GET"])
+def api_db_list():
+    db = database()
+    result = db.get_all_databases()
     return {"result": result}
 
+@server.route('/api/gene_ontology_list/<sub_string>', methods=["GET"])
+def api_go_list(sub_string):
+    db = database()
+    result = db.get_all_gene_ontology(sub_string, config["select"]["limit"])
+    return {"result": result}
 
-@server.route('/api/mapping/', methods=["POST"])
-def api_mapping():
-    result = interface.parse_mapping(request)
+@server.route('/api/pfam_list/<sub_string>', methods=["GET"])
+def api_pfam_list(sub_string):
+    db = database()
+    result = db.get_all_pfam(sub_string, config["select"]["limit"])
+    return {"result": result}
+
+@server.route('/api/taxonomy_list/<sub_string>', methods=["GET"])
+def api_taxonomy_list(sub_string):
+    db = database()
+    result = db.get_all_taxonomy(sub_string, config["select"]["limit"])
     return {"result": result}
 
 if __name__ == '__main__':

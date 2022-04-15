@@ -23,50 +23,46 @@ class search():
             min_value = broken_term[0].strip()
             max_value = broken_term[2].strip()
             ff = broken_term[1].strip()
-            phrase = "{} BETWEEN {} and {}".format(self.transform_terms[ff], min_value, max_value)
+            phrase = """select p.idpeptide, p.sequence, 
+                        p.length, p.molecular_weight, p.charge_density, 
+                        p.isoelectric_point, p.charge from peptide p
+                        where {} BETWEEN {} and {}""".format(self.transform_terms[ff], min_value, max_value)
         elif ("=" in term):
             value = term.split("=")[1].strip().replace("{", "").replace("}", "")
-            n_matches = len(value.split("AND"))
             ff = term.split("=")[0].strip()
-            if ("AND" in value):
-                value = ",".join([f for f in value.split("AND")])
-            else:
-                value = value
-            print(ff, value)
             if "Pfam" in ff:
-                phrase = """p.idpeptide in 
-                (select idpeptide from
-                (select php.idpeptide, COUNT(php.idpeptide) as n_matches
-                from peptide_has_pfam php join pfam on pfam.id_pfam = php.id_pfam
-                where pfam.name in ({})
-                group by php.idpeptide) as t
-                where t.n_matches >= {})""".format(value, str(n_matches))
+                phrase = """select p.idpeptide, p.sequence, 
+                        p.length, p.molecular_weight, p.charge_density, 
+                        p.isoelectric_point, p.charge from peptide p
+                        join peptide_has_pfam php
+                        on php.idpeptide = p.idpeptide and php.id_pfam = {}""".format(value)
+
             if "Taxonomy" in ff:
-                phrase = """p.idpeptide in 
-                (select idpeptide from 
-                (select pht.idpeptide, COUNT(pht.idpeptide) as n_matches 
-                from peptide_has_taxonomy pht join taxonomy t on t.idtaxonomy = pht.idtaxonomy
-                where t.name in ({})
-                group by pht.idpeptide) as q 
-                where q.n_matches >= {})""".format(value, str(n_matches))
-            if "Database" in ff:
-                phrase = """p.idpeptide in 
-                (select idpeptide from 
-                (select phdhi.idpeptide, COUNT(phdhi.idpeptide) as n_matches 
-                from peptide_has_db_has_index phdhi join db d on d.iddb = phdhi.id_db 
-                where d.name in ({})
-                group by phdhi.idpeptide) as q 
-                where q.n_matches >= {})""".format(value, str(n_matches))
+                phrase = """select p.idpeptide, p.sequence, 
+                        p.length, p.molecular_weight, p.charge_density, 
+                        p.isoelectric_point, p.charge from peptide p
+                        join peptide_has_taxonomy pht
+                        on pht.idpeptide = p.idpeptide and pht.idtaxonomy = {}""".format(value)
+
             if "Gene Ontology" in ff:
-                phrase = """p.idpeptide in 
-                (select phg.idpeptide
-                from peptide_has_go phg join gene_ontology go on go.id_go = phg.id_go 
-                where go.term like '%{}%'
-                group by phg.idpeptide)""".format(value, str(n_matches))
+                phrase = """select p.idpeptide, p.sequence, 
+                        p.length, p.molecular_weight, p.charge_density, 
+                        p.isoelectric_point, p.charge from peptide p
+                        join peptide_has_go phg
+                        on phg.idpeptide = p.idpeptide and phg.id_go = {}""".format(value)
+
+            if "Database" in ff:
+                phrase = """select p.idpeptide, p.sequence, 
+                        p.length, p.molecular_weight, p.charge_density, 
+                        p.isoelectric_point, p.charge from peptide p
+                        join peptide_has_db_has_index phdhi
+                        on phdhi.idpeptide = p.idpeptide and phdhi.id_db = {}""".format(value)
+
             if "Sequence" in ff:
-                phrase = """p.sequence like '%{}%'""".format(value)
-            phrase = phrase.replace("\n", "")
-            phrase = re.sub(" +"," ", phrase)
+                phrase = """select p.idpeptide, p.sequence, 
+                        p.length, p.molecular_weight, p.charge_density, 
+                        p.isoelectric_point, p.charge from peptide p
+                        where p.sequence like '%{}%'""".format(value)
         else:
             phrase = ""
         return phrase
@@ -89,8 +85,12 @@ class search():
         if logic == "":
             return " True ", limit, offset
         broken = [term.strip() for term in re.split('({})'.format("[\(\)]"), logic) if term != ""]
+        join_list = []
         for index, j in enumerate(broken):
             if j != "(" and j != ")" and j != "AND" and j != "OR" :
                 broken[index] = self.parse_terms(j)
-        parsed_query = " ".join(broken)
-        return parsed_query, limit, offset
+        join_list = list(set(join_list))
+        parsed_where = " ".join(broken)
+        parsed_where = parsed_where.replace("AND", "INTERSECT").replace("OR", "UNION")
+        print(parsed_where)
+        return parsed_where, limit, offset

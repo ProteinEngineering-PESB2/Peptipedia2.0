@@ -210,7 +210,6 @@ class verify_fasta:
                     return False
         return True
 
-
 class interface:
     def parse_information_no_options(self, request):
         try:
