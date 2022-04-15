@@ -8,23 +8,18 @@
  - Gene ontology: Caracteriza empleando términos gene ontology.
  - PFAM: Caracteriza empleando términos pfam.
  - Frequency: Caracteriza de acuerdo a las frecuencias aminoacídicas. Pendiente: Gráfico global.
- - Encoding: Codifica las secuencias de acuerdo a one hot encoding, propiedades físico químicas y fft. Pendiente: Arreglar la dependencia de fft con las propiedades físico químicas. 
- - Búsqueda avanzada: Formulario de búsqueda, permite generar queries y llevar a cabo consultas complejas. Pendiente: Conectar a la BD mediante una api y programar los joins correspondientes.
- - Clustering: Realiza clustering de secuencias empleando codificaciones, propiedades y algoritmos deseados. Pentiende: Corregir las codificaciones one hot encoding y physicochemical properties.
- 
+ - Encoding: Codifica las secuencias de acuerdo a one hot encoding, propiedades físico químicas y fft
+ - Búsqueda avanzada: Formulario de búsqueda, permite generar queries y llevar a cabo consultas complejas. Pendiente: Hacer el frontend de las consultas
+ - Clustering: Realiza clustering de secuencias empleando codificaciones, propiedades y algoritmos deseados.
+
 ## Tareas a realizar.
 
 Claudio
 
  - Mejorar home, incluir about us, tutoriales y submit sequences, contacto.
- - Agregar un formulario de clustering de secuencias. 
  - Generar gráficos y disponer de información relevante sobre la base de datos.
- 
-Gabriel
+ - Formulario aprendizaje supervizado
 
- - Incluir la base de datos propia para la búsqueda avanzada. 
- - Revisar flujo en las codificaciones. Incorporar la posibilidad de seleccionar propiedades en específico.
- - Incorporar la base de datos a la api. 
  
 David
 
@@ -34,6 +29,22 @@ David
  - Entrenar los clasificadores. 
  - Servicio de clasificación de secuencias.
  - Exploración de landscape y diseño de secuencias.
+
+
+## Estructura de directorios.
+
+.
+├── app
+│   ├── public
+│   └── src
+├── backend
+│   └── src
+├── bd
+
+Archivos que no se encuentran en el repositorio:
+
+ - peptipedia_psql.sql -> copiar en la carpeta ./bd/
+ - peptipedia_install_requisites.zip -> copiar y descomprimir en la carpeta ./backend/
 
 
 ## Instalación y ejecución de la aplicación.

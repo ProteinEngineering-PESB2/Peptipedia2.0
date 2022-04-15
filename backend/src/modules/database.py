@@ -1,12 +1,13 @@
 from sqlalchemy import create_engine, text
 import pandas as pd
 import json
+import os
 class database:
-    def __init__(self):
-        user = "user"
-        password = "chapalapachala123"
-        db = "peptipedia_db"
-        host = "190.114.255.125"
+    def __init__(self, config):
+        user = config["database"]["user"]
+        password = config["database"]["password"]
+        db = config["database"]["db"]
+        host = config["database"]["host"]
         engine = create_engine("postgresql+psycopg2://{}:{}@{}/{}".format(user, password, host, db))
         self.conn = engine.connect()
 

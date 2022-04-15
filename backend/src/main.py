@@ -25,6 +25,8 @@ temp_folder =  config["folders"]["temp_folder"]
 alignments = config["folders"]["alignments_folder"]
 path_aa_index = config["folders"]["path_aa_index"]
 
+db = database(config)
+
 try:
     os.mkdir(temp_folder)
 except Exception as e:
@@ -145,14 +147,12 @@ def api_supervised_learning():
 
 @server.route('/api/count/', methods=["POST"])
 def api_count():
-    db = database()
     where, limit, offset = search(request.json).parse_search()
     result = db.count_peptides(where)
     return {"count": result}
 
 @server.route('/api/search/', methods=["POST"])
 def api_search():
-    db = database()
     where, limit, offset = search(request.json).parse_search()
     result = db.select_peptides(where, limit, offset)
     return {"query": result}
@@ -160,25 +160,21 @@ def api_search():
 
 @server.route('/api/database_list/', methods=["GET"])
 def api_db_list():
-    db = database()
     result = db.get_all_databases()
     return {"result": result}
 
 @server.route('/api/gene_ontology_list/<sub_string>', methods=["GET"])
 def api_go_list(sub_string):
-    db = database()
     result = db.get_all_gene_ontology(sub_string, config["select"]["limit"])
     return {"result": result}
 
 @server.route('/api/pfam_list/<sub_string>', methods=["GET"])
 def api_pfam_list(sub_string):
-    db = database()
     result = db.get_all_pfam(sub_string, config["select"]["limit"])
     return {"result": result}
 
 @server.route('/api/taxonomy_list/<sub_string>', methods=["GET"])
 def api_taxonomy_list(sub_string):
-    db = database()
     result = db.get_all_taxonomy(sub_string, config["select"]["limit"])
     return {"result": result}
 
