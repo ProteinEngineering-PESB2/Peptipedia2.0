@@ -32,7 +32,7 @@ David
 
 
 ## Estructura de directorios.
-
+```
 .
 ├── app
 │   ├── public
@@ -40,7 +40,7 @@ David
 ├── backend
 │   └── src
 ├── bd
-
+```
 Archivos que no se encuentran en el repositorio:
 
  - peptipedia_psql.sql -> copiar en la carpeta ./bd/
