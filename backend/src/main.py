@@ -170,6 +170,7 @@ def api_go_list(sub_string):
 
 @server.route('/api/pfam_list/<sub_string>', methods=["GET"])
 def api_pfam_list(sub_string):
+    db = database()
     result = db.get_all_pfam(sub_string, config["select"]["limit"])
     return {"result": result}
 
