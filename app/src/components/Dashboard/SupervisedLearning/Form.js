@@ -7,16 +7,19 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import { styled } from "@mui/material/styles";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
+import { supervisedLearning } from "../../../services/supervsied_learning";
+
 const Input = styled("input")({
   display: "none",
 });
 
-const Form = () => {
+const Form = ({ setData }) => {
   const [fileInput, setFileInput] = useState(null);
   const [encodingTypeValue, setEncodingTypeValue] =
     useState("one_hot_encoding");
@@ -24,6 +27,7 @@ const Form = () => {
   const [validation, setValidation] = useState(2);
   const [taskType, setTaskType] = useState("classification");
   const [algorithm, setAlgorithm] = useState("adaboost");
+  const [loading, setLoading] = useState(false);
 
   const handleChangeFileInput = (e) => {
     setFileInput(e.target.files[0]);
@@ -49,9 +53,51 @@ const Form = () => {
     setAlgorithm(e.target.value);
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    let options;
+
+    if (encodingTypeValue === "one_hot_encoding") {
+      options = new Blob([
+        JSON.stringify({
+          encoding: encodingTypeValue,
+          task: taskType,
+          algorithm: algorithm,
+          validation: parseInt(validation),
+        }),
+      ]);
+    } else {
+      options = new Blob([
+        JSON.stringify({
+          encoding: encodingTypeValue,
+          selected_property: propertyValue,
+          task: taskType,
+          algorithm: algorithm,
+          validation: parseInt(validation),
+        }),
+      ]);
+    }
+
+    const post = new FormData();
+    post.append("file", fileInput);
+    post.append("options", options);
+
+    try {
+      const res = await supervisedLearning(post);
+      setData(res.result)
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginBottom: 2 }}>
             <label htmlFor="contained-button-file">
@@ -190,6 +236,36 @@ const Form = () => {
                 <MenuItem value="knn">KNN</MenuItem>
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item lg={12} xs={12} sx={{ marginTop: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item lg={5} md={4} xs={12}>
+                {loading ? (
+                  <LoadingButton
+                    loading
+                    variant="contained"
+                    color="primary"
+                    sx={{ width: "100%" }}
+                    size="medium"
+                  >
+                    Loading{" "}
+                  </LoadingButton>
+                ) : (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: "#2962ff",
+                      ":hover": { backgroundColor: "#2962ff" },
+                    }}
+                    size="medium"
+                  >
+                    Run Encodings
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </form>

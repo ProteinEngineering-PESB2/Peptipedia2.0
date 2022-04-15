@@ -1,81 +1,75 @@
-import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-
-const activites = [
-  { name: "Activity one" },
-  { name: "Activity two" },
-  { name: "Activity three" },
-  { name: "Activity fout" },
-  { name: "Activity five" },
-  { name: "Activity six" },
-];
+import InputLabel from "@mui/material/InputLabel";
 
 const GeneOntologyField = ({
   valueGeneOntology,
   setValueGeneOntology,
   logicOperatorValueForGeneOntology,
   setLogicOperatorValueForGeneOntology,
-  index
+  index,
 }) => {
-  const handleChangeValueGeneOntology = (e, newValue) => {
-    setValueGeneOntology([...newValue]);
+  const handleChangeValueGeneOntology = (e) => {
+    setValueGeneOntology(e.target.value);
   };
 
   return (
-    <Grid item lg={12} md={12} xs={12}>
-      {index !== 0 ? (
-        <Grid container spacing={2}>
-          <Grid item lg={2.6} xs={4}>
+    <>
+      <Grid item lg={12} md={12} xs={12}>
+        {index !== 0 ? (
+          <Grid container spacing={2}>
+            <Grid item lg={2.6} xs={4}>
+              <Select
+                value={logicOperatorValueForGeneOntology}
+                onChange={({ target }) =>
+                  setLogicOperatorValueForGeneOntology(target.value)
+                }
+                label="Operator"
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                sx={{ width: "100%" }}
+              >
+                <MenuItem value="AND">AND</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item lg={9} xs={8}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="gene-ontology-label">Gene Ontology</InputLabel>
+                <Select
+                  labelId="gene-ontology-label"
+                  label="Gene Ontology"
+                  value={valueGeneOntology}
+                  onChange={handleChangeValueGeneOntology}
+                >
+                  <MenuItem value="taxonomy">Taxonomy</MenuItem>
+                  <MenuItem value="taxonomy1">Taxonomy1</MenuItem>
+                  <MenuItem value="taxonomy2">Taxonomy2</MenuItem>
+                  <MenuItem value="taxonomy3">Taxonomy3</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        ) : (
+          <FormControl sx={{ width: "100%" }}>
+            <InputLabel id="gene-ontology-label">Gene Ontology</InputLabel>
             <Select
-              value={logicOperatorValueForGeneOntology}
-              onChange={({ target }) =>
-                setLogicOperatorValueForGeneOntology(target.value)
-              }
-              label="Operator"
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              sx={{ width: "100%" }}
+              labelId="gene-ontology-label"
+              label="Gene Ontology"
+              value={valueGeneOntology}
+              onChange={handleChangeValueGeneOntology}
             >
-              <MenuItem value="AND">AND</MenuItem>
-              <MenuItem value="OR">OR</MenuItem>
+              <MenuItem value="taxonomy">Taxonomy</MenuItem>
+              <MenuItem value="taxonomy1">Taxonomy1</MenuItem>
+              <MenuItem value="taxonomy2">Taxonomy2</MenuItem>
+              <MenuItem value="taxonomy3">Taxonomy3</MenuItem>
             </Select>
-          </Grid>
-          <Grid item lg={9} xs={8}>
-            <FormControl variant="standard" sx={{ width: "100%" }}>
-              <Autocomplete
-                value={valueGeneOntology}
-                onChange={handleChangeValueGeneOntology}
-                multiple
-                options={activites}
-                disableCloseOnSelect
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => (
-                  <TextField {...params} label="Gene Ontology" />
-                )}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      ) : (
-        <FormControl variant="standard" sx={{ width: "100%" }}>
-          <Autocomplete
-            value={valueGeneOntology}
-            onChange={handleChangeValueGeneOntology}
-            multiple
-            options={activites}
-            disableCloseOnSelect
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField {...params} label="Gene Ontology" />
-            )}
-          />
-        </FormControl>
-      )}
-    </Grid>
+          </FormControl>
+        )}
+      </Grid>
+    </>
   );
 };
 
