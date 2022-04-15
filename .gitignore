@@ -1,3 +1,5 @@
 */__pycache__
 backend/install_requisites
 tools
+bd
+src/config.ini
