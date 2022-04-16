@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
@@ -17,8 +15,6 @@ const TaxonomyField = ({
   index,
   taxonomies,
 }) => {
-  useEffect(() => console.log(inputTaxonomy));
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (

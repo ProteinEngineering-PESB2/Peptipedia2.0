@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
@@ -5,15 +7,19 @@ import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-const options = ["Option 1", "Option 2"];
-
 const PfamField = ({
   valuePfam,
   handleChangeValuePfam,
+  inputPfam,
+  handleChangeInputPfam,
   logicOperatorValueForPfam,
   setLogicOperatorValueForPfam,
   index,
+  pfams,
 }) => {
+
+  useEffect(() => console.log(pfams))
+
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -38,7 +44,9 @@ const PfamField = ({
               <Autocomplete
                 value={valuePfam}
                 onChange={handleChangeValuePfam}
-                options={options}
+                inputValue={inputPfam}
+                onInputChange={handleChangeInputPfam}
+                options={pfams}
                 renderInput={(params) => <TextField {...params} label="Pfam" />}
               />
             </FormControl>
@@ -49,7 +57,9 @@ const PfamField = ({
           <Autocomplete
             value={valuePfam}
             onChange={handleChangeValuePfam}
-            options={options}
+            inputValue={inputPfam}
+            onInputChange={handleChangeInputPfam}
+            options={pfams}
             renderInput={(params) => <TextField {...params} label="Pfam" />}
           />
         </FormControl>

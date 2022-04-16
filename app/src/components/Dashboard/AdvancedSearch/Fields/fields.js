@@ -4,7 +4,7 @@ export const fields = [
   { label: "Isoelectric Point" },
   { label: "Charge" },
   { label: "Charge Density" },
-  { label: "Activity" },
+  // { label: "Activity" },
   { label: "Taxonomy" },
   { label: "Database" },
   { label: "Pfam" },

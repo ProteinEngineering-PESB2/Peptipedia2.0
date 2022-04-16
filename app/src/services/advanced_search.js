@@ -9,3 +9,8 @@ export const getDatabases = async () => {
   const res = await axios.get("/api/database_list");
   return res.data;
 };
+
+export const getPfam = async (term) => {
+  const res = await axios.get(`/api/pfam_list/${term}`);
+  return res.data;
+};
