@@ -2,19 +2,18 @@ import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+
+const options = ["Option 1", "Option 2"];
 
 const GeneOntologyField = ({
   valueGeneOntology,
-  setValueGeneOntology,
+  handleChangeValueGeneOntology,
   logicOperatorValueForGeneOntology,
   setLogicOperatorValueForGeneOntology,
   index,
 }) => {
-  const handleChangeValueGeneOntology = (e) => {
-    setValueGeneOntology(e.target.value);
-  };
-
   return (
     <>
       <Grid item lg={12} md={12} xs={12}>
@@ -37,35 +36,27 @@ const GeneOntologyField = ({
             </Grid>
             <Grid item lg={9} xs={8}>
               <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="gene-ontology-label">Gene Ontology</InputLabel>
-                <Select
-                  labelId="gene-ontology-label"
-                  label="Gene Ontology"
+                <Autocomplete
                   value={valueGeneOntology}
                   onChange={handleChangeValueGeneOntology}
-                >
-                  <MenuItem value="taxonomy">Taxonomy</MenuItem>
-                  <MenuItem value="taxonomy1">Taxonomy1</MenuItem>
-                  <MenuItem value="taxonomy2">Taxonomy2</MenuItem>
-                  <MenuItem value="taxonomy3">Taxonomy3</MenuItem>
-                </Select>
+                  options={options}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Gene Ontology" />
+                  )}
+                />
               </FormControl>
             </Grid>
           </Grid>
         ) : (
           <FormControl sx={{ width: "100%" }}>
-            <InputLabel id="gene-ontology-label">Gene Ontology</InputLabel>
-            <Select
-              labelId="gene-ontology-label"
-              label="Gene Ontology"
+            <Autocomplete
               value={valueGeneOntology}
               onChange={handleChangeValueGeneOntology}
-            >
-              <MenuItem value="taxonomy">Taxonomy</MenuItem>
-              <MenuItem value="taxonomy1">Taxonomy1</MenuItem>
-              <MenuItem value="taxonomy2">Taxonomy2</MenuItem>
-              <MenuItem value="taxonomy3">Taxonomy3</MenuItem>
-            </Select>
+              options={options}
+              renderInput={(params) => (
+                <TextField {...params} label="Gene Ontology" />
+              )}
+            />
           </FormControl>
         )}
       </Grid>

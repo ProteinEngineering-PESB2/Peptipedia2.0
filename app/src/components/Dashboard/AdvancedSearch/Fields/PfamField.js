@@ -2,19 +2,18 @@ import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+
+const options = ["Option 1", "Option 2"];
 
 const PfamField = ({
   valuePfam,
-  setValuePfam,
+  handleChangeValuePfam,
   logicOperatorValueForPfam,
   setLogicOperatorValueForPfam,
   index,
 }) => {
-  const handleChangeValuePfam = (e) => {
-    setValuePfam(e.target.value);
-  };
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -36,35 +35,23 @@ const PfamField = ({
           </Grid>
           <Grid item lg={9} xs={8}>
             <FormControl sx={{ width: "100%" }}>
-              <InputLabel id="pfam-label">Pfam</InputLabel>
-              <Select
-                labelId="pfam-label"
-                label="Pfam"
+              <Autocomplete
                 value={valuePfam}
                 onChange={handleChangeValuePfam}
-              >
-                <MenuItem value="taxonomy">Taxonomy</MenuItem>
-                <MenuItem value="taxonomy1">Taxonomy1</MenuItem>
-                <MenuItem value="taxonomy2">Taxonomy2</MenuItem>
-                <MenuItem value="taxonomy3">Taxonomy3</MenuItem>
-              </Select>
+                options={options}
+                renderInput={(params) => <TextField {...params} label="Pfam" />}
+              />
             </FormControl>
           </Grid>
         </Grid>
       ) : (
         <FormControl sx={{ width: "100%" }}>
-          <InputLabel id="pfam-label">Pfam</InputLabel>
-          <Select
-            labelId="pfam-label"
-            label="Pfam"
+          <Autocomplete
             value={valuePfam}
             onChange={handleChangeValuePfam}
-          >
-            <MenuItem value="taxonomy">Taxonomy</MenuItem>
-            <MenuItem value="taxonomy1">Taxonomy1</MenuItem>
-            <MenuItem value="taxonomy2">Taxonomy2</MenuItem>
-            <MenuItem value="taxonomy3">Taxonomy3</MenuItem>
-          </Select>
+            options={options}
+            renderInput={(params) => <TextField {...params} label="Pfam" />}
+          />
         </FormControl>
       )}
     </Grid>

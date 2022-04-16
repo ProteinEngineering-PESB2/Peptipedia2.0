@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -23,8 +23,6 @@ import DatabaseField from "./Fields/DatabaseField";
 import GeneOntologyField from "./Fields/GeneOntologyField";
 import PfamField from "./Fields/PfamField";
 
-import { getTaxonomies } from "../../../services/advanced_search";
-
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -38,13 +36,11 @@ const Form = ({ queries, setQueries }) => {
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
-  const [valueTaxonomy, setValueTaxonomy] = useState("");
-  const [valueGeneOntology, setValueGeneOnotology] = useState("");
-  const [valuePfam, setValuePfam] = useState("");
-  const [valueActivity, setValueActivity] = useState("");
-  const [valueDatabase, setValueDatabase] = useState("");
-
-  const [taxonomies, setTaxonomies] = useState([]);
+  const [valueTaxonomy, setValueTaxonomy] = useState("Option 1");
+  const [valueGeneOntology, setValueGeneOnotology] = useState("Option 1");
+  const [valuePfam, setValuePfam] = useState("Option 1");
+  const [valueActivity, setValueActivity] = useState("Option 1");
+  const [valueDatabase, setValueDatabase] = useState("Option 1");
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
@@ -77,14 +73,6 @@ const Form = ({ queries, setQueries }) => {
   const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
     useState("AND");
 
-  const initialDataTaxonomies = async () => {
-    await getTaxonomies("binding");
-  };
-
-  useEffect(() => {
-    initialDataTaxonomies();
-  });
-
   const handleChangeQueryText = (e) => {
     setQueryText(e.target.value);
   };
@@ -110,9 +98,24 @@ const Form = ({ queries, setQueries }) => {
     setValueChargeDensity(newValue);
   };
 
-  const handleChangeValueTaxonomy = async (e) => {
-    await initialDataTaxonomies(e.target.value)
-    setValueTaxonomy(e.target.value);
+  const handleChangeValueActivity = (e, newValue) => {
+    setValueActivity(newValue);
+  };
+
+  const handleChangeValueTaxonomy = async (e, newValue) => {
+    setValueTaxonomy(newValue);
+  };
+
+  const handleChangeValueDatabase = (e, newValue) => {
+    setValueDatabase(newValue);
+  };
+
+  const handleChangeValuePfam = (e, newValue) => {
+    setValuePfam(newValue);
+  };
+
+  const handleChangeValueGeneOntology = (e, newValue) => {
+    setValueGeneOnotology(newValue);
   };
 
   // Operators
@@ -405,7 +408,7 @@ const Form = ({ queries, setQueries }) => {
             {option === "Activity" && (
               <ActivityField
                 valueActivity={valueActivity}
-                setValueActivity={setValueActivity}
+                handleChangeValueActivity={handleChangeValueActivity}
                 logicOperatorValueForActivity={logicOperatorValueForActivity}
                 setLogicOperatorValueForActivity={
                   setLogicOperatorValueForActivity
@@ -429,7 +432,7 @@ const Form = ({ queries, setQueries }) => {
             {option === "Database" && (
               <DatabaseField
                 valueDatabase={valueDatabase}
-                setValueDatabase={setValueDatabase}
+                handleChangeValueDatabase={handleChangeValueDatabase}
                 logicOperatorValueForDatabase={logicOperatorValueForDatabase}
                 setLogicOperatorValueForDatabase={
                   setLogicOperatorValueForDatabase
@@ -441,7 +444,7 @@ const Form = ({ queries, setQueries }) => {
             {option === "Pfam" && (
               <PfamField
                 valuePfam={valuePfam}
-                setValuePfam={setValuePfam}
+                handleChangeValuePfam={handleChangeValuePfam}
                 logicOperatorValueForPfam={logicOperatorValueForPfam}
                 setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
                 selectedOptions={selectedOptions}
@@ -451,7 +454,7 @@ const Form = ({ queries, setQueries }) => {
             {option === "Gene Ontology" && (
               <GeneOntologyField
                 valueGeneOntology={valueGeneOntology}
-                setValueGeneOntology={setValueGeneOnotology}
+                handleChangeValueGeneOntology={handleChangeValueGeneOntology}
                 logicOperatorValueForGeneOntology={
                   logicOperatorValueForGeneOntology
                 }

@@ -4,9 +4,9 @@ export const fields = [
   { label: "Isoelectric Point" },
   { label: "Charge" },
   { label: "Charge Density" },
-  { label: "Taxonomy" },
-  { label: "Gene Ontology" },
-  { label: "Pfam" },
   { label: "Activity" },
+  { label: "Taxonomy" },
   { label: "Database" },
+  { label: "Pfam" },
+  { label: "Gene Ontology" },
 ];
