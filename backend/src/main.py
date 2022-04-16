@@ -157,7 +157,6 @@ def api_search():
     result = db.select_peptides(where, limit, offset)
     return {"query": result}
 
-
 @server.route('/api/database_list/', methods=["GET"])
 def api_db_list():
     result = db.get_all_databases()
@@ -170,7 +169,6 @@ def api_go_list(sub_string):
 
 @server.route('/api/pfam_list/<sub_string>', methods=["GET"])
 def api_pfam_list(sub_string):
-    db = database()
     result = db.get_all_pfam(sub_string, config["select"]["limit"])
     return {"result": result}
 

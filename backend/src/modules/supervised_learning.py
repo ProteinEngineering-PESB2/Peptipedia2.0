@@ -25,7 +25,6 @@ class supervised_algorithms(config_tool):
         self.process_encoding_stage()
         run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation)
         response = run_instance.training_model()
-        print(response)
         return response
 
     def process_encoding_stage(self):

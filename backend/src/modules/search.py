@@ -92,5 +92,4 @@ class search():
         join_list = list(set(join_list))
         parsed_where = " ".join(broken)
         parsed_where = parsed_where.replace("AND", "INTERSECT").replace("OR", "UNION")
-        print(parsed_where)
         return parsed_where, limit, offset

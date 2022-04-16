@@ -10,7 +10,7 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 
 from modules.training_supervised_learning import supervised_algorithm
 
-class run_algorithm(object):
+class run_algorithm:
 
     def __init__(self, dataset, response, task, algorithm, validation):
         self.dataset = dataset

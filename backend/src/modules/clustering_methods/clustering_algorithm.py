@@ -7,7 +7,7 @@ from sklearn.cluster import DBSCAN
 from sklearn.cluster import Birch
 from sklearn.cluster import OPTICS
 
-class aplicateClustering(object):
+class aplicateClustering:
 
     def __init__(self, dataSet):
         self.dataSet = dataSet

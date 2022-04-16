@@ -1,6 +1,6 @@
 from sklearn import metrics
 
-class evaluationClustering(object):
+class evaluationClustering:
 
     def get_metrics(self, dataSet, labelsResponse):
 
@@ -9,6 +9,7 @@ class evaluationClustering(object):
             siluetas = metrics.silhouette_score(dataSet, labelsResponse, metric='euclidean')
             davies = metrics.davies_bouldin_score(dataSet, labelsResponse)
             response = [calinski, siluetas, davies]
+
         except Exception as e:
             print(e)
             calinski = "ERROR"
@@ -16,4 +17,5 @@ class evaluationClustering(object):
             davies = "ERROR"
             response = [calinski, siluetas, davies]
             pass
+            
         return response

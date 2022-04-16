@@ -115,10 +115,10 @@ class unsupervised_algorithms(config_tool):
             data_json = json.loads(self.dataset_encoded[["id", "label"]].to_json(orient = "records"))
             self.response.update({"status": "success"})
             counts = self.dataset_encoded.label.value_counts()
-            counts = [{"category": int(count), "value": int(counts[count]), "percentage": int(counts[count]) * 100 / counts.sum()} for count in list(counts.index)]
+            counts = [{"category": int(count), "value": int(counts[count]), "percentage": (int(counts[count]) * 100 / counts.sum()).round(3)} for count in list(counts.index)]
             self.response.update({"data": data_json})
             performances = evaluation_process.get_metrics(self.dataset_to_cluster, clustering_process.labels)
-            performances_dict = {"calinski": performances[0], "siluetas": performances[1], "dalvies": performances[2]}
+            performances_dict = {"calinski": performances[0].round(3), "siluetas": performances[1].round(3), "dalvies": performances[2].round(3)}
             self.response.update({"performance": performances_dict})
             self.response.update({"resume": counts})
             self.response.update({"encoding_path": self.dataset_encoded_path})
