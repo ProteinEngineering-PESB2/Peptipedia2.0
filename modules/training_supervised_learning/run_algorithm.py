@@ -10,6 +10,8 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 
 import supervised_algorithm
 
+from joblib import dump
+
 class run_algorithm(object):
 
     def __init__(self, dataset, response, type_model, algorithm, validation):
@@ -78,7 +80,12 @@ class run_algorithm(object):
         else: #KNN
             self.model = KNeighborsRegressor()
 
-    def training_model(self):
+    def __export_model(self, model_fit, name_export):
+
+        dump(model_fit, name_export)
+        return 0
+
+    def training_model(self, name_expot):
 
         #start model
         if self.type_model in [1,2]: #class
@@ -88,4 +95,10 @@ class run_algorithm(object):
 
         #instance training object
         training_object = supervised_algorithm.model_algorithm(self.dataset, self.response, self.type_model, self.algorithm, self.validation, self.model)
-        return training_object.trainingMethod(self.type_model)
+
+        response = training_object.trainingMethod(self.type_model)
+
+        # creating a joblib
+        self.__export_model(training_object.model, name_expot)
+
+        return response
