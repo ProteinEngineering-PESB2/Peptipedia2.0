@@ -177,17 +177,20 @@ def api_db_list():
     return {"result": result}
 
 @server.route('/api/gene_ontology_list/<sub_string>', methods=["GET"])
-def api_go_list(sub_string):
+@server.route('/api/gene_ontology_list/', methods=["GET"])
+def api_go_list(sub_string = None):
     result = db.get_all_gene_ontology(sub_string, config["select"]["limit"])
     return {"result": result}
 
 @server.route('/api/pfam_list/<sub_string>', methods=["GET"])
-def api_pfam_list(sub_string):
+@server.route('/api/pfam_list/', methods=["GET"])
+def api_pfam_list(sub_string = None):
     result = db.get_all_pfam(sub_string, config["select"]["limit"])
     return {"result": result}
 
 @server.route('/api/taxonomy_list/<sub_string>', methods=["GET"])
-def api_taxonomy_list(sub_string):
+@server.route('/api/taxonomy_list/', methods=["GET"])
+def api_taxonomy_list(sub_string = None):
     result = db.get_all_taxonomy(sub_string, config["select"]["limit"])
     return {"result": result}
 
