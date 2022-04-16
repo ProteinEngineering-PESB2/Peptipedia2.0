@@ -2,7 +2,10 @@ from sqlalchemy import create_engine, text
 import pandas as pd
 import json
 import os
+from datetime import date
+
 class database:
+
     def __init__(self, config):
         user = config["database"]["user"]
         password = config["database"]["password"]
@@ -13,7 +16,6 @@ class database:
 
     def count_peptides(self, query):
         count_query = "select COUNT(*) from {} as query".format(query)
-        print(count_query)
         count = pd.read_sql(text(count_query), self.conn)
         count = int(count.iloc[0].values[0])
         return count
@@ -49,3 +51,16 @@ class database:
         data.name = data.name + " (" + data.tax_type + ")"
         data.drop(["tax_type"], inplace=True, axis = 1)
         return json.loads(data.to_json(orient="records"))
+
+    def save_job(self, row):
+        row["options"]["date"] = date.today()
+        df = pd.DataFrame([row["options"]])
+        df.to_sql("model", self.conn, index=False, if_exists="append", method="multi", chunksize = 50)
+
+    def get_all_models(self):
+        data = pd.read_sql(text("select * from model"), self.conn)
+        dates = [row.strftime('%m/%d/%Y') for row in data["date"]]
+        json_data = json.loads(data.to_json(orient="records"))
+        for index, date in enumerate(dates):
+            json_data[index]["date"] = date
+        return json_data

@@ -90,3 +90,6 @@ class run_algorithm:
         #instance training object
         training_object = supervised_algorithm.model_algorithm(self.dataset, self.response, self.task, self.algorithm, self.validation, self.model)
         return training_object.trainingMethod()
+    
+    def get_model(self):
+        return self.model

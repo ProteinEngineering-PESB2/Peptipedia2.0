@@ -6,11 +6,14 @@ from modules.utils import config_tool
 import json
 from scipy import stats
 from modules.training_supervised_learning.run_algorithm import run_algorithm
+from joblib import dump
+from modules.database import database
 
 class supervised_algorithms(config_tool):
     def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
         super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences, is_fasta = False)
         self.dataset_encoded_path = "{}/{}.csv".format(static_folder, str(round(random()*10**20)))
+        self.job_path = "{}/{}.joblib".format(static_folder, str(round(random()*10**20)))
         self.options = options
         self.dataset_encoded = None
         self.path_config_aaindex_encoder = path_aa_index
@@ -25,6 +28,8 @@ class supervised_algorithms(config_tool):
         self.process_encoding_stage()
         run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation)
         response = run_instance.training_model()
+        self.model = run_instance.get_model()
+        self.dump_joblib()
         return response
 
     def process_encoding_stage(self):
@@ -43,3 +48,16 @@ class supervised_algorithms(config_tool):
             fft_encoding = run_fft_encoding.run_fft_encoding(self.data, selected_property, self.path_config_aaindex_encoder)
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()
+
+    def dump_joblib(self):
+        dump(self.model, self.job_path)
+
+class model:
+    def __init__(self, db):
+        self.db = db
+
+    def save_job(self, options):
+        self.db.save_job(options)
+    
+    def list_models(self):
+        return self.db.get_all_models()

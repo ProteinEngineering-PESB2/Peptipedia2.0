@@ -6,7 +6,7 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
-from modules.supervised_learning import supervised_algorithms
+from modules.supervised_learning import supervised_algorithms, model
 from modules.pca_process import pca_process
 from modules.utils import interface
 from modules.search import search
@@ -143,7 +143,21 @@ def api_supervised_learning():
     if(check["status"] == "error"):
         return check
     result = sl.run()
-    return {"result": result}
+    job_path = sl.job_path
+    return {"result": result, "job_path": job_path}
+
+@server.route('/api/publish_model/', methods=["POST"])
+def api_publish_model():
+    post_data = request.json
+    mod = model(db)
+    mod.save_job(post_data)
+    return {"status": "success"}
+
+@server.route('/api/list_models/', methods=["GET"])
+def api_list_models():
+    mod = model(db)
+    return {"result": mod.list_models()}
+
 
 @server.route('/api/count/', methods=["POST"])
 def api_count():
