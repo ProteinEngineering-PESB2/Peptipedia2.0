@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -10,6 +10,8 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import { fields } from "./Fields/fields";
+
+import { getTaxonomies, getDatabases } from "../../../services/advanced_search";
 
 // Fields
 import LengthField from "./Fields/LengthField";
@@ -30,17 +32,19 @@ const Form = ({ queries, setQueries }) => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [queryText, setQueryText] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [valueLength, setValueLength] = useState([20, 100]);
   const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
-  const [valueTaxonomy, setValueTaxonomy] = useState("Option 1");
-  const [valueGeneOntology, setValueGeneOnotology] = useState("Option 1");
-  const [valuePfam, setValuePfam] = useState("Option 1");
-  const [valueActivity, setValueActivity] = useState("Option 1");
-  const [valueDatabase, setValueDatabase] = useState("Option 1");
+  const [valueTaxonomy, setValueTaxonomy] = useState("");
+  const [inputTaxonomy, setInputTaxonomy] = useState("");
+  const [valueGeneOntology, setValueGeneOnotology] = useState("");
+  const [valuePfam, setValuePfam] = useState("");
+  const [valueActivity, setValueActivity] = useState("");
+  const [valueDatabase, setValueDatabase] = useState("");
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
@@ -73,6 +77,42 @@ const Form = ({ queries, setQueries }) => {
   const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
     useState("AND");
 
+  const [taxonomies, setTaxonomies] = useState([]);
+  const [databases, setDatabases] = useState([]);
+
+  const initialTaxonomies = async () => {
+    try {
+      const res = await getTaxonomies("a");
+      const array = [];
+      res.result.forEach((r) => {
+        array.push(r.name);
+      });
+      setTaxonomies(array);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const initialDatabases = async () => {
+    try {
+      const res = await getDatabases();
+      const array = [];
+      res.result.forEach((r) => {
+        array.push(r.name);
+      });
+      setDatabases(array);
+      setValueDatabase(array[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    initialTaxonomies();
+    initialDatabases();
+    setLoading(false);
+  }, []);
+
   const handleChangeQueryText = (e) => {
     setQueryText(e.target.value);
   };
@@ -104,6 +144,23 @@ const Form = ({ queries, setQueries }) => {
 
   const handleChangeValueTaxonomy = async (e, newValue) => {
     setValueTaxonomy(newValue);
+  };
+
+  const handleChangeInputTaxonomy = async (e, newValue) => {
+    if (newValue) {
+      try {
+        const res = await getTaxonomies(newValue);
+        const array = [];
+        res.result.forEach((r) => {
+          array.push(r.name);
+        });
+        setTaxonomies(array);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    setInputTaxonomy(newValue);
   };
 
   const handleChangeValueDatabase = (e, newValue) => {
@@ -308,233 +365,256 @@ const Form = ({ queries, setQueries }) => {
   };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item lg={12} md={12} xs={12}>
-        <Grid item lg={12} md={12} xs={12}>
-          <Autocomplete
-            multiple
-            options={fields}
-            disableCloseOnSelect
-            disabled={queryText.length > 0 ? true : false}
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
-                {option.label}
-              </li>
-            )}
-            renderInput={(params) => <TextField {...params} label="Fields" />}
-            value={optionsValue}
-            onChange={handleChangeOptionsValue}
-          />
-        </Grid>
-      </Grid>
-      {selectedOptions.map((option, index) => {
-        return (
-          <>
-            {option === "Length" && (
-              <LengthField
-                valueLength={valueLength}
-                handleChangeValueLength={handleChangeValueLength}
-                logicOperatorValueForLength={logicOperatorValueForLength}
-                handleChangeLogicOperatorLength={
-                  handleChangeLogicOperatorLength
-                }
-                index={index}
+    <>
+      {loading ? (
+        <div></div>
+      ) : (
+        <Grid container spacing={3}>
+          <Grid item lg={12} md={12} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
+              <Autocomplete
+                multiple
+                options={fields}
+                disableCloseOnSelect
+                disabled={queryText.length > 0 ? true : false}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.label}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField {...params} label="Fields" />
+                )}
+                value={optionsValue}
+                onChange={handleChangeOptionsValue}
               />
-            )}
-            {option === "Molecular Weight" && (
-              <MolecularWeightField
-                valueMolecularWeight={valueMolecularWeight}
-                handleChangeValueMolecularWeight={
-                  handleChangeValueMolecularWeight
-                }
-                logicOperatorValueForMolecularWeight={
-                  logicOperatorValueForMolecularWeight
-                }
-                handleChangeLogicOperatorMolecularWeight={
-                  handleChangeLogicOperatorMolecularWeight
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Isoelectric Point" && (
-              <IsoelectricPointField
-                valueIsoelectricPoint={valueIsoelectricPoint}
-                handleChangeValueIsoelectricPoint={
-                  handleChangeValueIsoelectricPoint
-                }
-                logicOperatorValueForIsoelectricPoint={
-                  logicOperatorValueForIsoelectricPoint
-                }
-                handleChangeLogicOperatorIsoelectricPoint={
-                  handleChangeLogicOperatorIsoelectricPoint
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Charge" && (
-              <ChargeField
-                valueCharge={valueCharge}
-                handleChangeValueCharge={handleChangeValueCharge}
-                logicOperatorValueForCharge={logicOperatorValueForCharge}
-                handleChangeLogicOperatorCharge={
-                  handleChangeLogicOperatorCharge
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Charge Density" && (
-              <ChargeDensityField
-                valueChargeDensity={valueChargeDensity}
-                handleChangeValueChargeDensity={handleChangeValueChargeDensity}
-                logicOperatorValueForChargeDensity={
-                  logicOperatorValueForChargeDensity
-                }
-                handleChangeLogicOperatorChargeDensity={
-                  handleChangeLogicOperatorChargeDensity
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Activity" && (
-              <ActivityField
-                valueActivity={valueActivity}
-                handleChangeValueActivity={handleChangeValueActivity}
-                logicOperatorValueForActivity={logicOperatorValueForActivity}
-                setLogicOperatorValueForActivity={
-                  setLogicOperatorValueForActivity
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Taxonomy" && (
-              <TaxonomyField
-                valueTaxonomy={valueTaxonomy}
-                handleChangeValueTaxonomy={handleChangeValueTaxonomy}
-                logicOperatorValueForTaxonomy={logicOperatorValueForTaxonomy}
-                setLogicOperatorValueForTaxonomy={
-                  setLogicOperatorValueForTaxonomy
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Database" && (
-              <DatabaseField
-                valueDatabase={valueDatabase}
-                handleChangeValueDatabase={handleChangeValueDatabase}
-                logicOperatorValueForDatabase={logicOperatorValueForDatabase}
-                setLogicOperatorValueForDatabase={
-                  setLogicOperatorValueForDatabase
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Pfam" && (
-              <PfamField
-                valuePfam={valuePfam}
-                handleChangeValuePfam={handleChangeValuePfam}
-                logicOperatorValueForPfam={logicOperatorValueForPfam}
-                setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-            {option === "Gene Ontology" && (
-              <GeneOntologyField
-                valueGeneOntology={valueGeneOntology}
-                handleChangeValueGeneOntology={handleChangeValueGeneOntology}
-                logicOperatorValueForGeneOntology={
-                  logicOperatorValueForGeneOntology
-                }
-                setLogicOperatorValueForGeneOntology={
-                  setLogicOperatorValueForGeneOntology
-                }
-                selectedOptions={selectedOptions}
-                index={index}
-              />
-            )}
-          </>
-        );
-      })}
-      <Grid item lg={12} md={12} xs={12}>
-        <TextField
-          multiline
-          rows={5}
-          label="Query"
-          disabled={selectedOptions.length === 0 ? false : true}
-          value={queryText}
-          onChange={handleChangeQueryText}
-          sx={{ width: "100%" }}
-        />
-      </Grid>
-      <Grid item lg={12} xs={12}>
-        <Grid container spacing={2}>
-          <Grid item lg={6} md={6} xs={6}>
-            <Button
-              variant="contained"
-              size="medium"
-              sx={{
-                width: "100%",
-                backgroundColor: "#2962ff",
-                ":hover": { backgroundColor: "#2962ff" },
-              }}
-              onClick={onSearch}
-              disabled={
-                selectedOptions.length === 0
-                  ? queryText.length === 0
-                    ? true
-                    : false
-                  : false ||
-                    (selectedOptions.includes("Activity") &&
-                      valueActivity === "")
-                  ? true
-                  : false ||
-                    (selectedOptions.includes("Taxonomy") &&
-                      valueTaxonomy === "")
-                  ? true
-                  : false ||
-                    (selectedOptions.includes("Database") &&
-                      valueDatabase === "")
-                  ? true
-                  : false ||
-                    (selectedOptions.includes("Gene Ontology") &&
-                      valueGeneOntology.length === 0)
-                  ? true
-                  : false ||
-                    (selectedOptions.includes("Pfam") && valuePfam.length === 0)
-                  ? true
-                  : false
-              }
-            >
-              ADD
-            </Button>
+            </Grid>
           </Grid>
-          <Grid item lg={6} md={6} xs={6}>
-            <Button
-              variant="contained"
-              size="medium"
-              color="error"
-              onClick={onReset}
+          {selectedOptions.map((option, index) => {
+            return (
+              <>
+                {option === "Length" && (
+                  <LengthField
+                    valueLength={valueLength}
+                    handleChangeValueLength={handleChangeValueLength}
+                    logicOperatorValueForLength={logicOperatorValueForLength}
+                    handleChangeLogicOperatorLength={
+                      handleChangeLogicOperatorLength
+                    }
+                    index={index}
+                  />
+                )}
+                {option === "Molecular Weight" && (
+                  <MolecularWeightField
+                    valueMolecularWeight={valueMolecularWeight}
+                    handleChangeValueMolecularWeight={
+                      handleChangeValueMolecularWeight
+                    }
+                    logicOperatorValueForMolecularWeight={
+                      logicOperatorValueForMolecularWeight
+                    }
+                    handleChangeLogicOperatorMolecularWeight={
+                      handleChangeLogicOperatorMolecularWeight
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+                {option === "Isoelectric Point" && (
+                  <IsoelectricPointField
+                    valueIsoelectricPoint={valueIsoelectricPoint}
+                    handleChangeValueIsoelectricPoint={
+                      handleChangeValueIsoelectricPoint
+                    }
+                    logicOperatorValueForIsoelectricPoint={
+                      logicOperatorValueForIsoelectricPoint
+                    }
+                    handleChangeLogicOperatorIsoelectricPoint={
+                      handleChangeLogicOperatorIsoelectricPoint
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+                {option === "Charge" && (
+                  <ChargeField
+                    valueCharge={valueCharge}
+                    handleChangeValueCharge={handleChangeValueCharge}
+                    logicOperatorValueForCharge={logicOperatorValueForCharge}
+                    handleChangeLogicOperatorCharge={
+                      handleChangeLogicOperatorCharge
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+                {option === "Charge Density" && (
+                  <ChargeDensityField
+                    valueChargeDensity={valueChargeDensity}
+                    handleChangeValueChargeDensity={
+                      handleChangeValueChargeDensity
+                    }
+                    logicOperatorValueForChargeDensity={
+                      logicOperatorValueForChargeDensity
+                    }
+                    handleChangeLogicOperatorChargeDensity={
+                      handleChangeLogicOperatorChargeDensity
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+                {option === "Activity" && (
+                  <ActivityField
+                    valueActivity={valueActivity}
+                    handleChangeValueActivity={handleChangeValueActivity}
+                    logicOperatorValueForActivity={
+                      logicOperatorValueForActivity
+                    }
+                    setLogicOperatorValueForActivity={
+                      setLogicOperatorValueForActivity
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+                {option === "Taxonomy" && (
+                  <TaxonomyField
+                    valueTaxonomy={valueTaxonomy}
+                    handleChangeValueTaxonomy={handleChangeValueTaxonomy}
+                    inputTaxonomy={inputTaxonomy}
+                    handleChangeInputTaxonomy={handleChangeInputTaxonomy}
+                    logicOperatorValueForTaxonomy={
+                      logicOperatorValueForTaxonomy
+                    }
+                    setLogicOperatorValueForTaxonomy={
+                      setLogicOperatorValueForTaxonomy
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                    taxonomies={taxonomies}
+                  />
+                )}
+                {option === "Database" && (
+                  <DatabaseField
+                    valueDatabase={valueDatabase}
+                    handleChangeValueDatabase={handleChangeValueDatabase}
+                    logicOperatorValueForDatabase={
+                      logicOperatorValueForDatabase
+                    }
+                    setLogicOperatorValueForDatabase={
+                      setLogicOperatorValueForDatabase
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                    databases={databases}
+                  />
+                )}
+                {option === "Pfam" && (
+                  <PfamField
+                    valuePfam={valuePfam}
+                    handleChangeValuePfam={handleChangeValuePfam}
+                    logicOperatorValueForPfam={logicOperatorValueForPfam}
+                    setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+                {option === "Gene Ontology" && (
+                  <GeneOntologyField
+                    valueGeneOntology={valueGeneOntology}
+                    handleChangeValueGeneOntology={
+                      handleChangeValueGeneOntology
+                    }
+                    logicOperatorValueForGeneOntology={
+                      logicOperatorValueForGeneOntology
+                    }
+                    setLogicOperatorValueForGeneOntology={
+                      setLogicOperatorValueForGeneOntology
+                    }
+                    selectedOptions={selectedOptions}
+                    index={index}
+                  />
+                )}
+              </>
+            );
+          })}
+          <Grid item lg={12} md={12} xs={12}>
+            <TextField
+              multiline
+              rows={5}
+              label="Query"
+              disabled={selectedOptions.length === 0 ? false : true}
+              value={queryText}
+              onChange={handleChangeQueryText}
               sx={{ width: "100%" }}
-            >
-              Reset
-            </Button>
+            />
+          </Grid>
+          <Grid item lg={12} xs={12}>
+            <Grid container spacing={2}>
+              <Grid item lg={6} md={6} xs={6}>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
+                  onClick={onSearch}
+                  disabled={
+                    selectedOptions.length === 0
+                      ? queryText.length === 0
+                        ? true
+                        : false
+                      : false ||
+                        (selectedOptions.includes("Activity") &&
+                          valueActivity === "")
+                      ? true
+                      : false ||
+                        (selectedOptions.includes("Taxonomy") &&
+                          valueTaxonomy === "")
+                      ? true
+                      : false ||
+                        (selectedOptions.includes("Database") &&
+                          valueDatabase === "")
+                      ? true
+                      : false ||
+                        (selectedOptions.includes("Gene Ontology") &&
+                          valueGeneOntology.length === 0)
+                      ? true
+                      : false ||
+                        (selectedOptions.includes("Pfam") &&
+                          valuePfam.length === 0)
+                      ? true
+                      : false
+                  }
+                >
+                  ADD
+                </Button>
+              </Grid>
+              <Grid item lg={6} md={6} xs={6}>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="error"
+                  onClick={onReset}
+                  sx={{ width: "100%" }}
+                >
+                  Reset
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      )}
+    </>
   );
 };
 

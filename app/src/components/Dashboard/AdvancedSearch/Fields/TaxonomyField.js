@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
@@ -5,15 +7,18 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
-const options = ["Option 1", "Option 2"];
-
 const TaxonomyField = ({
   valueTaxonomy,
   handleChangeValueTaxonomy,
+  inputTaxonomy,
+  handleChangeInputTaxonomy,
   logicOperatorValueForTaxonomy,
   setLogicOperatorValueForTaxonomy,
   index,
+  taxonomies,
 }) => {
+  useEffect(() => console.log(inputTaxonomy));
+
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -38,7 +43,9 @@ const TaxonomyField = ({
               <Autocomplete
                 value={valueTaxonomy}
                 onChange={handleChangeValueTaxonomy}
-                options={options}
+                inputValue={inputTaxonomy}
+                onInputChange={handleChangeInputTaxonomy}
+                options={taxonomies}
                 renderInput={(params) => (
                   <TextField {...params} label="Taxonomy" />
                 )}
@@ -51,7 +58,9 @@ const TaxonomyField = ({
           <Autocomplete
             value={valueTaxonomy}
             onChange={handleChangeValueTaxonomy}
-            options={options}
+            inputValue={inputTaxonomy}
+            onInputChange={handleChangeInputTaxonomy}
+            options={taxonomies}
             renderInput={(params) => <TextField {...params} label="Taxonomy" />}
           />
         </FormControl>

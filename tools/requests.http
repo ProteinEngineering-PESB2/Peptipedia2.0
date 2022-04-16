@@ -116,4 +116,89 @@ Content-Type: application/json
     }
 }
 ###
-GET {{api}}/gene_ontology_list/asdsa
+POST {{api}}/search/
+Content-Type: application/json
+
+{
+    "query": "((Taxonomy = 3) OR (( Sequence = AAAA ) AND ( 0 <= Length <= 10 )))",
+    "limit": 20,
+    "page": 3
+}
+
+###
+POST {{api}}/count/
+Content-Type: application/json
+
+{
+    "query": "((Taxonomy = 3) OR (( Sequence = AAAA ) AND ( 0 <= Length <= 10 )))"
+    
+}
+###
+POST {{api}}/supervised_learning/
+Content-Type: application/json
+
+{
+    "data": "id,sequence,target\n1,MPRRAENWDEAEVGAEEAGVEEYGPEEDG,2\n2,GEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVN,2\n3,SREPSQVIFCNRS,2\n4,YRGHLWLFRDAGTHDGLLVNQTELFVPSLNVD,1\n5,GQPIFANITLPVYTLKE,0\n6,RCLQVVRSLVKPENYRRLDIVRSLYEDLEDHP,0\n7,NVQKDLERLTQERIAHQRMGD,0\n8,NQTELFVPSLNVDGQPIFANITLPVY,0\n9,TLKERCLQVVRSLVKPENYRRLDIVRSLYEDLEDHPNVQKD,0\n10,LERLTQERIAHQRPP,0",
+    "options":{
+        "encoding": "one_hot_encoding",
+        "task": "classification",
+        "algorithm": "adaboost",
+        "validation": 4
+    }
+}
+###
+POST {{api}}/supervised_learning/
+Content-Type: application/json
+
+{
+    "data": "id,sequence,target\n1,MPRRAENWDEAEVGAEEAGVEEYGPEEDG,0\n2,GEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVN,0\n3,SREPSQVIFCNRS,0\n4,YRGHLWLFRDAGTHDGLLVNQTELFVPSLNVD,1\n5,GQPIFANITLPVYTLKE,1\n6,RCLQVVRSLVKPENYRRLDIVRSLYEDLEDHP,1\n7,NVQKDLERLTQERIAHQRMGD,0\n8,NQTELFVPSLNVDGQPIFANITLPVY,0\n9,TLKERCLQVVRSLVKPENYRRLDIVRSLYEDLEDHPNVQKD,0\n10,LERLTQERIAHQRPP,0",
+    "options":{
+        "encoding": "one_hot_encoding",
+        "task": "classification",
+        "algorithm": "adaboost",
+        "validation": 4
+    }
+}
+
+###
+POST {{api}}/supervised_learning/
+Content-Type: application/json
+
+{
+    "data": "id,sequence,target\n1,MPRRAENWDEAEVGAEEAGVEEYGPEEDG,2\n2,GEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVN,2\n3,SREPSQVIFCNRS,2\n4,YRGHLWLFRDAGTHDGLLVNQTELFVPSLNVD,1\n5,GQPIFANITLPVYTLKE,0\n6,RCLQVVRSLVKPENYRRLDIVRSLYEDLEDHP,0\n7,NVQKDLERLTQERIAHQRMGD,0\n8,NQTELFVPSLNVDGQPIFANITLPVY,0\n9,TLKERCLQVVRSLVKPENYRRLDIVRSLYEDLEDHPNVQKD,0\n10,LERLTQERIAHQRPP,0",
+    "options":{
+        "encoding": "one_hot_encoding",
+        "task": "regression",
+        "algorithm": "knn",
+        "validation": 2
+    }
+}
+
+###
+GET {{api}}/database_list/
+
+###
+GET {{api}}/gene_ontology_list/c
+
+###
+GET {{api}}/pfam_list/a
+
+###
+GET {{api}}/taxonomy_list/a
+
+###
+POST {{api}}/publish_model/
+Content-Type: application/json
+
+{
+    "options":{
+        "job_path": "./files/97833326399126192128.joblib",
+        "username": "Gabriel",
+        "mail": "gcabas17@alumnos.utalca.cl",
+        "model_name": "dsafjdajfs",
+        "model_description": "SDJFDJKFSJAKKAS"
+    }
+}
+
+###
+GET {{api}}/list_models/

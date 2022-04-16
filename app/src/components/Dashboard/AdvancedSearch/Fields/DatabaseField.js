@@ -5,16 +5,14 @@ import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-const options = ["Option 1", "Option 2"];
-
 const DatabaseField = ({
   valueDatabase,
   handleChangeValueDatabase,
   logicOperatorValueForDatabase,
   setLogicOperatorValueForDatabase,
   index,
+  databases,
 }) => {
-
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -39,7 +37,7 @@ const DatabaseField = ({
               <Autocomplete
                 value={valueDatabase}
                 onChange={handleChangeValueDatabase}
-                options={options}
+                options={databases}
                 renderInput={(params) => (
                   <TextField {...params} label="Database" />
                 )}
@@ -52,7 +50,7 @@ const DatabaseField = ({
           <Autocomplete
             value={valueDatabase}
             onChange={handleChangeValueDatabase}
-            options={options}
+            options={databases}
             renderInput={(params) => <TextField {...params} label="Database" />}
           />
         </FormControl>
