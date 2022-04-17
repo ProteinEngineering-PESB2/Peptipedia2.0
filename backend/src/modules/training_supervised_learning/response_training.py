@@ -29,9 +29,9 @@ class response_training_model:
         self.predict_values = self.model.predict(self.dataset)
         labels = self.target.unique().tolist()
         confusion_matrix_response = confusion_matrix(self.target, self.predict_values, labels = labels)
-        labels = [str(tar) for tar in labels]
+        self.labels = [str(tar) for tar in labels]
         self.cf_matrix = confusion_matrix_response.tolist()
-        return {"confusion_matrix": {"x": labels, "y": labels, "z": self.cf_matrix}}
+        return {"confusion_matrix": {"x": self.labels, "y": self.labels, "z": self.cf_matrix}}
 
     def analysis(self):
         sensibility_array = []
@@ -51,7 +51,7 @@ class response_training_model:
             else:
                 value = 0.0
             sensitivity_array.append(value)
-        return {"analysis": {"sensibility": sensibility_array, "sensitivity": sensitivity_array}}
+        return {"analysis": {"sensibility": sensibility_array, "sensitivity": sensitivity_array, "categories": self.labels}}
 
     def get_labels(self):
         return {"labels": {"target": self.target.tolist(), "predicted_label": self.predict_values.tolist()}}
@@ -86,7 +86,7 @@ class response_training_model:
 
     def error_bars(self):
         error = self.target - self.predict_values
-        return {"error_boxplot": error.round(3).tolist()}
+        return {"error_values": error.round(3).tolist()}
 
     def __calculatedPearson(self, real_values, predict_values):
         response = pearsonr(real_values, predict_values)

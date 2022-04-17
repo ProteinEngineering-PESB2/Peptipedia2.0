@@ -41,7 +41,8 @@ class database:
         data.rename(columns={"id_pfam": "id", "term": "name"}, inplace=True)
         data.name = data.name + " (" + data.source + ")"
         data.drop(["source"], inplace=True, axis = 1)
-        return json.loads(data.to_json(orient="records"))
+        data.rename(columns = {"id": "value", "name": "label"}, inplace=True)
+        return json.loads(data.to_json(orient="records")) 
 
     def get_all_pfam(self, sub_string, limit):
         if sub_string == None:
@@ -52,6 +53,7 @@ class database:
         data.rename(columns={"id_pfam": "id"}, inplace=True)
         data.name = data.name + " (" + data.type + ")"
         data.drop(["type"], inplace=True, axis = 1)
+        data.rename(columns = {"id": "value", "name": "label"}, inplace=True)
         return json.loads(data.to_json(orient="records")) 
 
     def get_all_taxonomy(self, sub_string, limit):
@@ -63,7 +65,8 @@ class database:
         data.rename(columns={"idtaxonomy": "id"}, inplace=True)
         data.name = data.name + " (" + data.tax_type + ")"
         data.drop(["tax_type"], inplace=True, axis = 1)
-        return json.loads(data.to_json(orient="records"))
+        data.rename(columns = {"id": "value", "name": "label"}, inplace=True)
+        return json.loads(data.to_json(orient="records")) 
 
     def save_job(self, row):
         row["options"]["date"] = date.today()
