@@ -48,7 +48,7 @@ const Form = ({ queries, setQueries }) => {
   // const [valueActivity, setValueActivity] = useState("");
   const [valueTaxonomy, setValueTaxonomy] = useState({});
   const [valuePfam, setValuePfam] = useState({});
-  const [valueGeneOntology, setValueGeneOnotology] = useState("");
+  const [valueGeneOntology, setValueGeneOnotology] = useState({});
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
@@ -354,7 +354,12 @@ const Form = ({ queries, setQueries }) => {
         // if (value === "Activity")
         //   query += selectInput(value, valueActivity, index, selectedOperators);
         if (value === "Database")
-          query += selectInput(value, valueDatabase.label, index, selectedOperators);
+          query += selectInput(
+            value,
+            valueDatabase.label,
+            index,
+            selectedOperators
+          );
       });
       query = `(${query})`;
     }
@@ -565,19 +570,19 @@ const Form = ({ queries, setQueries }) => {
                         : false
                       : false ||
                         (selectedOptions.includes("Taxonomy") &&
-                          valueTaxonomy === "")
+                          valueTaxonomy.value === undefined)
                       ? true
                       : false ||
                         (selectedOptions.includes("Database") &&
-                          valueDatabase === "")
+                          valueDatabase.value === undefined)
                       ? true
                       : false ||
                         (selectedOptions.includes("Gene Ontology") &&
-                          valueGeneOntology.length === 0)
+                          valueGeneOntology.value === undefined)
                       ? true
                       : false ||
                         (selectedOptions.includes("Pfam") &&
-                          valuePfam.length === 0)
+                          valuePfam.value === undefined)
                       ? true
                       : false
                   }
