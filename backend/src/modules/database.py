@@ -13,7 +13,7 @@ class database:
         host = config["database"]["host"]
         engine = create_engine("postgresql+psycopg2://{}:{}@{}/{}".format(user, password, host, db))
         self.conn = engine.connect()
-        self.max_items = 20
+        self.max_items = 200
 
     def count_peptides(self, query):
         count_query = "select COUNT(*) from {} as query".format(query)
@@ -29,7 +29,7 @@ class database:
 
     def get_all_databases(self):
         data = pd.read_sql("select iddb, name from db", self.conn)
-        data.rename(columns={"iddb": "id"}, inplace=True)
+        data.rename(columns = {"iddb": "value", "name": "label"}, inplace=True)
         return json.loads(data.to_json(orient="records"))
         
     def get_all_gene_ontology(self, sub_string, limit):
@@ -38,11 +38,11 @@ class database:
         else:
             query = "select id_go, term, source from gene_ontology where UPPER(term) like UPPER('%{}%') limit {}".format(sub_string, self.max_items)
         data = pd.read_sql(text(query), self.conn)
-        data.rename(columns={"id_pfam": "id", "term": "name"}, inplace=True)
+        data.rename(columns={"id_go": "id", "term": "name"}, inplace=True)
         data.name = data.name + " (" + data.source + ")"
         data.drop(["source"], inplace=True, axis = 1)
         data.rename(columns = {"id": "value", "name": "label"}, inplace=True)
-        return json.loads(data.to_json(orient="records")) 
+        return json.loads(data.to_json(orient="records"))
 
     def get_all_pfam(self, sub_string, limit):
         if sub_string == None:
