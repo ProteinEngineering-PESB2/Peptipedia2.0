@@ -44,7 +44,7 @@ const Form = ({ queries, setQueries }) => {
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
-  const [valueDatabase, setValueDatabase] = useState("");
+  const [valueDatabase, setValueDatabase] = useState({});
   // const [valueActivity, setValueActivity] = useState("");
   const [valueTaxonomy, setValueTaxonomy] = useState({});
   const [valuePfam, setValuePfam] = useState({});
@@ -107,13 +107,7 @@ const Form = ({ queries, setQueries }) => {
   const initialDatabases = async () => {
     try {
       const res = await getDatabases();
-      const array = [];
-      res.result.forEach((r) => {
-        array.push(r.name);
-      });
-      console.log(array)
-      setDatabases(array);
-      setValueDatabase(array[0]);
+      setDatabases(res.result);
     } catch (error) {
       console.log(error);
     }
@@ -164,10 +158,6 @@ const Form = ({ queries, setQueries }) => {
   // const handleChangeValueActivity = (e, newValue) => {
   //   setValueActivity(newValue);
   // };
-
-  const handleChangeValueDatabase = (e, newValue) => {
-    setValueDatabase(newValue);
-  };
 
   // Operators
   const handleChangeLogicOperatorLength = (e) => {
@@ -241,7 +231,7 @@ const Form = ({ queries, setQueries }) => {
     setValueChargeDensity([20, 100]);
     // setValueActivity("");
     setValueTaxonomy({});
-    setValueDatabase(databases[0]);
+    setValueDatabase({});
     setValueGeneOnotology({});
     setValuePfam({});
     setLogicOperatorValueForMolecularWeight("AND");
@@ -341,7 +331,12 @@ const Form = ({ queries, setQueries }) => {
             selectedOperators
           );
         if (value === "Taxonomy")
-          query += selectInput(value, valueTaxonomy.label, index, selectedOperators);
+          query += selectInput(
+            value,
+            valueTaxonomy.label,
+            index,
+            selectedOperators
+          );
         if (value === "Gene Ontology")
           query += selectInput(
             value,
@@ -350,11 +345,16 @@ const Form = ({ queries, setQueries }) => {
             selectedOperators
           );
         if (value === "Pfam")
-          query += selectInput(value, valuePfam.label, index, selectedOperators);
+          query += selectInput(
+            value,
+            valuePfam.label,
+            index,
+            selectedOperators
+          );
         // if (value === "Activity")
         //   query += selectInput(value, valueActivity, index, selectedOperators);
         if (value === "Database")
-          query += selectInput(value, valueDatabase, index, selectedOperators);
+          query += selectInput(value, valueDatabase.label, index, selectedOperators);
       });
       query = `(${query})`;
     }
@@ -467,7 +467,7 @@ const Form = ({ queries, setQueries }) => {
                 {option === "Database" && (
                   <DatabaseField
                     valueDatabase={valueDatabase}
-                    handleChangeValueDatabase={handleChangeValueDatabase}
+                    setValueDatabase={setValueDatabase}
                     logicOperatorValueForDatabase={
                       logicOperatorValueForDatabase
                     }
@@ -475,7 +475,7 @@ const Form = ({ queries, setQueries }) => {
                       setLogicOperatorValueForDatabase
                     }
                     index={index}
-                    databases={databases}
+                    options={databases}
                   />
                 )}
                 {/* {option === "Activity" && (

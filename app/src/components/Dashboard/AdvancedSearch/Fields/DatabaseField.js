@@ -1,18 +1,31 @@
+import AsyncSelect from "react-select/async";
+
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 
 const DatabaseField = ({
   valueDatabase,
-  handleChangeValueDatabase,
+  setValueDatabase,
   logicOperatorValueForDatabase,
   setLogicOperatorValueForDatabase,
   index,
-  databases,
+  options,
 }) => {
+  const filterDatabases = (inputValue) => {
+    const databases = options.filter((o) => o.label.includes(inputValue));
+
+    return databases;
+  };
+
+  const loadOptions = (inputValue, callback) => {
+    setTimeout(() => {
+      const databases = filterDatabases(inputValue);
+      callback(databases);
+    }, 1000);
+  };
+
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -34,24 +47,24 @@ const DatabaseField = ({
           </Grid>
           <Grid item lg={9} xs={8}>
             <FormControl sx={{ width: "100%" }}>
-              <Autocomplete
+              <AsyncSelect
                 value={valueDatabase}
-                onChange={handleChangeValueDatabase}
-                options={databases}
-                renderInput={(params) => (
-                  <TextField {...params} label="Database" />
-                )}
+                onChange={(e) => setValueDatabase(e)}
+                cacheOptions
+                defaultOptions={options}
+                loadOptions={loadOptions}
               />
             </FormControl>
           </Grid>
         </Grid>
       ) : (
         <FormControl sx={{ width: "100%" }}>
-          <Autocomplete
+          <AsyncSelect
             value={valueDatabase}
-            onChange={handleChangeValueDatabase}
-            options={databases}
-            renderInput={(params) => <TextField {...params} label="Database" />}
+            onChange={(e) => setValueDatabase(e)}
+            cacheOptions
+            defaultOptions={options}
+            loadOptions={loadOptions}
           />
         </FormControl>
       )}
