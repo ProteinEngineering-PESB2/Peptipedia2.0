@@ -29,6 +29,7 @@ import TaxonomyField from "./Fields/TaxonomyField";
 import DatabaseField from "./Fields/DatabaseField";
 import GeneOntologyField from "./Fields/GeneOntologyField";
 import PfamField from "./Fields/PfamField";
+import SequenceField from "./Fields/SequenceField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -49,6 +50,7 @@ const Form = ({ queries, setQueries }) => {
   const [valueTaxonomy, setValueTaxonomy] = useState({});
   const [valuePfam, setValuePfam] = useState({});
   const [valueGeneOntology, setValueGeneOnotology] = useState({});
+  const [valueSequence, setValueSequence] = useState("");
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
@@ -79,6 +81,8 @@ const Form = ({ queries, setQueries }) => {
     setLogicOperatorValueForGeneOntology,
   ] = useState("AND");
   const [logicOperatorValueForPfam, setLogicOperatorValueForPfam] =
+    useState("AND");
+  const [logicOperatorValueForSequence, setLogicOperatorValueForSequence] =
     useState("AND");
 
   const [taxonomies, setTaxonomies] = useState([]);
@@ -155,6 +159,10 @@ const Form = ({ queries, setQueries }) => {
     setValueChargeDensity(newValue);
   };
 
+  const handleChangeValueSequence = (e) => {
+    setValueSequence(e.target.value);
+  };
+
   // const handleChangeValueActivity = (e, newValue) => {
   //   setValueActivity(newValue);
   // };
@@ -182,6 +190,10 @@ const Form = ({ queries, setQueries }) => {
 
   const handleChangeLogicOperatorPfam = (e) => {
     setLogicOperatorValueForPfam(e.target.value);
+  };
+
+  const handleChangeLogicOperatorForSequence = (e) => {
+    setLogicOperatorValueForSequence(e.target.value);
   };
 
   const handleChangeOptionsValue = (e, newValue) => {
@@ -234,6 +246,7 @@ const Form = ({ queries, setQueries }) => {
     setValueDatabase({});
     setValueGeneOnotology({});
     setValuePfam({});
+    setValueSequence("");
     setLogicOperatorValueForMolecularWeight("AND");
     setLogicOperatorValueForIsoelectricPoint("AND");
     setLogicOperatorValueForCharge("AND");
@@ -244,6 +257,7 @@ const Form = ({ queries, setQueries }) => {
     setLogicOperatorValueForDatabase("AND");
     setLogicOperatorValueForGeneOntology("AND");
     setLogicOperatorValueForPfam("AND");
+    setLogicOperatorValueForSequence("AND");
     setQueryText("");
   };
 
@@ -302,6 +316,8 @@ const Form = ({ queries, setQueries }) => {
             selectedOperators.push(logicOperatorValueForGeneOntology);
           if (value === "Pfam")
             selectedOperators.push(logicOperatorValueForPfam);
+          if (value === "Sequence")
+            selectedOperators.push(logicOperatorValueForSequence);
         }
       });
       selectedOptions.forEach((value, index) => {
@@ -351,6 +367,8 @@ const Form = ({ queries, setQueries }) => {
             index,
             selectedOperators
           );
+        if (value === "Sequence")
+          query += selectInput(value, valueSequence, index, selectedOperators);
         // if (value === "Activity")
         //   query += selectInput(value, valueActivity, index, selectedOperators);
         if (value === "Database")
@@ -537,6 +555,19 @@ const Form = ({ queries, setQueries }) => {
                     options={geneOntologies}
                   />
                 )}
+                {option === "Sequence" && (
+                  <SequenceField
+                    index={index}
+                    valueSequence={valueSequence}
+                    handleChangeValueSequence={handleChangeValueSequence}
+                    logicOperatorValueForSequence={
+                      logicOperatorValueForSequence
+                    }
+                    handleChangeLogicOperatorForSequence={
+                      handleChangeLogicOperatorForSequence
+                    }
+                  />
+                )}
               </>
             );
           })}
@@ -583,6 +614,8 @@ const Form = ({ queries, setQueries }) => {
                       : false ||
                         (selectedOptions.includes("Pfam") &&
                           valuePfam.value === undefined)
+                      ? true
+                      : false || valueSequence === ""
                       ? true
                       : false
                   }

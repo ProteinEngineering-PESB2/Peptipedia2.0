@@ -9,4 +9,5 @@ export const fields = [
   { label: "Taxonomy" },
   { label: "Pfam" },
   { label: "Gene Ontology" },
+  { label: "Sequence" },
 ];
