@@ -14,8 +14,8 @@ import { fields } from "./Fields/fields";
 import {
   getTaxonomiesWithoutTerm,
   getDatabases,
-  getPfamWithoutTrem,
-  getGeneOntology,
+  getPfamWithoutTerm,
+  getGeneOntologyWithoutTerm,
 } from "../../../services/advanced_search";
 
 // Fields
@@ -24,7 +24,7 @@ import MolecularWeightField from "./Fields/MolecularWeightField";
 import IsoelectricPointField from "./Fields/IsoelectricPointField";
 import ChargeField from "./Fields/ChargeField";
 import ChargeDensityField from "./Fields/ChargeDensityField";
-import ActivityField from "./Fields/ActivityField";
+// import ActivityField from "./Fields/ActivityField";
 import TaxonomyField from "./Fields/TaxonomyField";
 import DatabaseField from "./Fields/DatabaseField";
 import GeneOntologyField from "./Fields/GeneOntologyField";
@@ -32,8 +32,6 @@ import PfamField from "./Fields/PfamField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
-const options = ["Option 1", "Option 2"];
 
 const Form = ({ queries, setQueries }) => {
   const [optionsValue, setOptionsValue] = useState([]);
@@ -46,11 +44,11 @@ const Form = ({ queries, setQueries }) => {
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
-  const [valueTaxonomy, setValueTaxonomy] = useState("");
-  const [valuePfam, setValuePfam] = useState("");
-  const [valueGeneOntology, setValueGeneOnotology] = useState("");
-  const [valueActivity, setValueActivity] = useState("");
   const [valueDatabase, setValueDatabase] = useState("");
+  // const [valueActivity, setValueActivity] = useState("");
+  const [valueTaxonomy, setValueTaxonomy] = useState({});
+  const [valuePfam, setValuePfam] = useState({});
+  const [valueGeneOntology, setValueGeneOnotology] = useState("");
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");
@@ -99,7 +97,7 @@ const Form = ({ queries, setQueries }) => {
 
   const initialPfams = async () => {
     try {
-      const res = await getPfamWithoutTrem();
+      const res = await getPfamWithoutTerm();
       setPfams(res.result);
     } catch (error) {
       console.log(error);
@@ -113,6 +111,7 @@ const Form = ({ queries, setQueries }) => {
       res.result.forEach((r) => {
         array.push(r.name);
       });
+      console.log(array)
       setDatabases(array);
       setValueDatabase(array[0]);
     } catch (error) {
@@ -122,12 +121,8 @@ const Form = ({ queries, setQueries }) => {
 
   const initialGeneOntology = async () => {
     try {
-      const res = await getGeneOntology("a");
-      const array = [];
-      res.result.forEach((r) => {
-        array.push(r.name);
-      });
-      setGeneOntologies(array);
+      const res = await getGeneOntologyWithoutTerm();
+      setGeneOntologies(res.result);
     } catch (error) {
       console.log(error);
     }
@@ -136,8 +131,8 @@ const Form = ({ queries, setQueries }) => {
   useEffect(() => {
     initialPfams();
     initialTaxonomies();
-    // initialDatabases();
-    // initialGeneOntology();
+    initialDatabases();
+    initialGeneOntology();
     setLoading(false);
   }, []);
 
@@ -166,16 +161,12 @@ const Form = ({ queries, setQueries }) => {
     setValueChargeDensity(newValue);
   };
 
-  const handleChangeValueActivity = (e, newValue) => {
-    setValueActivity(newValue);
-  };
+  // const handleChangeValueActivity = (e, newValue) => {
+  //   setValueActivity(newValue);
+  // };
 
   const handleChangeValueDatabase = (e, newValue) => {
     setValueDatabase(newValue);
-  };
-
-  const handleChangeValueGeneOntology = (e, newValue) => {
-    setValueGeneOnotology(newValue);
   };
 
   // Operators
@@ -248,11 +239,11 @@ const Form = ({ queries, setQueries }) => {
     setValueIsoelectricPoint([20, 100]);
     setValueCharge([20, 100]);
     setValueChargeDensity([20, 100]);
-    setValueActivity("");
-    setValueTaxonomy("");
-    setValueDatabase("");
-    setValueGeneOnotology("");
-    setValuePfam("");
+    // setValueActivity("");
+    setValueTaxonomy({});
+    setValueDatabase(databases[0]);
+    setValueGeneOnotology({});
+    setValuePfam({});
     setLogicOperatorValueForMolecularWeight("AND");
     setLogicOperatorValueForIsoelectricPoint("AND");
     setLogicOperatorValueForCharge("AND");
@@ -350,18 +341,18 @@ const Form = ({ queries, setQueries }) => {
             selectedOperators
           );
         if (value === "Taxonomy")
-          query += selectInput(value, valueTaxonomy, index, selectedOperators);
+          query += selectInput(value, valueTaxonomy.label, index, selectedOperators);
         if (value === "Gene Ontology")
           query += selectInput(
             value,
-            valueGeneOntology,
+            valueGeneOntology.label,
             index,
             selectedOperators
           );
         if (value === "Pfam")
-          query += selectInput(value, valuePfam, index, selectedOperators);
-        if (value === "Activity")
-          query += selectInput(value, valueActivity, index, selectedOperators);
+          query += selectInput(value, valuePfam.label, index, selectedOperators);
+        // if (value === "Activity")
+        //   query += selectInput(value, valueActivity, index, selectedOperators);
         if (value === "Database")
           query += selectInput(value, valueDatabase, index, selectedOperators);
       });
@@ -429,7 +420,6 @@ const Form = ({ queries, setQueries }) => {
                     handleChangeLogicOperatorMolecularWeight={
                       handleChangeLogicOperatorMolecularWeight
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
                   />
                 )}
@@ -445,7 +435,6 @@ const Form = ({ queries, setQueries }) => {
                     handleChangeLogicOperatorIsoelectricPoint={
                       handleChangeLogicOperatorIsoelectricPoint
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
                   />
                 )}
@@ -457,7 +446,6 @@ const Form = ({ queries, setQueries }) => {
                     handleChangeLogicOperatorCharge={
                       handleChangeLogicOperatorCharge
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
                   />
                 )}
@@ -473,8 +461,21 @@ const Form = ({ queries, setQueries }) => {
                     handleChangeLogicOperatorChargeDensity={
                       handleChangeLogicOperatorChargeDensity
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
+                  />
+                )}
+                {option === "Database" && (
+                  <DatabaseField
+                    valueDatabase={valueDatabase}
+                    handleChangeValueDatabase={handleChangeValueDatabase}
+                    logicOperatorValueForDatabase={
+                      logicOperatorValueForDatabase
+                    }
+                    setLogicOperatorValueForDatabase={
+                      setLogicOperatorValueForDatabase
+                    }
+                    index={index}
+                    databases={databases}
                   />
                 )}
                 {/* {option === "Activity" && (
@@ -505,20 +506,6 @@ const Form = ({ queries, setQueries }) => {
                     options={taxonomies}
                   />
                 )}
-                {option === "Database" && (
-                  <DatabaseField
-                    valueDatabase={valueDatabase}
-                    handleChangeValueDatabase={handleChangeValueDatabase}
-                    logicOperatorValueForDatabase={
-                      logicOperatorValueForDatabase
-                    }
-                    setLogicOperatorValueForDatabase={
-                      setLogicOperatorValueForDatabase
-                    }
-                    index={index}
-                    databases={databases}
-                  />
-                )}
                 {option === "Pfam" && (
                   <PfamField
                     options={pfams}
@@ -534,18 +521,15 @@ const Form = ({ queries, setQueries }) => {
                 {option === "Gene Ontology" && (
                   <GeneOntologyField
                     valueGeneOntology={valueGeneOntology}
-                    handleChangeValueGeneOntology={
-                      handleChangeValueGeneOntology
-                    }
+                    setValueGeneOnotology={setValueGeneOnotology}
                     logicOperatorValueForGeneOntology={
                       logicOperatorValueForGeneOntology
                     }
                     setLogicOperatorValueForGeneOntology={
                       setLogicOperatorValueForGeneOntology
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
-                    geneOntologies={geneOntologies}
+                    options={geneOntologies}
                   />
                 )}
               </>
@@ -579,10 +563,6 @@ const Form = ({ queries, setQueries }) => {
                       ? queryText.length === 0
                         ? true
                         : false
-                      : false ||
-                        (selectedOptions.includes("Activity") &&
-                          valueActivity === "")
-                      ? true
                       : false ||
                         (selectedOptions.includes("Taxonomy") &&
                           valueTaxonomy === "")

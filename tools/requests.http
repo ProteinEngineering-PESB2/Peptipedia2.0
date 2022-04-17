@@ -179,7 +179,8 @@ GET {{api}}/database_list/
 
 ###
 GET {{api}}/gene_ontology_list/c
-
+###
+GET {{api}}/gene_ontology_list
 ###
 GET {{api}}/pfam_list/a
 

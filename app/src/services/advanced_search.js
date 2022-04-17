@@ -15,13 +15,18 @@ export const getDatabases = async () => {
   return res.data;
 };
 
-export const getPfamWithoutTrem = async () => {
+export const getPfamWithoutTerm = async () => {
   const res = await axios.get("/api/pfam_list");
   return res.data;
 };
 
 export const getPfam = async (term) => {
   const res = await axios.get(`/api/pfam_list/${term}`);
+  return res.data;
+};
+
+export const getGeneOntologyWithoutTerm = async () => {
+  const res = await axios.get("/api/gene_ontology_list");
   return res.data;
 };
 
