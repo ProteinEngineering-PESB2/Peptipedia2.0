@@ -14,3 +14,8 @@ export const getPfam = async (term) => {
   const res = await axios.get(`/api/pfam_list/${term}`);
   return res.data;
 };
+
+export const getGeneOntology = async (term) => {
+  const res = await axios.get(`/api/gene_ontology_list/${term}`);
+  return res.data;
+};

@@ -1,70 +1,74 @@
-import { useEffect } from "react";
+import AsyncSelect from "react-select/async";
+import { useState, useEffect } from "react";
 
 import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 
-const PfamField = ({
-  valuePfam,
-  handleChangeValuePfam,
-  inputPfam,
-  handleChangeInputPfam,
-  logicOperatorValueForPfam,
-  setLogicOperatorValueForPfam,
-  index,
-  pfams,
-}) => {
+import { getPfam } from "../../../../services/advanced_search";
 
-  useEffect(() => console.log(pfams))
+const PfamField = () => {
+  const [selectedOption, setSelectedOption] = useState({});
+  const [pfams, setPfams] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const initialData = async () => {
+    const res = await getPfam("a");
+    setPfams(res.result);
+  };
+
+  useEffect(() => {
+    initialData();
+    setLoading(false);
+  }, []);
+
+  const colourOptions = [
+    { value: "ocean", label: "Ocean" },
+    { value: "blue", label: "Blue" },
+    { value: "purple", label: "Purple" },
+    { value: "red", label: "Red" },
+    { value: "orange", label: "Orange" },
+    { value: "yellow", label: "Yellow" },
+    { value: "green", label: "Green" },
+    { value: "forest", label: "Forest" },
+    { value: "slate", label: "Slate" },
+    { value: "silver", label: "Silver" },
+  ];
+
+  const filterColors = async (inputValue) => {
+    const res = await getPfam(inputValue);
+    console.log(res.result);
+    // const colors = colourOptions.filter((i) =>
+    //   i.label.toLowerCase().includes(inputValue.toLowerCase())
+    // );
+    return res.result;
+  };
+
+  const loadOptions = (inputValue, callback) => {
+    setTimeout(async () => {
+      const res = await getPfam(inputValue);
+      callback(res.result);
+    }, 1000);
+  };
 
   return (
-    <Grid item lg={12} md={12} xs={12}>
-      {index !== 0 ? (
-        <Grid container spacing={2}>
-          <Grid item lg={2.6} xs={4}>
-            <Select
-              value={logicOperatorValueForPfam}
-              onChange={({ target }) =>
-                setLogicOperatorValueForPfam(target.value)
-              }
-              label="Operator"
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              sx={{ width: "100%" }}
-            >
-              <MenuItem value="AND">AND</MenuItem>
-              <MenuItem value="OR">OR</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item lg={9} xs={8}>
-            <FormControl sx={{ width: "100%" }}>
-              <Autocomplete
-                value={valuePfam}
-                onChange={handleChangeValuePfam}
-                inputValue={inputPfam}
-                onInputChange={handleChangeInputPfam}
-                options={pfams}
-                renderInput={(params) => <TextField {...params} label="Pfam" />}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
+    <>
+      {loading ? (
+        <></>
       ) : (
-        <FormControl sx={{ width: "100%" }}>
-          <Autocomplete
-            value={valuePfam}
-            onChange={handleChangeValuePfam}
-            inputValue={inputPfam}
-            onInputChange={handleChangeInputPfam}
-            options={pfams}
-            renderInput={(params) => <TextField {...params} label="Pfam" />}
-          />
-        </FormControl>
+        <>
+          <Grid item lg={12} md={12} xs={12}>
+            <AsyncSelect
+              value={selectedOption}
+              onChange={(e) => setSelectedOption(e)}
+              cacheOptions
+              defaultOptions={pfams}
+              loadOptions={loadOptions}
+            />
+          </Grid>
+          <h1>{selectedOption.value}</h1>
+          <h1>{selectedOption.label}</h1>
+        </>
       )}
-    </Grid>
+    </>
   );
 };
 

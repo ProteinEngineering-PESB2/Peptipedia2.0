@@ -5,14 +5,13 @@ import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-const options = ["Option 1", "Option 2"];
-
 const GeneOntologyField = ({
   valueGeneOntology,
   handleChangeValueGeneOntology,
   logicOperatorValueForGeneOntology,
   setLogicOperatorValueForGeneOntology,
   index,
+  geneOntologies
 }) => {
   return (
     <>
@@ -39,7 +38,7 @@ const GeneOntologyField = ({
                 <Autocomplete
                   value={valueGeneOntology}
                   onChange={handleChangeValueGeneOntology}
-                  options={options}
+                  options={geneOntologies}
                   renderInput={(params) => (
                     <TextField {...params} label="Gene Ontology" />
                   )}
@@ -52,7 +51,7 @@ const GeneOntologyField = ({
             <Autocomplete
               value={valueGeneOntology}
               onChange={handleChangeValueGeneOntology}
-              options={options}
+              options={geneOntologies}
               renderInput={(params) => (
                 <TextField {...params} label="Gene Ontology" />
               )}

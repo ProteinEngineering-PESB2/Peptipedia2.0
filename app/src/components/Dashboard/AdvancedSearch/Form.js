@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -15,6 +16,7 @@ import {
   getTaxonomies,
   getDatabases,
   getPfam,
+  getGeneOntology,
 } from "../../../services/advanced_search";
 
 // Fields
@@ -32,6 +34,8 @@ import PfamField from "./Fields/PfamField";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
+const options = ["Option 1", "Option 2"];
+
 const Form = ({ queries, setQueries }) => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -46,7 +50,8 @@ const Form = ({ queries, setQueries }) => {
   const [valueTaxonomy, setValueTaxonomy] = useState("");
   const [inputTaxonomy, setInputTaxonomy] = useState("");
   const [valueGeneOntology, setValueGeneOnotology] = useState("");
-  const [valuePfam, setValuePfam] = useState("");
+  const [valuePfam, setValuePfam] = useState(options[0]);
+  const [pfam, setPfam] = useState(options[0]);
   const [inputPfam, setInputPfam] = useState("");
   const [valueActivity, setValueActivity] = useState("");
   const [valueDatabase, setValueDatabase] = useState("");
@@ -85,15 +90,27 @@ const Form = ({ queries, setQueries }) => {
   const [taxonomies, setTaxonomies] = useState([]);
   const [databases, setDatabases] = useState([]);
   const [pfams, setPfams] = useState([]);
+  const [geneOntologies, setGeneOntologies] = useState([]);
 
   const initialTaxonomies = async () => {
     try {
       const res = await getTaxonomies("a");
+      setTaxonomies(res.result.term);
+      setValueTaxonomy(res.result.term[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const initialPfams = async () => {
+    try {
+      const res = await getPfam("a");
       const array = [];
       res.result.forEach((r) => {
         array.push(r.name);
       });
-      setTaxonomies(array);
+      setPfams(array);
+      setPfam(array[0]);
     } catch (error) {
       console.log(error);
     }
@@ -113,23 +130,24 @@ const Form = ({ queries, setQueries }) => {
     }
   };
 
-  const initialPfam = async () => {
+  const initialGeneOntology = async () => {
     try {
-      const res = await getPfam("a");
+      const res = await getGeneOntology("a");
       const array = [];
       res.result.forEach((r) => {
-  
+        array.push(r.name);
       });
-      setPfams(array);
+      setGeneOntologies(array);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    initialTaxonomies();
-    initialDatabases();
-    initialPfam();
+    // initialPfams();
+    // initialTaxonomies();
+    // initialDatabases();
+    // initialGeneOntology();
     setLoading(false);
   }, []);
 
@@ -170,16 +188,11 @@ const Form = ({ queries, setQueries }) => {
     if (newValue) {
       try {
         const res = await getTaxonomies(newValue);
-        const array = [];
-        res.result.forEach((r) => {
-          array.push(r.name);
-        });
-        setTaxonomies(array);
+        setTaxonomies(res.result.term);
       } catch (error) {
         console.log(error);
       }
     }
-
     setInputTaxonomy(newValue);
   };
 
@@ -187,22 +200,21 @@ const Form = ({ queries, setQueries }) => {
     setValueDatabase(newValue);
   };
 
-  const handleChangeValuePfam = (e, newValue) => {
-    setValuePfam(newValue);
+  const handleChangePfam = (e, newValue) => {
+    setPfam(newValue);
   };
 
   const handleChangeInputPfam = async (e, newValue) => {
     if (newValue) {
       try {
         const res = await getPfam(newValue);
-        const array = [];
-        res.result.forEach((r) => {
-          array.push(r.name);
-        });
+        const array = res.result.map((r) => r.name);
         setPfams(array);
       } catch (error) {
         console.log(error);
       }
+    } else {
+      setPfams([]);
     }
 
     setInputPfam(newValue);
@@ -554,17 +566,7 @@ const Form = ({ queries, setQueries }) => {
                   />
                 )}
                 {option === "Pfam" && (
-                  <PfamField
-                    valuePfam={valuePfam}
-                    handleChangeValuePfam={handleChangeValuePfam}
-                    inputPfam={inputPfam}
-                    handleChangeInputPfam={handleChangeInputPfam}
-                    logicOperatorValueForPfam={logicOperatorValueForPfam}
-                    setLogicOperatorValueForPfam={setLogicOperatorValueForPfam}
-                    selectedOptions={selectedOptions}
-                    index={index}
-                    pfams={pfams}
-                  />
+                  <PfamField/>
                 )}
                 {option === "Gene Ontology" && (
                   <GeneOntologyField
@@ -580,6 +582,7 @@ const Form = ({ queries, setQueries }) => {
                     }
                     selectedOptions={selectedOptions}
                     index={index}
+                    geneOntologies={geneOntologies}
                   />
                 )}
               </>
