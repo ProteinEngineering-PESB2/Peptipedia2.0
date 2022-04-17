@@ -1,20 +1,27 @@
-import Autocomplete from "@mui/material/Autocomplete";
+import AsyncSelect from "react-select/async";
+
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
+
+import { getTaxonomies } from "../../../../services/advanced_search";
 
 const TaxonomyField = ({
   valueTaxonomy,
-  handleChangeValueTaxonomy,
-  inputTaxonomy,
-  handleChangeInputTaxonomy,
+  setValueTaxonomy,
   logicOperatorValueForTaxonomy,
   setLogicOperatorValueForTaxonomy,
   index,
-  taxonomies,
+  options,
 }) => {
+  const loadOptions = (inputValue, callback) => {
+    setTimeout(async () => {
+      const res = await getTaxonomies(inputValue);
+      callback(res.result);
+    }, 1000);
+  };
+
   return (
     <Grid item lg={12} md={12} xs={12}>
       {index !== 0 ? (
@@ -36,28 +43,24 @@ const TaxonomyField = ({
           </Grid>
           <Grid item lg={9} xs={8}>
             <FormControl sx={{ width: "100%" }}>
-              <Autocomplete
+              <AsyncSelect
                 value={valueTaxonomy}
-                onChange={handleChangeValueTaxonomy}
-                inputValue={inputTaxonomy}
-                onInputChange={handleChangeInputTaxonomy}
-                options={taxonomies}
-                renderInput={(params) => (
-                  <TextField {...params} label="Taxonomy" />
-                )}
+                onChange={(e) => setValueTaxonomy(e)}
+                cacheOptions
+                defaultOptions={options}
+                loadOptions={loadOptions}
               />
             </FormControl>
           </Grid>
         </Grid>
       ) : (
         <FormControl sx={{ width: "100%" }}>
-          <Autocomplete
+          <AsyncSelect
             value={valueTaxonomy}
-            onChange={handleChangeValueTaxonomy}
-            inputValue={inputTaxonomy}
-            onInputChange={handleChangeInputTaxonomy}
-            options={taxonomies}
-            renderInput={(params) => <TextField {...params} label="Taxonomy" />}
+            onChange={(e) => setValueTaxonomy(e)}
+            cacheOptions
+            defaultOptions={options}
+            loadOptions={loadOptions}
           />
         </FormControl>
       )}

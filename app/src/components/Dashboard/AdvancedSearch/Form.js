@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -13,9 +12,9 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { fields } from "./Fields/fields";
 
 import {
-  getTaxonomies,
+  getTaxonomiesWithoutTerm,
   getDatabases,
-  getPfam,
+  getPfamWithoutTrem,
   getGeneOntology,
 } from "../../../services/advanced_search";
 
@@ -48,11 +47,8 @@ const Form = ({ queries, setQueries }) => {
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
   const [valueTaxonomy, setValueTaxonomy] = useState("");
-  const [inputTaxonomy, setInputTaxonomy] = useState("");
+  const [valuePfam, setValuePfam] = useState("");
   const [valueGeneOntology, setValueGeneOnotology] = useState("");
-  const [valuePfam, setValuePfam] = useState(options[0]);
-  const [pfam, setPfam] = useState(options[0]);
-  const [inputPfam, setInputPfam] = useState("");
   const [valueActivity, setValueActivity] = useState("");
   const [valueDatabase, setValueDatabase] = useState("");
 
@@ -94,9 +90,8 @@ const Form = ({ queries, setQueries }) => {
 
   const initialTaxonomies = async () => {
     try {
-      const res = await getTaxonomies("a");
-      setTaxonomies(res.result.term);
-      setValueTaxonomy(res.result.term[0]);
+      const res = await getTaxonomiesWithoutTerm();
+      setTaxonomies(res.result);
     } catch (error) {
       console.log(error);
     }
@@ -104,13 +99,8 @@ const Form = ({ queries, setQueries }) => {
 
   const initialPfams = async () => {
     try {
-      const res = await getPfam("a");
-      const array = [];
-      res.result.forEach((r) => {
-        array.push(r.name);
-      });
-      setPfams(array);
-      setPfam(array[0]);
+      const res = await getPfamWithoutTrem();
+      setPfams(res.result);
     } catch (error) {
       console.log(error);
     }
@@ -144,8 +134,8 @@ const Form = ({ queries, setQueries }) => {
   };
 
   useEffect(() => {
-    // initialPfams();
-    // initialTaxonomies();
+    initialPfams();
+    initialTaxonomies();
     // initialDatabases();
     // initialGeneOntology();
     setLoading(false);
@@ -180,44 +170,8 @@ const Form = ({ queries, setQueries }) => {
     setValueActivity(newValue);
   };
 
-  const handleChangeValueTaxonomy = async (e, newValue) => {
-    setValueTaxonomy(newValue);
-  };
-
-  const handleChangeInputTaxonomy = async (e, newValue) => {
-    if (newValue) {
-      try {
-        const res = await getTaxonomies(newValue);
-        setTaxonomies(res.result.term);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    setInputTaxonomy(newValue);
-  };
-
   const handleChangeValueDatabase = (e, newValue) => {
     setValueDatabase(newValue);
-  };
-
-  const handleChangePfam = (e, newValue) => {
-    setPfam(newValue);
-  };
-
-  const handleChangeInputPfam = async (e, newValue) => {
-    if (newValue) {
-      try {
-        const res = await getPfam(newValue);
-        const array = res.result.map((r) => r.name);
-        setPfams(array);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setPfams([]);
-    }
-
-    setInputPfam(newValue);
   };
 
   const handleChangeValueGeneOntology = (e, newValue) => {
@@ -243,6 +197,10 @@ const Form = ({ queries, setQueries }) => {
 
   const handleChangeLogicOperatorChargeDensity = (e) => {
     setLogicOperatorValueForChargeDensity(e.target.value);
+  };
+
+  const handleChangeLogicOperatorPfam = (e) => {
+    setLogicOperatorValueForPfam(e.target.value);
   };
 
   const handleChangeOptionsValue = (e, newValue) => {
@@ -536,18 +494,15 @@ const Form = ({ queries, setQueries }) => {
                 {option === "Taxonomy" && (
                   <TaxonomyField
                     valueTaxonomy={valueTaxonomy}
-                    handleChangeValueTaxonomy={handleChangeValueTaxonomy}
-                    inputTaxonomy={inputTaxonomy}
-                    handleChangeInputTaxonomy={handleChangeInputTaxonomy}
+                    setValueTaxonomy={setValueTaxonomy}
                     logicOperatorValueForTaxonomy={
                       logicOperatorValueForTaxonomy
                     }
                     setLogicOperatorValueForTaxonomy={
                       setLogicOperatorValueForTaxonomy
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
-                    taxonomies={taxonomies}
+                    options={taxonomies}
                   />
                 )}
                 {option === "Database" && (
@@ -560,13 +515,21 @@ const Form = ({ queries, setQueries }) => {
                     setLogicOperatorValueForDatabase={
                       setLogicOperatorValueForDatabase
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
                     databases={databases}
                   />
                 )}
                 {option === "Pfam" && (
-                  <PfamField/>
+                  <PfamField
+                    options={pfams}
+                    valuePfam={valuePfam}
+                    setValuePfam={setValuePfam}
+                    logicOperatorValueForPfam={logicOperatorValueForPfam}
+                    handleChangeLogicOperatorPfam={
+                      handleChangeLogicOperatorPfam
+                    }
+                    index={index}
+                  />
                 )}
                 {option === "Gene Ontology" && (
                   <GeneOntologyField

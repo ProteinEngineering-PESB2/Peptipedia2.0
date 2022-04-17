@@ -184,8 +184,9 @@ GET {{api}}/gene_ontology_list/c
 GET {{api}}/pfam_list/a
 
 ###
-GET {{api}}/taxonomy_list/animalia (kingdom)
-
+GET {{api}}/taxonomy_list/po
+###
+GET {{api}}/taxonomy_list
 ###
 POST {{api}}/publish_model/
 Content-Type: application/json

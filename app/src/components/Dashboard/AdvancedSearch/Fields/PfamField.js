@@ -1,47 +1,20 @@
 import AsyncSelect from "react-select/async";
-import { useState, useEffect } from "react";
 
 import Grid from "@mui/material/Grid";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 import { getPfam } from "../../../../services/advanced_search";
+import { FormControl } from "@mui/material";
 
-const PfamField = () => {
-  const [selectedOption, setSelectedOption] = useState({});
-  const [pfams, setPfams] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const initialData = async () => {
-    const res = await getPfam("a");
-    setPfams(res.result);
-  };
-
-  useEffect(() => {
-    initialData();
-    setLoading(false);
-  }, []);
-
-  const colourOptions = [
-    { value: "ocean", label: "Ocean" },
-    { value: "blue", label: "Blue" },
-    { value: "purple", label: "Purple" },
-    { value: "red", label: "Red" },
-    { value: "orange", label: "Orange" },
-    { value: "yellow", label: "Yellow" },
-    { value: "green", label: "Green" },
-    { value: "forest", label: "Forest" },
-    { value: "slate", label: "Slate" },
-    { value: "silver", label: "Silver" },
-  ];
-
-  const filterColors = async (inputValue) => {
-    const res = await getPfam(inputValue);
-    console.log(res.result);
-    // const colors = colourOptions.filter((i) =>
-    //   i.label.toLowerCase().includes(inputValue.toLowerCase())
-    // );
-    return res.result;
-  };
-
+const PfamField = ({
+  options,
+  valuePfam,
+  setValuePfam,
+  index,
+  logicOperatorValueForPfam,
+  handleChangeLogicOperatorPfam,
+}) => {
   const loadOptions = (inputValue, callback) => {
     setTimeout(async () => {
       const res = await getPfam(inputValue);
@@ -51,23 +24,44 @@ const PfamField = () => {
 
   return (
     <>
-      {loading ? (
-        <></>
-      ) : (
-        <>
-          <Grid item lg={12} md={12} xs={12}>
-            <AsyncSelect
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e)}
-              cacheOptions
-              defaultOptions={pfams}
-              loadOptions={loadOptions}
-            />
+      <Grid item lg={12} md={12} xs={12}>
+        {index === 0 ? (
+          <AsyncSelect
+            value={valuePfam}
+            onChange={(e) => setValuePfam(e)}
+            cacheOptions
+            defaultOptions={options}
+            loadOptions={loadOptions}
+          />
+        ) : (
+          <Grid container spacing={2}>
+            <Grid item lg={2.6} xs={4}>
+              <Select
+                value={logicOperatorValueForPfam}
+                onChange={handleChangeLogicOperatorPfam}
+                label="Operator"
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+                sx={{ width: "100%" }}
+              >
+                <MenuItem value="AND">AND</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item lg={9} xs={8}>
+              <FormControl sx={{ width: "100%" }}>
+                <AsyncSelect
+                  value={valuePfam}
+                  onChange={(e) => setValuePfam(e)}
+                  cacheOptions
+                  defaultOptions={options}
+                  loadOptions={loadOptions}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-          <h1>{selectedOption.value}</h1>
-          <h1>{selectedOption.label}</h1>
-        </>
-      )}
+        )}
+      </Grid>
     </>
   );
 };
