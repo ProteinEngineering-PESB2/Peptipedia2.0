@@ -289,8 +289,10 @@ const Form = ({
           if (position.length > 0) {
             if (parseInt(position) <= queries.length) {
               query += queries[parseInt(position) - 1];
+              queryWithId += queriesWithID[parseInt(position) - 1];
             } else {
               query = queryText;
+              queryWithId += queryText;
               break;
             }
           }
@@ -299,6 +301,7 @@ const Form = ({
             continue;
           } else {
             query += queryText[i];
+            queryWithId += queryText[i];
           }
         }
       }
