@@ -15,16 +15,6 @@ import { search } from "../../../services/advanced_search";
 
 const columns = ["#", "Query", "Results", "Options"];
 
-const columnsTable = [
-  "idpeptide",
-  "sequence",
-  "length",
-  "molecular_weight",
-  "charge_density",
-  "isoelectric_point",
-  "charge",
-];
-
 const AdvancedSearchContent = ({
   queries,
   setQueries,
@@ -34,6 +24,7 @@ const AdvancedSearchContent = ({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataTable, setDataTable] = useState([]);
+  const [columnsTable, setColumnsTable] = useState([])
   const [pageTable, setPageTable] = useState(0);
   const [totalTable, setTotalTable] = useState(50);
   const [loadingTable, setLoadingTable] = useState(true);
@@ -99,6 +90,7 @@ const AdvancedSearchContent = ({
     try {
       const res = await search(post);
       setDataTable(res.query.data);
+      setColumnsTable(res.query.columns)
       setLoadingTable(false);
     } catch (error) {
       console.log(error);
