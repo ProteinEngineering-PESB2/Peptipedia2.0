@@ -194,5 +194,11 @@ def api_taxonomy_list(sub_string = None):
     result = db.get_all_taxonomy(sub_string, config["select"]["limit"])
     return {"result": result}
 
+
+@server.route('/api/min_max_parameters/', methods = ["GET"])
+def api_min_max_parameters():
+    result = db.get_min_max_parameters()
+    return {"result": result}
+
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=8001, debug=True)

@@ -24,6 +24,7 @@ class database:
     def select_peptides(self, query, limit, offset):
         limited_query = query + " order by idpeptide limit {} offset {} ".format(limit, offset)
         data = pd.read_sql(text(limited_query), self.conn)
+        data = data.round(4)
         return {"data": data.values.tolist(), "columns": data.columns.tolist()}
 
     def get_all_databases(self):
@@ -79,3 +80,26 @@ class database:
         for index, date in enumerate(dates):
             json_data[index]["date"] = date
         return json_data
+
+    def get_min_max_parameters(self):
+        data = pd.read_sql("""select MAX(p.length) as max_length,
+                                MIN(p.length) as min_length,
+                                MAX(p.charge) as max_charge,
+                                MIN(p.charge) as min_charge,
+                                MAX(p.isoelectric_point) as max_isoelectric_point,
+                                MIN(p.isoelectric_point) as min_isoelectric_point,
+                                MAX(p.charge_density) as max_charge_density,
+                                MIN(p.charge_density) as min_charge_density,
+                                MAX(molecular_weight) as max_molecular_weight,
+                                MIN(molecular_weight) as min_molecular_weigth
+                                from peptide p""", self.conn)
+        data = json.loads(data.to_json(orient="records"))[0]
+        data["max_charge"] = int(data["max_charge"]) + 1
+        data["min_charge"] = int(data["min_charge"])
+        data["max_charge_density"] = round(data["max_charge_density"], 3) + 0.001
+        data["min_charge_density"] = round(data["min_charge_density"], 3)
+        data["max_molecular_weight"] = int(data["max_molecular_weight"]) + 1
+        data["min_molecular_weigth"] = int(data["min_molecular_weigth"])
+        data["max_isoelectric_point"] = int(data["max_isoelectric_point"]) + 1
+        data["min_isoelectric_point"] = int(data["min_isoelectric_point"])
+        return data
