@@ -8,7 +8,7 @@ import DataTable from "../DataTable";
 
 const columns = ["#", "Query", "Results", "Options"];
 
-const AdvancedSearchContent = ({ queries, setQueries }) => {
+const AdvancedSearchContent = ({ queries, setQueries, queriesWithID, counts }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const AdvancedSearchContent = ({ queries, setQueries }) => {
       d.push([
         cont,
         q,
-        0,
+        counts[cont-1],
         <Button
           variant="text"
           color="error"
@@ -33,7 +33,7 @@ const AdvancedSearchContent = ({ queries, setQueries }) => {
     });
     setData(d);
     setLoading(false);
-  }, [queries, setQueries]);
+  }, [queries, setQueries, queriesWithID, counts]);
 
   return (
     <>

@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -16,6 +17,7 @@ import {
   getDatabases,
   getPfamWithoutTerm,
   getGeneOntologyWithoutTerm,
+  databaseResultsCount,
 } from "../../../services/advanced_search";
 
 // Fields
@@ -34,11 +36,19 @@ import SequenceField from "./Fields/SequenceField";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const Form = ({ queries, setQueries }) => {
+const Form = ({
+  queries,
+  setQueries,
+  queriesWithID,
+  setQueriesWithID,
+  counts,
+  setCounts,
+}) => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [queryText, setQueryText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   const [valueLength, setValueLength] = useState([20, 100]);
   const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
@@ -209,12 +219,12 @@ const Form = ({ queries, setQueries }) => {
 
   const rangeInput = (field, range, index, selectedOperators) => {
     if (selectedOperators.length === 0) {
-      return `(${range[0]} < ${field} < ${range[1]})`;
+      return `(${range[0]} <= ${field} <= ${range[1]})`;
     } else {
       if (index === 0) {
-        return `(${range[0]} < ${field} < ${range[1]})`;
+        return `(${range[0]} <= ${field} <= ${range[1]})`;
       } else {
-        return ` ${selectedOperators[index - 1]} (${range[0]} < ${field} < ${
+        return ` ${selectedOperators[index - 1]} (${range[0]} <= ${field} <= ${
           range[1]
         })`;
       }
@@ -261,8 +271,10 @@ const Form = ({ queries, setQueries }) => {
     setQueryText("");
   };
 
-  const onSearch = () => {
+  const onSearch = async () => {
     let query = "";
+    let queryWithId = "";
+
     if (queryText.length > 0) {
       for (let i = 0; i < queryText.length; i++) {
         if (queryText[i] === "#") {
@@ -321,68 +333,154 @@ const Form = ({ queries, setQueries }) => {
         }
       });
       selectedOptions.forEach((value, index) => {
-        if (value === "Length")
+        if (value === "Length") {
           query += rangeInput(value, valueLength, index, selectedOperators);
-        if (value === "Molecular Weight")
+          queryWithId += rangeInput(
+            value,
+            valueLength,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Molecular Weight") {
           query += rangeInput(
             value,
             valueMolecularWeight,
             index,
             selectedOperators
           );
-        if (value === "Isoelectric Point")
+          queryWithId += rangeInput(
+            value,
+            valueMolecularWeight,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Isoelectric Point") {
           query += rangeInput(
             value,
             valueIsoelectricPoint,
             index,
             selectedOperators
           );
-        if (value === "Charge")
+          queryWithId += rangeInput(
+            value,
+            valueIsoelectricPoint,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Charge") {
           query += rangeInput(value, valueCharge, index, selectedOperators);
-        if (value === "Charge Density")
+          queryWithId += rangeInput(
+            value,
+            valueCharge,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Charge Density") {
           query += rangeInput(
             value,
             valueChargeDensity,
             index,
             selectedOperators
           );
-        if (value === "Taxonomy")
+          queryWithId += rangeInput(
+            value,
+            valueChargeDensity,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Taxonomy") {
           query += selectInput(
             value,
             valueTaxonomy.label,
             index,
             selectedOperators
           );
-        if (value === "Gene Ontology")
+          queryWithId += selectInput(
+            value,
+            valueTaxonomy.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Gene Ontology") {
           query += selectInput(
             value,
             valueGeneOntology.label,
             index,
             selectedOperators
           );
-        if (value === "Pfam")
+          queryWithId += selectInput(
+            value,
+            valueGeneOntology.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Pfam") {
           query += selectInput(
             value,
             valuePfam.label,
             index,
             selectedOperators
           );
-        if (value === "Sequence")
+          queryWithId += selectInput(
+            value,
+            valuePfam.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Sequence") {
           query += selectInput(value, valueSequence, index, selectedOperators);
+          queryWithId += selectInput(
+            value,
+            valueSequence,
+            index,
+            selectedOperators
+          );
+        }
         // if (value === "Activity")
         //   query += selectInput(value, valueActivity, index, selectedOperators);
-        if (value === "Database")
+        if (value === "Database") {
           query += selectInput(
             value,
             valueDatabase.label,
             index,
             selectedOperators
           );
+          queryWithId += selectInput(
+            value,
+            valueDatabase.value,
+            index,
+            selectedOperators
+          );
+        }
       });
       query = `(${query})`;
+      queryWithId = `(${queryWithId})`;
     }
-    setQueries(queries.concat(query));
-    onReset();
+    try {
+      setLoadingButton(true);
+      const res = await databaseResultsCount(queryWithId);
+
+      setCounts(counts.concat(res.count));
+
+      setQueries(queries.concat(query));
+      setQueriesWithID(queriesWithID.concat(queryWithId));
+      onReset();
+      setLoadingButton(false);
+    } catch (error) {
+      console.log(error);
+      setQueries([]);
+      setQueriesWithID([]);
+      onReset();
+      setLoadingButton(false);
+    }
   };
 
   return (
@@ -585,43 +683,56 @@ const Form = ({ queries, setQueries }) => {
           <Grid item lg={12} xs={12}>
             <Grid container spacing={2}>
               <Grid item lg={6} md={6} xs={6}>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  sx={{
-                    width: "100%",
-                    backgroundColor: "#2962ff",
-                    ":hover": { backgroundColor: "#2962ff" },
-                  }}
-                  onClick={onSearch}
-                  disabled={
-                    selectedOptions.length === 0
-                      ? queryText.length === 0
+                {loadingButton ? (
+                  <LoadingButton
+                    loading
+                    variant="contained"
+                    sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                    size="medium"
+                  >
+                    Loading{" "}
+                  </LoadingButton>
+                ) : (
+                  <Button
+                    variant="contained"
+                    size="medium"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: "#2962ff",
+                      ":hover": { backgroundColor: "#2962ff" },
+                    }}
+                    onClick={onSearch}
+                    disabled={
+                      selectedOptions.length === 0
+                        ? queryText.length === 0
+                          ? true
+                          : false
+                        : false ||
+                          (selectedOptions.includes("Taxonomy") &&
+                            valueTaxonomy.value === undefined)
+                        ? true
+                        : false ||
+                          (selectedOptions.includes("Database") &&
+                            valueDatabase.value === undefined)
+                        ? true
+                        : false ||
+                          (selectedOptions.includes("Gene Ontology") &&
+                            valueGeneOntology.value === undefined)
+                        ? true
+                        : false ||
+                          (selectedOptions.includes("Pfam") &&
+                            valuePfam.value === undefined)
+                        ? true
+                        : false ||
+                          (selectedOptions.includes("Sequence") &&
+                            valueSequence === "")
                         ? true
                         : false
-                      : false ||
-                        (selectedOptions.includes("Taxonomy") &&
-                          valueTaxonomy.value === undefined)
-                      ? true
-                      : false ||
-                        (selectedOptions.includes("Database") &&
-                          valueDatabase.value === undefined)
-                      ? true
-                      : false ||
-                        (selectedOptions.includes("Gene Ontology") &&
-                          valueGeneOntology.value === undefined)
-                      ? true
-                      : false ||
-                        (selectedOptions.includes("Pfam") &&
-                          valuePfam.value === undefined)
-                      ? true
-                      : false || valueSequence === ""
-                      ? true
-                      : false
-                  }
-                >
-                  ADD
-                </Button>
+                    }
+                  >
+                    ADD
+                  </Button>
+                )}
               </Grid>
               <Grid item lg={6} md={6} xs={6}>
                 <Button

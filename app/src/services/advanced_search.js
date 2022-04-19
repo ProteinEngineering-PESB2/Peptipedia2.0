@@ -34,3 +34,13 @@ export const getGeneOntology = async (term) => {
   const res = await axios.get(`/api/gene_ontology_list/${term}`);
   return res.data;
 };
+
+export const databaseResultsCount = async (query) => {
+  const post = {
+    query: query,
+  };
+
+  const res = await axios.post(`/api/count`, post);
+
+  return res.data;
+};
