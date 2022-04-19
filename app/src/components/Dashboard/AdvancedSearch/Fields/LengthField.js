@@ -11,6 +11,7 @@ const LengthField = ({
   logicOperatorValueForLength,
   handleChangeLogicOperatorLength,
   index,
+  params
 }) => {
   return (
     <Grid item lg={12} md={12} xs={12}>
@@ -22,8 +23,8 @@ const LengthField = ({
             onChange={handleChangeValueLength}
             aria-labelledby="label-length"
             valueLabelDisplay="auto"
-            min={-10}
-            max={500}
+            min={params.min_length}
+            max={params.max_length}
           />
         </FormControl>
       ) : (
@@ -49,8 +50,8 @@ const LengthField = ({
                 onChange={handleChangeValueLength}
                 aria-labelledby="label-length"
                 valueLabelDisplay="auto"
-                min={-10}
-                max={500}
+                min={params.min_length}
+                max={params.max_length}
               />
             </FormControl>
           </Grid>

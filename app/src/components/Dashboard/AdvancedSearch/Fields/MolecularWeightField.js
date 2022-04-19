@@ -11,6 +11,7 @@ const MolecularWeightField = ({
   logicOperatorValueForMolecularWeight,
   handleChangeLogicOperatorMolecularWeight,
   index,
+  params
 }) => {
   return (
     <Grid item lg={12} md={12} xs={12}>
@@ -39,8 +40,8 @@ const MolecularWeightField = ({
                 onChange={handleChangeValueMolecularWeight}
                 aria-labelledby="label-molecular-weight"
                 valueLabelDisplay="auto"
-                min={-10}
-                max={500}
+                min={params.min_molecular_weigth}
+                max={params.max_molecular_weight}
               />
             </FormControl>
           </Grid>
@@ -53,8 +54,8 @@ const MolecularWeightField = ({
             onChange={handleChangeValueMolecularWeight}
             aria-labelledby="label-molecular-weight"
             valueLabelDisplay="auto"
-            min={-10}
-            max={500}
+            min={params.min_molecular_weigth}
+            max={params.max_molecular_weight}
           />
         </FormControl>
       )}

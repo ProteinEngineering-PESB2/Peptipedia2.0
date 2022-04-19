@@ -11,6 +11,7 @@ const ChargeDensityField = ({
   logicOperatorValueForChargeDensity,
   handleChangeLogicOperatorChargeDensity,
   index,
+  params,
 }) => {
   return (
     <Grid item lg={12} md={12} xs={12}>
@@ -37,8 +38,9 @@ const ChargeDensityField = ({
                 onChange={handleChangeValueChargeDensity}
                 aria-labelledby="label-charge-density"
                 valueLabelDisplay="auto"
-                min={-10}
-                max={500}
+                min={params.min_charge_density}
+                max={params.max_charge_density}
+                step={0.0002}
               />
             </FormControl>
           </Grid>
@@ -51,8 +53,9 @@ const ChargeDensityField = ({
             onChange={handleChangeValueChargeDensity}
             aria-labelledby="label-charge-density"
             valueLabelDisplay="auto"
-            min={-10}
-            max={500}
+            min={params.min_charge_density}
+            max={params.max_charge_density}
+            step={0.0002}
           />
         </FormControl>
       )}

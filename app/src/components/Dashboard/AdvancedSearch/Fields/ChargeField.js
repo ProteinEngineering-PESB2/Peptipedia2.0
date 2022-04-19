@@ -11,6 +11,7 @@ const ChargeField = ({
   logicOperatorValueForCharge,
   handleChangeLogicOperatorCharge,
   index,
+  params,
 }) => {
   return (
     <Grid item lg={12} md={12} xs={12}>
@@ -37,8 +38,8 @@ const ChargeField = ({
                 onChange={handleChangeValueCharge}
                 aria-labelledby="label-charge"
                 valueLabelDisplay="auto"
-                min={-10}
-                max={500}
+                min={params.min_charge}
+                max={params.max_charge}
               />
             </FormControl>
           </Grid>
@@ -51,8 +52,8 @@ const ChargeField = ({
             onChange={handleChangeValueCharge}
             aria-labelledby="label-charge"
             valueLabelDisplay="auto"
-            min={-10}
-            max={500}
+            min={params.min_charge}
+            max={params.max_charge}
           />
         </FormControl>
       )}

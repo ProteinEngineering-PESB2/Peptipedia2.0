@@ -11,6 +11,7 @@ const IsoelectricPointField = ({
   logicOperatorValueForIsoelectricPoint,
   handleChangeLogicOperatorIsoelectricPoint,
   index,
+  params,
 }) => {
   return (
     <Grid item lg={12} md={12} xs={12}>
@@ -39,8 +40,8 @@ const IsoelectricPointField = ({
                 onChange={handleChangeValueIsoelectricPoint}
                 aria-labelledby="label-isoelectric-point"
                 valueLabelDisplay="auto"
-                min={-10}
-                max={500}
+                min={params.min_isoelectric_point}
+                max={params.max_isoelectric_point}
               />
             </FormControl>
           </Grid>
@@ -53,8 +54,8 @@ const IsoelectricPointField = ({
             onChange={handleChangeValueIsoelectricPoint}
             aria-labelledby="label-isoelectric-point"
             valueLabelDisplay="auto"
-            min={-10}
-            max={500}
+            min={params.min_isoelectric_point}
+            max={params.max_isoelectric_point}
           />
         </FormControl>
       )}

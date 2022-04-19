@@ -39,7 +39,6 @@ export const databaseResultsCount = async (query) => {
   const post = {
     query: query,
   };
-  console.log(post);
 
   const res = await axios.post(`/api/count`, post);
 
@@ -48,6 +47,12 @@ export const databaseResultsCount = async (query) => {
 
 export const search = async (post) => {
   const res = await axios.post("/api/search", post);
+
+  return res.data;
+};
+
+export const parameters = async () => {
+  const res = await axios.get("/api/min_max_parameters");
 
   return res.data;
 };

@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 import DataTable from "../DataTable";
+import CircularLoading from "../CircularLoading";
 
 import { search } from "../../../services/advanced_search";
 
@@ -19,15 +20,17 @@ const AdvancedSearchContent = ({
   queries,
   setQueries,
   queriesWithID,
+  setQueriesWithID,
   counts,
+  setCounts,
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataTable, setDataTable] = useState([]);
-  const [columnsTable, setColumnsTable] = useState([])
+  const [columnsTable, setColumnsTable] = useState([]);
   const [pageTable, setPageTable] = useState(0);
-  const [totalTable, setTotalTable] = useState(50);
-  const [loadingTable, setLoadingTable] = useState(true);
+  const [totalTable, setTotalTable] = useState(20);
+  const [loadingTable, setLoadingTable] = useState(false);
   const [querySelected, setQuerySelected] = useState("");
 
   useEffect(() => {
@@ -37,6 +40,7 @@ const AdvancedSearchContent = ({
     queries.forEach((q) => {
       let query = queriesWithID[cont - 1];
       let count = counts[cont - 1];
+      let position = cont - 1;
 
       d.push([
         cont,
@@ -52,11 +56,7 @@ const AdvancedSearchContent = ({
           >
             <PlayArrowIcon />
           </Button>
-          <Button
-            variant="text"
-            color="error"
-            onClick={() => setQueries(queries.filter((query) => query !== q))}
-          >
+          <Button variant="text" color="error" onClick={() => reset(position)}>
             <DeleteIcon />
           </Button>
         </Box>,
@@ -66,6 +66,18 @@ const AdvancedSearchContent = ({
     setData(d);
     setLoading(false);
   }, [queries, setQueries, counts, queriesWithID]);
+
+  const reset = (position) => {
+    const queriesReset = queries.filter((value, index) => index !== position);
+    const queriesWithIDReset = queriesWithID.filter(
+      (value, index) => index !== position
+    );
+    const countsReset = counts.filter((value, index) => index !== position);
+
+    setQueries(queriesReset);
+    setQueriesWithID(queriesWithIDReset);
+    setCounts(countsReset);
+  };
 
   const searchDatabase = async (values) => {
     setLoadingTable(true);
@@ -77,20 +89,20 @@ const AdvancedSearchContent = ({
     setPageTable(values.page);
 
     if (values.count !== 0) {
-      const total = Math.trunc(values.count / 50) + 1;
+      const total = Math.trunc(values.count / 20) + 1;
       setTotalTable(total);
     }
 
     const post = {
       query: values.query !== "" ? values.query : querySelected,
-      limit: 50,
+      limit: 20,
       page: values.page + 1,
     };
 
     try {
       const res = await search(post);
       setDataTable(res.query.data);
-      setColumnsTable(res.query.columns)
+      setColumnsTable(res.query.columns);
       setLoadingTable(false);
     } catch (error) {
       console.log(error);
@@ -100,8 +112,8 @@ const AdvancedSearchContent = ({
 
   const options = {
     selectableRowsHideCheckboxes: true,
-    rowsPerPage: 50,
-    rowsPerPageOptions: [50],
+    rowsPerPage: 20,
+    rowsPerPageOptions: [20],
     responsive: "standard",
     serverSide: true,
     count: totalTable,
@@ -116,7 +128,7 @@ const AdvancedSearchContent = ({
   return (
     <>
       {loading ? (
-        <div></div>
+        <CircularLoading />
       ) : (
         <DataTable
           title={"Advanced Search Results"}
@@ -125,15 +137,19 @@ const AdvancedSearchContent = ({
         />
       )}
       {loadingTable ? (
-        <div></div>
-      ) : (
         <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 4 }}>
-          <MUIDataTable
-            options={options}
-            data={dataTable}
-            columns={columnsTable}
-          />
+          <CircularLoading />
         </Grid>
+      ) : (
+        dataTable.length > 0 && (
+          <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 4 }}>
+            <MUIDataTable
+              options={options}
+              data={dataTable}
+              columns={columnsTable}
+            />
+          </Grid>
+        )
       )}
     </>
   );

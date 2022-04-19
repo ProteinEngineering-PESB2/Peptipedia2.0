@@ -18,6 +18,7 @@ import {
   getPfamWithoutTerm,
   getGeneOntologyWithoutTerm,
   databaseResultsCount,
+  parameters,
 } from "../../../services/advanced_search";
 
 // Fields
@@ -49,8 +50,9 @@ const Form = ({
   const [queryText, setQueryText] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
+  const [params, setParams] = useState({});
 
-  const [valueLength, setValueLength] = useState([20, 100]);
+  const [valueLength, setValueLength] = useState([]);
   const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
   const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
   const [valueCharge, setValueCharge] = useState([20, 100]);
@@ -136,7 +138,31 @@ const Form = ({
     }
   };
 
+  const initialParameters = async () => {
+    try {
+      const res = await parameters();
+      setParams(res.result);
+      setValueLength([res.result.min_length, res.result.max_length]);
+      setValueMolecularWeight([
+        res.result.min_molecular_weigth,
+        res.result.max_molecular_weight,
+      ]);
+      setValueIsoelectricPoint([
+        res.result.min_isoelectric_point,
+        res.result.max_isoelectric_point,
+      ]);
+      setValueCharge([res.result.min_charge, res.result.max_charge]);
+      setValueChargeDensity([
+        res.result.min_charge_density,
+        res.result.max_charge_density,
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    initialParameters();
     initialPfams();
     initialTaxonomies();
     initialDatabases();
@@ -246,11 +272,20 @@ const Form = ({
   const onReset = () => {
     setSelectedOptions([]);
     setOptionsValue([]);
-    setValueLength([20, 100]);
-    setValueMolecularWeight([20, 100]);
-    setValueIsoelectricPoint([20, 100]);
-    setValueCharge([20, 100]);
-    setValueChargeDensity([20, 100]);
+    setValueLength([params.min_length, params.max_length]);
+    setValueMolecularWeight([
+      params.min_molecular_weigth,
+      params.max_molecular_weight,
+    ]);
+    setValueIsoelectricPoint([
+      params.min_isoelectric_point,
+      params.max_isoelectric_point,
+    ]);
+    setValueCharge([params.min_charge, params.max_charge]);
+    setValueChargeDensity([
+      params.min_charge_density,
+      params.max_charge_density,
+    ]);
     // setValueActivity("");
     setValueTaxonomy({});
     setValueDatabase({});
@@ -530,6 +565,7 @@ const Form = ({
                       handleChangeLogicOperatorLength
                     }
                     index={index}
+                    params={params}
                   />
                 )}
                 {option === "Molecular Weight" && (
@@ -545,6 +581,7 @@ const Form = ({
                       handleChangeLogicOperatorMolecularWeight
                     }
                     index={index}
+                    params={params}
                   />
                 )}
                 {option === "Isoelectric Point" && (
@@ -560,6 +597,7 @@ const Form = ({
                       handleChangeLogicOperatorIsoelectricPoint
                     }
                     index={index}
+                    params={params}
                   />
                 )}
                 {option === "Charge" && (
@@ -571,6 +609,7 @@ const Form = ({
                       handleChangeLogicOperatorCharge
                     }
                     index={index}
+                    params={params}
                   />
                 )}
                 {option === "Charge Density" && (
@@ -586,6 +625,7 @@ const Form = ({
                       handleChangeLogicOperatorChargeDensity
                     }
                     index={index}
+                    params={params}
                   />
                 )}
                 {option === "Database" && (

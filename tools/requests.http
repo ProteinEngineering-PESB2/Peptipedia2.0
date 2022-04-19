@@ -124,7 +124,8 @@ Content-Type: application/json
     "limit": 50,
     "page": 3
 }
-
+###
+GET {{api}}/min_max_parameters/
 ###
 POST {{api}}/count/
 Content-Type: application/json

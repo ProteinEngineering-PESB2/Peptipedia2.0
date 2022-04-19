@@ -9,7 +9,7 @@ import AdvancedSearchContent from "./AdvancedSearchContent";
 const AdvancedSearch = () => {
   const [queries, setQueries] = useState([]);
   const [queriesWithID, setQueriesWithID] = useState([]);
-  const [counts, setCounts] = useState([])
+  const [counts, setCounts] = useState([]);
 
   return (
     <>
@@ -33,7 +33,9 @@ const AdvancedSearch = () => {
               queries={queries}
               setQueries={setQueries}
               queriesWithID={queriesWithID}
+              setQueriesWithID={setQueriesWithID}
               counts={counts}
+              setCounts={setCounts}
             />
           </Grid>
         )}
