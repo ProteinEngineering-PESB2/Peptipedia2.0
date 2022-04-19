@@ -24,8 +24,7 @@ class database:
     def select_peptides(self, query, limit, offset):
         limited_query = query + " order by idpeptide limit {} offset {} ".format(limit, offset)
         data = pd.read_sql(text(limited_query), self.conn)
-        data = json.loads(data.to_json(orient="records"))
-        return {"data": data}
+        return {"data": data.values.tolist(), "columns": data.columns.tolist()}
 
     def get_all_databases(self):
         data = pd.read_sql("select iddb, name from db", self.conn)
