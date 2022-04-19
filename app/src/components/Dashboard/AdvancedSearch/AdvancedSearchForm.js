@@ -10,6 +10,9 @@ const AdvancedSearchForm = ({
   setQueriesWithID,
   counts,
   setCounts,
+  setOpenSnackbar,
+  setMessage,
+  setSeverity,
 }) => {
   return (
     <>
@@ -29,6 +32,9 @@ const AdvancedSearchForm = ({
               setQueriesWithID={setQueriesWithID}
               counts={counts}
               setCounts={setCounts}
+              setOpenSnackbar={setOpenSnackbar}
+              setMessage={setMessage}
+              setSeverity={setSeverity}
             />
           </Paper>
         </Grid>

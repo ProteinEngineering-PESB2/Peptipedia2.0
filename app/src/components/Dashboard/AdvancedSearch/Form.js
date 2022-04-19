@@ -44,6 +44,9 @@ const Form = ({
   setQueriesWithID,
   counts,
   setCounts,
+  setOpenSnackbar,
+  setMessage,
+  setSeverity,
 }) => {
   const [optionsValue, setOptionsValue] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -513,9 +516,9 @@ const Form = ({
       onReset();
       setLoadingButton(false);
     } catch (error) {
-      console.log(error);
-      setQueries([]);
-      setQueriesWithID([]);
+      setSeverity("error");
+      setMessage("Service not available");
+      setOpenSnackbar(true);
       onReset();
       setLoadingButton(false);
     }
