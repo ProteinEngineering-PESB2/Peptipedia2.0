@@ -1,0 +1,147 @@
+activity,in_old,in_new
+Allergen,1,1
+Amphibian defense,0,1
+Analgesic,0,1
+Angiogenic,0,1
+Anorexic,0,1
+Anti Angiogenic,1,0
+Anti Diabetic,1,0
+Anti Gram(+),1,1
+Anti Gram(-),1,1
+Anti HIV,1,1
+Anti HSV,1,0
+Anti Leishmania,0,1
+Anti MRSA,1,0
+Anti TB,1,0
+Anti Yeast,1,0
+Anti-analgesic,0,1
+Anti-arthropod,0,1
+Anti-protist,0,1
+AntiProliferative,0,1
+Antibacterial/antibiotic,1,1
+Antibiofilm,1,1
+Anticancer,1,1
+Antidote,0,1
+Antifreezing,0,1
+Antifungal,1,1
+Antihypertensive,1,1
+Antiinflammatory,1,0
+Antilisterial,1,0
+Antimalarial/antiplasmodial,1,1
+Antimicrobial,1,1
+Antinociceptive,1,1
+Antioxidant,1,1
+Antiparasitic,1,1
+Antiprotozoal,1,1
+Antitumour,1,1
+Antiviral,1,1
+Antiyeast,0,1
+Anuro defense,1,1
+Anxiolytic,0,1
+Apoptosis,0,1
+Arthropod,0,1
+Atheroma related,0,1
+Bacteria Growth stimulator,0,1
+Bacteriocins,1,0
+Behavior,0,1
+Bile acid-binding,0,1
+Bioactive,1,1
+Biopesticide,0,1
+Biosynthesis,0,1
+Blood Pressure,0,1
+Blood processes,0,1
+Blood-brain barrier crossing,1,1
+Bone processes,0,1
+Brain peptide,1,0
+Cancer cell,1,1
+Cardiac,0,1
+Cell aggregation,0,1
+Cell degranulating,0,1
+Cell proliferation,0,1
+Cell sensing,1,0
+Cell-cell communication,1,1
+Cell-penetrating,1,1
+Channel modulator,0,1
+Chaperone,0,1
+Chelator,0,1
+Chemotactic,1,1
+Chromatine assembly,0,1
+Coagulation or anticoagulation,0,1
+Cytokine activity,0,1
+Cytolytic,1,1
+Cytoprotective,0,1
+DNA Binding,0,1
+DNA replication,0,1
+Defense,1,1
+Diabetic,0,1
+Diuresis,0,1
+Drug delivery vehicle,1,1
+Eating behavior,0,1
+Enzymatic,0,1
+Enzyme inhibitor,1,1
+Gene expression and tranlation,0,1
+Gene expression and translation,0,1
+Growth factor,0,1
+Hemolytic,1,1
+Homeostasis,0,1
+Hormone,0,1
+Hormone Binding,0,1
+Immunological activity,1,1
+Immunomodulatory,1,1
+Inflammatory modulator,0,1
+Insecticidal,1,1
+Ion Binding,0,1
+Ligand binding,0,1
+Lipid Binding,0,1
+MHC binding and non-binding,0,1
+Mammallian cell,1,1
+Membrane Binding,0,1
+Metabolic,1,0
+Metal Binding,0,1
+Molecule Binding,0,1
+Mollicute,0,1
+Molluscicidal,0,1
+Muscle processes,0,1
+Natriuretic,0,1
+Nematocide,0,1
+Nematode,0,1
+Neurological activity,1,1
+Neuropeptide,1,1
+Neurotoxic,0,1
+Neurotoxin,0,1
+None Activity reported,0,1
+Opioid,0,1
+Other activity,1,1
+Paralytic,0,1
+Peptide Binding,0,1
+Pheromone,0,1
+Plant processes,0,1
+Precipitation processes,0,1
+Propeptide,1,1
+Protein binding,0,1
+Protein modulator,0,1
+Proteolytic,1,1
+Protista,0,1
+Quorum sensing,1,1
+Receptor modulator,0,1
+Regulatory,1,1
+Sensorial,0,1
+Sexual/reproduction regulation,0,1
+Signal,1,1
+Signal transduction,0,1
+Sporulation,0,1
+Surface-immobilized,1,1
+Taste & Saliva,0,1
+Temperature,0,1
+Therapeutic,1,1
+Toxic,1,1
+Toxins,0,1
+Transcription processes,0,1
+Transit,1,1
+Transport,0,1
+Tumor-homing,0,1
+Uricemic,0,1
+Vasoconstrictor,0,1
+Vasodilator,0,1
+Wound healing,1,0
+sexual/reproduction,0,1

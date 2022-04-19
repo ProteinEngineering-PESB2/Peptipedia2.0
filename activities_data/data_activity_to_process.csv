@@ -1,0 +1,702 @@
+﻿activity,Name in DB
+4KD_DEFENSIN,Defense
+ABAECIN,Antimicrobial
+ACANTHOSCURRIN,Anti Gram(-)
+ACANTHOSCURRIN,Antiyeast
+ACBP,Lipid Binding
+ACBP,Transport
+ACCESSORY_GLAND,sexual/reproduction
+ACE-INHIBITOR,Enzyme inhibitor
+ACE-INHIBITOR,Antihypertensive
+ACHATIN,Neuropeptide
+ACRORHAGIN,Toxic
+ACTH_DOMAIN_AND_OPIOIDS_NEUROPEPTIDES,Neuropeptide
+ACTIVATOR OF GENE EXPRESSION,Transcription processes
+ADIPOGENIC-DIFFERENTIATING,Transcription processes
+ADIPOKINETIC,Hormone
+ADRENOMEDULLIN,Hormone
+AESTIVATION REGULATOR,Neuropeptide
+AGGREGATION REGULATOR,Neuropeptide
+AGOUTI,Neuropeptide
+ALCRP,Antibacterial/antibiotic
+ALLATOSTATIN_A,Neuropeptide
+ALLATOTROPIN,Neuropeptide
+ALLERGEN,Allergen
+ALLERGIC,Allergen
+ALPHA-AMYLASE-INHIBITOR,Enzyme inhibitor
+AMPHIREGULIN,Growth factor
+ANALGESIC,Analgesic
+ANATIPARASITAL,Antiparasitic
+ANDROGENIC_GLAND_HORMONE,Hormone
+ANENOME_NEUROTOXIN,Neurotoxin
+ANGIOGENIC,Angiogenic
+ANGIOTENSIN,Hormone
+ANIONIC,Antimicrobial
+ANOREXIC,Anorexic
+ANTHELMINTIC,Antiparasitic
+ANTHO_RIAMIDE,Neuropeptide
+ANTI BACTERIAL,Antibacterial/antibiotic
+ANTI BIOFILM,Antibiofilm
+ANTI DIABETIC,Diabetic
+ANTI MICROBIAL,Antimicrobial
+ANTI TUBERCULAR,Antibacterial/antibiotic
+ANTI_LIPOPOLYSACCHARIDE_FACTOR,Antimicrobial
+ANTI-ALLERGEN,Allergen
+ANTI-AMNESTIC,Therapeutic
+ANTI-ANALGESIC,Anti-analgesic
+ANTI-ATHEROSCLEROTIC,Atheroma related
+ANTI-BARNACLE,Anti-arthropod
+ANTI-CHAPERONE,Chaperone
+ANTI-COAGULANT,Coagulation or anticoagulation
+ANTI-COLITIC,Inflammatory modulator
+ANTI-DIABETIC,Diabetic
+ANTI-GRAM-,Anti Gram(-)
+ANTI-GRAM+,Anti Gram(+)
+ANTI-HIV,Anti HIV
+ANTI-HYPERURICEMIC,Uricemic
+ANTI-INFLAMMATORY,Inflammatory modulator
+ANTI-NEUROTENSIVE,Neurological activity
+ANTI-OBESITY,Eating behavior
+ANTI-PLATELET AGGREGATION ACTIVITY,Coagulation or anticoagulation
+ANTI-PROTIST,Anti-protist
+ANTIALLERGEN,Allergen
+ANTIAMNESTIC,Therapeutic
+ANTIANGIOGENIC,Angiogenic
+ANTIBACTERIAL,Antibacterial/antibiotic
+ANTIBIOFILM,Antibiofilm
+ANTIBIOTIC,Antibacterial/antibiotic
+ANTICANCER,Anticancer
+ANTICOAGULANT,Coagulation or anticoagulation
+ANTIDIABETIC,Diabetic
+ANTIDIURETIC,Diuresis
+ANTIDOTE,Antidote
+ANTIFEEDANT,Biopesticide
+ANTIFREEZE,Antifreezing
+ANTIFUNGAL,Antifungal
+ANTIGRAM_N,Anti Gram(-)
+ANTIGRAM_P,Anti Gram(+)
+ANTIHIV,Anti HIV
+ANTIHYPERGLYCEMIC,Diabetic
+ANTIHYPERTENSIVE,Antihypertensive
+ANTIHYPERURICEMIC,Uricemic
+ANTIINFLAMMATORY,Inflammatory modulator
+ANTIINSECTICIDAL,Insecticidal
+ANTILEISHMANIA,Anti Leishmania
+ANTIMALARIAL,Antimalarial/antiplasmodial
+ANTIMIACROBIAL,Antimicrobial
+ANTIMICROBIAL,Antimicrobial
+ANTINOCICEPTIVE,Antinociceptive
+ANTIONCOGENIC,Anticancer
+ANTIOXIDANT,Antioxidant
+ANTIPARASITIC,Antiparasitic
+ANTIPLASMODIA,Antimalarial/antiplasmodial
+ANTIPROLIFERATIVE,AntiProliferative
+ANTIPROTOZOA,Antiprotozoal
+ANTIREPRODUCTIVE,Other activity
+ANTITHROMBOTIC,Coagulation or anticoagulation
+ANTITOXIC,Antidote
+ANTITOXIN,Antidote
+ANTITRYPANOSOMIC,Antiparasitic
+ANTITUMOR,Antitumour
+ANTITUMOUR,Antitumour
+ANTIVIRAL,Antiviral
+ANTIYEAST,Antiyeast
+ANTUTUMOR,Antitumour
+ANTY-INFLAMMATORY,Inflammatory modulator
+ANXIOLYTIC,Anxiolytic
+APELIN,Homeostasis
+APIDAECIN,Antibacterial/antibiotic
+APOPTOSIS,Apoptosis
+APTOTOXIN,Toxins
+ARENICIN,Anti Gram(-)
+ARMET,Growth factor
+ARTHROPOD,Arthropod
+ATTACIN,Antibacterial/antibiotic
+ATTRACTIN,Inflammatory modulator
+BACTERIA GROWTH STIMULATOR,Bacteria Growth stimulator
+BEHAVIOR,Behavior
+BETA_BUNGAROTOXIN_B_CHAIN_PRECURSOR,Neurotoxin
+BILE ACID-BINDING,Bile acid-binding
+BIND VARIOUS HEAVY METALS,Metal Binding
+BINDING,Molecule Binding
+BIOACTIVE,Bioactive
+BIOSYNTHESIS ACTIVATOR,Biosynthesis
+BIOSYNTHESIS INHIBITOR,Biosynthesis
+BLOOD-BRAIN BARRIER,Blood-brain barrier crossing
+BLOODBRAINBARRIER,Blood-brain barrier crossing
+BOMBESIN,Amphibian defense
+BOMBININ,Antimicrobial
+BOMBOLITIN,Toxins
+BRADYKININ,Vasodilator
+BUCCALIN,Neuropeptide
+BURSICON,Hormone
+CA-BINDING,Ion Binding
+CA2-LEVEL-REGULATOR,Regulatory
+CA2+ LEVEL REGULATOR,Regulatory
+CALCITONIN_CGRP_IAPP,Hormone
+GENERATING,Other activity
+GENERATING_PEPTIDE,Other activity
+CANCER,Anticancer
+CANCER,Anticancer
+CANCERCELLS,Cancer cell
+CARDIOACTIVE,Cardiac
+CART PEPTIDE,Eating behavior
+CATHELICIDINS,Antimicrobial
+CECROPIN,Antimicrobial
+CELIAC-TOXIC,Toxins
+CELL ACTIVATOR,Immunomodulatory
+CELL AGGLUTINATOR,Antimicrobial
+CELL AGGREGATION INHIBITOR,Cell aggregation
+CELL AGGREGATION REGULATOR,Cell aggregation
+CELL GROWTH INHIBITOR,Cell proliferation
+CELL GROWTH STIMULATOR,Cell proliferation
+CELL PENETRATING,Cell-penetrating
+CELL TRANSPORT REGULATOR,Transport
+CELL_CELL_COMMUNICATION,Cell-cell communication
+CELL-CELL COMMUNICATION,Cell-cell communication
+CELL-GROWTH-INHIBITOR,Cell proliferation
+CELL-TO-CELL COMMUNICATION,Cell-cell communication
+CELLPENETRATING,Cell-penetrating
+CERATOTOXIN,Antibacterial/antibiotic
+CEREBELLIN,Neurological activity
+CGMP ACTIVATOR,Signal transduction
+CHANNEL BLOCKER,Channel modulator
+CHANNEL MODULATOR,Channel modulator
+CHAPERONE,Chaperone
+CHEMICAL-AND-ENZYMATIC-DIGESTION,Enzymatic
+CHEMOATTRACTANT,Chemotactic
+CHEMOTACTIC,Chemotactic
+CHEMOTAXIS REGULATOR,Chemotactic
+CHEMOTAXYS INDUCTOR,Chemotactic
+CHOLESTEROL METABOLISM MODULATOR,Homeostasis
+CHROMATIN ASSEMBLY OR DISASSEMBLY,Chromatine assembly
+CHROMATIN-ASSEMBLY-OR-DISASSEMBLY,Chromatine assembly
+CILIARY_NEUROTROPHIC_FACTOR,Growth factor
+CLAVANIN,Antimicrobial
+COAGULATION REGULATOR,Coagulation or anticoagulation
+COAGULOGEN,Coagulation or anticoagulation
+COCAINE_AND_AMPHETAMINE_REGULATED_TRANSCRIPT_PROTEIN,Eating behavior
+COLEOPTERICIN,Antimicrobial
+COLIPASE,Enzymatic
+COMPETENCE FACTOR,Quorum sensing
+COMPETENCE PEPTIDE,Quorum sensing
+CONANTOKIN,Neurotoxin
+CONOPHAN,Neurotoxin
+CONOTOXIN,Neurotoxic
+CONOTOXIN,Neurotoxin
+CONTRACTION_INHIBITING_PEPTIDE,Hormone
+COPPER II-CHELATING,Chelator
+CORAZONIN,Neuropeptide
+CORTICOTROPIN_RELEASING_FACTOR,Hormone
+CPP,Cell-penetrating
+CRUSTIN,Antimicrobial
+CRYOPROTECTIVE,Antifreezing
+CYCLOOXYGENASE,Enzymatic
+CYTIN_A_CHAIN,Other activity
+CYTOKINE/GROWTH FACTOR,Cytokine activity
+CYTOKINE/GROWTH FACTOR,Growth factor
+CYTOLYTIC,Cytolytic
+CYTOPROTECTIVE,Cytoprotective
+CYTOTO,Toxic
+CYTOTOXIC,Toxic
+CYTOTOXIN,Toxic
+DEFENSE,Defense
+DEFENSIN,Defense
+DEFENSINS,Defense
+DEFENSIVE-PROTEINASE-INHIBITOR,Defense
+DELTA_ATRACOTOXIN,Neurotoxin
+DERMCIDIN,Antimicrobial
+DEVELOPMENT REGULATOR,Regulatory
+DEVELOPMENT-REGULATOR,Regulatory
+DIAPAUSIN,Antifungal
+DIGESTION INHIBITOR,Other activity
+DIURETIC,Diuresis
+DIURETIC,Diuresis
+DNA SYNTHESIS INDUCTOR,Other activity
+DNA-BINDING,DNA Binding
+DNA-REPAIR,DNA replication
+DNA-SYNTHESIS STIMULATING,DNA replication
+DNA-SYNTHESIS STIMULATING PEPTIDE,DNA replication
+DPP-IV-INHIBITOR,Diabetic
+DROSOCIN,Antimicrobial
+DROSOMYCIN_LIKE,Antifungal
+DRUG_DELIVERY_VEHICLE,Drug delivery vehicle
+DRUGDELIVERYVEHICLE,Drug delivery vehicle
+DYNASTIN,Antimicrobial
+ECDYSIOTROPIC,Hormone
+ECDYSIS_TRIGGERING_HORMONE,Hormone
+ECLOSION_HORMONE,Hormone
+ECTATOMIN,Toxins
+EGG_LAYING_HORMONE,Hormone
+ELECTRIN,Amphibian defense
+ENDOTHELIN,Vasoconstrictor
+ENZYMATIC-DEGRADATION,Enzymatic
+ENZYMATIC-DIGESTION,Enzymatic
+ENZYME,Enzymatic
+ENZYME ACTIVATOR,Enzymatic
+ENZYME DEGRADATION REGULATOR,Enzymatic
+ENZYME INHIBIOR,Enzymatic
+ENZYME INHIBITOR,Enzymatic
+ENZYME STABILIZER,Enzymatic
+ENZYME SUBSTRATE,Enzymatic
+ENZYME SYNTHESIS ACTIVATOR,Enzymatic
+ENZYME SYNTHESIS PEPTIDE,Enzymatic
+ENZYME-INHIBITOR,Enzymatic
+ENZYMEINHIBITOR,Enzymatic
+ERGTOXIN,Toxins
+ERYTHROPOIETIN_THROMBOPOEITIN,Blood processes
+ESTROGEN-LIKE-ACTIVITY,Hormone
+EYESTALK_PEPTIDE,Hormone
+FAM3,Cytokine activity
+FEEDING BEHAVIOR,Neuropeptide
+FEEDING CIRCUIT ACTIVATOR,Neuropeptide
+FEEDING CIRCUIT-ACTIVATING,Neuropeptide
+FIBRINOGEN_ALPHA_1_CHAIN_PRECURSOR,Coagulation or anticoagulation
+FIBRINOLYTIC,Coagulation or anticoagulation
+FIBROSIN,Growth factor
+FMRFAMIDE_AND_RELATED_NEUROPEPTIDES,Neuropeptide
+FOLLICULAR_DENDRITIC_CELL_SECRETED_PEPTIDE,Immunomodulatory
+FORMAECIN,Antibacterial/antibiotic
+FULICIN,Hormone
+FUNGUS,Antifungal
+FUNGUS,Antifungal
+FUNGUS,Antifungal
+FUNGUS,Antifungal
+GALANIN,Hormone
+GALLERIMYCIN,Antifungal
+GAMBICIN,Antimicrobial
+GASTRIN_CHOLECYSTOKININ,Hormone
+GBP_PSP1_PARALYTIC,Cytokine activity
+GENE ACTIVATOR,Gene expression and tranlation
+GENE EXPRESSION ACTIVATOR,Gene expression and tranlation
+GENE EXPRESSION INDUCTOR,Gene expression and tranlation
+GENE EXPRESSION REGULATOR,Gene expression and tranlation
+GENE EXPRESSION STIMULATOR,Gene expression and tranlation
+GENE-EXPRESSION-ACTIVATOR,Gene expression and tranlation
+GENE-EXPRESSION-STIMULATOR,Gene expression and tranlation
+GENOME REGULATOR,Gene expression and tranlation
+GGNG_MYOACTIVE_PEPTIDE,Other activity
+GGY_ANTIMICROBIAL,Antimicrobial
+GHRELIN_AND_MOTILIN_RELATED_PEPTIDE,Hormone
+GHRELIN_AND_MOTILIN_RELATED_PEPTIDE,Hormone
+GIANT-LENS,Regulatory
+GLOVERIN,Anti Gram(-)
+GLP-INTERVENING,Hormone
+GLUCAGON_GIP_SECRETIN_VIP,Hormone
+GLYCOPROTEIN_HORMONES_ALPHA_CHAIN,Hormone
+GLYCOPROTEIN_HORMONES_BETA_CHAIN,Hormone
+GMF_BETA,Growth factor
+GONADOTROPIN_RELEASING_HORMONES,Hormone
+GRAM NEG,Anti Gram(-)
+GRAM POS,Anti Gram(+)
+GRAM-,Anti Gram(-)
+GRAM-,Anti Gram(-)
+GRAM-,Anti Gram(-)
+GRAM+,Anti Gram(+)
+GRAM+,Anti Gram(+)
+GRAMMISTIN,Toxins
+GRANINS,Hemolytic
+GRANULINS,Growth factor
+GRANULOCYTE_MACROPHAGE_COLONY_STIMULATING_FACTOR,Immunomodulatory
+GRANULYSIN_NK_LYSIN_LIKE,Antibacterial/antibiotic
+GREMLIN,Cytokine activity
+GROWTH_FACTOR_ARC,Growth factor
+GUANYLIN,Hormone
+HALOCIDIN_SUBUNIT,Antimicrobial
+HBGF_FGF,Growth factor
+HEAVY-METAL-BINDING,Metal Binding
+HEMATOPOIETIC_ANTIMICROBIAL_PEPTIDE,Antimicrobial
+HEMIPTERICIN,Anti Gram(-)
+HEMODYNAMIC,Blood Pressure
+HEMOGLOBIN HYDROLYSATE (PEPSIN),Blood processes
+HEMOLYRIC,Hemolytic
+HEMOLYTIC,Hemolytic
+HEMOPOIETIC,Blood processes
+HEMOTACTIC,Blood processes
+HEMOTAXIS REGULATOR,Blood processes
+HEPARIN_BINDING_EPIDERMAL_GROWTH_FACTOR,Growth factor
+HEPATOMA_DERIVED_GROWTH_FACTOR,Growth factor
+HEPATOPROTECTIVE,Regulatory
+HEPCIDIN,Regulatory
+HHH_ANTIMICROBIAL,Antimicrobial
+HISTATIN,Antibacterial/antibiotic
+HISTATIN,Antifungal
+HIV,Anti HIV
+HMG-COA-REDUCTASE-INHIBITOR,Enzyme inhibitor
+HOMEOSTASIS CONTROL,Homeostasis
+HOMOEOSTASIS MAINTAINANCE,Homeostasis
+HORMONE,Hormone
+HORMONE EXPRESSION REGULATOR,Hormone
+HORMONE SECRETION REGULATOR,Hormone
+HUWENTOXIN_2,Neurotoxin
+HYDRALYSIN,Toxins
+HYLIN_B,Anuro defense
+HYM_PREPROHORMONE,Other activity
+HYMENOPTAECIN,Antibacterial/antibiotic
+HYPOCHOLESTEROLEMIC,Eating behavior
+HYPOGLYCEMIC,Eating behavior
+HYPOSIN,Antimicrobial
+HYPOTENSIN,Blood Pressure
+HYPOTENSIVE,Blood Pressure
+HYPOTRIGLYCERIDEMIC,Eating behavior
+I_SUPERFAMILY_CONOTOXIN,Toxins
+ICHTHYOTOXIC,Toxins
+IGE-BINDING,Immunological activity
+IL_27_P28_SUBUNIT,Immunological activity
+IL_6_SUBFAMILY_LIKE_CYTOKINE_M17,Immunological activity
+IMMUNE SYSTEM STIMULATION,Immunological activity
+IMMUNE_INDUCED_PEPTIDE_PRECURSOR,Immunological activity
+IMMUNE_INDUCED_PEPTIDES_13,Immunological activity
+IMMUNEMODULATOR,Immunomodulatory
+IMMUNOGENIC,Immunological activity
+IMMUNOMODULATOR,Immunomodulatory
+IMMUNOMODULATORY,Immunomodulatory
+IMMUNOREGULATOR,Immunological activity
+IMMUNOSTIMULATING,Immunological activity
+IMMUNOSUPPRESSIVE,Immunological activity
+INDUCTION FACTOR,Other activity
+INFLAMMATORY,Inflammatory modulator
+INHIBITS ANGIOTENSIN I-CONVERTING ENZYME (IC50=22 ΜM) - RECALCULATED FROM -LOG,Angiogenic
+INSCTICIDAL,Insecticidal
+INSECT,Insecticidal
+INSECTICIDAL,Insecticidal
+INSECTICIDAL_TOXIN_DTX,Insecticidal
+INSECTICIDE,Insecticidal
+INSETICIDAL,Insecticidal
+INSULIN,Hormone
+INSULIN_GROWTH_FACTOR_LIKE,Hormone
+INSULIN-BINDING-PROTEIN,Protein binding
+INTERFERON_ALPHA_BETA_DELTA,Immunological activity
+INTERFERON_GAMMA,Immunological activity
+INTERLEUKIN,Immunological activity
+ION CHANNEL BLOCKER,Channel modulator
+ION CHANNEL MODULATOR,Channel modulator
+ION CHANNELMODULATOR,Channel modulator
+ION TRANSPORT INHIBITOR,Channel modulator
+ION TRANSPORT PEPTIDE,Channel modulator
+ION-CANNEL BLOCKER,Channel modulator
+JANUS_ATRACOTOXIN,Toxins
+JAPONICIN,Antimicrobial
+JELLYFISH_TOXIN,Toxins
+KASSINATUERIN,Antimicrobial
+L71,Other activity
+LATARCIN,Antimicrobial
+LATROTOXIN,Neurotoxin
+LEADER PEPTIDE,Signal
+LEBOCIN,Antibacterial/antibiotic
+LEPTIN,Hormone
+LEUCOKININ,Neuropeptide
+LIF_OSM,Blood processes
+LIGAND BINDING,Ligand binding
+LIGAND BINDING INHIBITOR,Ligand binding
+LIGAND TO HUMAN GLIOMA CELLS,Molecule Binding
+LIGHT_YELLOW_CELL_PEPTIDE,Neuropeptide
+LIPOGENESIS ATTENUATOR,Eating behavior
+LITX_TOXIN,Toxins
+LIVER_EXPRESSED_ANTIMICROBIAL,Antimicrobial
+LONG_CHAIN_POTASSIUM_CHANNEL_INHIBITOR_SCORPION_TOXIN,Toxins
+LYCOTOXIN,Toxins
+LYMNA_DF_AMIDE,Neuropeptide
+LYSIS,Proteolytic
+LYTIC,Proteolytic
+MALE_ACCESSORY_GLAND_PROTEIN,Sexual/reproduction regulation
+MAMMALIAN CELL,Mammallian cell
+MAMMALIAN CELL,Mammallian cell
+MAMMALIAN CELL,Mammallian cell
+MAMMALIANCELLS,Mammallian cell
+MAST CELL DEGRANULATING,Cell degranulating
+MAST CELL DEGRANULATING TOXIN,Toxins
+MAST CELLS DEGRANULATOR,Cell degranulating
+MAST_CELL_DEGRANULATING_PEPTIDE,Cell degranulating
+MASTOPARAN,Cell degranulating
+MEGOURIN,Antimicrobial
+MEGOURIN,Antifungal
+MEGOURIN,Anti Gram(+)
+MELITTIN,Toxins
+MELITTIN,Hemolytic
+MELITTIN,Antimicrobial
+MEMBRANE-BINDING,Membrane Binding
+MEMORY REGULATOR,Regulatory
+METAL-BINDING,Metal Binding
+METALNIKOWIN,Anti Gram(-)
+METASTASIS_SUPPRESSOR_KISS,Anticancer
+METCHNIKOWIN,Antibacterial/antibiotic
+METCHNIKOWIN,Antifungal
+MHC BINDER,MHC binding and non-binding
+MICROPLUSIN,Antimicrobial
+MIGRATION-INDUCING,Sensorial
+MITOGEN,Cell proliferation
+MITOGENIC,Cell proliferation
+MLPT,None Activity reported
+MOLLICUTE,Mollicute
+MOLLUSCICIDAL,Molluscicidal
+MORICIN,Antibacterial/antibiotic
+MORPHOGENETIC_NEUROPEPTIDE,Neuropeptide
+MU_AGATOXIN_AND_SPIDER_TOXIN_SFI,Toxins
+MYOACTIVE_TETRADECAPEPTIDE,Muscle processes
+MYOMODULIN,Neuropeptide
+MYOTOXINS,Toxic
+MYOTOXINS,Toxins
+MYTICIN,Antibacterial/antibiotic
+MYTILIN,Antimicrobial
+NASAL_EMBRYONIC_LUTEINIZING_HORMONE_RELEASING_HORMONE_FACTOR,Neurological activity
+NATRIURETIC_PEPTIDES,Natriuretic
+NEMATOCIDE,Nematocide
+NEMATODE,Nematode
+NEMATODE_SPECIFIC_PEPTIDE_FAMILY_GROUP_B,Nematode
+NEMATODE_SPECIFIC_PEPTIDE_FAMILY_GROUP_C,Nematode
+NERVE_GROWTH_FACTOR,Neuropeptide
+NEUREGULIN,Neurological activity
+NEUREXOPHILIN,Neurological activity
+NEUROACTIVE,Neurological activity
+NEUROACTIVE_POLYPROTEIN_R15,Neurological activity
+NEUROENDOCRINE_PROTEIN_7B2,Neurological activity
+NEUROENDOCRINE_SECRETORY_PROTEIN_55,Neurological activity
+NEUROHYPOPHYSIAL_HORMONES,Neurological activity
+NEUROMEDIN_U_S,Neurological activity
+NEUROPARSIN,Neurological activity
+NEUROPEPTIDE,Neuropeptide
+NEUROPEPTIDE,Neuropeptide
+NEUROPROTECTIVE,Neuropeptide
+NEUROPROTECTOR,Neuropeptide
+NEUROSECRETORY_PROTEIN_VGF,Neurological activity
+NEUROTENSIN ANTAGONISTIC,Neurological activity
+NEUROTENSIN_NEUROMEDIN_N,Neurological activity
+NEUROTENSIN-INHIBITOR,Neurological activity
+NEUROTOXIN_B,Neurological activity
+NEUROTOXIN_MAGI,Neurological activity
+NEUROTROPHIC FACTOR,Neurological activity
+NEUTROPHIL INHIBITOR,Immunological activity
+NITROPHORIN,Coagulation or anticoagulation
+OMEGA_AGATOXIN,Toxins
+OMEGA_ATRACOTOXIN,Toxins
+OPIOID,Opioid
+ORCOKININ,Neuropeptide
+OREXIN,Neuropeptide
+ORNATIN,Coagulation or anticoagulation
+OSTEOANABOLIC,Bone processes
+OSTEOCRIN,Bone processes
+OSTEOGENIC,Bone processes
+OSTEOPONTIN,Bone processes
+OVARIAN_ECDYSTEROIDOGENIC_HORMONE,Hormone
+OVARIAN_ECDYSTEROIDOGENIC_HORMONE,sexual/reproduction
+OXIDATIVE STRESS REGULATOR,Antioxidant
+OXYOPININ_2,Toxins
+OXYTOXIN,Hormone
+OXYTOXIN,sexual/reproduction
+PACIFASTIN_RELATED_PEPTIDE,Enzyme inhibitor
+PANCREATIC_HORMONE,Hormone
+PARABUTOPORIN,Antimicrobial
+PARABUTOPORIN,Toxins
+PARALYTIC,Paralytic
+PARASITE,Antiparasitic
+PARASITE,Antiparasitic
+PARASITE,Antiparasitic
+PARATHYROID_HORMONE,Hormone
+PARDAXIN,Anticancer
+PATHOGENESIS,Other activity
+PATHOGENIC,Other activity
+PEDIBIN,Other activity
+PENAEIDIN,Antimicrobial
+PEPTIDE INHIBITOR,Protein modulator
+PEPTIDE POTENTIATOR,Protein modulator
+PEPTIDE PRECURSOR,Propeptide
+PEPTIDE_BMKN,Antibacterial/antibiotic
+PEPTIDE_HORMONE,Hormone
+PERIVISCEROKININ,Neuropeptide
+PHAGOCYTOSIS-STIMULATORY-PEPTIDE,Immunological activity
+PHEROMONE,Pheromone
+PHEROMONE INHIBITOR,Pheromone
+PHOSPHATIDYLETHANOLAMINE_BINDING_PROTEIN,Molecule Binding
+PHOTOSYNTHESIS INHIBITOR,Plant processes
+PHOTOSYNTHESIS PARTICIPANT,Plant processes
+PHOTOSYNTHESIS-PARTICIPANT,Plant processes
+PHYLLOSEPTIN,Antibacterial/antibiotic
+PHYLLOSEPTIN,Antiprotozoal
+PHYLOTAXIS REGULATOR,Plant processes
+PIGMENT_DISPERSING_HORMONE,Hormone
+PILOSULIN,Allergen
+PLATELET AGGREGATION INHIBITOR,Blood processes
+PLATELET AGREGATION INHIBITOR,Blood processes
+PLATELET_DERIVED_GROWTH_FACTOR,Growth factor
+PLEURIN,Metal Binding
+PLEUROCIDIN,Antimicrobial
+PNEUMADIN,Diuresis
+POLYBINE,Toxins
+POMPILIDOTOXIN,Toxins
+PONERICIN,Antibacterial/antibiotic
+PONERICIN,Insecticidal
+PONERICIN_L,Antimicrobial
+PORE-FORMING,Antimicrobial
+POTASSIUM_CHANNEL_TOXIN_ALPHA_KTX,Toxins
+POTASSIUM_CHANNEL_TOXIN_KAPPA_KTX,Toxins
+POTENTIATOR,Protein modulator
+PRECIPITATION INHIBITOR,Precipitation processes
+PRO_MCH,Neurological activity
+PRO-APOPTOTIC,Other activity
+PROCTOLIN,Neuropeptide
+PROKINETICIN,Muscle processes
+PROLIFERATION REGULATOR,Cell proliferation
+PROLIFERATION STIMULATOR,Cell proliferation
+PROPEPTIDE,Propeptide
+PROSAAS,Neurological activity
+PROTEASE-INHIBITOR,Protein modulator
+PROTEIN DIMERIZATION ACTIVATOR,Protein modulator
+PROTEIN EXPRESSION REGULATOR,Protein modulator
+protein modulator,Protein modulator
+PROTEIN SYNTHESIS INHIBITOR,Protein modulator
+PROTEIN TRANSLATION INHIBITOR,Protein modulator
+PROTEIN TRANSPORT INHIBITOR,Protein modulator
+PROTEIN_C12ORF39,Antibacterial/antibiotic
+PROTEIN-BINDING,Protein binding
+PROTEIN-BINDING INHIBITOR,Protein modulator
+PROTEIN-DIMERIZATION-ACTIVATOR,Protein modulator
+PROTEIN-SYNTHESIS-INHIBITOR,Protein modulator
+PROTEIN-TRANSLATION-INHIBITOR,Protein modulator
+PROTEOLYSIS ACTIVATOR,Proteolytic
+PROTEOLYSIS-ACTIVATOR,Proteolytic
+PROTHORACICOTROPIC_HORMONE_PRECURSOR,Hormone
+PROTISTA,Protista
+PROTONECTIN,Antimicrobial
+PSEUDIN,Anti Gram(-)
+PSEUDIN,Anti Gram(+)
+PTN_MK_HEPARIN_BINDING,Protein binding
+PTN_MK_HEPARIN_BINDING,Growth factor
+PYROKININS,Neuropeptide
+PYRRHOCORICIN,Antibacterial/antibiotic
+QUORUMSENSING,Quorum sensing
+RADIOPROTECTIVE,Other activity
+RALF,Plant processes
+RALF-RAPID-ALKALINIZATION-FACTOR,Plant processes
+RECEPTIVITY_FACTOR,Receptor modulator
+RECEPTOR ANTAGONIST,Receptor modulator
+RECEPTOR INHIBITOR,Receptor modulator
+RECEPTOR INHIBITORRECEPTOR INHIBITOR,Receptor modulator
+RECEPTOR LIGAND,Receptor modulator
+RECEPTOR-STIMULATING,Receptor modulator
+REDUCTANT,Other activity
+RESISTANCE-ACTIVITY,Other activity
+RESISTIN,Hormone
+RIBONUCLEOPROTEIN,Gene expression and translation
+RIBOSOME-INACTIVATING,Gene expression and translation
+RUBELLIDIN,Anuro defense
+SALIVARY_ANTI_THROMBIN_ANOPHELIN,Taste & Saliva
+SALIVARY_GLUE_PROTEIN_3,Taste & Saliva
+SALIVARY_GLUE_PROTEIN_5,Taste & Saliva
+SALIVARY_SECRETED,Taste & Saliva
+SALIVATION STIMULATOR,Taste & Saliva
+SALMOCIDIN,Anti Gram(-)
+SALT PRECIPITATION INHIBITOR,Precipitation processes
+SCORPION_SHORT_TOXIN_1,Toxins
+SCORPION_SHORT_TOXIN_2,Toxins
+SCORPION_TOXIN,Toxins
+SCORPION_TOXIN_ISCT,Toxins
+SEA_ANEMONE_BDS_TOXIN,Toxins
+SEA_ANEMONE_POTASSIUM_CHANNEL_INHIBITORY_TOXIN,Toxins
+SEA_ANEMONE_SHORT_TOXIN,Toxins
+SECAPIN,Enzyme inhibitor
+SEMINAL_VESICLE_SPECIFIC_PEPTIDE,Sexual/reproduction regulation
+SERINE-PROTEASE-INHIBITOR,Enzyme inhibitor
+SEX PHEROMONE INHIBITOR,Sexual/reproduction regulation
+SEX REGULATOR,Sexual/reproduction regulation
+SHORT_NEUROPEPTIDE_F,Neuropeptide
+SIGNAL,Signal
+SIGNALING MOLECULES,Signal
+SIGNALING-PEPTIDE,Signal
+SILOCA-PRECIPITATING,Precipitation processes
+SKIN_SECRETED_PEPTIDE_1,Other activity
+SLEEPER,Behavior
+SMALL_CARDIOACTIVE_PEPTIDE,Blood processes
+SMALL_CYTOKINES,Immunological activity
+SMOOTH-MUSCLES-CONTRACTING-PEPTIDE,Muscle processes
+SNAKE_TOXINS,Toxins
+SNTX_VTX_TOXIN,Toxins
+SODEFRIN,Sexual/reproduction regulation
+SODIUM CHANNEL BLOCKER,Channel modulator
+SODIUM-CHANNEL-BLOCKER,Channel modulator
+SOMATOSTATIN,Hormone
+SOMATOTROPIN,Hormone
+SPATZLE,sexual/reproduction
+SPERM ACTIVATOR,Sexual/reproduction regulation
+SPERM ATTRACTING,Sexual/reproduction regulation
+SPERM_ACTIVATING_PEPTIDE,Sexual/reproduction regulation
+SPIDER_TOXIN_CSTX,Toxins
+SPIDER_TOXIN_TX2,Toxins
+SPORULATION FACTOR,Sporulation
+SPORULATION PARTICIPANT,Sporulation
+SPORULATION REGULATOR,Sporulation
+SPTR_PROHORMONE,Hormone
+STANNIOCALCIN,Hormone
+STATHERIN,Metal Binding
+STIMULATOR OF HORMONE SYNTHESIS,Biosynthesis
+STREPOGENIN,Growth factor
+STRESS RESPONSE,Homeostasis
+STROMAL_CELL_DERIVED_GROWTH_FACTOR,Growth factor
+STRUCTURAL ROLE IN BIOSYNTHESIS,Biosynthesis
+STYELIN,Antibacterial/antibiotic
+SUBMAXILLARY_GLAND_ANDROGEN_REGULATED_PROTEIN,Taste & Saliva
+SUPPRESSES GENE EXPRESSION,Gene expression and translation
+SURFACEIMMOBILIZED,Surface-immobilized
+SYNTHESIS STIMULATOR,Biosynthesis
+SYNTHESIS-STIMULATOR,Biosynthesis
+SYNTHETIC,Other activity
+TACHYKININ,Neurological activity
+TACHYPLESIN_POLYPHEMUSIN,Antibacterial/antibiotic
+TACHYSTATIN,Antimicrobial
+TAMULUSTOXIN,Toxins
+TAP BINDER,Peptide Binding
+TASTE,Taste & Saliva
+TERMICIN,Antibacterial/antibiotic
+TERMICIN,Antifungal
+TESTIS_ECDYSIOTROPIN_PEPTIDE,Biosynthesis
+TETRAPANDIN,Toxins
+TGF_BETA,Growth factor
+THERMAL,Temperature
+THYMIC_FACTOR,None Activity reported
+THYMOSIN_BETA,Sensorial
+THYROLIBERIN,Hormone
+TIGERININ,Antimicrobial
+TOXIC,Toxic
+TOXIN,Toxins
+TRANSCRIPTION FACTOR,Transcription processes
+TRANSCRIPTION REGULATOR,Transcription processes
+TRANSCRIPTION-FACTOR,Transcription processes
+TRANSIT,Transit
+TRANSPORT,Transit
+TRANSPORTER,Transit
+TRANSTHYRETIN,Hormone Binding
+TREFOIL_FACTOR,Eating behavior
+TRUNK_PROTEIN,Hormone
+TRYPSIN INHIBITORY,Enzyme inhibitor
+TRYPSIN_MODULATING_OOSTATIC_FACTOR,Hormone
+TRYPSIN-INHIBITOR,Enzyme inhibitor
+TRYPTOPHYLLIN,Defense
+TUBEROINFUNDIBULAR_PEPTIDE,Neuropeptide
+TUMOR HOMING,Tumor-homing
+TUMORHOMINGPEPTIDE,Tumor-homing
+TURRITOXIN,Toxins
+TYPE_III_ANTIFREEZE,Temperature
+TYROSINASE-AND-MELANIN-INHIBITOR,Enzyme inhibitor
+TYROSINASE-INHIBITOR,Enzyme inhibitor
+UROTENSIN_II,Blood processes
+UTEROACTIVE,sexual/reproduction
+UTEROGLOBIN,sexual/reproduction
+UTEROTONIC,sexual/reproduction
+UTEROTONIC-ACTIVITY,sexual/reproduction
+VASCULAR PERMEABILITY ENHANCING,Blood processes
+VASORELAXANT,Blood processes
+VD1_RPD2_ALPHA_PEPTIDE,None Activity reported
+VEGF_CO_REGULATED_CHEMOKINE_1,None Activity reported
+VENOM,Toxins
+VESPID_CHEMOTACTIC_PEPTIDE,Chemotactic
+VESPRYN,Neurotoxin
+VIRUS,Antiviral
+VIRUS,Antiviral
+WAGLERIN,Toxins
+WAMIDE_NEUROPEPTIDES,Neuropeptide
+WATER CHANNEL,Channel modulator
+WIDE SPECTRUM OF ACTIVITY,Other activity
+WWAMIDE,Neuropeptide
+XENOXIN,Toxins
+YEAST,Antiyeast
+ZN-BINDING,Metal Binding

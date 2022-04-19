@@ -1,0 +1,145 @@
+name_activity
+Therapeutic
+Antimicrobial
+Antifungal
+Antiyeast
+Antibacterial/antibiotic
+Anti Gram(-)
+Anti Gram(+)
+Anti MRSA
+Antilisterial
+Bacteriocins
+Anti TB
+Antibiofilm
+Amphibian defense
+Anuro defense
+Antiprotozoal
+Antimalarial/antiplasmodial
+Anti Leishmania
+Antiviral
+Anti HIV
+Anti HSV
+Anticancer
+Antitumour
+AntiAngioPred
+AntiProliferative
+Toxic
+Insecticidal
+Paralytic
+Antiparasitic
+Nematocide
+Anti-arthropod
+Molluscicidal
+Anti-protist
+Cytolytic
+Hemolytic
+Biopesticide
+Neurotoxic
+Metabolic
+Inflammatory modulator
+Enzyme inhibitor
+Protein modulator
+Hormone
+sexual/reproduction
+Regulation
+Regulatory
+Growth factor
+Neurotransmisor
+Signal transduction
+Transcription processes
+Gene expression and translation
+Chromatine assembly
+DNA replication
+Blood processes
+Coagulation or anticoagulation
+Cardiac
+Homeostasis
+Natriuretic
+Uricemic
+Diabetic
+Diuresis
+Temperature
+Vascular
+Blood Pressure
+Vasodilator
+Vasoconstrictor
+Angiogenic
+Atheroma related
+Bone processes
+Plant processes
+Muscle processes
+Pheromone
+Analgesic
+Opioid
+Anti-analgesic
+Eating behavior
+Anorexic
+Taste & Saliva
+Cell proliferation
+Apoptosis
+Sporulation
+Bioactive
+Antioxidant
+Antifreezing
+Immunological activity
+Immunomodulatory
+Wound healing
+MHC binding and non-binding
+Cell degranulating
+Cytokine activity
+Allergen
+Sensorial
+Quorum sensing
+Chemotactic
+Cell-cell communication
+Defense
+Neurological activity
+Antinociceptive
+Brain peptide
+Neuropeptide
+Anxiolytic
+Drug delivery vehicle
+Cell-penetrating
+Blood-brain barrier crossing
+Tumor-homing
+Transit
+Propeptide
+Signal
+Other activity
+Cancer cell
+Mammallian cell
+Enzymatic
+Lytic activity
+Proteolytic
+Nematode
+Mollicute
+Protista
+Arthropod
+Surface-immobilized
+Sexual/reproduction regulation
+Microbial growth
+Bacteria Growth stimulator
+Behavior
+Biosynthesis
+Cell aggregation
+Chaperone
+Cytoprotective
+None Activity reported
+Toxins
+Neurotoxin
+Antidote
+Transport
+Lipid Binding
+Channel modulator
+Receptor modulator
+Molecule Binding
+Metal Binding
+Hormone Binding
+Protein binding
+Ligand binding
+Membrane Binding
+DNA Binding
+Precipitation processes
+Bile acid-binding
+Ion Binding
+Chelator

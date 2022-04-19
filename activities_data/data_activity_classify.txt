@@ -1,0 +1,702 @@
+name_activity
+Defense
+Antimicrobial
+Anti Gram(-)
+Anti Yeast
+Lipid Binding
+Transport
+Sexual
+Enzyme inhibitor
+Antihypertensive
+Neuropeptide
+Toxic
+Neuropeptide
+Transcription factor
+Transcription factor
+Hormone
+Hormone
+Neuropeptide
+Neuropeptide
+Neuropeptide
+Antibacterial/antibiotic
+Neuropeptide
+Neuropeptide
+Allergen
+Allergen
+Enzyme inhibitor
+Growth factor
+Analgesic
+Antiparasitic
+Hormone
+Neurotoxin
+Angiogenic
+Hormone
+Antimicrobial
+Anorexic
+Antiparasitic
+Neuropeptide
+Antibacterial/antibiotic
+Antibiofilm
+Anti Diabetic
+Antimicrobial
+Antibacterial/antibiotic
+Antimicrobial
+Allergen
+Therapeutic
+Anti-analgesic
+Atheroma related
+Anti-arthropod
+Chaperone
+Anti Coagulant
+Inflamatory modulato
+Anti Diabetic
+Anti Gram(-)
+Anti Gram(+)
+Anti HIV
+Uricemic
+Antiinflammatory
+Neurological activity
+Eating behavior
+Coagulation or anticoagulation
+Anti-protist
+Allergen
+Therapeutic
+Anti Angiogenic
+Antibacterial/antibiotic
+Antibiofilm
+Antibacterial/antibiotic
+Anticancer
+Coagulation or anticoagulation
+Anti Diabetic
+Diuresis
+Antidote
+Biopesticide
+Antifreezing
+Antifungal
+Anti Gram(-)
+Anti Gram(+)
+Anti HIV
+Anti Diabetic
+Antihypertensive
+Uricemic
+Antiinflammatory
+Insecticidal
+Anti Leishmania
+Antimalarial/antiplasmodial
+Antimicrobial
+Antimicrobial
+Antinociceptive
+Anticancer
+Antioxidant
+Antiparasitic
+Antimalarial/antiplasmodial
+ANTIPROLIFERATIVE
+Antiprotozoal
+Other activitiy
+Coagulation or anticoagulation
+Antidote
+Antidote
+Antiparasitic
+Antitumour
+Antitumour
+Antiviral
+Anti Yeast
+Antitumour
+Antiinflammatory
+Anxiolytic
+Homeostasis
+Antibacterial/antibiotic
+Apoptosis
+Toxins
+Anti Gram(-)
+Growth factor
+ARTHROPOD
+Antibacterial/antibiotic
+Inflamatory modulator
+BACTERIA GROWTH STIMULATOR
+Behavior
+Neurotoxin
+BILE ACID-BINDING
+Metal Binding
+Molecule Binding
+Bioactive
+Biosynthesis
+Biosynthesis
+Blood-brain barrier crossing
+Blood-brain barrier crossing
+Amphibian dfense
+Antimicrobial
+Toxins
+Vasodilator
+Neuropeptide
+Hormone
+Ion Binding
+Regulatory
+Regulatory
+Hormone
+Other activitiy
+Other activitiy
+Anticancer
+Anticancer
+Cancer cell
+Cardiac
+Eating behavior
+Antimicrobial
+Antimicrobial
+Toxins
+Immunomodulatory
+Antimicrobial
+Cell aggregation
+Cell aggregation
+Cell proliferation
+Cell proliferation
+Cell-penetrating
+Transport
+Cell-cell communication
+Cell-cell communication
+Cell proliferation
+Cell-cell communication
+Cell-penetrating
+Antibacterial
+Neurological activity
+Signal transduction
+Channel modulator
+Channel modulator
+Chaperone
+Enzymatic
+Chemotactic
+Chemotactic
+Chemotactic
+Chemotactic
+Homeostasis
+Chromatine assembly
+Chromatine assembly
+growth factor
+antimicrobial
+Coagulation or anticoagulation
+Coagulation or anticoagulation
+Eating behavior
+antimicrobial
+Enzymatic
+quorum sensing
+quorum sensing
+Neurotoxin
+Neurotoxin
+Neurotoxic
+Neurotoxin
+hormone
+Chelator
+neuropeptide
+hormone
+sell-penetrating
+antimicrobial
+Antifreezing
+Enzymatic
+Other activitiy
+CYTOKINE
+GROWTH FACTOR
+Cytolytic
+cytoprotective
+CYTOTOXIC
+CYTOTOXIC
+CYTOTOXIC
+Defense
+Defense
+Defense
+Defense
+neurotoxin
+antimicrobial
+Regulatory
+Regulatory
+antifungal
+Other activitiy
+Diuresis
+Diuresis
+Other activitiy
+DNA Binding
+DNA replication
+DNA replication
+DNA replication
+Diabetic
+antimicrobial
+antifungal
+Drug delivery vehicle
+Drug delivery vehicle
+Antimicrobial
+hormone
+hormone
+hormone
+Toxin
+hormone
+Amphibian defense
+Vasoconstrictor
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+enzymatic
+toxin
+Blood processes
+hormone
+hormone
+cytokine
+neuropeptide
+Neuropeptide
+Neuropeptide
+Coagulation or anticoagulation
+Coagulation or anticoagulation
+Growth factor
+Neuropeptide
+Immunomodulatory
+Antibacterial
+Hormone
+Antifungal
+Antifungal
+Antifungal
+Antifungal
+Hormone
+Antifungal
+Antimicrobial
+Hormone
+cytokine
+Gene expression and tranlation
+Gene expression and tranlation
+Gene expression and tranlation
+Gene expression and tranlation
+Gene expression and tranlation
+Gene expression and tranlation
+Gene expression and tranlation
+Gene expression and tranlation
+Other activitiy
+Antimicrobial
+Hormone
+Hormone
+Regulatory
+Anti Gram(-)
+hormone
+hormone
+hormone
+hormone
+Growth factor
+hormone
+Anti Gram(-)
+Anti Gram(+)
+Anti Gram(-)
+Anti Gram(-)
+Anti Gram(-)
+Anti Gram(+)
+Anti Gram(+)
+toxin
+hemolytic
+Growth factor
+Immunomodulatory
+Antibacterial
+Cytokine activity
+Growth Factor
+Hormone
+Antimicrobial
+Growth Factor
+Metal binding
+Antimicrobial
+Anti Gram(-)
+Blood pressure
+Blood processes
+Hemolytic
+Hemolytic
+Blood processes
+Blood processes
+Blood processes
+Growth Factor
+Growth Factor
+Regulatory
+Regulatory
+Antimicrobial
+Antibacterial
+antifungal
+Anti HIV
+Enzyme inhibitor
+Homeotasis
+Homeotasis
+Hormone
+Hormone
+Hormone
+Neurotoxin
+Toxin
+Anuro defense
+Other activitiy
+Antibacterial/antibiotic
+Eating Behavior
+Eating Behavior
+Antimicrobial
+Blood pressure
+Blood pressure
+Eating Behavior
+Toxin
+Toxin
+Immunological activity
+Immunological activity
+Immunological activity
+Immunological activity
+Immunological activity
+Immunological activity
+Immunomodulatory
+Immunological activity
+Immunomodulatory
+Immunomodulatory
+Immunological activity
+Immunological activity
+Immunological activity
+Other activitiy
+Antiinflammatory
+Anti Angiogenic
+Insecticidal
+Insecticidal
+Insecticidal
+Insecticidal
+Insecticidal
+Insecticidal
+Hormone
+Hormone
+Protein binding
+Inmunological activity
+Inmunological activity
+Inmunological activity
+Channel modulator
+Channel modulator
+Channel modulator
+Channel modulator
+Channel modulator
+Channel modulator
+Toxin
+Antimicrobial
+Toxin
+Antimicrobial
+Other activitiy
+Antimicrobial
+Neurotoxin
+Signal
+Antibacterial
+Hormone
+Neuropeptide
+Blood processes
+Ligand binding
+Ligand binding
+Molecule binding
+Neuropeptide
+Eating Behavior
+Toxin
+Antimicrobial
+Toxin
+Toxin
+Neuropeptide
+Proteolytic
+Proteolytic
+Sexual regulation
+Mammallian cell
+Mammallian cell
+Mammallian cell
+Mammallian cell
+Cell degranulating
+Toxin
+Cell degranulating
+Cell degranulating
+Cell degranulating
+Antimicrobial
+Antifungal
+Anti Gram(+)
+Toxin
+Hemolytic
+antimicrobial
+Membrane binding
+Regulatory
+Metal binding
+Anti Gram(-)
+Anticancer
+Antibacterial
+Antifungal
+MHC binding and non-binding
+Antimicrobial
+Movement
+Cell proliferation
+Cell proliferation
+None activity reported
+Mollicute
+Molluscicidal
+Antibacterial
+Neuropeptide
+Toxin
+Muscle processes
+Neuropeptide
+Toxic
+Toxin
+Antibacterial
+Antimicrobial
+Neurological activity
+Natriuretic
+Nematocide
+Nematode
+Nematode
+Nematode
+Neuropeptide
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neuropeptide
+Neuropeptide
+Neuropeptide
+Neuropeptide
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Neurological activity
+Inmunological activity
+Coagulation
+Toxin
+Toxin
+OPIOID
+neuropeptide
+neuropeptide
+Coagulation or anticoagulation
+Bone processes
+Bone processes
+Bone processes
+Bone processes
+Hormone
+sexual reproduction
+Antioxidant
+Toxin
+Hormone
+ sexual reproduction
+Enzyme inhibitor
+Hormone
+Antimicrobial
+Toxin
+Paralytic
+Antiparasitic
+Antiparasitic
+Antiparasitic
+Hormone
+Anticancer
+Other activitiy
+Other activitiy
+Other activitiy
+Antimicrobial
+Protein modulator
+Protein modulator
+Propeptide
+Antibacterial
+Hormone
+Neuropeptide
+Inmunological activity
+Pheromone
+Pheromone
+Molecule binding
+Plant processes
+Plant processes
+Plant processes
+Antibacterial
+Antiprotozoos
+Plant processes
+Hormone
+Allergen
+Blood processes
+Blood processes
+Growth Factor
+Metal binding
+Antimicrobial
+Diuresis
+Toxin
+Toxin
+Antibacterial
+Antiinsecticide
+Antimicrobial
+Antimicrobial
+Toxin
+Toxin
+Protein modulator
+Precipitation processes
+Neurological activity
+Other activitiy
+neuropeptide
+Muscle processes
+Cell proliferation
+Cell proliferation
+Propeptide
+Neurological activity
+protein modulator
+Protein modulator
+Protein modulator
+protein modulator
+Protein modulator
+protein modulator
+protein modulator
+Antibacterial
+Protein binding
+protein modulator
+protein modulator
+protein modulator
+protein modulator
+Proteolytic
+Proteolytic
+Hormone
+PROTISTA
+Antimicrobial
+Anti Gram(-)
+Anti Gram(+)
+Protein binding
+growth factor
+Neuropeptide
+Antibacterial
+Quorum sensing
+Other activity
+Plant processes
+Plant processes
+Receptor modulator
+Receptor modulator
+Receptor modulator
+Receptor modulator
+Receptor modulator
+Receptor modulator
+Other activity
+Other activity
+Hormone
+Gene expression and translation
+Gene expression and translation
+Anuro defense
+Taste & Saliva
+Taste & Saliva
+Taste & Saliva
+Taste & Saliva
+Taste & Saliva
+Anti Gram(-)
+Precipitation processes
+Toxin
+Toxin
+Toxin
+Toxin
+Toxin
+Toxin
+Toxin
+Enzyme inhibitor
+Sexual regulation
+Enzyme inhibitor
+Sexual regulation
+Sexual regulation
+Neuropeptide
+Signal
+Signal
+Signal
+Precipitation processes
+Other activity
+Behavior
+Blood processes
+Inmunological activity
+Muscle processes
+Toxin
+Toxin
+Sexual regulation
+Channel modulator
+Channel modulator
+Hormone
+Hormone
+Sexual/reproduction
+Sexual regulation
+Sexual regulation
+Sexual regulation
+Toxin
+Toxin
+Sporulation
+Sporulation
+Sporulation
+Hormone
+Hormone
+Metal binding
+Biosynthesis
+Growth Factor
+Homeostasis
+Growth Factor
+Biosynthesis
+Antibacterial
+Taste & saliva
+Gene expression and translation
+Surface-immobilized
+Biosynthesis
+Biosynthesis
+Other activity
+Neurological activity
+Antibacterial
+Antimicrobial
+Toxin
+Peptide Binding
+Taste & Saliva
+antibacterial
+antifungal
+Biosynthesis
+Toxin
+Growth factor
+Temperature
+Non activity reported
+Movement
+Hormone
+Antimicrobial
+Toxic
+Toxin
+Transcription processes
+Transcription processes
+Transcription processes
+Transit
+Transit
+Transit
+Hormone binding
+Eating behaviour
+Hormone
+Enzyme inhibitor
+Hormone
+Enzyme inhibitor
+Defense
+Neuropeptide
+Tumor-homing
+Tumor-homing
+Toxin
+Temperature
+Enzyme inhibitor
+Enzyme inhibitor
+Blood processes
+sexual/reproduction
+sexual/reproduction
+sexual/reproduction
+sexual/reproduction
+Blood processes
+Blood processes
+None Activity reported
+None Activity reported
+Toxin
+Chemotactic
+Neurotoxin
+Antiviral
+Antiviral
+Toxin
+Neuropeptide
+Channel modulator
+Other activity
+Neuropeptide
+Toxin
+Anti Yeast
+Metal binding

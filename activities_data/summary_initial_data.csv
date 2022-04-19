@@ -1,0 +1,147 @@
+activity,count_prev
+Allergen,2192
+Amphibian defense,61
+Analgesic,3
+Angiogenic,211
+Anorexic,1
+Anti Angiogenic,234
+Anti Diabetic,2129
+Anti Gram(+),13017
+Anti Gram(-),13750
+Anti HIV,1047
+Anti HSV,1
+Anti Leishmania,15
+Anti MRSA,9
+Anti TB,387
+Anti Yeast,30
+Anti-analgesic,1
+Anti-arthropod,9
+Anti-protist,4
+AntiProliferative,9
+Antibacterial/antibiotic,8654
+Antibiofilm,228
+Anticancer,4156
+Antidote,10
+Antifreezing,210
+Antifungal,7392
+Antihypertensive,2318
+Antiinflammatory,1
+Antilisterial,7
+Antimalarial/antiplasmodial,187
+Antimicrobial,31864
+Antinociceptive,4
+Antioxidant,662
+Antiparasitic,651
+Antiprotozoal,65
+Antitumour,838
+Antiviral,5301
+Antiyeast,34
+Anuro defense,2496
+Anxiolytic,5
+Apoptosis,8
+Arthropod,366
+Atheroma related,3
+Bacteria Growth stimulator,3
+Bacteriocins,453
+Behavior,19
+Bile acid-binding,1
+Bioactive,6508
+Biopesticide,9
+Biosynthesis,14
+Blood Pressure,11
+Blood processes,178
+Blood-brain barrier crossing,225
+Bone processes,26
+Brain peptide,85
+Cancer cell,158
+Cardiac,17
+Cell aggregation,12
+Cell degranulating,35
+Cell proliferation,17
+Cell sensing,8967
+Cell-cell communication,691
+Cell-penetrating,1595
+Channel modulator,124
+Chaperone,17
+Chelator,1
+Chemotactic,62
+Chromatine assembly,4
+Coagulation or anticoagulation,565
+Cytokine activity,292
+Cytolytic,1911
+Cytoprotective,1
+DNA Binding,119
+DNA replication,4
+Defense,2029
+Diabetic,9
+Diuresis,11
+Drug delivery vehicle,2360
+Eating behavior,75
+Enzymatic,2300
+Enzyme inhibitor,516
+Gene expression and tranlation,16
+Gene expression and translation,25
+Growth factor,1496
+Hemolytic,2248
+Homeostasis,34
+Hormone,4787
+Hormone Binding,59
+Immunological activity,4415
+Immunomodulatory,393
+Inflammatory modulator,80
+Insecticidal,512
+Ion Binding,11
+Ligand binding,25
+Lipid Binding,117
+MHC binding and non-binding,13786
+Mammallian cell,7921
+Membrane Binding,13
+Metabolic,3914
+Metal Binding,37
+Molecule Binding,372
+Mollicute,38
+Molluscicidal,6
+Muscle processes,46
+Natriuretic,237
+Nematocide,72
+Nematode,60
+Neurological activity,1623
+Neuropeptide,5682
+Neurotoxic,902
+Neurotoxin,995
+None Activity reported,17679
+Opioid,634
+Other activity,319
+Paralytic,25
+Peptide Binding,468
+Pheromone,60
+Plant processes,54
+Precipitation processes,11
+Propeptide,8961
+Protein binding,62
+Protein modulator,262
+Proteolytic,1389
+Protista,39
+Quorum sensing,588
+Receptor modulator,31
+Regulatory,764
+Sensorial,93
+Sexual/reproduction regulation,67
+Signal,18360
+Signal transduction,32
+Sporulation,8
+Surface-immobilized,6
+Taste & Saliva,242
+Temperature,57
+Therapeutic,40216
+Toxic,6695
+Toxins,3958
+Transcription processes,14
+Transit,700
+Transport,117
+Tumor-homing,577
+Uricemic,6
+Vasoconstrictor,42
+Vasodilator,85
+Wound healing,2
+sexual/reproduction,98
