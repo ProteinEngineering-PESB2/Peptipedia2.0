@@ -39,9 +39,15 @@ export const databaseResultsCount = async (query) => {
   const post = {
     query: query,
   };
-  console.log(post)
+  console.log(post);
 
   const res = await axios.post(`/api/count`, post);
+
+  return res.data;
+};
+
+export const search = async (post) => {
+  const res = await axios.post("/api/search", post);
 
   return res.data;
 };

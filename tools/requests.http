@@ -120,8 +120,8 @@ POST {{api}}/search/
 Content-Type: application/json
 
 {
-    "query": "((Taxonomy = 3) OR (( Sequence = AAAA ) AND ( 0 <= Length <= 10 )))",
-    "limit": 20,
+    "query": "((20 <= Length <= 100))",
+    "limit": 50,
     "page": 3
 }
 

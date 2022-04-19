@@ -2,6 +2,8 @@ import MUIDataTable from "mui-datatables";
 
 const options = {
   selectableRowsHideCheckboxes: true,
+  rowsPerPageOptions: [5, 10, 100],
+  responsive: "standard",
 };
 
 const DataTable = ({ title, data, columns }) => {
