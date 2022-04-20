@@ -1,6 +1,6 @@
 import MUIDataTable from "mui-datatables";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -33,53 +33,41 @@ const AdvancedSearchContent = ({
   const [loadingTable, setLoadingTable] = useState(false);
   const [querySelected, setQuerySelected] = useState("");
 
-  useEffect(() => {
-    setLoading(true);
-    const d = [];
-    let cont = 1;
-    queries.forEach((q) => {
-      let query = queriesWithID[cont - 1];
-      let count = counts[cont - 1];
-      let position = cont - 1;
-
-      d.push([
-        cont,
-        q,
-        counts[cont - 1],
-        <Box>
-          <Button
-            variant="text"
-            color="info"
-            onClick={() =>
-              searchDatabase({ query: query, page: 0, count: count, })
-            }
-          >
-            <PlayArrowIcon />
-          </Button>
-          <Button variant="text" color="error" onClick={() => reset(position)}>
-            <DeleteIcon />
-          </Button>
-        </Box>,
-      ]);
-      cont++;
-    });
-    setData(d);
-    setLoading(false);
-  }, [queries, setQueries, counts, queriesWithID]);
-
-  const reset = (position) => {
-    const queriesReset = queries.filter((value, index) => index !== position);
-    const queriesWithIDReset = queriesWithID.filter(
-      (value, index) => index !== position
-    );
-    const countsReset = counts.filter((value, index) => index !== position);
-
-    setQueries(queriesReset);
-    setQueriesWithID(queriesWithIDReset);
-    setCounts(countsReset);
+  const options = {
+    selectableRowsHideCheckboxes: true,
+    rowsPerPage: 20,
+    rowsPerPageOptions: [20],
+    responsive: "standard",
+    serverSide: true,
+    count: totalTable,
+    page: pageTable,
+    sort: false,
+    search: false,
+    filter: false,
+    viewColumns: false,
+    onTableChange: (action, tableState) => {
+      if (action === "changePage") {
+        searchDatabase({ query: "", page: tableState.page, count: 0 });
+      }
+    },
   };
 
-  const searchDatabase = async (values) => {
+  const reset = useCallback(
+    (position) => {
+      const queriesReset = queries.filter((value, index) => index !== position);
+      const queriesWithIDReset = queriesWithID.filter(
+        (value, index) => index !== position
+      );
+      const countsReset = counts.filter((value, index) => index !== position);
+
+      setQueries(queriesReset);
+      setQueriesWithID(queriesWithIDReset);
+      setCounts(countsReset);
+    },
+    [counts, queries, queriesWithID, setCounts, setQueries, setQueriesWithID]
+  );
+
+  const searchDatabase = useCallback(async (values) => {
     setLoadingTable(true);
 
     if (values.query !== "") {
@@ -107,26 +95,41 @@ const AdvancedSearchContent = ({
       console.log(error);
       setLoadingTable(false);
     }
-  };
+  }, [querySelected]);
 
-  const options = {
-    selectableRowsHideCheckboxes: true,
-    rowsPerPage: 20,
-    rowsPerPageOptions: [20],
-    responsive: "standard",
-    serverSide: true,
-    count: totalTable,
-    page: pageTable,
-    sort: false,
-    search: false,
-    filter: false,
-    viewColumns: false,
-    onTableChange: (action, tableState) => {
-      if (action === "changePage") {
-        searchDatabase({ query: "", page: tableState.page, count: 0 });
-      }
-    },
-  };
+  useEffect(() => {
+    setLoading(true);
+    const d = [];
+    let cont = 1;
+    queries.forEach((q) => {
+      let query = queriesWithID[cont - 1];
+      let count = counts[cont - 1];
+      let position = cont - 1;
+
+      d.push([
+        cont,
+        q,
+        counts[cont - 1],
+        <Box>
+          <Button
+            variant="text"
+            color="info"
+            onClick={() =>
+              searchDatabase({ query: query, page: 0, count: count })
+            }
+          >
+            <PlayArrowIcon />
+          </Button>
+          <Button variant="text" color="error" onClick={() => reset(position)}>
+            <DeleteIcon />
+          </Button>
+        </Box>,
+      ]);
+      cont++;
+    });
+    setData(d);
+    setLoading(false);
+  }, [queries, setQueries, counts, queriesWithID, reset, searchDatabase]);
 
   return (
     <>
@@ -144,7 +147,8 @@ const AdvancedSearchContent = ({
           <CircularLoading />
         </Grid>
       ) : (
-        (dataTable.length > 0) && (queriesWithID.includes(querySelected)) && (
+        dataTable.length > 0 &&
+        queriesWithID.includes(querySelected) && (
           <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 4 }}>
             <MUIDataTable
               options={options}
