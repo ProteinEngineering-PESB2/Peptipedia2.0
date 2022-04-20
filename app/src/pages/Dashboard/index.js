@@ -8,13 +8,10 @@ import Container from "@mui/material/Container";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 
@@ -23,13 +20,10 @@ import ListItems from "../../components/Dashboard/ListItems";
 import RenderSection from "../../components/Dashboard/RenderSection";
 
 import {
-  AppBar,
-  Search,
-  SearchIconWrapper,
-  StyledInputBase,
   DrawerHeader,
   Main,
 } from "../../components/Dashboard/utils";
+import { Typography } from "@mui/material";
 
 const TestDashboard = () => {
   const mdTheme = createTheme();
@@ -43,7 +37,7 @@ const TestDashboard = () => {
       <ThemeProvider theme={mdTheme}>
         <Box className="display">
           <CssBaseline />
-          <AppBar position="fixed" open={open}>
+          {/* <AppBar position="fixed" open={open}>
             <Toolbar
               sx={{
                 pr: "24px",
@@ -85,7 +79,7 @@ const TestDashboard = () => {
                 />
               </Search>
             </Toolbar>
-          </AppBar>
+          </AppBar> */}
           <Drawer
             sx={{
               width: drawerWidth,
@@ -100,6 +94,7 @@ const TestDashboard = () => {
             open={open}
           >
             <DrawerHeader>
+              <Typography variant="h4" sx={{ fontWeight: "medium", cursor: "pointer" }} onClick={() => setSection("home")}>Peptipedia</Typography>
               <IconButton onClick={() => setOpen(false)}>
                 {theme.direction === "ltr" ? (
                   <ChevronLeftIcon />
@@ -112,8 +107,20 @@ const TestDashboard = () => {
             <ListItems setSection={setSection} section={section} />
           </Drawer>
           <Main open={true}>
-            <DrawerHeader />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg">
+              <IconButton
+                aria-label="open drawer"
+                edge="start"
+                onClick={() => setOpen(true)}
+                size="large"
+                sx={{
+                  mr: 2,
+                  ...(open && { display: "none" }),
+                  color: "#000"
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
               <RenderSection section={section} />
             </Container>
           </Main>
