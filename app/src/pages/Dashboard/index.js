@@ -10,19 +10,20 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 
 import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 
 // Components
 import ListItems from "../../components/Dashboard/ListItems";
 import RenderSection from "../../components/Dashboard/RenderSection";
 
-import {
-  Main,
-} from "../../components/Dashboard/utils";
+import { Main, DrawerHeader } from "../../components/Dashboard/utils";
 
 const TestDashboard = () => {
   const mdTheme = createTheme();
+  const theme = useTheme()
   const [open, setOpen] = useState(true);
   const [section, setSection] = useState("home");
   const drawerWidth = 240;
@@ -88,7 +89,7 @@ const TestDashboard = () => {
             anchor="left"
             open={open}
           >
-            {/* <DrawerHeader>
+            <DrawerHeader>
               <IconButton onClick={() => setOpen(false)}>
                 {theme.direction === "ltr" ? (
                   <ChevronLeftIcon />
@@ -96,7 +97,7 @@ const TestDashboard = () => {
                   <ChevronRightIcon />
                 )}
               </IconButton>
-            </DrawerHeader> */}
+            </DrawerHeader>
             <Divider />
             <ListItems setSection={setSection} section={section} />
           </Drawer>
@@ -110,7 +111,7 @@ const TestDashboard = () => {
                 sx={{
                   mr: 2,
                   color: "#000",
-                  marginBottom: 2
+                  marginBottom: 2,
                 }}
               >
                 <MenuIcon />

@@ -190,7 +190,7 @@ const ListItems = ({ section, setSection }) => {
           </ListItemText>
         </ListItemButton>
       </List>
-      <ListSubheader>Static Tools</ListSubheader>
+      <ListSubheader>Statistic Tools</ListSubheader>
       <List component="div" disablePadding>
         <ListItemButton
           disableRipple
