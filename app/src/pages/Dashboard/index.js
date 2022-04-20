@@ -9,27 +9,22 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 // Components
 import ListItems from "../../components/Dashboard/ListItems";
 import RenderSection from "../../components/Dashboard/RenderSection";
 
 import {
-  DrawerHeader,
   Main,
 } from "../../components/Dashboard/utils";
-import { Typography } from "@mui/material";
 
 const TestDashboard = () => {
   const mdTheme = createTheme();
   const [open, setOpen] = useState(true);
   const [section, setSection] = useState("home");
-  const theme = useTheme();
   const drawerWidth = 240;
 
   return (
@@ -93,8 +88,7 @@ const TestDashboard = () => {
             anchor="left"
             open={open}
           >
-            <DrawerHeader>
-              <Typography variant="h4" sx={{ fontWeight: "medium", cursor: "pointer" }} onClick={() => setSection("home")}>Peptipedia</Typography>
+            {/* <DrawerHeader>
               <IconButton onClick={() => setOpen(false)}>
                 {theme.direction === "ltr" ? (
                   <ChevronLeftIcon />
@@ -102,7 +96,7 @@ const TestDashboard = () => {
                   <ChevronRightIcon />
                 )}
               </IconButton>
-            </DrawerHeader>
+            </DrawerHeader> */}
             <Divider />
             <ListItems setSection={setSection} section={section} />
           </Drawer>
@@ -111,12 +105,12 @@ const TestDashboard = () => {
               <IconButton
                 aria-label="open drawer"
                 edge="start"
-                onClick={() => setOpen(true)}
+                onClick={() => setOpen(!open)}
                 size="large"
                 sx={{
                   mr: 2,
-                  ...(open && { display: "none" }),
-                  color: "#000"
+                  color: "#000",
+                  marginBottom: 2
                 }}
               >
                 <MenuIcon />
