@@ -16,7 +16,6 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 
 const ListItems = ({ section, setSection }) => {
-
   return (
     <List component="nav">
       <ListSubheader>Dashboard</ListSubheader>
@@ -44,6 +43,9 @@ const ListItems = ({ section, setSection }) => {
             </Typography>
           </ListItemText>
         </ListItemButton>
+      </List>
+      <ListSubheader>Database</ListSubheader>
+      <List component="div" disablePadding>
         <ListItemButton
           disableRipple
           sx={{

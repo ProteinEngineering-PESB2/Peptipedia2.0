@@ -19,13 +19,12 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData }) => {
+const Form = ({ setData, taskType, setTaskType }) => {
   const [fileInput, setFileInput] = useState(null);
   const [encodingTypeValue, setEncodingTypeValue] =
     useState("one_hot_encoding");
   const [propertyValue, setPropertyValue] = useState("alpha-structure_group");
   const [validation, setValidation] = useState(2);
-  const [taskType, setTaskType] = useState("classification");
   const [algorithm, setAlgorithm] = useState("adaboost");
   const [loading, setLoading] = useState(false);
 
@@ -55,8 +54,8 @@ const Form = ({ setData }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
+    setData()
 
     let options;
 
@@ -87,7 +86,8 @@ const Form = ({ setData }) => {
 
     try {
       const res = await supervisedLearning(post);
-      setData(res.result)
+
+      setData(res)
     } catch (error) {
       console.log(error);
     }
@@ -260,6 +260,7 @@ const Form = ({ setData }) => {
                       ":hover": { backgroundColor: "#2962ff" },
                     }}
                     size="medium"
+                    disabled={fileInput === null && true}
                   >
                     Run Encodings
                   </Button>
