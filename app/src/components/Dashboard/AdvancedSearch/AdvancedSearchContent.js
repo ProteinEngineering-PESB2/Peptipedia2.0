@@ -51,7 +51,7 @@ const AdvancedSearchContent = ({
             variant="text"
             color="info"
             onClick={() =>
-              searchDatabase({ query: query, page: 0, count: count })
+              searchDatabase({ query: query, page: 0, count: count, })
             }
           >
             <PlayArrowIcon />
@@ -89,9 +89,7 @@ const AdvancedSearchContent = ({
     setPageTable(values.page);
 
     if (values.count !== 0) {
-      const total = Math.trunc(values.count / 20) + 1;
-      console.log(total)
-      setTotalTable(total);
+      setTotalTable(values.count);
     }
 
     const post = {
@@ -119,6 +117,10 @@ const AdvancedSearchContent = ({
     serverSide: true,
     count: totalTable,
     page: pageTable,
+    sort: false,
+    search: false,
+    filter: false,
+    viewColumns: false,
     onTableChange: (action, tableState) => {
       if (action === "changePage") {
         searchDatabase({ query: "", page: tableState.page, count: 0 });
@@ -142,7 +144,7 @@ const AdvancedSearchContent = ({
           <CircularLoading />
         </Grid>
       ) : (
-        dataTable.length > 0 && (
+        (dataTable.length > 0) && (queriesWithID.includes(querySelected)) && (
           <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 4 }}>
             <MUIDataTable
               options={options}
