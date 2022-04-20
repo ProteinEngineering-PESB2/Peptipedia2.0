@@ -23,6 +23,9 @@ const AdvancedSearchContent = ({
   setQueriesWithID,
   counts,
   setCounts,
+  setOpenSnackbar,
+  setMessage,
+  setSeverity,
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -92,10 +95,12 @@ const AdvancedSearchContent = ({
       setColumnsTable(res.query.columns);
       setLoadingTable(false);
     } catch (error) {
-      console.log(error);
+      setSeverity("error")
+      setMessage("Service no available")
+      setOpenSnackbar(true)
       setLoadingTable(false);
     }
-  }, [querySelected]);
+  }, [querySelected, setMessage, setSeverity, setOpenSnackbar]);
 
   useEffect(() => {
     setLoading(true);

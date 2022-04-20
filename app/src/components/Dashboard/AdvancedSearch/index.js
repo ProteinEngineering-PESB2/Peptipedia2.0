@@ -18,7 +18,7 @@ const AdvancedSearch = () => {
 
   return (
     <>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} sx={{ marginTop: 4 }}>
         {message.length > 0 && (
           <Snackbar
             open={openSnackbar}
@@ -52,6 +52,9 @@ const AdvancedSearch = () => {
               setQueriesWithID={setQueriesWithID}
               counts={counts}
               setCounts={setCounts}
+              setOpenSnackbar={setOpenSnackbar}
+              setMessage={setMessage}
+              setSeverity={setSeverity}
             />
           </Grid>
         )}

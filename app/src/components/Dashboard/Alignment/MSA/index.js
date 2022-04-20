@@ -17,7 +17,7 @@ const MSA = () => {
 
   return (
     <>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} sx={{ marginTop: 4 }}>
         {error.length > 0 && (
           <Snackbar
             open={openSnackbar}

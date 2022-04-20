@@ -115,9 +115,9 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
         link.click();
 
         setSeverity("success");
-        setMessage("Download completed.");
-        setLoading(false);
+        setMessage("Download completed");
         setOpenSnackbar(true);
+        setLoading(false);
       }
     } catch (error) {
       setSeverity("error");

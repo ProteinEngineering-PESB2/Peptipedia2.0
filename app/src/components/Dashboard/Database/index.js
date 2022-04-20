@@ -99,7 +99,7 @@ const Database = () => {
 
   return (
     <>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} sx={{ marginTop: 4 }}>
         {snackbarZIPMessage.length > 0 && (
           <SnackbarComponent
             open={openSnackbarZIP}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -105,43 +105,53 @@ const Form = ({
   const [pfams, setPfams] = useState([]);
   const [geneOntologies, setGeneOntologies] = useState([]);
 
-  const initialTaxonomies = async () => {
+  const initialTaxonomies = useCallback(async () => {
+    console.log("Hola")
     try {
       const res = await getTaxonomiesWithoutTerm();
+      console.log(res)
       setTaxonomies(res.result);
     } catch (error) {
-      console.log(error);
+      setSeverity("error")
+      setMessage("Service no available")
+      setOpenSnackbar(true)
     }
-  };
+  }, [setMessage, setOpenSnackbar, setSeverity]);
 
-  const initialPfams = async () => {
+  const initialPfams = useCallback(async () => {
     try {
       const res = await getPfamWithoutTerm();
       setPfams(res.result);
     } catch (error) {
-      console.log(error);
+      setSeverity("error")
+      setMessage("Service no available")
+      setOpenSnackbar(true)
     }
-  };
+  }, [setSeverity, setMessage, setOpenSnackbar]);
 
-  const initialDatabases = async () => {
+  const initialDatabases = useCallback(async () => {
     try {
       const res = await getDatabases();
       setDatabases(res.result);
     } catch (error) {
-      console.log(error);
+      setSeverity("error")
+      setMessage("Service no available")
+      setOpenSnackbar(true)
     }
-  };
+  }, [setMessage, setSeverity, setOpenSnackbar]);
 
-  const initialGeneOntology = async () => {
+  const initialGeneOntology = useCallback(async () => {
     try {
       const res = await getGeneOntologyWithoutTerm();
       setGeneOntologies(res.result);
     } catch (error) {
-      console.log(error);
+      setSeverity("error")
+      setMessage("Service no available")
+      setOpenSnackbar(true)
     }
-  };
+  }, [setSeverity, setMessage, setOpenSnackbar]);
 
-  const initialParameters = async () => {
+  const initialParameters = useCallback(async () => {
     try {
       const res = await parameters();
       setParams(res.result);
@@ -160,9 +170,11 @@ const Form = ({
         res.result.max_charge_density,
       ]);
     } catch (error) {
-      console.log(error);
+      setSeverity("error")
+      setMessage("Service no available")
+      setOpenSnackbar(true)
     }
-  };
+  }, [setMessage, setSeverity, setOpenSnackbar]);
 
   useEffect(() => {
     initialParameters();
@@ -171,7 +183,7 @@ const Form = ({
     initialDatabases();
     initialGeneOntology();
     setLoading(false);
-  }, []);
+  }, [initialTaxonomies, initialPfams, initialGeneOntology, initialParameters, initialDatabases]);
 
   const handleChangeQueryText = (e) => {
     setQueryText(e.target.value);

@@ -11,7 +11,7 @@ import Contact from "./Contact";
 const Home = () => {
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ marginTop: 4 }}>
         <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
         <Grid item lg={12} md={12} xs={12} sx={{ textAlign: "center" }}>
           <Header />

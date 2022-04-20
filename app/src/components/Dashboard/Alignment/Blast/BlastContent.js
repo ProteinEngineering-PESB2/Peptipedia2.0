@@ -1,5 +1,6 @@
 import axios from "axios";
 import blasterjs from "biojs-vis-blasterjs";
+import { useState } from "react";
 
 import { useEffect, useRef, forwardRef } from "react";
 import { useStateIfMounted } from "use-state-if-mounted";
@@ -12,6 +13,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import CircularLoading from "../../CircularLoading";
 
@@ -21,9 +23,16 @@ const ComponentBlastMultipleAlignments = forwardRef((props, ref) => (
   </div>
 ));
 
-const BlastContent = ({ data, path }) => {
+const BlastContent = ({
+  data,
+  path,
+  setError,
+  setSeverity,
+  setOpenSnackbar,
+}) => {
   const componentBlastMultipleAlignmentsRef = useRef();
   const [loading, setLoading] = useStateIfMounted(true);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -37,15 +46,28 @@ const BlastContent = ({ data, path }) => {
   });
 
   const downloadBlast = async () => {
-    const res = await axios.get(path, {
-      responseType: "blob",
-    });
-    const url = window.URL.createObjectURL(new Blob([res.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "result.txt");
-    document.body.appendChild(link);
-    link.click();
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(path, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "result.txt");
+      document.body.appendChild(link);
+      link.click();
+
+      setSeverity("success");
+      setError("Download completed");
+      setOpenSnackbar(true);
+      setLoadingButton(false);
+    } catch (error) {
+      setSeverity("error");
+      setError("Service not available");
+      setOpenSnackbar(true);
+      setLoadingButton(false);
+    }
   };
 
   return (
@@ -136,16 +158,28 @@ const BlastContent = ({ data, path }) => {
               </Paper>
             </Grid>
             <Grid item xs={12}>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#2962ff",
-                  ":hover": { backgroundColor: "#2962ff" },
-                }}
-                onClick={downloadBlast}
-              >
-                Download Blast
-              </Button>
+              {loadingButton ? (
+                <LoadingButton
+                  loading
+                  variant="contained"
+                  color="primary"
+                  sx={{ width: "100%" }}
+                  size="medium"
+                >
+                  Loading{" "}
+                </LoadingButton>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#2962ff",
+                    ":hover": { backgroundColor: "#2962ff" },
+                  }}
+                  onClick={downloadBlast}
+                >
+                  Download Blast
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>

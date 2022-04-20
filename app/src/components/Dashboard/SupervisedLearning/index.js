@@ -11,7 +11,7 @@ const SupervisedLearning = () => {
 
   return (
     <>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} sx={{ marginTop: 4 }}>
         <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4">Supervised Learning</Typography>
         </Grid>

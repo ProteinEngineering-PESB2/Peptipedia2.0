@@ -18,7 +18,7 @@ const Blast = () => {
 
   return (
     <>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} sx={{ marginTop: 4 }}>
         {error.length > 0 && (
           <Snackbar
             open={openSnackbar}
@@ -39,7 +39,15 @@ const Blast = () => {
             setPath={setPath}
           />
         </Grid>
-        {data.length > 0 && <BlastContent data={data} path={path} />}
+        {data.length > 0 && (
+          <BlastContent
+            data={data}
+            path={path}
+            setError={setError}
+            setSeverity={setSeverity}
+            setPath={setPath}
+          />
+        )}
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
     </>
