@@ -9,7 +9,7 @@ class alignment(config_tool):
         print(self.output_path)
 
     def execute_blastp(self):
-        command = "blastp -db swissprot -query {} -evalue 0.5 -out {}".format(self.temp_file_path, self.output_path)
+        command = "blastp -db peptipedia.fasta -query {} -evalue 0.5 -out {}".format(self.temp_file_path, self.output_path)
         print(command)
         os.system(command)
         return self.output_path

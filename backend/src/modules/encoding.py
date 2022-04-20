@@ -11,7 +11,7 @@ class encoding(config_tool):
     def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
         super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
         self.rand_name = str(round(random()*10**20))
-        self.results_folder = "files/{}".format(self.rand_name)
+        self.results_folder = "{}/{}".format(static_folder, self.rand_name)
         os.mkdir(self.results_folder)
 
         self.one_hot_encoding = options["one_hot_encoding"]
@@ -20,6 +20,7 @@ class encoding(config_tool):
         self.temp_csv = "{}/{}_codifications.csv".format(self.temp_folder, self.rand_name)
         self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group", "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
         self.path_config_aaindex_encoder = path_aa_index
+
     def get_longest(self):
         return self.data.sequence.str.len().max()
 
