@@ -19,6 +19,8 @@ import PsychologyIcon from "@mui/icons-material/Psychology";
 import TransformIcon from "@mui/icons-material/Transform";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 
+import { FaDatabase } from "@react-icons/all-files/fa/FaDatabase" 
+
 const ListItems = ({ section, setSection }) => {
   const [expandItemCharacterizations, setExpandItemCharacterizations] =
     useState(false);
@@ -48,6 +50,29 @@ const ListItems = ({ section, setSection }) => {
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography sx={{ fontWeight: section === "home" && "bold" }}>
               Home
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+        <ListItemButton
+          disableRipple
+          sx={{
+            pl: 2,
+            margin: "6px 14px",
+            padding: "9px",
+            borderRadius: "8px",
+            backgroundColor: section === "database" ? "#2962ff" : "#fff",
+            color: section === "database" ? "#fff" : "#000",
+            "&:hover": {
+              background: "#2962ff",
+              color: "#fff",
+            },
+          }}
+          onClick={() => setSection("database")}
+        >
+          <FaDatabase sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography sx={{ fontWeight: section === "database" && "bold" }}>
+              Database
             </Typography>
           </ListItemText>
         </ListItemButton>

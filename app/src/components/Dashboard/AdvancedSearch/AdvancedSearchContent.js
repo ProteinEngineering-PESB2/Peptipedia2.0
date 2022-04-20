@@ -90,6 +90,7 @@ const AdvancedSearchContent = ({
 
     if (values.count !== 0) {
       const total = Math.trunc(values.count / 20) + 1;
+      console.log(total)
       setTotalTable(total);
     }
 

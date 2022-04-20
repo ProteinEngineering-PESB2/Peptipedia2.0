@@ -1,4 +1,5 @@
 import Home from "./Home";
+import Database from "./Database";
 import Blast from "./Alignment/Blast";
 import MSA from "./Alignment/MSA";
 import GeneOntology from "./Characterization/GeneOntology";
@@ -14,6 +15,7 @@ const RenderSection = ({ section }) => {
   return (
     <>
       {section === "home" && <Home/>}
+      {section === "database" && <Database/>}
       {section === "blast" && <Blast />}
       {section === "msa" && <MSA />}
       {section === "phisicochemical" && <Phisicochemical />}
