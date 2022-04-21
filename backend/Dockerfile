@@ -31,8 +31,6 @@ RUN hmmpress Pfam-A.hmm
 #Instalación de Blast+ y Swissprot
 WORKDIR /app/install_requisites/blast
 RUN tar -xvf ncbi-blast-2.13.0+-src.tar.gz
-WORKDIR /app/install_requisites/blastdb
-RUN tar -xf swissprot.tar.gz
 
 #Instalación librerías bioperl
 RUN cpan Moose

@@ -3,12 +3,7 @@ services:
   backend:
     build: ./backend/
     volumes:
-      -  ./backend/src/main.py:/app/src/main.py
-      -  ./backend/src/modules:/app/src/modules
-      -  ./backend/src/config.ini:/app/src/config.ini
-      -  ./bd/backup.sql:/app/files/downloads/dump.sql
-      -  ./bd/dump.fasta:/app/files/downloads/dump.fasta
-      -  ./bd/dump_csv.zip:/app/files/downloads/dump_csv.zip
+      -  ./backend/src:/app/src
     ports:
       - "8001:8001"
   app :

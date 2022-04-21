@@ -49,7 +49,7 @@ class encoding(config_tool):
                 result = fft_encoding.appy_fft()
                 result.to_csv("{}/digital_signal_processing/{}.csv".format(self.results_folder, selected_property))
         self.compress()
-        return self.rand_name + ".zip"
+        return self.results_folder + ".zip"
     
     def compress(self):
         command = "zip -r {}.zip {}/".format(self.results_folder, self.results_folder)

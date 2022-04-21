@@ -18,17 +18,19 @@ class response_training_model:
         self.dataset = dataset
         self.target = target
         self.model = model
+        print(self.model)
         self.validation = validation
 
     def estimate_performance(self, metrics_list):
         response_data = cross_validate(self.model, self.dataset, self.target, cv = self.validation, scoring = metrics_list)
-        performance = [{metric: np.mean(response_data["test_{}".format(metric)]).round(3)} for metric in metrics_list]
+        performance = {metric: np.mean(response_data["test_{}".format(metric)]).round(3) for metric in metrics_list}
         return {"performance": performance}
 
     def confussion_matrix(self):
         self.predict_values = self.model.predict(self.dataset)
         labels = self.target.unique().tolist()
         confusion_matrix_response = confusion_matrix(self.target, self.predict_values, labels = labels)
+        
         self.labels = [str(tar) for tar in labels]
         self.cf_matrix = confusion_matrix_response.tolist()
         return {"confusion_matrix": {"x": self.labels, "y": self.labels, "z": self.cf_matrix}}
@@ -58,14 +60,22 @@ class response_training_model:
     
     def learning_curve(self):
         train_sizes, train_scores, test_scores = learning_curve(self.model, self.dataset, self.target, cv=self.validation, n_jobs=5, train_sizes=np.linspace(.1, 1.0, 5))
+
         train_scores_mean = np.mean(train_scores, axis=1)
         train_scores_std = np.std(train_scores, axis=1)
         test_scores_mean = np.mean(test_scores, axis=1)
         test_scores_std = np.std(test_scores, axis=1)
-        error_train = np.concatenate((train_scores_mean + train_scores_std, train_scores_mean - train_scores_std))
-        error_test = np.concatenate((test_scores_mean + test_scores_std, test_scores_mean - test_scores_std))
+
+        train_error_down = train_scores_mean - train_scores_std
+        test_error_down = test_scores_mean - test_scores_std
+        error_train = np.concatenate((train_scores_mean + train_scores_std, train_error_down[::-1]))
+        error_test = np.concatenate((test_scores_mean + test_scores_std, test_error_down[::-1]))
         error_sizes = np.concatenate((train_sizes, train_sizes[::-1]))
-        return {
+
+
+
+
+        response = {
             "learning_curve": {
                 "training": { "x": train_sizes.tolist(), "y": train_scores_mean.round(3).tolist()},
                 "error_training":{"x": error_sizes.tolist(), "y": error_train.round(3).tolist()},
@@ -73,6 +83,12 @@ class response_training_model:
                 "error_testing":{"x": error_sizes.tolist(), "y": error_test.round(3).tolist()}
                 }
             }
+        for j in response["learning_curve"].keys():
+            mask = np.isfinite(response["learning_curve"][j]["y"])
+            print(response["learning_curve"][j]["y"], mask)
+            response["learning_curve"][j]["x"] = np.array(response["learning_curve"][j]["x"])[mask].tolist()
+            response["learning_curve"][j]["y"] = np.array(response["learning_curve"][j]["y"])[mask].tolist()
+        return response
 
     def correlations(self):
         self.predict_values = self.model.predict(self.dataset)
@@ -98,7 +114,7 @@ class response_training_model:
             r2 = 'ERROR'
         else:
             r2 = response[1]
-        dictResponse = {"pearsonr": r1.round(3), "pvalue": r2.round(3)}
+        dictResponse = {"pearsonr": round(r1, 3), "pvalue": round(r2, 3)}
         return dictResponse
 
     def __calculatedSpearman(self, real_values, predict_values):
@@ -111,7 +127,7 @@ class response_training_model:
             r2 = 'ERROR'
         else:
             r2 = response[1]
-        dictResponse = {"spearmanr": r1.round(3), "pvalue": r2.round(3)}
+        dictResponse = {"spearmanr": round(r1, 3), "pvalue": round(r2, 3)}
         return dictResponse
 
     def __calculatekendalltau(self, real_values, predict_values):
@@ -124,5 +140,5 @@ class response_training_model:
             r2 = 'ERROR'
         else:
             r2 = response[1]
-        dictResponse = {"kendalltau": r1.round(3), "pvalue": r2.round(3)}
+        dictResponse = {"kendalltau": round(r1, 3), "pvalue": round(r2, 3)}
         return dictResponse
