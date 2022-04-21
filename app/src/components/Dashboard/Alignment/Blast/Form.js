@@ -10,7 +10,6 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -23,6 +22,7 @@ import { blast } from "../../../../services/alignments";
 
 const Input = styled("input")({
   display: "none",
+  width: "100%",
 });
 
 const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
@@ -91,7 +91,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
   return (
     <form onSubmit={onSubmit}>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item lg={12} xs={12}>
           <FormControl>
             <FormLabel id="label-file-type">File Type</FormLabel>
             <RadioGroup
@@ -116,76 +116,74 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
             </RadioGroup>
           </FormControl>
         </Grid>
-        {fileType === "text" && (
-          <Grid item xs={12}>
-            <TextField
-              label="Enter Amino Acid sequences"
-              multiline
-              rows={11}
-              sx={{ width: "100%" }}
-              onChange={handleChangeTextInput}
+        <Grid item lg={12} md={12} xs={12}>
+          <TextField
+            label="Enter Amino Acid sequences"
+            multiline
+            rows={11}
+            sx={{ width: "100%" }}
+            onChange={handleChangeTextInput}
+            disabled={fileType === "file"}
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ marginTop: 1 }}>
+        <Grid item lg={3.2} md={4.2} xs={12}>
+          <label htmlFor="contained-button-file" style={{ width: "100%" }}>
+            <Input
+              id="contained-button-file"
+              type="file"
+              onChange={handleChangeFileInput}
             />
-          </Grid>
-        )}
-        {fileType === "file" && (
+            <Button
+              variant="outlined"
+              component="span"
+              endIcon={<CloudUploadIcon />}
+              disabled={fileType === "text"}
+              sx={{ width: "100%" }}
+              color={
+                fileInput ? (fileInput.name ? "success" : "primary") : "primary"
+              }
+            >
+              {fileInput
+                ? fileInput.name
+                  ? fileInput.name
+                  : "Upload Fasta"
+                : "Upload Fasta"}
+            </Button>
+          </label>
+        </Grid>
+      </Grid>
+      <Grid item lg={3} md={4} xs={12} sx={{ marginTop: 4 }}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Stack direction="row" spacing={2}>
-              <label htmlFor="contained-button-file">
-                <Input
-                  id="contained-button-file"
-                  type="file"
-                  onChange={handleChangeFileInput}
-                />
-                <Button
-                  variant="outlined"
-                  component="span"
-                  endIcon={<CloudUploadIcon />}
-                  color={
-                    fileInput
-                      ? fileInput.name
-                        ? "success"
-                        : "primary"
-                      : "primary"
-                  }
-                >
-                  {fileInput
-                    ? fileInput.name
-                      ? fileInput.name
-                      : "Upload Fasta"
-                    : "Upload Fasta"}
-                </Button>
-              </label>
-            </Stack>
-          </Grid>
-        )}
-        <Grid item lg={3} md={4} xs={12} sx={{ marginTop: 2 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              {loading ? (
-                <LoadingButton
-                  loading
-                  variant="contained"
-                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
-                  size="medium"
-                >
-                  Loading{" "}
-                </LoadingButton>
-              ) : (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={textInput === "" && (fileInput === null || fileInput === undefined)}
-                  sx={{
-                    width: "100%",
-                    backgroundColor: "#2962ff",
-                    ":hover": { backgroundColor: "#2962ff" },
-                  }}
-                  size="medium"
-                >
-                  run alignment
-                </Button>
-              )}
-            </Grid>
+            {loading ? (
+              <LoadingButton
+                loading
+                variant="contained"
+                sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                size="medium"
+              >
+                Loading{" "}
+              </LoadingButton>
+            ) : (
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={
+                  textInput === "" &&
+                  (fileInput === null || fileInput === undefined)
+                }
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#2962ff",
+                  ":hover": { backgroundColor: "#2962ff" },
+                }}
+                size="medium"
+              >
+                run alignment
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Grid>
