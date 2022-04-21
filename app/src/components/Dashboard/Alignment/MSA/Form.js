@@ -178,7 +178,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
                 <Button
                   type="submit"
                   variant="contained"
-                  disabled={textInput === "" && fileInput === null}
+                  disabled={textInput === "" && (fileInput === null || fileInput === undefined)}
                   sx={{
                     width: "100%",
                     backgroundColor: "#2962ff",

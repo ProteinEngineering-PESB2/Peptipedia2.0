@@ -287,11 +287,13 @@ const Form = ({
                   type="submit"
                   variant="contained"
                   disabled={
-                    chargeDensityCheckbox === false &&
-                    chargeCheckbox === false &&
-                    lengthCheckbox === false &&
-                    isoelectricPointCheckbox === false &&
-                    molecularWeightCheckbox === false
+                    (chargeDensityCheckbox === false &&
+                      chargeCheckbox === false &&
+                      lengthCheckbox === false &&
+                      isoelectricPointCheckbox === false &&
+                      molecularWeightCheckbox === false) ||
+                    (textInput === "" &&
+                      (fileInput === null || fileInput === undefined))
                   }
                   size="medium"
                   sx={{

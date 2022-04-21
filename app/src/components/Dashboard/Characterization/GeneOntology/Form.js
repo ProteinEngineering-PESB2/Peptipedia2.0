@@ -229,9 +229,11 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
                   type="submit"
                   variant="contained"
                   disabled={
-                    molecularFunctionCheckbox === false &&
-                    biologicalProcessCheckbox === false &&
-                    celularComponentCheckbox === false
+                    (molecularFunctionCheckbox === false &&
+                      biologicalProcessCheckbox === false &&
+                      celularComponentCheckbox === false) ||
+                    (textInput === "" &&
+                      (fileInput === null || fileInput === undefined))
                   }
                   sx={{
                     width: "100%",

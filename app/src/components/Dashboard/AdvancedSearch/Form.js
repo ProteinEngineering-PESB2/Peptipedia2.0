@@ -106,15 +106,13 @@ const Form = ({
   const [geneOntologies, setGeneOntologies] = useState([]);
 
   const initialTaxonomies = useCallback(async () => {
-    console.log("Hola")
     try {
       const res = await getTaxonomiesWithoutTerm();
-      console.log(res)
       setTaxonomies(res.result);
     } catch (error) {
-      setSeverity("error")
-      setMessage("Service no available")
-      setOpenSnackbar(true)
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
     }
   }, [setMessage, setOpenSnackbar, setSeverity]);
 
@@ -123,9 +121,9 @@ const Form = ({
       const res = await getPfamWithoutTerm();
       setPfams(res.result);
     } catch (error) {
-      setSeverity("error")
-      setMessage("Service no available")
-      setOpenSnackbar(true)
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
     }
   }, [setSeverity, setMessage, setOpenSnackbar]);
 
@@ -134,9 +132,9 @@ const Form = ({
       const res = await getDatabases();
       setDatabases(res.result);
     } catch (error) {
-      setSeverity("error")
-      setMessage("Service no available")
-      setOpenSnackbar(true)
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
     }
   }, [setMessage, setSeverity, setOpenSnackbar]);
 
@@ -145,9 +143,9 @@ const Form = ({
       const res = await getGeneOntologyWithoutTerm();
       setGeneOntologies(res.result);
     } catch (error) {
-      setSeverity("error")
-      setMessage("Service no available")
-      setOpenSnackbar(true)
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
     }
   }, [setSeverity, setMessage, setOpenSnackbar]);
 
@@ -170,9 +168,9 @@ const Form = ({
         res.result.max_charge_density,
       ]);
     } catch (error) {
-      setSeverity("error")
-      setMessage("Service no available")
-      setOpenSnackbar(true)
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
     }
   }, [setMessage, setSeverity, setOpenSnackbar]);
 
@@ -183,7 +181,13 @@ const Form = ({
     initialDatabases();
     initialGeneOntology();
     setLoading(false);
-  }, [initialTaxonomies, initialPfams, initialGeneOntology, initialParameters, initialDatabases]);
+  }, [
+    initialTaxonomies,
+    initialPfams,
+    initialGeneOntology,
+    initialParameters,
+    initialDatabases,
+  ]);
 
   const handleChangeQueryText = (e) => {
     setQueryText(e.target.value);
@@ -521,12 +525,20 @@ const Form = ({
       setLoadingButton(true);
       const res = await databaseResultsCount(queryWithId);
 
-      setCounts(counts.concat(res.count));
+      if (res.status === "error") {
+        setSeverity("error");
+        setMessage(res.description);
+        setOpenSnackbar(true);
+        onReset();
+        setLoadingButton(false);
+      } else if (res.status === "success") {
+        setCounts(counts.concat(res.count));
 
-      setQueries(queries.concat(query));
-      setQueriesWithID(queriesWithID.concat(queryWithId));
-      onReset();
-      setLoadingButton(false);
+        setQueries(queries.concat(query));
+        setQueriesWithID(queriesWithID.concat(queryWithId));
+        onReset();
+        setLoadingButton(false);
+      }
     } catch (error) {
       setSeverity("error");
       setMessage("Service not available");

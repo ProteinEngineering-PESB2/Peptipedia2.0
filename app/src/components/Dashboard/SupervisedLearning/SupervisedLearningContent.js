@@ -448,7 +448,7 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
               </Grid>
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Error Values
+                  Error Plot
                 </Typography>
               </Grid>
               <Grid item lg={12} md={12} xs={12}>

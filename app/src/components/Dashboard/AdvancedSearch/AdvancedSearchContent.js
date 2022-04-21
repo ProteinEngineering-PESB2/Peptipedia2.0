@@ -70,37 +70,48 @@ const AdvancedSearchContent = ({
     [counts, queries, queriesWithID, setCounts, setQueries, setQueriesWithID]
   );
 
-  const searchDatabase = useCallback(async (values) => {
-    setLoadingTable(true);
+  const searchDatabase = useCallback(
+    async (values) => {
+      setLoadingTable(true);
 
-    if (values.query !== "") {
-      setQuerySelected(values.query);
-    }
+      if (values.query !== "") {
+        setQuerySelected(values.query);
+      }
 
-    setPageTable(values.page);
+      setPageTable(values.page);
 
-    if (values.count !== 0) {
-      setTotalTable(values.count);
-    }
+      if (values.count !== 0) {
+        setTotalTable(values.count);
+      }
 
-    const post = {
-      query: values.query !== "" ? values.query : querySelected,
-      limit: 20,
-      page: values.page + 1,
-    };
+      const post = {
+        query: values.query !== "" ? values.query : querySelected,
+        limit: 20,
+        page: values.page + 1,
+      };
 
-    try {
-      const res = await search(post);
-      setDataTable(res.query.data);
-      setColumnsTable(res.query.columns);
-      setLoadingTable(false);
-    } catch (error) {
-      setSeverity("error")
-      setMessage("Service no available")
-      setOpenSnackbar(true)
-      setLoadingTable(false);
-    }
-  }, [querySelected, setMessage, setSeverity, setOpenSnackbar]);
+      try {
+        const res = await search(post);
+
+        if (res.status === "error") {
+          setSeverity("error");
+          setMessage(res.description);
+          setOpenSnackbar(true);
+          setLoadingTable(false);
+        } else if (res.status === "success") {
+          setDataTable(res.data);
+          setColumnsTable(res.columns);
+          setLoadingTable(false);
+        }
+      } catch (error) {
+        setSeverity("error");
+        setMessage("Service no available");
+        setOpenSnackbar(true);
+        setLoadingTable(false);
+      }
+    },
+    [querySelected, setMessage, setSeverity, setOpenSnackbar]
+  );
 
   useEffect(() => {
     setLoading(true);

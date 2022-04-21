@@ -245,9 +245,11 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
                   type="submit"
                   variant="contained"
                   disabled={
-                    oneHotEncodingCheckbox === false &&
-                    phisicochemicalPropertiesCheckbox === false &&
-                    digitalSignalProcessingCheckbox === false
+                    (oneHotEncodingCheckbox === false &&
+                      phisicochemicalPropertiesCheckbox === false &&
+                      digitalSignalProcessingCheckbox === false) ||
+                    (textInput === "" &&
+                      (fileInput === null || fileInput === undefined))
                   }
                   sx={{
                     width: "100%",

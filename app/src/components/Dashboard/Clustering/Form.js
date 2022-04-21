@@ -569,7 +569,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                   ":hover": { backgroundColor: "#2962ff" },
                 }}
                 size="medium"
-                disabled={textInput === "" && fileInput === null ? true : false}
+                disabled={textInput === "" && (fileInput === null || fileInput === undefined) ? true : false}
               >
                 Run Clustering
               </Button>
