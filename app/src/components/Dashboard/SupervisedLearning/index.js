@@ -8,7 +8,7 @@ import SupervisedLearningContent from "./SupervisedLearningContent";
 
 const SupervisedLearning = () => {
   const [data, setData] = useState();
-  const [taskType, setTaskType] = useState("classification");
+  const [selectedTaskType, setSelectedTaskType] = useState("")
 
   return (
     <>
@@ -19,13 +19,12 @@ const SupervisedLearning = () => {
         <Grid item lg={12} md={12} xs={12}>
           <SupervisedLearningForm
             setData={setData}
-            taskType={taskType}
-            setTaskType={setTaskType}
+            setSelectedTaskType={setSelectedTaskType}
           />
         </Grid>
         {data && (
           <Grid item lg={12} md={12} xs={12}>
-            <SupervisedLearningContent data={data} taskType={taskType} />
+            <SupervisedLearningContent data={data} selectedTaskType={selectedTaskType} />
           </Grid>
         )}
       </Grid>

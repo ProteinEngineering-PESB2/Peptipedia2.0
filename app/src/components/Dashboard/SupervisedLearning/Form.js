@@ -19,12 +19,13 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData, taskType, setTaskType }) => {
+const Form = ({ setData, setSelectedTaskType }) => {
   const [fileInput, setFileInput] = useState(null);
   const [encodingTypeValue, setEncodingTypeValue] =
     useState("one_hot_encoding");
   const [propertyValue, setPropertyValue] = useState("alpha-structure_group");
   const [validation, setValidation] = useState(2);
+  const [taskType, setTaskType] = useState("classification");
   const [algorithm, setAlgorithm] = useState("adaboost");
   const [loading, setLoading] = useState(false);
 
@@ -46,6 +47,7 @@ const Form = ({ setData, taskType, setTaskType }) => {
 
   const handleChangeTaskType = (e) => {
     setTaskType(e.target.value);
+    setAlgorithm("adaboost");
   };
 
   const handleChangeAlgorithm = (e) => {
@@ -55,7 +57,8 @@ const Form = ({ setData, taskType, setTaskType }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setData()
+    setSelectedTaskType("");
+    setData();
 
     let options;
 
@@ -86,8 +89,8 @@ const Form = ({ setData, taskType, setTaskType }) => {
 
     try {
       const res = await supervisedLearning(post);
-
-      setData(res)
+      setSelectedTaskType(taskType);
+      setData(res);
     } catch (error) {
       console.log(error);
     }
