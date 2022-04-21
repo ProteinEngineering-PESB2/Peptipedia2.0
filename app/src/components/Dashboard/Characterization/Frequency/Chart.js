@@ -68,7 +68,7 @@ const Chart = ({ data, autocompleteValue }) => {
               />
             </Paper>
           </Grid>
-          <Grid item lg={3} md={4} xs={12}>
+          <Grid item lg={3} md={3} xs={12}>
             <Button
               variant="contained"
               size="large"

@@ -242,7 +242,7 @@ const Form = ({ setData, setSelectedTaskType }) => {
           </Grid>
           <Grid item lg={12} xs={12} sx={{ marginTop: 2 }}>
             <Grid container spacing={2}>
-              <Grid item lg={5} md={4} xs={12}>
+              <Grid item lg={5} md={5.5} xs={12}>
                 {loading ? (
                   <LoadingButton
                     loading

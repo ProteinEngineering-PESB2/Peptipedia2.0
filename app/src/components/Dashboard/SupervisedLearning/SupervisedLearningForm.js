@@ -7,7 +7,7 @@ const SupervisedLearningForm = ({ setData, setSelectedTaskType }) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item lg={5} md={8} xs={12}>
+        <Grid item lg={6} md={6} xs={12}>
           <Paper
             sx={{
               p: 2,

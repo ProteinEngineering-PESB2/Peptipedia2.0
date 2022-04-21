@@ -35,7 +35,7 @@ const FrequencyContent = ({ data }) => {
         <CircularLoading/>
       ) : (
         <Grid container spacing={3}>
-          <Grid item lg={5} md={6} xs={12}>
+          <Grid item lg={3} md={3} xs={12}>
             <Paper
               sx={{
                 p: 2,

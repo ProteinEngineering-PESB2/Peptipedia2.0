@@ -209,6 +209,7 @@ const ClusteringContent = ({
                 variant="contained"
                 sx={{
                   backgroundColor: "#2962ff",
+                  width: '100%',
                   ":hover": { backgroundColor: "#2962ff" },
                 }}
                 size="medium"
@@ -305,7 +306,7 @@ const ClusteringContent = ({
                 </Button>
               </Grid>
             ) : (
-              <Grid item lg={3.5} md={12} xs={12}>
+              <Grid item lg={3.8} md={4.5} xs={12}>
                 <Paper
                   sx={{
                     p: 2,

@@ -80,7 +80,7 @@ const BlastContent = ({
             <Grid item lg={12} md={12} xs={12}>
               <Typography variant="h6">Blast Multiple Alignments</Typography>
             </Grid>
-            <Grid item lg={7} md={12} xs={12}>
+            <Grid item lg={8} md={8} xs={12}>
               <Paper
                 sx={{
                   p: 2,
