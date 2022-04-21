@@ -1,8 +1,10 @@
 import Plot from "react-plotly.js";
+import axios from "axios";
 
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import { useEffect, useState, useCallback } from "react";
 
@@ -14,8 +16,8 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
   const [dataErrorBars, setDataErrorBars] = useState([]);
   const [dataScatter, setDataScatter] = useState([]);
   const [dataBoxPlot, setDataBoxPlot] = useState([]);
-  const [dataHistogram, setDataHistogram] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   const parseDataHeatmap = useCallback(() => {
     const array = [
@@ -103,7 +105,7 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
     const traceX = {
       x: data.result.scatter.x,
       y: data.result.scatter.y,
-      mode: "lines+markers",
+      mode: "markers",
       type: "scatter",
     };
 
@@ -122,14 +124,25 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
     setDataBoxPlot(array);
   }, [data]);
 
-  const parseDataHistogram = useCallback(() => {
-    const array = {
-      x: data.result.error_values,
-      type: "histogram",
-    };
+  const downloadModel = async () => {
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(data.job_path, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "model.joblib");
+      document.body.appendChild(link);
+      link.click();
 
-    setDataHistogram([array]);
-  }, [data]);
+      setLoadingButton(false);
+    } catch (error) {
+      console.log(error);
+      setLoadingButton(false);
+    }
+  };
 
   useEffect(() => {
     if (selectedTaskType === "classification") {
@@ -140,7 +153,6 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
     if (selectedTaskType === "regression") {
       parseDataScatter();
       parseDataBoxPlot();
-      parseDataHistogram();
     }
     setLoading(false);
   }, [
@@ -150,7 +162,6 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
     parseDataSensibility,
     parseDataScatter,
     parseDataBoxPlot,
-    parseDataHistogram,
   ]);
 
   return (
@@ -161,6 +172,34 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
         <Grid container spacing={3}>
           {selectedTaskType === "classification" && (
             <>
+              <Grid item lg={12} xs={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Download Model
+                </Typography>
+              </Grid>
+              <Grid item lg={12} xs={12}>
+                {loadingButton ? (
+                  <LoadingButton
+                    loading
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                  >
+                    Loading{" "}
+                  </LoadingButton>
+                ) : (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#2962ff",
+                      ":hover": { backgroundColor: "#2962ff" },
+                    }}
+                    onClick={downloadModel}
+                  >
+                    Download
+                  </Button>
+                )}
+              </Grid>
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Performance
@@ -237,7 +276,15 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
                       autosize: true,
                       height: 430,
                       title: "Learning Curve",
-                      xaxis: { title: "Training Examples" },
+                      xaxis: {
+                        title: "Training Examples",
+                        range: [
+                          data.result.learning_curve.training.x[0],
+                          data.result.learning_curve.training.x[
+                            data.result.learning_curve.training.x.length - 1
+                          ],
+                        ],
+                      },
                       yaxis: { title: "Score" },
                     }}
                     useResizeHandler
@@ -277,34 +324,70 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
             <>
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Download Model
+                </Typography>
+              </Grid>
+              <Grid item lg={12} xs={12}>
+                {loadingButton ? (
+                  <LoadingButton
+                    loading
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                  >
+                    Loading{" "}
+                  </LoadingButton>
+                ) : (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#2962ff",
+                      ":hover": { backgroundColor: "#2962ff" },
+                    }}
+                    onClick={downloadModel}
+                  >
+                    Download
+                  </Button>
+                )}
+              </Grid>
+              <Grid item lg={12} xs={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Correlation
                 </Typography>
               </Grid>
-              {/* <Grid item lg={6} md={8} xs={12}>
+              <Grid item lg={6} md={8} xs={12}>
                 <div className="table-responsive">
                   <table
-                    className="table table-light table-hover text-center"
-                    style={{ width: "100%" }}
+                    className="table table-hover text-center table-striped"
+                    style={{ width: "100%", fontWeight: "bold" }}
                   >
                     <thead>
                       <tr>
-                        <th>Accuracy</th>
-                        <th>F1 Weighted</th>
-                        <th>Recall Weighted</th>
-                        <th>Precision Weighted</th>
+                        <th>Metric Name</th>
+                        <th>Metric Value</th>
+                        <th>P-value</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="table-active">
-                        <td>{data.result.performance.accuracy}</td>
-                        <td>{data.result.performance.f1_weighted}</td>
-                        <td>{data.result.performance.recall_weighted}</td>
-                        <td>{data.result.performance.precision_weighted}</td>
+                        <td>Kendall</td>
+                        <td>{data.result.corr.kendall.kendalltau}</td>
+                        <td>{data.result.corr.kendall.pvalue}</td>
+                      </tr>
+                      <tr className="table-active">
+                        <td>Pearson</td>
+                        <td>{data.result.corr.pearson.pearsonr}</td>
+                        <td>{data.result.corr.pearson.pvalue}</td>
+                      </tr>
+                      <tr className="table-active">
+                        <td>Spearman</td>
+                        <td>{data.result.corr.spearman.spearmanr}</td>
+                        <td>{data.result.corr.spearman.pvalue}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-              </Grid> */}
+              </Grid>
               <Grid item lg={12} xs={12} marginTop={2}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Performance
@@ -314,7 +397,7 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
                 <div className="table-responsive">
                   <table
                     className="table table-light table-hover text-center"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", fontWeight: "bold" }}
                   >
                     <thead>
                       <tr>
@@ -378,25 +461,6 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
                 >
                   <Plot
                     data={dataBoxPlot}
-                    layout={{
-                      autosize: true,
-                      height: 430,
-                    }}
-                    useResizeHandler
-                    className="w-full h-full"
-                  />
-                </Paper>
-              </Grid>
-              <Grid item lg={12} md={12} xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Plot
-                    data={dataHistogram}
                     layout={{
                       autosize: true,
                       height: 430,
