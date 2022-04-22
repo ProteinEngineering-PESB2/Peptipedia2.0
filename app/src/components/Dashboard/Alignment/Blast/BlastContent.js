@@ -157,13 +157,12 @@ const BlastContent = ({
                 <div id="blast-single-alignment"></div>
               </Paper>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item lg={2.5} md={3} xs={12}>
               {loadingButton ? (
                 <LoadingButton
                   loading
                   variant="contained"
                   color="primary"
-                  sx={{ width: "100%" }}
                   size="medium"
                 >
                   Loading{" "}
@@ -174,6 +173,7 @@ const BlastContent = ({
                   sx={{
                     backgroundColor: "#2962ff",
                     ":hover": { backgroundColor: "#2962ff" },
+                    width: '100%'
                   }}
                   onClick={downloadBlast}
                 >

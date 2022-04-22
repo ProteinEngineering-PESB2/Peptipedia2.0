@@ -45,6 +45,7 @@ const Blast = () => {
             path={path}
             setError={setError}
             setSeverity={setSeverity}
+            setOpenSnackbar={setOpenSnackbar}
             setPath={setPath}
           />
         )}
