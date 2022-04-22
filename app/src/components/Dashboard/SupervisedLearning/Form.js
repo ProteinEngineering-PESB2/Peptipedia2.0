@@ -67,6 +67,7 @@ const Form = ({
     setData();
 
     let options;
+    let example;
 
     if (encodingTypeValue === "one_hot_encoding") {
       options = new Blob([
@@ -77,6 +78,12 @@ const Form = ({
           validation: parseInt(validation),
         }),
       ]);
+      example = {
+        encoding: encodingTypeValue,
+        task: taskType,
+        algorithm: algorithm,
+        validation: parseInt(validation),
+      };
     } else {
       options = new Blob([
         JSON.stringify({
@@ -87,6 +94,13 @@ const Form = ({
           validation: parseInt(validation),
         }),
       ]);
+      example = {
+        encoding: encodingTypeValue,
+        selected_property: propertyValue,
+        task: taskType,
+        algorithm: algorithm,
+        validation: parseInt(validation),
+      };
     }
 
     const post = new FormData();
@@ -94,6 +108,7 @@ const Form = ({
     post.append("options", options);
 
     try {
+      console.log(example);
       const res = await supervisedLearning(post);
 
       if (res.status === "error") {

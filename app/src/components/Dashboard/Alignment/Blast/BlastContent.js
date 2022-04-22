@@ -48,15 +48,25 @@ const BlastContent = ({
   const downloadBlast = async () => {
     setLoadingButton(true);
     try {
+      // const res = await axios.get(path, {
+      //   responseType: "blob",
+      // });
+      // const url = window.URL.createObjectURL(new Blob([res.data]));
+      // const link = document.createElement("a");
+      // link.href = url;
+      // link.setAttribute("download", "result.txt");
+      // document.body.appendChild(link);
+      // link.click();
       const res = await axios.get(path, {
-        responseType: "blob",
+        responseType: "blod",
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "result.txt");
+      link.setAttribute("download", "blast.txt");
       document.body.appendChild(link);
       link.click();
+      link.parentNode.removeChild(link);
 
       setSeverity("success");
       setError("Download completed");
@@ -76,6 +86,31 @@ const BlastContent = ({
         <CircularLoading />
       ) : (
         <Grid item lg={12} md={12} xs={12}>
+          <Grid item lg={2.5} md={3} xs={12} sx={{ marginBottom: 3 }}>
+            {loadingButton ? (
+              <LoadingButton
+                loading
+                variant="contained"
+                color="primary"
+                size="medium"
+                sx={{ width: "100%" }}
+              >
+                Loading{" "}
+              </LoadingButton>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#2962ff",
+                  ":hover": { backgroundColor: "#2962ff" },
+                  width: "100%",
+                }}
+                onClick={downloadBlast}
+              >
+                Download Blast
+              </Button>
+            )}
+          </Grid>
           <Grid container spacing={3}>
             <Grid item lg={12} md={12} xs={12}>
               <Typography variant="h6">Blast Multiple Alignments</Typography>
@@ -156,31 +191,6 @@ const BlastContent = ({
               >
                 <div id="blast-single-alignment"></div>
               </Paper>
-            </Grid>
-            <Grid item lg={2.5} md={3} xs={12}>
-              {loadingButton ? (
-                <LoadingButton
-                  loading
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  sx={{ width: "100%" }}
-                >
-                  Loading{" "}
-                </LoadingButton>
-              ) : (
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#2962ff",
-                    ":hover": { backgroundColor: "#2962ff" },
-                    width: "100%",
-                  }}
-                  onClick={downloadBlast}
-                >
-                  Download Blast
-                </Button>
-              )}
             </Grid>
           </Grid>
         </Grid>
