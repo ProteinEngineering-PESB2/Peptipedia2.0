@@ -6,7 +6,7 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
-from modules.supervised_learning import supervised_algorithms, model
+from modules.supervised_learning import supervised_algorithms, model, use_model
 from modules.pca_process import pca_process
 from modules.utils import interface
 from modules.search import search
@@ -25,6 +25,7 @@ static_folder = config["folders"]["static_folder"]
 temp_folder =  config["folders"]["temp_folder"]
 alignments_folder = static_folder +"/"+ config["folders"]["alignments_folder"]
 downloads_folder = static_folder +"/"+ config["folders"]["downloads_folder"]
+results_folder = static_folder +"/"+ config["folders"]["results_folder"]
 path_aa_index = config["folders"]["path_aa_index"]
 
 db = database(config)
@@ -41,6 +42,7 @@ except Exception as e:
 try:
     os.mkdir(alignments_folder)
     os.mkdir(downloads_folder)
+    os.mkdir(results_folder)
 except Exception as e:
     print(e)
 if not os.path.isdir(path_aa_index):
@@ -155,6 +157,17 @@ class api:
         job_path = sl.job_path
         return {"result": result, "job_path": job_path}
 
+    @server.route('/api/use_model/', methods=["POST"])
+    def api_use_model():
+        data, options, is_json, is_file = interface.parse_information_with_options(request)
+        use = use_model(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
+        check = use.get_check()
+        if(check["status"] == "error"):
+            return check
+        prediction = use.get_prediction()
+        return {"result": prediction}
+
+
     @server.route('/api/publish_model/', methods=["POST"])
     def api_publish_model():
         post_data = request.json
@@ -171,15 +184,21 @@ class api:
     ###Advanced search###
     @server.route('/api/count/', methods=["POST"])
     def api_count():
-        where, limit, offset = search(request.json).parse_search()
+        search_obj = search(request.json)
+        res = search_obj.verify_query()
+        if res["status"] == "error":
+            return res
+        where, limit, offset = search_obj.parse_search()
         result = db.count_peptides(where)
-        return {"count": result}
+        return result
 
     @server.route('/api/search/', methods=["POST"])
     def api_search():
-        where, limit, offset = search(request.json).parse_search()
+        search_obj = search(request.json)
+        where, limit, offset = search_obj.parse_search()
         result = db.select_peptides(where, limit, offset)
-        return {"query": result}
+        print(result)
+        return result
 
     @server.route('/api/database_list/', methods=["GET"])
     def api_db_list():

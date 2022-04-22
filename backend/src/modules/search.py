@@ -11,12 +11,6 @@ class search():
             "Isoelectric Point": "p.isoelectric_point"
         }
 
-    def parse_mapping(self, request):
-        substr = request.json["substr"]
-        db = database()
-        result = db.map_sequence(substr)
-        return result
-
     def parse_terms(self, term):
         if "<=" in term:
             broken_term = term.split("<=")
@@ -93,3 +87,39 @@ class search():
         parsed_where = " ".join(broken)
         parsed_where = parsed_where.replace("AND", "INTERSECT").replace("OR", "UNION")
         return parsed_where, limit, offset
+
+    def verify_query(self):
+        logic = self.query["query"]
+        print(logic)
+        broken = [term.strip() for term in re.split('([\(\) ])', logic) if term != "" and term != " "]
+        if len(broken) <= 3:
+            return {"status": "error", "description": "Query invalid"}
+        if "Sequence" in broken:
+            has_sequence = True
+        else:
+            has_sequence = False
+        if broken[0] != "(" or broken[-1] != ")":
+            return {"status": "error", "description": "Query invalid"}
+        for i, value in enumerate(broken):
+            if value == "(" or value == ")":
+                broken[i] = ""
+            elif (value in ["Molecular", "Weight", "Length", "Charge", "Density", "Isoelectric", "Point"]):
+                broken[i] = ""
+            elif (value in ["Gene", "Ontology", "Taxonomy", "Pfam", "Database","Sequence"]):
+                broken[i] = ""
+            elif value == "<=" or value == "=":
+                broken[i] = ""
+            elif value == "OR" or value == "AND":
+                broken[i] = ""
+            else:
+                try:
+                    float(value)
+                    broken[i] = ""
+                except:
+                    pass
+        broken = [val for val in broken if val != ""]
+        if has_sequence == False and len(broken) != 0:
+            return {"status": "error", "description": "Query invalid"}
+        if has_sequence == True and len(broken) != 1:
+            return {"status": "error", "description": "Query invalid"}
+        return {"status": "success"}
