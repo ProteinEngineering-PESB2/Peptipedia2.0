@@ -33,6 +33,7 @@ const Form = ({
   const [validation, setValidation] = useState(2);
   const [taskType, setTaskType] = useState("classification");
   const [algorithm, setAlgorithm] = useState("adaboost");
+  const [testSize, setTestSize] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const handleChangeFileInput = (e) => {
@@ -60,6 +61,10 @@ const Form = ({
     setAlgorithm(e.target.value);
   };
 
+  const handleChangeTestSize = (e) => {
+    setTestSize(e.target.value);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -75,6 +80,7 @@ const Form = ({
           task: taskType,
           algorithm: algorithm,
           validation: parseInt(validation),
+          test_size: parseFloat(testSize),
         }),
       ]);
     } else {
@@ -85,6 +91,7 @@ const Form = ({
           task: taskType,
           algorithm: algorithm,
           validation: parseInt(validation),
+          test_size: parseFloat(testSize),
         }),
       ]);
     }
@@ -95,6 +102,8 @@ const Form = ({
 
     try {
       const res = await supervisedLearning(post);
+
+      console.log(res)
 
       if (res.status === "error") {
         setSeverity("error");
@@ -256,6 +265,25 @@ const Form = ({
                   <MenuItem value="svc">SVC</MenuItem>
                 )}
                 <MenuItem value="knn">KNN</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <FormControl fullWidth>
+              <InputLabel id="test-size-label">Test Size</InputLabel>
+              <Select
+                labelId="test-size-label"
+                label="Test Size"
+                value={testSize}
+                onChange={handleChangeTestSize}
+              >
+                <MenuItem value={0}>0%</MenuItem>
+                <MenuItem value={0.05}>5%</MenuItem>
+                <MenuItem value={0.1}>10%</MenuItem>
+                <MenuItem value={0.15}>15%</MenuItem>
+                <MenuItem value={0.2}>20%</MenuItem>
+                <MenuItem value={0.25}>25%</MenuItem>
+                <MenuItem value={0.3}>30%</MenuItem>
               </Select>
             </FormControl>
           </Grid>

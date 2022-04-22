@@ -18,10 +18,14 @@ const SupervisedLearningContent = ({
   setSeverity,
 }) => {
   const [dataHeatmap, setDataHeatmap] = useState([]);
+  const [dataHeatmapTesting, setDataHeatmapTesting] = useState([]);
   const [dataBar, setDataBar] = useState([]);
+  const [dataBarTesting, setBarTesting] = useState([]);
   const [dataErrorBars, setDataErrorBars] = useState([]);
   const [dataScatter, setDataScatter] = useState([]);
+  const [dataScatterTesting, setDataScatterTesting] = useState([]);
   const [dataBoxPlot, setDataBoxPlot] = useState([]);
+  const [dataBoxPlotTesting, setDataBoxPlotTesting] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
 
@@ -35,6 +39,20 @@ const SupervisedLearningContent = ({
         hoverongaps: false,
       },
     ];
+
+    if (data.result.confusion_matrix_testing) {
+      const array_testing = [
+        {
+          x: data.result.confusion_matrix_testing.x,
+          y: data.result.confusion_matrix_testing.y,
+          z: data.result.confusion_matrix_testing.z,
+          type: "heatmap",
+          hoverongaps: false,
+        },
+      ];
+      setDataHeatmapTesting(array_testing);
+    }
+
     setDataHeatmap(array);
   }, [data]);
 
@@ -104,6 +122,24 @@ const SupervisedLearningContent = ({
       type: "bar",
     };
 
+    if (data.result.analysis_testing) {
+      const traceSensibilityTesting = {
+        x: data.result.analysis_testing.categories,
+        y: data.result.analysis_testing.sensibility,
+        name: "Sensibility",
+        type: "bar",
+      };
+
+      const traceSensivityTesting = {
+        x: data.result.analysis_testing.categories,
+        y: data.result.analysis_testing.sensitivity,
+        name: "Sensitivity",
+        type: "bar",
+      };
+
+      setBarTesting([traceSensibilityTesting, traceSensivityTesting]);
+    }
+
     setDataBar([traceSensibility, traceSensivity]);
   }, [data]);
 
@@ -114,6 +150,17 @@ const SupervisedLearningContent = ({
       mode: "markers",
       type: "scatter",
     };
+
+    if (data.result.scatter_testing) {
+      const traceXTesting = {
+        x: data.result.scatter_testing.x,
+        y: data.result.scatter_testing.y,
+        mode: "markers",
+        type: "scatter",
+      };
+
+      setDataScatterTesting([traceXTesting]);
+    }
 
     setDataScatter([traceX]);
   }, [data]);
@@ -126,6 +173,18 @@ const SupervisedLearningContent = ({
         boxpoints: "all",
       },
     ];
+
+    if (data.result.error_values_testing) {
+      const array_testing = [
+        {
+          y: data.result.error_values_testing,
+          type: "box",
+          boxpoints: "all",
+        },
+      ];
+
+      setDataBoxPlotTesting(array_testing);
+    }
 
     setDataBoxPlot(array);
   }, [data]);
@@ -196,7 +255,7 @@ const SupervisedLearningContent = ({
                     sx={{
                       backgroundColor: "#2962ff",
                       ":hover": { backgroundColor: "#2962ff" },
-                      width: '100%'
+                      width: "100%",
                     }}
                     onClick={downloadModel}
                   >
@@ -260,12 +319,95 @@ const SupervisedLearningContent = ({
                   </table>
                 </div>
               </Grid>
+              {data.result.performance_testing && (
+                <>
+                  <Grid item lg={12} xs={12}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      Performance Testing
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={6} md={8} xs={12}>
+                    <div className="table-responsive">
+                      <table
+                        className="table table-light table-hover text-center"
+                        style={{ width: "100%" }}
+                      >
+                        <thead>
+                          <tr>
+                            <th>Accuracy</th>
+                            {data.result.performance_testing.f1 && <th>F1</th>}
+                            {data.result.performance_testing.f1_weighted && (
+                              <th>F1 Weighted</th>
+                            )}
+                            {data.result.performance_testing.recall && (
+                              <th>Recall</th>
+                            )}
+                            {data.result.performance_testing
+                              .recall_weighted && <th>Recall Weighted</th>}
+                            {data.result.performance_testing.precision && (
+                              <th>Precision</th>
+                            )}
+                            {data.result.performance_testing
+                              .precision_weighted && (
+                              <th>Precision Weighted</th>
+                            )}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="table-active">
+                            <td>{data.result.performance_testing.accuracy}</td>
+                            {data.result.performance_testing.f1 && (
+                              <td>{data.result.performance_testing.f1}</td>
+                            )}
+                            {data.result.performance_testing.f1_weighted && (
+                              <td>
+                                {data.result.performance_testing.f1_weighted}
+                              </td>
+                            )}
+                            {data.result.performance_testing.recall && (
+                              <td>{data.result.performance_testing.recall}</td>
+                            )}
+                            {data.result.performance_testing
+                              .recall_weighted && (
+                              <td>
+                                {
+                                  data.result.performance_testing
+                                    .recall_weighted
+                                }
+                              </td>
+                            )}
+                            {data.result.performance_testing.precision && (
+                              <td>
+                                {data.result.performance_testing.precision}
+                              </td>
+                            )}
+                            {data.result.performance_testing
+                              .precision_weighted && (
+                              <td>
+                                {
+                                  data.result.performance_testing
+                                    .precision_weighted
+                                }
+                              </td>
+                            )}
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </Grid>
+                </>
+              )}
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Confusion Matrix
                 </Typography>
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid
+                item
+                lg={data.result.confusion_matrix_testing ? 6 : 12}
+                md={data.result.confusion_matrix_testing ? 6 : 12}
+                xs={12}
+              >
                 <Paper
                   sx={{
                     p: 2,
@@ -287,6 +429,32 @@ const SupervisedLearningContent = ({
                   />
                 </Paper>
               </Grid>
+              {data.result.confusion_matrix_testing && (
+                <>
+                  <Grid item lg={6} md={6} xs={12}>
+                    <Paper
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Plot
+                        data={dataHeatmapTesting}
+                        layout={{
+                          autosize: true,
+                          height: 430,
+                          title: "Confusion Matrix Testing",
+                          xaxis: { title: "Real Values" },
+                          yaxis: { title: "Predicted Values" },
+                        }}
+                        useResizeHandler
+                        className="w-full h-full"
+                      />
+                    </Paper>
+                  </Grid>
+                </>
+              )}
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Learning Curve
@@ -327,7 +495,12 @@ const SupervisedLearningContent = ({
                   Sensibility Analysis
                 </Typography>
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid
+                item
+                lg={data.result.analysis_testing ? 6 : 12}
+                md={data.result.analysis_testing ? 6 : 12}
+                xs={12}
+              >
                 <Paper
                   sx={{
                     p: 2,
@@ -348,6 +521,29 @@ const SupervisedLearningContent = ({
                   />
                 </Paper>
               </Grid>
+              {data.result.analysis_testing && (
+                <Grid item lg={6} md={6} xs={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataBarTesting}
+                      layout={{
+                        autosize: true,
+                        height: 430,
+                        barmode: "group",
+                        title: "Sensibility Analysis Testing",
+                      }}
+                      useResizeHandler
+                      className="w-full h-full"
+                    />
+                  </Paper>
+                </Grid>
+              )}
             </>
           )}
           {selectedTaskType === "regression" && (
@@ -368,7 +564,7 @@ const SupervisedLearningContent = ({
                     sx={{
                       backgroundColor: "#2962ff",
                       ":hover": { backgroundColor: "#2962ff" },
-                      width: '100%'
+                      width: "100%",
                     }}
                     onClick={downloadModel}
                   >
@@ -400,16 +596,37 @@ const SupervisedLearningContent = ({
                         <td>{data.result.corr.kendall.kendalltau}</td>
                         <td>{data.result.corr.kendall.pvalue}</td>
                       </tr>
+                      {data.result.corr_testing && (
+                        <tr className="table-active">
+                          <td>Kendall Testing</td>
+                          <td>{data.result.corr_testing.kendall.kendalltau}</td>
+                          <td>{data.result.corr_testing.kendall.pvalue}</td>
+                        </tr>
+                      )}
                       <tr className="table-active">
                         <td>Pearson</td>
                         <td>{data.result.corr.pearson.pearsonr}</td>
                         <td>{data.result.corr.pearson.pvalue}</td>
                       </tr>
+                      {data.result.corr_testing && (
+                        <tr className="table-active">
+                          <td>Kendall Testing</td>
+                          <td>{data.result.corr_testing.pearson.pearsonr}</td>
+                          <td>{data.result.corr_testing.pearson.pvalue}</td>
+                        </tr>
+                      )}
                       <tr className="table-active">
                         <td>Spearman</td>
                         <td>{data.result.corr.spearman.spearmanr}</td>
                         <td>{data.result.corr.spearman.pvalue}</td>
                       </tr>
+                      {data.result.corr_testing && (
+                        <tr className="table-active">
+                          <td>Kendall Testing</td>
+                          <td>{data.result.corr_testing.spearman.spearmanr}</td>
+                          <td>{data.result.corr_testing.spearman.pvalue}</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -419,7 +636,12 @@ const SupervisedLearningContent = ({
                   Performance
                 </Typography>
               </Grid>
-              <Grid item lg={8} md={9} xs={12}>
+              <Grid
+                item
+                lg={data.result.performance_testing ? 12 : 6}
+                md={data.result.performance_testing ? 12 : 6}
+                xs={12}
+              >
                 <div className="table-responsive">
                   <table
                     className="table table-light table-hover text-center"
@@ -428,8 +650,15 @@ const SupervisedLearningContent = ({
                     <thead>
                       <tr>
                         <th>Negative Median Absolute Error</th>
+                        {data.result.performance_testing && (
+                          <th>Negative Median Absolute Error Testing</th>
+                        )}
                         <th>Negative Root Mean Squared Error</th>
+                        {data.result.performance_testing && (
+                          <th>Negative Root Mean Squared Error Testing</th>
+                        )}
                         <th>R2</th>
+                        {data.result.performance_testing && <th>R2 Testing</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -437,10 +666,29 @@ const SupervisedLearningContent = ({
                         <td>
                           {data.result.performance.neg_median_absolute_error}
                         </td>
+                        {data.result.performance_testing && (
+                          <td>
+                            {
+                              data.result.performance_testing
+                                .neg_median_absolute_error
+                            }
+                          </td>
+                        )}
                         <td>
                           {data.result.performance.neg_root_mean_squared_error}
                         </td>
+                        {data.result.performance_testing && (
+                          <td>
+                            {
+                              data.result.performance_testing
+                                .neg_root_mean_squared_error
+                            }
+                          </td>
+                        )}
                         <td>{data.result.performance.r2}</td>
+                        {data.result.performance_testing && (
+                          <td>{data.result.performance_testing.r2}</td>
+                        )}
                       </tr>
                     </tbody>
                   </table>
@@ -451,7 +699,12 @@ const SupervisedLearningContent = ({
                   Scatter
                 </Typography>
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid
+                item
+                lg={data.result.scatter_testing ? 6 : 12}
+                md={data.result.scatter_testing ? 6 : 12}
+                xs={12}
+              >
                 <Paper
                   sx={{
                     p: 2,
@@ -466,18 +719,48 @@ const SupervisedLearningContent = ({
                       height: 430,
                       xaxis: { title: "Real Values" },
                       yaxis: { title: "Predicted Values" },
+                      title: "Scatter Plot",
                     }}
                     useResizeHandler
                     className="w-full h-full"
                   />
                 </Paper>
               </Grid>
+              {data.result.scatter_testing && (
+                <Grid item lg={6} md={6} xs={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataScatterTesting}
+                      layout={{
+                        autosize: true,
+                        height: 430,
+                        xaxis: { title: "Real Values" },
+                        yaxis: { title: "Predicted Values" },
+                        title: "Scatter Plot Testing",
+                      }}
+                      useResizeHandler
+                      className="w-full h-full"
+                    />
+                  </Paper>
+                </Grid>
+              )}
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Error Plot
                 </Typography>
               </Grid>
-              <Grid item lg={12} md={12} xs={12}>
+              <Grid
+                item
+                lg={data.result.error_values_testing ? 6 : 12}
+                md={data.result.error_values_testing ? 6 : 12}
+                xs={12}
+              >
                 <Paper
                   sx={{
                     p: 2,
@@ -490,12 +773,35 @@ const SupervisedLearningContent = ({
                     layout={{
                       autosize: true,
                       height: 430,
+                      title: "Box Plot",
                     }}
                     useResizeHandler
                     className="w-full h-full"
                   />
                 </Paper>
               </Grid>
+              {data.result.error_values_testing && (
+                <Grid item lg={6} md={6} xs={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataBoxPlotTesting}
+                      layout={{
+                        autosize: true,
+                        height: 430,
+                        title: "Box Plot Testing",
+                      }}
+                      useResizeHandler
+                      className="w-full h-full"
+                    />
+                  </Paper>
+                </Grid>
+              )}
             </>
           )}
         </Grid>
