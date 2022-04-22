@@ -151,46 +151,43 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
             </RadioGroup>
           </FormControl>
         </Grid>
-        {fileType === "text" && (
-          <Grid item xs={12}>
-            <TextField
-              label="Enter Amino Acid sequences"
-              multiline
-              rows={11}
-              sx={{ width: "100%" }}
-              onChange={handleChangeTextInput}
+        <Grid item xs={12}>
+          <TextField
+            label="Enter Amino Acid sequences"
+            multiline
+            rows={11}
+            sx={{ width: "100%" }}
+            onChange={handleChangeTextInput}
+            disabled={fileType === "text"}
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ marginTop: 1 }}>
+        <Grid item lg={3} md={4} xs={12}>
+          <label htmlFor="contained-button-file" style={{ width: "100%" }}>
+            <Input
+              id="contained-button-file"
+              type="file"
+              onChange={handleChangeFileInput}
             />
-          </Grid>
-        )}
-        {fileType === "file" && (
-          <Grid item xs={12}>
-            <label htmlFor="contained-button-file">
-              <Input
-                id="contained-button-file"
-                type="file"
-                onChange={handleChangeFileInput}
-              />
-              <Button
-                variant="outlined"
-                component="span"
-                endIcon={<CloudUploadIcon />}
-                color={
-                  fileInput
-                    ? fileInput.name
-                      ? "success"
-                      : "primary"
-                    : "primary"
-                }
-              >
-                {fileInput
+            <Button
+              variant="outlined"
+              component="span"
+              endIcon={<CloudUploadIcon />}
+              color={
+                fileInput ? (fileInput.name ? "success" : "primary") : "primary"
+              }
+              disabled={fileType === "text"}
+              sx={{ width: "100%" }}
+            >
+              {fileInput
+                ? fileInput.name
                   ? fileInput.name
-                    ? fileInput.name
-                    : "Upload Fasta"
-                  : "Upload Fasta"}
-              </Button>
-            </label>
-          </Grid>
-        )}
+                  : "Upload Fasta"
+                : "Upload Fasta"}
+            </Button>
+          </label>
+        </Grid>
         <Grid item xs={12}>
           <FormGroup>
             <FormControlLabel
@@ -227,7 +224,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
             ></FormControlLabel>
           </FormGroup>
         </Grid>
-        <Grid item xs={12} sx={{ marginTop: 2 }}>
+        <Grid item xs={12} sx={{ marginTop: 3 }}>
           <Grid container spacing={2}>
             <Grid item lg={3} md={4} xs={12}>
               {loading ? (

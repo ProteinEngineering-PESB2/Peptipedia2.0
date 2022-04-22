@@ -102,8 +102,8 @@ const Form = ({ setData, setSelectedTaskType }) => {
     <>
       <form onSubmit={onSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sx={{ marginBottom: 2 }}>
-            <label htmlFor="contained-button-file">
+          <Grid item lg={6} md={6} xs={12} sx={{ marginBottom: 2 }}>
+            <label htmlFor="contained-button-file" style={{ width: "100%" }}>
               <Input
                 id="contained-button-file"
                 type="file"
@@ -120,15 +120,18 @@ const Form = ({ setData, setSelectedTaskType }) => {
                       : "primary"
                     : "primary"
                 }
+                sx={{ width: '100%' }}
               >
                 {fileInput
                   ? fileInput.name
                     ? fileInput.name
-                    : "Upload CSV/Excel"
-                  : "Upload CSV/Excel"}
+                    : "Upload CSV"
+                  : "Upload CSV"}
               </Button>
             </label>
           </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ marginTop: 1 }}>
           <Grid item lg={6} md={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="encoding-type-label">Encoding Type</InputLabel>
@@ -240,9 +243,9 @@ const Form = ({ setData, setSelectedTaskType }) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={12} xs={12} sx={{ marginTop: 2 }}>
+          <Grid item lg={12} xs={12} sx={{ marginTop: 3 }}>
             <Grid container spacing={2}>
-              <Grid item lg={5} md={5.5} xs={12}>
+              <Grid item lg={6} md={6} xs={12}>
                 {loading ? (
                   <LoadingButton
                     loading
@@ -263,9 +266,9 @@ const Form = ({ setData, setSelectedTaskType }) => {
                       ":hover": { backgroundColor: "#2962ff" },
                     }}
                     size="medium"
-                    disabled={fileInput === null && true}
+                    disabled={(fileInput === null || fileInput === undefined) && true}
                   >
-                    Run Encodings
+                    Run Training
                   </Button>
                 )}
               </Grid>

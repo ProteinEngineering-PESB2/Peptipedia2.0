@@ -154,7 +154,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
           </label>
         </Grid>
       </Grid>
-      <Grid item lg={3} md={4} xs={12} sx={{ marginTop: 4 }}>
+      <Grid item lg={3} md={4} xs={12} sx={{ marginTop: 4.2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {loading ? (
