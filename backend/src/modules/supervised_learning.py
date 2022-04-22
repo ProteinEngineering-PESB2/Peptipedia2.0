@@ -23,7 +23,7 @@ class supervised_algorithms(config_tool):
         self.task = self.options["task"]
         self.algorithm = self.options["algorithm"]
         self.validation = self.options["validation"]
-        self.test_size = 0.2
+        self.test_size = self.options["test_size"]
         self.data = pd.read_csv(self.temp_file_path)
         self.target = self.data.target
         self.data.drop("target", inplace=True, axis = 1)
@@ -32,40 +32,41 @@ class supervised_algorithms(config_tool):
         self.process_encoding_stage()
         ids = self.dataset_encoded.id
         self.dataset_encoded.drop(["id"], axis = 1, inplace=True)
-        run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation)
+        run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation, self.test_size)
         response_training = run_instance.training_model()
-        response_testing = run_instance.testing_model()
-        if self.task == "regression":
-            temp = response_testing["performance"]
-            response_testing["performance_testing"] = temp
-            del response_testing["performance"]
+        if self.test_size != 0:
+            response_testing = run_instance.testing_model()
+            if self.task == "regression":
+                temp = response_testing["performance"]
+                response_testing["performance_testing"] = temp
+                del response_testing["performance"]
 
-            temp = response_testing["corr"]
-            response_testing["corr_testing"] = temp
-            del response_testing["corr"]
-            
-            temp = response_testing["scatter"]
-            response_testing["scatter_testing"] = temp
-            del response_testing["scatter"]
+                temp = response_testing["corr"]
+                response_testing["corr_testing"] = temp
+                del response_testing["corr"]
+                
+                temp = response_testing["scatter"]
+                response_testing["scatter_testing"] = temp
+                del response_testing["scatter"]
 
-            temp = response_testing["error_values"]
-            response_testing["error_values_testing"] = temp
-            del response_testing["error_values"]
+                temp = response_testing["error_values"]
+                response_testing["error_values_testing"] = temp
+                del response_testing["error_values"]
 
-        elif self.task == "classification":
-            temp = response_testing["performance"]
-            response_testing["performance_testing"] = temp
-            del response_testing["performance"]
+            elif self.task == "classification":
+                temp = response_testing["performance"]
+                response_testing["performance_testing"] = temp
+                del response_testing["performance"]
 
-            temp = response_testing["confusion_matrix"]
-            response_testing["confusion_matrix_testing"] = temp
-            del response_testing["confusion_matrix"]
+                temp = response_testing["confusion_matrix"]
+                response_testing["confusion_matrix_testing"] = temp
+                del response_testing["confusion_matrix"]
 
-            temp = response_testing["analysis"]
-            response_testing["analysis_testing"] = temp
-            del response_testing["analysis"]
+                temp = response_testing["analysis"]
+                response_testing["analysis_testing"] = temp
+                del response_testing["analysis"]
 
-        response_training.update(response_testing)
+            response_training.update(response_testing)
         self.model = run_instance.get_model()
         self.dump_joblib()
         return response_training

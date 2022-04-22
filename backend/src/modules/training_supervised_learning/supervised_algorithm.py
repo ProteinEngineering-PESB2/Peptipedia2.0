@@ -1,17 +1,22 @@
 from modules.training_supervised_learning import response_training
 from sklearn.model_selection import train_test_split
 class model_algorithm:
-    def __init__(self, dataset, target, task, algorithm, validation, model):
+    def __init__(self, dataset, target, task, algorithm, validation, model, test_size):
         self.dataset=dataset
         self.target=target
         self.algorithm=algorithm
         self.validation=validation
         self.model = model
         self.task = task
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.dataset, self.target, test_size=0.2)
-        self.training_performances = response_training.response_training_model(self.X_train, self.y_train, self.model, self.validation)
-        self.testing_performances = response_training.response_training_model(self.X_test, self.y_test, self.model, self.validation)
-
+        self.test_size = test_size
+        if self.test_size != 0:
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.dataset, self.target, test_size=self.test_size)
+            self.training_performances = response_training.response_training_model(self.X_train, self.y_train, self.model, self.validation)
+            self.testing_performances = response_training.response_training_model(self.X_test, self.y_test, self.model, self.validation)
+        if self.test_size == 0:
+            self.X_train = self.dataset
+            self.y_train = self.target
+            self.training_performances = response_training.response_training_model(self.X_train, self.y_train, self.model, self.validation)
     def trainingMethod(self):
         self.model = self.model.fit(self.X_train, self.y_train)
         tp = self.training_performances

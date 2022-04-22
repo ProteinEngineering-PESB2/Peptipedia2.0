@@ -9,16 +9,16 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from modules.training_supervised_learning import supervised_algorithm
 
 class run_algorithm:
-    def __init__(self, dataset, response, task, algorithm, validation):
+    def __init__(self, dataset, response, task, algorithm, validation, test_size):
         self.dataset = dataset
         self.response = response
         self.task = task
         self.algorithm = algorithm
         self.validation = validation
+        self.test_size = test_size
         self.model = None
         
     def __instance_classification_model(self):
-
         if self.algorithm == "adaboost": #Adaboost
             self.model = AdaBoostClassifier()
 
@@ -50,7 +50,6 @@ class run_algorithm:
             self.model = KNeighborsClassifier()
 
     def __instance_regression_model(self):
-
         if self.algorithm == "adaboost": #Adaboost
             self.model = AdaBoostRegressor()
 
@@ -76,16 +75,13 @@ class run_algorithm:
             self.model = KNeighborsRegressor()
 
     def training_model(self):
-
         #start model
         if self.task == "classification": #class
             self.__instance_classification_model()
         elif self.task == "regression":
             self.__instance_regression_model()
-        else:
-            pass
         #instance training object
-        self.training_object = supervised_algorithm.model_algorithm(self.dataset, self.response, self.task, self.algorithm, self.validation, self.model)
+        self.training_object = supervised_algorithm.model_algorithm(self.dataset, self.response, self.task, self.algorithm, self.validation, self.model, self.test_size)
         return self.training_object.trainingMethod()
 
     def testing_model(self):
