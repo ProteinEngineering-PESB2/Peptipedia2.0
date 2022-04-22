@@ -18,7 +18,6 @@ class response_training_model:
         self.dataset = dataset
         self.target = target
         self.model = model
-        print(self.model)
         self.validation = validation
 
     def estimate_performance(self, metrics_list):
@@ -72,9 +71,6 @@ class response_training_model:
         error_test = np.concatenate((test_scores_mean + test_scores_std, test_error_down[::-1]))
         error_sizes = np.concatenate((train_sizes, train_sizes[::-1]))
 
-
-
-
         response = {
             "learning_curve": {
                 "training": { "x": train_sizes.tolist(), "y": train_scores_mean.round(3).tolist()},
@@ -85,7 +81,6 @@ class response_training_model:
             }
         for j in response["learning_curve"].keys():
             mask = np.isfinite(response["learning_curve"][j]["y"])
-            print(response["learning_curve"][j]["y"], mask)
             response["learning_curve"][j]["x"] = np.array(response["learning_curve"][j]["x"])[mask].tolist()
             response["learning_curve"][j]["y"] = np.array(response["learning_curve"][j]["y"])[mask].tolist()
         return response

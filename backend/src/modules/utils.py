@@ -84,10 +84,11 @@ class verify_csv:
                     if self.unique_ids():
                         if self.less_than_n():
                             if self.more_than_n():
-                                if self.is_protein():
+                                res_is_protein = self.is_protein()
+                                if res_is_protein[0]:
                                     return {"status": "success"}
                                 else:
-                                    return {"status": "error", "description": "Not proteins"}
+                                    return {"status": "error", "description": "Not proteins (id={})".format(res_is_protein[1])}
                             else:
                                 return {"status": "error", "description": "Too few sequences"}
                         else:
@@ -133,11 +134,12 @@ class verify_csv:
                     'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y',
                     'X', 'B', 'Z','J',
                     'x', 'b', 'z' 'j', '*']
-        for sequence in self.data.sequence:
+        for index, row in self.data.iterrows():
+            sequence = row.sequence
             for letter in sequence:
                 if letter not in alphabet:
-                    return False
-        return True
+                    return False, row.id
+        return True, None
 
     def null_values(self):
         data = self.data
@@ -164,10 +166,11 @@ class verify_fasta:
             if self.unique_ids():
                 if self.less_than_n():
                     if self.more_than_n():
-                        if self.is_protein():
+                        res_is_protein = self.is_protein()
+                        if res_is_protein[0]:
                             return {"status": "success"}
                         else:
-                            return {"status": "error", "description": "Not proteins"}
+                            return {"status": "error", "description": "Not proteins (id={})".format(res_is_protein[1])}
                     else:
                         return {"status": "error", "description": "Too few sequences"}
                 else:
@@ -207,8 +210,8 @@ class verify_fasta:
         for record in self.fasta:
             for letter in str(record.seq):
                 if letter not in alphabet:
-                    return False
-        return True
+                    return False, record.id
+        return True, None
 
 class interface:
     def parse_information_no_options(self, request):

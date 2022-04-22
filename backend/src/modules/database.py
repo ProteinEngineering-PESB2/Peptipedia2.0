@@ -17,15 +17,21 @@ class database:
 
     def count_peptides(self, query):
         count_query = "select COUNT(*) from {} as query".format(query)
-        count = pd.read_sql(text(count_query), self.conn)
+        try:
+            count = pd.read_sql(text(count_query), self.conn)
+        except:
+            return {"status": "error", "description": "Query invalid"}
         count = int(count.iloc[0].values[0])
-        return count
+        return {"status": "success", "count": count}
 
     def select_peptides(self, query, limit, offset):
         limited_query = query + " order by idpeptide limit {} offset {} ".format(limit, offset)
-        data = pd.read_sql(text(limited_query), self.conn)
+        try:
+            data = pd.read_sql(text(limited_query), self.conn)
+        except:
+            return {"status": "error", "description": "Query invalid"}
         data = data.round(4)
-        return {"data": data.values.tolist(), "columns": data.columns.tolist()}
+        return {"status": "success", "data": data.values.tolist(), "columns": data.columns.tolist()}
 
     def get_all_databases(self):
         data = pd.read_sql("select iddb, name from db", self.conn)

@@ -1,4 +1,3 @@
-#sklearn modules
 from sklearn.ensemble import AdaBoostClassifier, AdaBoostRegressor
 from sklearn.ensemble import BaggingClassifier, BaggingRegressor
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
@@ -7,11 +6,9 @@ from sklearn.naive_bayes import BernoulliNB, GaussianNB
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.svm import NuSVC, NuSVR, SVC, SVR
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-
 from modules.training_supervised_learning import supervised_algorithm
 
 class run_algorithm:
-
     def __init__(self, dataset, response, task, algorithm, validation):
         self.dataset = dataset
         self.response = response
@@ -19,7 +16,7 @@ class run_algorithm:
         self.algorithm = algorithm
         self.validation = validation
         self.model = None
-
+        
     def __instance_classification_model(self):
 
         if self.algorithm == "adaboost": #Adaboost
@@ -60,7 +57,7 @@ class run_algorithm:
         elif self.algorithm == "bagging":#Bagging
             self.model = BaggingRegressor()
 
-        elif self.algorithm == "decision_tree":#Decision tree
+        elif self.algorithm == "descision_tree":#Decision tree
             self.model = DecisionTreeRegressor()
 
         elif self.algorithm == "gradient_boosting": #GradientBoostingRegressor
@@ -88,8 +85,11 @@ class run_algorithm:
         else:
             pass
         #instance training object
-        training_object = supervised_algorithm.model_algorithm(self.dataset, self.response, self.task, self.algorithm, self.validation, self.model)
-        return training_object.trainingMethod()
-    
+        self.training_object = supervised_algorithm.model_algorithm(self.dataset, self.response, self.task, self.algorithm, self.validation, self.model)
+        return self.training_object.trainingMethod()
+
+    def testing_model(self):
+        return self.training_object.testingMethod()
+
     def get_model(self):
         return self.model
