@@ -164,6 +164,7 @@ const BlastContent = ({
                   variant="contained"
                   color="primary"
                   size="medium"
+                  sx={{ width: "100%" }}
                 >
                   Loading{" "}
                 </LoadingButton>
@@ -173,7 +174,7 @@ const BlastContent = ({
                   sx={{
                     backgroundColor: "#2962ff",
                     ":hover": { backgroundColor: "#2962ff" },
-                    width: '100%'
+                    width: "100%",
                   }}
                   onClick={downloadBlast}
                 >

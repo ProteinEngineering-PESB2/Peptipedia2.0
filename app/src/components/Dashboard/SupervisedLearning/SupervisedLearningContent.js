@@ -180,7 +180,7 @@ const SupervisedLearningContent = ({
         <Grid container spacing={3}>
           {selectedTaskType === "classification" && (
             <>
-              <Grid item lg={2.5} md={3} xs={12}>
+              <Grid item lg={2.5} md={2.8} xs={12}>
                 {loadingButton ? (
                   <LoadingButton
                     loading
@@ -352,12 +352,7 @@ const SupervisedLearningContent = ({
           )}
           {selectedTaskType === "regression" && (
             <>
-              <Grid item lg={12} xs={12}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Download Model
-                </Typography>
-              </Grid>
-              <Grid item lg={12} xs={12}>
+              <Grid item lg={2.5} md={3} xs={12}>
                 {loadingButton ? (
                   <LoadingButton
                     loading
@@ -373,10 +368,11 @@ const SupervisedLearningContent = ({
                     sx={{
                       backgroundColor: "#2962ff",
                       ":hover": { backgroundColor: "#2962ff" },
+                      width: '100%'
                     }}
                     onClick={downloadModel}
                   >
-                    Download
+                    Download Model
                   </Button>
                 )}
               </Grid>
