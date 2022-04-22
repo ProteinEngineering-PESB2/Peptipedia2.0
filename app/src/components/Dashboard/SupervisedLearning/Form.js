@@ -19,7 +19,13 @@ const Input = styled("input")({
   display: "none",
 });
 
-const Form = ({ setData, setSelectedTaskType }) => {
+const Form = ({
+  setData,
+  setSelectedTaskType,
+  setOpenSnackbar,
+  setMessage,
+  setSeverity,
+}) => {
   const [fileInput, setFileInput] = useState(null);
   const [encodingTypeValue, setEncodingTypeValue] =
     useState("one_hot_encoding");
@@ -89,13 +95,23 @@ const Form = ({ setData, setSelectedTaskType }) => {
 
     try {
       const res = await supervisedLearning(post);
-      setSelectedTaskType(taskType);
-      setData(res);
-    } catch (error) {
-      console.log(error);
-    }
 
-    setLoading(false);
+      if (res.status === "error") {
+        setSeverity("error");
+        setMessage(res.description);
+        setOpenSnackbar(true);
+        setLoading(false);
+      } else {
+        setSelectedTaskType(taskType);
+        setData(res);
+        setLoading(false);
+      }
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -120,7 +136,7 @@ const Form = ({ setData, setSelectedTaskType }) => {
                       : "primary"
                     : "primary"
                 }
-                sx={{ width: '100%' }}
+                sx={{ width: "100%" }}
               >
                 {fileInput
                   ? fileInput.name
@@ -266,7 +282,9 @@ const Form = ({ setData, setSelectedTaskType }) => {
                       ":hover": { backgroundColor: "#2962ff" },
                     }}
                     size="medium"
-                    disabled={(fileInput === null || fileInput === undefined) && true}
+                    disabled={
+                      (fileInput === null || fileInput === undefined) && true
+                    }
                   >
                     Run Training
                   </Button>

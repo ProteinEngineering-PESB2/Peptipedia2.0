@@ -10,7 +10,13 @@ import { useEffect, useState, useCallback } from "react";
 
 import CircularLoading from "../CircularLoading";
 
-const SupervisedLearningContent = ({ data, selectedTaskType }) => {
+const SupervisedLearningContent = ({
+  data,
+  selectedTaskType,
+  setOpenSnackbar,
+  setMessage,
+  setSeverity,
+}) => {
   const [dataHeatmap, setDataHeatmap] = useState([]);
   const [dataBar, setDataBar] = useState([]);
   const [dataErrorBars, setDataErrorBars] = useState([]);
@@ -139,7 +145,9 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
 
       setLoadingButton(false);
     } catch (error) {
-      console.log(error);
+      setSeverity("error");
+      setMessage("Service not available");
+      setOpenSnackbar(true);
       setLoadingButton(false);
     }
   };
@@ -214,17 +222,43 @@ const SupervisedLearningContent = ({ data, selectedTaskType }) => {
                     <thead>
                       <tr>
                         <th>Accuracy</th>
-                        <th>F1 Weighted</th>
-                        <th>Recall Weighted</th>
-                        <th>Precision Weighted</th>
+                        {data.result.performance.f1 && <th>F1</th>}
+                        {data.result.performance.f1_weighted && (
+                          <th>F1 Weighted</th>
+                        )}
+                        {data.result.performance.recall && <th>Recall</th>}
+                        {data.result.performance.recall_weighted && (
+                          <th>Recall Weighted</th>
+                        )}
+                        {data.result.performance.precision && (
+                          <th>Precision</th>
+                        )}
+                        {data.result.performance.precision_weighted && (
+                          <th>Precision Weighted</th>
+                        )}
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="table-active">
                         <td>{data.result.performance.accuracy}</td>
-                        <td>{data.result.performance.f1_weighted}</td>
-                        <td>{data.result.performance.recall_weighted}</td>
-                        <td>{data.result.performance.precision_weighted}</td>
+                        {data.result.performance.f1 && (
+                          <td>{data.result.performance.f1}</td>
+                        )}
+                        {data.result.performance.f1_weighted && (
+                          <td>{data.result.performance.f1_weighted}</td>
+                        )}
+                        {data.result.performance.recall && (
+                          <td>{data.result.performance.recall}</td>
+                        )}
+                        {data.result.performance.recall_weighted && (
+                          <td>{data.result.performance.recall_weighted}</td>
+                        )}
+                        {data.result.performance.precision && (
+                          <td>{data.result.performance.precision}</td>
+                        )}
+                        {data.result.performance.precision_weighted && (
+                          <td>{data.result.performance.precision_weighted}</td>
+                        )}
                       </tr>
                     </tbody>
                   </table>
