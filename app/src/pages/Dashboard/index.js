@@ -25,7 +25,7 @@ const TestDashboard = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [section, setSection] = useState("home");
-  const drawerWidth = 280;
+  const drawerWidth = 255;
 
   return (
     <>
