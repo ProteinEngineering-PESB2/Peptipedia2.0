@@ -28,7 +28,7 @@ const AdvancedSearch = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Advanced Search</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>Advanced Search</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <AdvancedSearchForm

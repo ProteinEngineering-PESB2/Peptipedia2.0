@@ -28,7 +28,7 @@ const Blast = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Blast Alignment</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>Alignment Sequence</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <BlastForm

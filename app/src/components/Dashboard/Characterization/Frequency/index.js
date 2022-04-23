@@ -27,7 +27,9 @@ const Frequency = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Frequency Analysis</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>
+            Frequency Evaluation
+          </Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <FrequencyForm

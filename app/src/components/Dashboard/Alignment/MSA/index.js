@@ -27,7 +27,7 @@ const MSA = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">MSA Alignment</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>Multi Sequence Alignment</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <MSAForm

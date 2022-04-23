@@ -1,5 +1,5 @@
-import { useState } from "react"; 
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -26,7 +26,9 @@ const GeneOntology = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Gene Ontology Characterization</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>
+            Gene Ontology Prediction
+          </Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <GeneOntologyForm

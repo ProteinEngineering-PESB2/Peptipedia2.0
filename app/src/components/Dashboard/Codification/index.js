@@ -23,7 +23,7 @@ const Codification = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Encodings</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>Encoding Sequences</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <CodificationForm

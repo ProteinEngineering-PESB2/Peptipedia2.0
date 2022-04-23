@@ -26,7 +26,7 @@ const Pfam = () => {
           />
         )}
         <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4">Pfam Characterization</Typography>
+          <Typography variant="h4" style={{ fontWeight: "bold" }}>Pfam Prediction</Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
           <PfamForm

@@ -28,7 +28,7 @@ const SupervisedLearning = () => {
         )}
         <Grid item lg={12} md={12} xs={12}>
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            Supervised Learning
+            Training Predictive Models
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
