@@ -20,12 +20,9 @@ const SupervisedLearningContent = ({
   const [dataHeatmap, setDataHeatmap] = useState([]);
   const [dataHeatmapTesting, setDataHeatmapTesting] = useState([]);
   const [dataBar, setDataBar] = useState([]);
-  const [dataBarTesting, setBarTesting] = useState([]);
   const [dataErrorBars, setDataErrorBars] = useState([]);
   const [dataScatter, setDataScatter] = useState([]);
-  const [dataScatterTesting, setDataScatterTesting] = useState([]);
   const [dataBoxPlot, setDataBoxPlot] = useState([]);
-  const [dataBoxPlotTesting, setDataBoxPlotTesting] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
 
@@ -108,14 +105,14 @@ const SupervisedLearningContent = ({
   }, [data]);
 
   const parseDataSensibility = useCallback(() => {
-    const traceSensibility = {
+    let traceSensibility = {
       x: data.result.analysis.categories,
       y: data.result.analysis.sensibility,
       name: "Sensibility",
       type: "bar",
     };
 
-    const traceSensivity = {
+    let traceSensivity = {
       x: data.result.analysis.categories,
       y: data.result.analysis.sensitivity,
       name: "Sensitivity",
@@ -126,29 +123,35 @@ const SupervisedLearningContent = ({
       const traceSensibilityTesting = {
         x: data.result.analysis_testing.categories,
         y: data.result.analysis_testing.sensibility,
-        name: "Sensibility",
+        name: "Sensibility Testing",
         type: "bar",
       };
 
       const traceSensivityTesting = {
         x: data.result.analysis_testing.categories,
         y: data.result.analysis_testing.sensitivity,
-        name: "Sensitivity",
+        name: "Sensitivity Testing",
         type: "bar",
       };
 
-      setBarTesting([traceSensibilityTesting, traceSensivityTesting]);
+      setDataBar([
+        traceSensibility,
+        traceSensibilityTesting,
+        traceSensivity,
+        traceSensivityTesting,
+      ]);
+    } else {
+      setDataBar([traceSensibility, traceSensivity]);
     }
-
-    setDataBar([traceSensibility, traceSensivity]);
   }, [data]);
 
   const parseDataScatter = useCallback(() => {
-    const traceX = {
+    let traceX = {
       x: data.result.scatter.x,
       y: data.result.scatter.y,
       mode: "markers",
       type: "scatter",
+      name: "Training",
     };
 
     if (data.result.scatter_testing) {
@@ -157,36 +160,35 @@ const SupervisedLearningContent = ({
         y: data.result.scatter_testing.y,
         mode: "markers",
         type: "scatter",
+        name: "Testing",
       };
 
-      setDataScatterTesting([traceXTesting]);
+      setDataScatter([traceX, traceXTesting]);
+    } else {
+      setDataScatter([traceX]);
     }
-
-    setDataScatter([traceX]);
   }, [data]);
 
   const parseDataBoxPlot = useCallback(() => {
-    const array = [
-      {
-        y: data.result.error_values,
-        type: "box",
-        boxpoints: "all",
-      },
-    ];
+    let array = {
+      y: data.result.error_values,
+      type: "box",
+      boxpoints: "all",
+      name: "Training",
+    };
 
     if (data.result.error_values_testing) {
-      const array_testing = [
-        {
-          y: data.result.error_values_testing,
-          type: "box",
-          boxpoints: "all",
-        },
-      ];
+      const array_testing = {
+        y: data.result.error_values_testing,
+        type: "box",
+        boxpoints: "all",
+        name: "Testing",
+      };
 
-      setDataBoxPlotTesting(array_testing);
+      setDataBoxPlot([array, array_testing]);
+    } else {
+      setDataBoxPlot([array]);
     }
-
-    setDataBoxPlot(array);
   }, [data]);
 
   const downloadModel = async () => {
@@ -268,18 +270,19 @@ const SupervisedLearningContent = ({
                   Performance
                 </Typography>
               </Grid>
-              <Grid item lg={6} md={8} xs={12}>
-                <div className="table-responsive">
-                  <table
-                    className="table table-light table-hover text-center"
-                    style={{ width: "100%" }}
-                  >
+              <Grid item lg={6}>
+                <div
+                  className="table-responsive"
+                  style={{ fontWeight: "bold" }}
+                >
+                  <table className="table table-hover text-center table-striped">
                     <thead>
                       <tr>
+                        <th>Set</th>
                         <th>Accuracy</th>
                         {data.result.performance.f1 && <th>F1</th>}
                         {data.result.performance.f1_weighted && (
-                          <th>F1 Weighted</th>
+                          <td>F1 Weighted</td>
                         )}
                         {data.result.performance.recall && <th>Recall</th>}
                         {data.result.performance.recall_weighted && (
@@ -294,109 +297,70 @@ const SupervisedLearningContent = ({
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="table-active">
-                        <td>{data.result.performance.accuracy}</td>
-                        {data.result.performance.f1 && (
-                          <td>{data.result.performance.f1}</td>
-                        )}
-                        {data.result.performance.f1_weighted && (
-                          <td>{data.result.performance.f1_weighted}</td>
-                        )}
-                        {data.result.performance.recall && (
-                          <td>{data.result.performance.recall}</td>
-                        )}
-                        {data.result.performance.recall_weighted && (
-                          <td>{data.result.performance.recall_weighted}</td>
-                        )}
-                        {data.result.performance.precision && (
-                          <td>{data.result.performance.precision}</td>
-                        )}
-                        {data.result.performance.precision_weighted && (
-                          <td>{data.result.performance.precision_weighted}</td>
-                        )}
-                      </tr>
+                      {data.result.performance && (
+                        <tr className="table-active">
+                          <td>Training</td>
+                          <td>{data.result.performance.accuracy}</td>
+                          {data.result.performance.f1 && (
+                            <td>{data.result.performance.f1}</td>
+                          )}
+                          {data.result.performance.f1_weighted && (
+                            <td>{data.result.performance.f1_weighted}</td>
+                          )}
+                          {data.result.performance.recall && (
+                            <td>{data.result.performance.recall}</td>
+                          )}
+                          {data.result.performance.recall_weighted && (
+                            <td>{data.result.performance.recall_weighted}</td>
+                          )}
+                          {data.result.performance.precision && (
+                            <td>{data.result.performance.precision}</td>
+                          )}
+                          {data.result.performance.precision_weighted && (
+                            <td>
+                              {data.result.performance.precision_weighted}
+                            </td>
+                          )}
+                        </tr>
+                      )}
+                      {data.result.performance_testing && (
+                        <tr className="table-active">
+                          <td>Testing</td>
+                          <td>{data.result.performance_testing.accuracy}</td>
+                          {data.result.performance_testing.f1 && (
+                            <td>{data.result.performance_testing.f1}</td>
+                          )}
+                          {data.result.performance_testing.f1_weighted && (
+                            <td>
+                              {data.result.performance_testing.f1_weighted}
+                            </td>
+                          )}
+                          {data.result.performance_testing.recall && (
+                            <td>{data.result.performance_testing.recall}</td>
+                          )}
+                          {data.result.performance_testing.recall_weighted && (
+                            <td>
+                              {data.result.performance_testing.recall_weighted}
+                            </td>
+                          )}
+                          {data.result.performance_testing.precision && (
+                            <td>{data.result.performance_testing.precision}</td>
+                          )}
+                          {data.result.performance_testing
+                            .precision_weighted && (
+                            <td>
+                              {
+                                data.result.performance_testing
+                                  .precision_weighted
+                              }
+                            </td>
+                          )}
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
               </Grid>
-              {data.result.performance_testing && (
-                <>
-                  <Grid item lg={12} xs={12}>
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Performance Testing
-                    </Typography>
-                  </Grid>
-                  <Grid item lg={6} md={8} xs={12}>
-                    <div className="table-responsive">
-                      <table
-                        className="table table-light table-hover text-center"
-                        style={{ width: "100%" }}
-                      >
-                        <thead>
-                          <tr>
-                            <th>Accuracy</th>
-                            {data.result.performance_testing.f1 && <th>F1</th>}
-                            {data.result.performance_testing.f1_weighted && (
-                              <th>F1 Weighted</th>
-                            )}
-                            {data.result.performance_testing.recall && (
-                              <th>Recall</th>
-                            )}
-                            {data.result.performance_testing
-                              .recall_weighted && <th>Recall Weighted</th>}
-                            {data.result.performance_testing.precision && (
-                              <th>Precision</th>
-                            )}
-                            {data.result.performance_testing
-                              .precision_weighted && (
-                              <th>Precision Weighted</th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="table-active">
-                            <td>{data.result.performance_testing.accuracy}</td>
-                            {data.result.performance_testing.f1 && (
-                              <td>{data.result.performance_testing.f1}</td>
-                            )}
-                            {data.result.performance_testing.f1_weighted && (
-                              <td>
-                                {data.result.performance_testing.f1_weighted}
-                              </td>
-                            )}
-                            {data.result.performance_testing.recall && (
-                              <td>{data.result.performance_testing.recall}</td>
-                            )}
-                            {data.result.performance_testing
-                              .recall_weighted && (
-                              <td>
-                                {
-                                  data.result.performance_testing
-                                    .recall_weighted
-                                }
-                              </td>
-                            )}
-                            {data.result.performance_testing.precision && (
-                              <td>
-                                {data.result.performance_testing.precision}
-                              </td>
-                            )}
-                            {data.result.performance_testing
-                              .precision_weighted && (
-                              <td>
-                                {
-                                  data.result.performance_testing
-                                    .precision_weighted
-                                }
-                              </td>
-                            )}
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </Grid>
-                </>
-              )}
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Confusion Matrix
@@ -495,12 +459,7 @@ const SupervisedLearningContent = ({
                   Sensibility Analysis
                 </Typography>
               </Grid>
-              <Grid
-                item
-                lg={data.result.analysis_testing ? 6 : 12}
-                md={data.result.analysis_testing ? 6 : 12}
-                xs={12}
-              >
+              <Grid item log={12} md={12} xs={12}>
                 <Paper
                   sx={{
                     p: 2,
@@ -521,29 +480,6 @@ const SupervisedLearningContent = ({
                   />
                 </Paper>
               </Grid>
-              {data.result.analysis_testing && (
-                <Grid item lg={6} md={6} xs={12}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Plot
-                      data={dataBarTesting}
-                      layout={{
-                        autosize: true,
-                        height: 430,
-                        barmode: "group",
-                        title: "Sensibility Analysis Testing",
-                      }}
-                      useResizeHandler
-                      className="w-full h-full"
-                    />
-                  </Paper>
-                </Grid>
-              )}
             </>
           )}
           {selectedTaskType === "regression" && (
@@ -636,60 +572,59 @@ const SupervisedLearningContent = ({
                   Performance
                 </Typography>
               </Grid>
-              <Grid
-                item
-                lg={data.result.performance_testing ? 12 : 6}
-                md={data.result.performance_testing ? 12 : 6}
-                xs={12}
-              >
+              <Grid item lg={6} md={6} xs={12}>
                 <div className="table-responsive">
                   <table
                     className="table table-light table-hover text-center"
-                    style={{ width: "100%", fontWeight: "bold" }}
+                    style={{ fontWeight: "bold" }}
                   >
                     <thead>
                       <tr>
-                        <th>Negative Median Absolute Error</th>
-                        {data.result.performance_testing && (
-                          <th>Negative Median Absolute Error Testing</th>
+                        <th>Set</th>
+                        {data.result.performance.neg_median_absolute_error && (
+                          <th>Negative Median Absolute Error</th>
                         )}
-                        <th>Negative Root Mean Squared Error</th>
-                        {data.result.performance_testing && (
-                          <th>Negative Root Mean Squared Error Testing</th>
+                        {data.result.performance
+                          .neg_root_mean_squared_error && (
+                          <th>Negative Root Mean Squared Error</th>
                         )}
-                        <th>R2</th>
-                        {data.result.performance_testing && <th>R2 Testing</th>}
+                        {data.result.performance.r2 && <th>R2</th>}
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="table-active">
-                        <td>
-                          {data.result.performance.neg_median_absolute_error}
-                        </td>
-                        {data.result.performance_testing && (
+                      {data.result.performance && (
+                        <tr className="table-active">
+                          <td>Training</td>
+                          <td>
+                            {data.result.performance.neg_median_absolute_error}
+                          </td>
+                          <td>
+                            {
+                              data.result.performance
+                                .neg_root_mean_squared_error
+                            }
+                          </td>
+                          <td>{data.result.performance.r2}</td>
+                        </tr>
+                      )}
+                      {data.result.performance_testing && (
+                        <tr className="table-active">
+                          <td>Testing</td>
                           <td>
                             {
                               data.result.performance_testing
                                 .neg_median_absolute_error
                             }
                           </td>
-                        )}
-                        <td>
-                          {data.result.performance.neg_root_mean_squared_error}
-                        </td>
-                        {data.result.performance_testing && (
                           <td>
                             {
                               data.result.performance_testing
                                 .neg_root_mean_squared_error
                             }
                           </td>
-                        )}
-                        <td>{data.result.performance.r2}</td>
-                        {data.result.performance_testing && (
                           <td>{data.result.performance_testing.r2}</td>
-                        )}
-                      </tr>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -699,12 +634,7 @@ const SupervisedLearningContent = ({
                   Scatter
                 </Typography>
               </Grid>
-              <Grid
-                item
-                lg={data.result.scatter_testing ? 6 : 12}
-                md={data.result.scatter_testing ? 6 : 12}
-                xs={12}
-              >
+              <Grid item lg={12} md={12} xs={12}>
                 <Paper
                   sx={{
                     p: 2,
@@ -726,41 +656,12 @@ const SupervisedLearningContent = ({
                   />
                 </Paper>
               </Grid>
-              {data.result.scatter_testing && (
-                <Grid item lg={6} md={6} xs={12}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Plot
-                      data={dataScatterTesting}
-                      layout={{
-                        autosize: true,
-                        height: 430,
-                        xaxis: { title: "Real Values" },
-                        yaxis: { title: "Predicted Values" },
-                        title: "Scatter Plot Testing",
-                      }}
-                      useResizeHandler
-                      className="w-full h-full"
-                    />
-                  </Paper>
-                </Grid>
-              )}
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Error Plot
                 </Typography>
               </Grid>
-              <Grid
-                item
-                lg={data.result.error_values_testing ? 6 : 12}
-                md={data.result.error_values_testing ? 6 : 12}
-                xs={12}
-              >
+              <Grid item lg={12} md={12} xs={12}>
                 <Paper
                   sx={{
                     p: 2,
@@ -780,28 +681,6 @@ const SupervisedLearningContent = ({
                   />
                 </Paper>
               </Grid>
-              {data.result.error_values_testing && (
-                <Grid item lg={6} md={6} xs={12}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Plot
-                      data={dataBoxPlotTesting}
-                      layout={{
-                        autosize: true,
-                        height: 430,
-                        title: "Box Plot Testing",
-                      }}
-                      useResizeHandler
-                      className="w-full h-full"
-                    />
-                  </Paper>
-                </Grid>
-              )}
             </>
           )}
         </Grid>

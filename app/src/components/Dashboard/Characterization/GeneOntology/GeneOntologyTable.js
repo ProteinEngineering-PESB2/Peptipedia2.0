@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useStateIfMounted } from "use-state-if-mounted";
 
 import Autocomplete from "@mui/material/Autocomplete";
@@ -24,8 +24,7 @@ const GeneOntologyTable = ({ data }) => {
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useStateIfMounted(true);
 
-  useEffect(() => {
-    setLoading(true)
+  const parseData = useCallback(() => {
     let types = [];
     let sequences = [];
 
@@ -50,6 +49,10 @@ const GeneOntologyTable = ({ data }) => {
 
     setLoading(false);
   }, [data]);
+
+  useEffect(() => {
+    parseData();
+  }, [parseData]);
 
   const handleChangeValueTypesAutocomplete = (e) => {
     setValueTypesAutocomplete(e.target.value);
