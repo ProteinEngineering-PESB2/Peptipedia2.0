@@ -154,7 +154,9 @@ class api:
         if(check["status"] == "error"):
             return check
         result = sl.run()
+        print(result)
         job_path = sl.job_path
+        print(job_path)
         return {"result": result, "job_path": job_path}
 
     @server.route('/api/use_model/', methods=["POST"])
@@ -227,6 +229,39 @@ class api:
     def api_min_max_parameters():
         result = db.get_min_max_parameters()
         return {"result": result}
+
+
+    ###Profile
+    @server.route('/api/get_go_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_go_from_peptide(idpeptide):
+        result = db.get_go_from_peptide(idpeptide)
+        return {"result": result}
+
+    @server.route('/api/get_pfam_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_pfam_from_peptide(idpeptide):
+        result = db.get_pfam_from_peptide(idpeptide)
+        return {"result": result}
+
+    @server.route('/api/get_tax_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_tax_from_peptide(idpeptide):
+        result = db.get_tax_from_peptide(idpeptide)
+        return {"result": result}
+
+    @server.route('/api/get_info_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_info_from_peptide(idpeptide):
+        result = db.get_info_from_peptide(idpeptide)
+        return {"result": result}
+
+    @server.route('/api/get_act_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_act_from_peptide(idpeptide):
+        result = db.get_act_from_peptide(idpeptide)
+        return {"result": result}
+
+    @server.route('/api/get_patent_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_patent_from_peptide(idpeptide):
+        result = db.get_patent_from_peptide(idpeptide)
+        return {"result": result}
+
 
     def get_server(self):
         return server

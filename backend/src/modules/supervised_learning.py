@@ -10,7 +10,7 @@ from joblib import dump, load
 from modules.database import database
 
 from modules.utils import config_tool
-
+from datetime import date
 
 class supervised_algorithms(config_tool):
     def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
@@ -92,8 +92,13 @@ class model:
     def __init__(self, db):
         self.db = db
 
-    def save_job(self, options):
-        self.db.save_job(options)
+    def save_job(self, post_data):
+        post_data["options"]["date"] = date.today()
+        df = pd.DataFrame([post_data["options"]])
+        json_obj = json.dumps(post_data["model_results"]) 
+        df["model_results"] = str(json_obj)
+        
+        self.db.save_job(df)
     
     def list_models(self):
         return self.db.get_all_models()
