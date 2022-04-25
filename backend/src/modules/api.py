@@ -207,6 +207,11 @@ class api:
         result = db.get_all_databases()
         return {"result": result}
 
+    @server.route('/api/activity_list/', methods=["GET"])
+    def api_activity_list():
+        result = db.get_all_activities()
+        return {"result": result}
+
     @server.route('/api/gene_ontology_list/<sub_string>', methods=["GET"])
     @server.route('/api/gene_ontology_list/', methods=["GET"])
     def api_go_list(sub_string = None):

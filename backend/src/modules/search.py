@@ -52,6 +52,13 @@ class search():
                         join peptide_has_db_has_index phdhi
                         on phdhi.idpeptide = p.idpeptide and phdhi.id_db = {}""".format(value)
 
+            if "Activity" in ff:
+                phrase = """select p.idpeptide, p.length,
+                        p.molecular_weight, p.charge_density,
+                        p.isoelectric_point, p.charge, p.sequence from peptide p
+                        join peptide_has_activity pha
+                        on pha.idpeptide = p.idpeptide and pha.idactivity = {}""".format(value)
+                        
             if "Sequence" in ff:
                 phrase = """select p.idpeptide, p.length,
                         p.molecular_weight, p.charge_density, 
@@ -90,7 +97,6 @@ class search():
 
     def verify_query(self):
         logic = self.query["query"]
-        print(logic)
         broken = [term.strip() for term in re.split('([\(\) ])', logic) if term != "" and term != " "]
         if len(broken) <= 3:
             return {"status": "error", "description": "Query invalid"}
@@ -105,7 +111,7 @@ class search():
                 broken[i] = ""
             elif (value in ["Molecular", "Weight", "Length", "Charge", "Density", "Isoelectric", "Point"]):
                 broken[i] = ""
-            elif (value in ["Gene", "Ontology", "Taxonomy", "Pfam", "Database","Sequence"]):
+            elif (value in ["Gene", "Ontology", "Taxonomy", "Pfam", "Database","Sequence", "Activity"]):
                 broken[i] = ""
             elif value == "<=" or value == "=":
                 broken[i] = ""

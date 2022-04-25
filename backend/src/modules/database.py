@@ -36,6 +36,11 @@ class database:
         data = pd.read_sql("select iddb, name from db", self.conn)
         data.rename(columns = {"iddb": "value", "name": "label"}, inplace=True)
         return json.loads(data.to_json(orient="records"))
+
+    def get_all_activities(self):
+        data = pd.read_sql("select idactivity, name from activity", self.conn)
+        data.rename(columns = {"idactivity": "value", "name": "label"}, inplace=True)
+        return json.loads(data.to_json(orient="records"))
         
     def get_all_gene_ontology(self, sub_string, limit):
         if sub_string == None:
