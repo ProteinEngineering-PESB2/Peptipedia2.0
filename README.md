@@ -19,7 +19,8 @@ Claudio
 
  - Mejorar home, incluir about us, tutoriales y submit sequences, contacto.
  - Generar gráficos y disponer de información relevante sobre la base de datos.
- 
+ - Uso de modelos y publicación de modelos
+ - Perfil de péptido
 David
 
  - Entrenar modelos con Deep Learning.
