@@ -114,15 +114,15 @@ class database:
 
 
     def get_go_from_peptide(self, idpeptide):
-        data = pd.read_sql("select phg.id_go, accession, term, description, source from peptide_has_go phg join gene_ontology go on go.id_go = phg.id_go and idpeptide = {}".format(idpeptide), con=self.conn)
+        data = pd.read_sql("select accession, term, description, source from peptide_has_go phg join gene_ontology go on go.id_go = phg.id_go and idpeptide = {}".format(idpeptide), con=self.conn)
         return json.loads(data.to_json(orient="records"))
 
     def get_pfam_from_peptide(self, idpeptide):
-        data = pd.read_sql("select pfam.id_pfam, accession, name, type from peptide_has_pfam php join pfam on php.id_pfam = pfam.id_pfam and idpeptide = {}".format(idpeptide), con=self.conn)
+        data = pd.read_sql("select accession, name, type from peptide_has_pfam php join pfam on php.id_pfam = pfam.id_pfam and idpeptide = {}".format(idpeptide), con=self.conn)
         return json.loads(data.to_json(orient="records"))
 
     def get_tax_from_peptide(self, idpeptide):
-        data = pd.read_sql("select tax.idtaxonomy, name, tax_type from peptide_has_taxonomy pht join taxonomy tax on pht.idtaxonomy = tax.idtaxonomy and idpeptide = {}".format(idpeptide), con=self.conn)
+        data = pd.read_sql("select name, tax_type from peptide_has_taxonomy pht join taxonomy tax on pht.idtaxonomy = tax.idtaxonomy and idpeptide = {}".format(idpeptide), con=self.conn)
         return json.loads(data.to_json(orient="records"))
 
     def get_info_from_peptide(self, idpeptide):
@@ -130,9 +130,16 @@ class database:
         return json.loads(data.to_json(orient="records"))
 
     def get_act_from_peptide(self, idpeptide):
-        data = pd.read_sql("select act.idactivity, act.name, pha.is_predicted from peptide_has_activity pha join activity act on pha.idactivity = act.idactivity and pha.idpeptide = {}".format(idpeptide), con=self.conn)
+        data = pd.read_sql("select act.name, pha.is_predicted from peptide_has_activity pha join activity act on pha.idactivity = act.idactivity and pha.idpeptide = {}".format(idpeptide), con=self.conn)
         return json.loads(data.to_json(orient="records"))
 
     def get_patent_from_peptide(self, idpeptide):
         data = pd.read_sql("select patent from patent where patent.idpeptide = {}".format(idpeptide), con=self.conn)
+        return json.loads(data.to_json(orient="records"))
+
+    def get_db_from_peptide(self, idpeptide):
+        data = pd.read_sql("""select db.name as db, i.name as id from peptide_has_db_has_index phdhi 
+        join db on db.id_db = phdhi.id_db
+        join "index" i on i.id_index = phdhi.id_index
+        and phdhi.idpeptide = {}""".format(idpeptide), con=self.conn)
         return json.loads(data.to_json(orient="records"))

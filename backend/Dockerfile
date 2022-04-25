@@ -48,4 +48,5 @@ WORKDIR /app
 #Ejecución de la api
 COPY ./src /app/src
 WORKDIR /app/src
+RUN playwright install
 CMD ["python3", "main.py"]

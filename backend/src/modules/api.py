@@ -11,7 +11,7 @@ from modules.pca_process import pca_process
 from modules.utils import interface
 from modules.search import search
 from modules.database import database
-
+from modules.structure import structure
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -267,6 +267,20 @@ class api:
         result = db.get_patent_from_peptide(idpeptide)
         return {"result": result}
 
+    @server.route('/api/get_db_from_peptide/<idpeptide>', methods=["GET"])
+    def api_get_db_from_peptide(idpeptide):
+        result = db.get_db_from_peptide(idpeptide)
+        return {"result": result}
+
+    @server.route('/api/get_structure/<uniprot>', methods=["GET"])
+    def api_get_structure(uniprot):
+        struct = structure(static_folder)
+        res = struct.get_alphafold(uniprot)
+        return {"path": res}
+
+    @server.route('/api/get_ftp_data/', methods=["GET"])
+    def api_get_ftp_data():
+        return {"credentials": dict(config["ftp"])}
 
     def get_server(self):
         return server
