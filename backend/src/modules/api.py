@@ -162,7 +162,7 @@ class api:
     @server.route('/api/use_model/', methods=["POST"])
     def api_use_model():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
-        use = use_model(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
+        use = use_model(data, options, static_folder, temp_folder, is_file, is_json, int(config["use_model"]["max_sequences"]), int(config["use_model"]["min_sequences"]), path_aa_index)
         check = use.get_check()
         if(check["status"] == "error"):
             return check
