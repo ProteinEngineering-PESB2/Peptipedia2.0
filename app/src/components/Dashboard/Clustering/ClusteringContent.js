@@ -342,38 +342,46 @@ const ClusteringContent = ({
                       <CircularLoading />
                     </Box>
                   ) : (
-                    <Grid container spacing={4}>
-                      <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 4 }}>
-                        <Paper
-                          sx={{
-                            p: 2,
-                            display: "flex",
-                            flexDirection: "column",
-                          }}
+                    dataScatter.length > 0 && (
+                      <Grid container spacing={4}>
+                        <Grid
+                          item
+                          lg={12}
+                          md={12}
+                          xs={12}
+                          sx={{ marginTop: 4 }}
                         >
-                          <Plot
-                            data={dataScatter}
-                            layout={layoutScatter}
-                            useResizeHandler
-                            className="w-full"
-                          />
-                        </Paper>
+                          <Paper
+                            sx={{
+                              p: 2,
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
+                            <Plot
+                              data={dataScatter}
+                              layout={layoutScatter}
+                              useResizeHandler
+                              className="w-full"
+                            />
+                          </Paper>
+                        </Grid>
+                        <Grid item xl={2} lg={3} md={3} sm={5} xs={12}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              backgroundColor: "#2962ff",
+                              ":hover": { backgroundColor: "#2962ff" },
+                              width: "100%",
+                            }}
+                            size="large"
+                            onClick={downloadPCA}
+                          >
+                            Download PCA
+                          </Button>
+                        </Grid>
                       </Grid>
-                      <Grid item xl={2} lg={3} md={3} sm={5} xs={12}>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            backgroundColor: "#2962ff",
-                            ":hover": { backgroundColor: "#2962ff" },
-                            width: '100%'
-                          }}
-                          size="large"
-                          onClick={downloadPCA}
-                        >
-                          Download PCA
-                        </Button>
-                      </Grid>
-                    </Grid>
+                    )
                   )}
                 </Grid>
               </Paper>

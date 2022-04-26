@@ -36,9 +36,9 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
   const [kvalue, setKvalue] = useState(2);
   const [linkage, setLinkage] = useState("ward");
   const [affinity, setAffinity] = useState("euclidean");
-  const [minSamples, setMinSamples] = useState(0);
-  const [xi, setXi] = useState(0);
-  const [minClusterSize, setMinClusterSize] = useState(0);
+  const [minSamples, setMinSamples] = useState(5);
+  const [xi, setXi] = useState(0.05);
+  const [minClusterSize, setMinClusterSize] = useState(5);
   const [loading, setLoading] = useStateIfMounted(false);
 
   const handleChangeFileType = (e) => {
@@ -342,6 +342,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
               multiline
               rows={11}
               sx={{ width: "100%" }}
+              value={textInput}
               onChange={handleChangeTextInput}
               disabled={fileType === "file"}
             />

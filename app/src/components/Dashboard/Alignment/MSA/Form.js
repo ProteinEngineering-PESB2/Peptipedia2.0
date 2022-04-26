@@ -124,6 +124,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
             multiline
             rows={15}
             sx={{ width: "100%" }}
+            value={textInput}
             onChange={handleChangeTextInput}
             disabled={fileType === "file"}
           />

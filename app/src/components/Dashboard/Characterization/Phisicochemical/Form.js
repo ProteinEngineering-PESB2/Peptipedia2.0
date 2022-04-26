@@ -186,6 +186,7 @@ const Form = ({
             multiline
             rows={11}
             sx={{ width: "100%" }}
+            value={textInput}
             onChange={handleChangeTextInput}
             disabled={fileType === "file"}
           />

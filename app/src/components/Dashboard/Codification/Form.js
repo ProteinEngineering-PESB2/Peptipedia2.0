@@ -157,8 +157,9 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
             multiline
             rows={11}
             sx={{ width: "100%" }}
+            value={textInput}
             onChange={handleChangeTextInput}
-            disabled={fileType === "text"}
+            disabled={fileType === "file"}
           />
         </Grid>
       </Grid>

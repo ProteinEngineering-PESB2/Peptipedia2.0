@@ -24,7 +24,7 @@ const Dashboard = () => {
           height: "100%",
           minHeight: "100vh",
           paddingY: 2,
-          backgroundColor: "#F5F5F5",
+          backgroundColor: "#EEEEEE",
         }}
       >
         <Container maxWidth="xl">
@@ -35,7 +35,7 @@ const Dashboard = () => {
             size="large"
             sx={{
               mr: 2,
-              color: "#000",
+              color: "#000"
             }}
           >
             <FormatAlignJustifyIcon />
