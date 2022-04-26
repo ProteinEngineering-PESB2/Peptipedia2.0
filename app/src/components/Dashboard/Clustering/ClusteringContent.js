@@ -245,9 +245,9 @@ const ClusteringContent = ({
                 >
                   <thead>
                     <tr>
-                      <th>Calinski</th>
-                      <th>Dalvies</th>
-                      <th>Siluetas</th>
+                      <th>Calinski-Harabasz index</th>
+                      <th>Davies-Bouldin Index</th>
+                      <th>Silhouette Coefficient</th>
                     </tr>
                   </thead>
                   <tbody>
