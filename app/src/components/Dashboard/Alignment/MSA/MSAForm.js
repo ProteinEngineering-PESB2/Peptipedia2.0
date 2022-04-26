@@ -6,7 +6,7 @@ import Form from "./Form";
 const MSAForm = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item lg={6} md={8.5} xs={12} sx={{ margin: "start" }}>
+      <Grid item xs={12} sm={8} md={8} lg={8} xl={6} sx={{ margin: "start" }}>
         <Paper
           sx={{
             p: 2,

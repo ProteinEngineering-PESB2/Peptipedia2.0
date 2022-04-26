@@ -130,7 +130,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ marginTop: 1 }}>
-        <Grid item lg={4} md={4} xs={12}>
+        <Grid item xl={3} lg={3} md={4.1} sm={6.6} xs={12}>
           <label htmlFor="contained-button-file" style={{ width: "100%" }}>
             <Input
               id="contained-button-file"
@@ -157,14 +157,14 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
         </Grid>
         <Grid item xs={12} sx={{ marginTop: 3 }}>
           <Grid container spacing={2}>
-            <Grid item lg={4} md={4} xs={12}>
+            <Grid item xl={3} lg={3} md={4.1} sm={6.6} xs={12}>
               {loading ? (
                 <LoadingButton
                   loading
                   variant="contained"
                   color="primary"
-                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                   size="medium"
+                  sx={{ width: "100%", backgroundColor: "#2962ff" }}
                 >
                   Loading{" "}
                 </LoadingButton>
