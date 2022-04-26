@@ -47,7 +47,7 @@ const About = () => {
             justifyContent: "center",
           }}
         >
-          <img src={Fornite} alt="header" style={{ height: "18rem" }} />
+          <img src={Fornite} alt="header" style={{ height: "15rem" }} />
         </Grid>
       </Grid>
     </>
