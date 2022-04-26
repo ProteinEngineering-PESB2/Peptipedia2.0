@@ -11,7 +11,7 @@ import Contact from "./Contact";
 const Home = () => {
   return (
     <>
-      <Grid container spacing={3} sx={{ marginTop: 4 }}>
+      <Grid container spacing={3} sx={{ marginTop: 2 }}>
         <Grid item lg={12} md={12} xs={12} sx={{ textAlign: "center" }}>
           <Header />
         </Grid>
@@ -24,9 +24,9 @@ const Home = () => {
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Services />
       </Grid>
-      {/* <Grid container spacing={3} sx={{ marginTop: 5 }}>
+      <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Team />
-      </Grid> */}
+      </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>
           <FAQs />

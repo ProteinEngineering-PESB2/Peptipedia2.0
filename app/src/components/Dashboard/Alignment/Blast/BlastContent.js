@@ -86,7 +86,7 @@ const BlastContent = ({
         <CircularLoading />
       ) : (
         <Grid item lg={12} md={12} xs={12}>
-          <Grid item lg={2.5} md={3} xs={12} sx={{ marginBottom: 3 }}>
+          <Grid item xl={2.05} lg={2.05} md={2.65} sm={4.15} xs={12} sx={{ marginBottom: 3 }}>
             {loadingButton ? (
               <LoadingButton
                 loading
@@ -111,11 +111,11 @@ const BlastContent = ({
               </Button>
             )}
           </Grid>
-          <Grid container spacing={3}>
+          {/* <Grid container spacing={3} sx={{ marginTop: 1 }}>
             <Grid item lg={12} md={12} xs={12}>
               <Typography variant="h6">Blast Multiple Alignments</Typography>
             </Grid>
-            <Grid item lg={5} md={4} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
               <Paper
                 sx={{
                   p: 2,
@@ -165,7 +165,7 @@ const BlastContent = ({
             <Grid item lg={12} xs={12} marginTop={2}>
               <Typography variant="h6">Blast Alignments Table</Typography>
             </Grid>
-            <Grid item lg={5} md={4} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
               <Paper
                 sx={{
                   p: 2,
@@ -181,7 +181,7 @@ const BlastContent = ({
             <Grid item lg={12} xs={12} marginTop={2}>
               <Typography variant="h6">Blast Single Alignment</Typography>
             </Grid>
-            <Grid item lg={5} md={4} xs={12}>
+            <Grid item lg={12} md={12} xs={12}>
               <Paper
                 sx={{
                   p: 2,
@@ -192,7 +192,7 @@ const BlastContent = ({
                 <div id="blast-single-alignment"></div>
               </Paper>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       )}
     </>

@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 const Header = () => {
   return (
     <>
-      <Typography variant="h3" style={{ fontWeight: "bold", marginBottom: 8 }}>
+      <Typography variant="h2" style={{ fontWeight: "bold", marginBottom: 8, color: "#2962ff" }}>
         Peptipedia
       </Typography>
       <Typography

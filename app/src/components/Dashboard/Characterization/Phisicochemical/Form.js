@@ -192,7 +192,7 @@ const Form = ({
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ marginTop: 1 }}>
-        <Grid item lg={4} md={5.2} xs={12}>
+        <Grid item lg={4} md={5.2} sm={5} xs={12}>
           <label htmlFor="contained-button-file" style={{ width: "100%" }}>
             <Input
               id="contained-button-file"
@@ -268,7 +268,7 @@ const Form = ({
         </Grid>
         <Grid item xs={12} sx={{ marginTop: 3 }}>
           <Grid container spacing={2}>
-            <Grid item lg={4} md={5.1} xs={12}>
+            <Grid item lg={4} md={5.1} sm={5} xs={12}>
               {loading ? (
                 <LoadingButton
                   loading

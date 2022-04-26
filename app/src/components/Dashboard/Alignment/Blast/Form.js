@@ -128,7 +128,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ marginTop: 1 }}>
-        <Grid item lg={3.2} md={4.2} xs={12}>
+        <Grid item xl={3.15} lg={3.2} md={4.2} sm={4.25} xs={12}>
           <label htmlFor="contained-button-file" style={{ width: "100%" }}>
             <Input
               id="contained-button-file"
@@ -154,7 +154,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
           </label>
         </Grid>
       </Grid>
-      <Grid item lg={3} md={4} xs={12} sx={{ marginTop: 4.2 }}>
+      <Grid item xl={3} lg={3} md={4} sm={4.05} xs={12} sx={{ marginTop: 4.2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {loading ? (

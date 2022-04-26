@@ -17,7 +17,7 @@ const Phisicochemical = () => {
 
   return (
     <>
-      <Grid container spacing={5} sx={{ marginTop: 4 }}>
+      <Grid container spacing={5} sx={{ marginTop: 2 }}>
         {error.length > 0 && (
           <SnackbarComponent
             open={openSnackbar}

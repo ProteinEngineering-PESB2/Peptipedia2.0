@@ -72,7 +72,7 @@ const GeneOntologyTable = ({ data }) => {
         <CircularLoading />
       ) : (
         <Grid container spacing={3}>
-          <Grid item lg={3} md={4} xs={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Paper
               sx={{
                 p: 2,
@@ -80,52 +80,50 @@ const GeneOntologyTable = ({ data }) => {
                 flexDirection: "column",
               }}
             >
-              <FormControl>
-                <InputLabel id="type-label">Type</InputLabel>
-                <Select
-                  aria-labelledby="type-label"
-                  label="Type"
-                  value={valueTypesAutocomplete}
-                  onChange={handleChangeValueTypesAutocomplete}
-                >
-                  {typesAutocomplete.map((t) => (
-                    <MenuItem value={t} key={t}>
-                      {t === "molecular_function" && "Molecular Function"}
-                      {t === "biological_process" && "Biological Process"}
-                      {t === "celular_component" && "Celular Component"}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <Grid container spacing={4}>
+                <Grid item xl={2} lg={3} md={3} sm={4} xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id="type-label">Type</InputLabel>
+                    <Select
+                      aria-labelledby="type-label"
+                      label="Type"
+                      value={valueTypesAutocomplete}
+                      onChange={handleChangeValueTypesAutocomplete}
+                    >
+                      {typesAutocomplete.map((t) => (
+                        <MenuItem value={t} key={t}>
+                          {t === "molecular_function" && "Molecular Function"}
+                          {t === "biological_process" && "Biological Process"}
+                          {t === "celular_component" && "Celular Component"}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xl={5} lg={7} md={9} sm={8} xs={12}>
+                  <Autocomplete
+                    disablePortal
+                    value={valueSequencesAutocomplete}
+                    onChange={handleChangeValueSequencesAutocomplete}
+                    inputValue={inputSequencesAutocomplete}
+                    onInputChange={handleChangeInputSequencesAutocomplete}
+                    options={sequencesAutocomplete}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Sequence" />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Table
+                    type={valueTypesAutocomplete}
+                    sequence={valueSequencesAutocomplete}
+                    data={data}
+                    columns={columns}
+                  />
+                </Grid>
+              </Grid>
             </Paper>
           </Grid>
-          <Grid item lg={5} md={4} xs={12}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                value={valueSequencesAutocomplete}
-                onChange={handleChangeValueSequencesAutocomplete}
-                inputValue={inputSequencesAutocomplete}
-                onInputChange={handleChangeInputSequencesAutocomplete}
-                options={sequencesAutocomplete}
-                renderInput={(params) => (
-                  <TextField {...params} label="Sequence" />
-                )}
-              />
-            </Paper>
-          </Grid>
-          <Table
-            type={valueTypesAutocomplete}
-            sequence={valueSequencesAutocomplete}
-            data={data}
-            columns={columns}
-          />
         </Grid>
       )}
     </>

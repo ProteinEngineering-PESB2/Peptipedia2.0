@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
@@ -50,21 +48,11 @@ const Table = ({ type, sequence, data, columns }) => {
     <>
       {loading === false && (
         <>
-          <Grid item lg={12} xs={12}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <DataTable
-                title={"Gene Ontology Characterization Table"}
-                data={results}
-                columns={columns}
-              />
-            </Paper>
-          </Grid>
+          <DataTable
+            title={"Gene Ontology Characterization Table"}
+            data={results}
+            columns={columns}
+          />
         </>
       )}
     </>

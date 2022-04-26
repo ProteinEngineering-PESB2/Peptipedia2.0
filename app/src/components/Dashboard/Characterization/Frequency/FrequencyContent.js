@@ -32,10 +32,10 @@ const FrequencyContent = ({ data }) => {
   return (
     <>
       {loading ? (
-        <CircularLoading/>
+        <CircularLoading />
       ) : (
         <Grid container spacing={3}>
-          <Grid item lg={3} md={3} xs={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Paper
               sx={{
                 p: 2,
@@ -43,18 +43,24 @@ const FrequencyContent = ({ data }) => {
                 flexDirection: "column",
               }}
             >
-              <Autocomplete
-                disablePortal
-                value={autocompleteValue}
-                onChange={handleChangeAutocompleteValue}
-                options={autocompleteSequences}
-                renderInput={(params) => (
-                  <TextField {...params} label="Sequence" />
-                )}
-              />
+              <Grid container spacing={4}>
+                <Grid item xl={2} lg={2.5} md={3} sm={5} xs={12}>
+                  <Autocomplete
+                    disablePortal
+                    value={autocompleteValue}
+                    onChange={handleChangeAutocompleteValue}
+                    options={autocompleteSequences}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Sequence" />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Chart data={data} autocompleteValue={autocompleteValue} />
+                </Grid>
+              </Grid>
             </Paper>
           </Grid>
-          <Chart data={data} autocompleteValue={autocompleteValue} />
         </Grid>
       )}
     </>

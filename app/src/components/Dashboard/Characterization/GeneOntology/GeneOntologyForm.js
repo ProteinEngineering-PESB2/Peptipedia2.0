@@ -11,7 +11,7 @@ const GeneOntologyForm = ({
 }) => {
   return (
     <Grid container spacing={3}>
-      <Grid item lg={8} md={8} xs={12} sx={{ margin: "start" }}>
+      <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
         <Paper
           sx={{
             p: 2,

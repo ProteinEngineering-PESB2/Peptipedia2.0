@@ -14,7 +14,7 @@ const PfamTable = ({ data }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const sequences = [];
     data.forEach((d) => sequences.push(d.id));
 
@@ -33,25 +33,6 @@ const PfamTable = ({ data }) => {
         <CircularLoading />
       ) : (
         <Grid container spacing={3}>
-          <Grid item lg={3} md={4} xs={12}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                value={autocompleteValue}
-                onChange={handleChangeAutocompleteValue}
-                options={autocompleteOptions}
-                renderInput={(params) => (
-                  <TextField {...params} label="Sequence" />
-                )}
-              />
-            </Paper>
-          </Grid>
           <Grid item lg={12} xs={12}>
             <Paper
               sx={{
@@ -60,7 +41,22 @@ const PfamTable = ({ data }) => {
                 flexDirection: "column",
               }}
             >
-              <Table data={data} autocompleteValue={autocompleteValue} />
+              <Grid container spacing={4}>
+                <Grid item xl={2} lg={2.5} md={3} sm={5} xs={12}>
+                  <Autocomplete
+                    disablePortal
+                    value={autocompleteValue}
+                    onChange={handleChangeAutocompleteValue}
+                    options={autocompleteOptions}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Sequence" />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Table data={data} autocompleteValue={autocompleteValue} />
+                </Grid>
+              </Grid>
             </Paper>
           </Grid>
         </Grid>
