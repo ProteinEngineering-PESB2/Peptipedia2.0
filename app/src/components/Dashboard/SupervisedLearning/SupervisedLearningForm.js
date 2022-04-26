@@ -13,7 +13,7 @@ const SupervisedLearningForm = ({
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item lg={6} md={6} xs={12}>
+        <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
           <Paper
             sx={{
               p: 2,

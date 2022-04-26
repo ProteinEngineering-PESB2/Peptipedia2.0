@@ -299,7 +299,7 @@ const Form = ({
                     ":hover": { backgroundColor: "#2962ff" },
                   }}
                 >
-                  run characterization
+                  run
                 </Button>
               )}
             </Grid>

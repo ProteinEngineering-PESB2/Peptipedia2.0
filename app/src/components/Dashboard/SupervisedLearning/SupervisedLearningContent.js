@@ -241,7 +241,7 @@ const SupervisedLearningContent = ({
         <Grid container spacing={3}>
           {selectedTaskType === "classification" && (
             <>
-              <Grid item lg={2.5} md={2.8} xs={12}>
+              <Grid item xl={2} lg={2.5} md={2.8} sm={4} xs={12}>
                 {loadingButton ? (
                   <LoadingButton
                     loading
@@ -270,7 +270,7 @@ const SupervisedLearningContent = ({
                   Performance
                 </Typography>
               </Grid>
-              <Grid item lg={6}>
+              <Grid item lg={6} md={6} xs={12}>
                 <div
                   className="table-responsive"
                   style={{ fontWeight: "bold" }}
@@ -484,7 +484,7 @@ const SupervisedLearningContent = ({
           )}
           {selectedTaskType === "regression" && (
             <>
-              <Grid item lg={2.5} md={3} xs={12}>
+              <Grid item xl={2} lg={2.5} md={2.8} sm={4} xs={12}>
                 {loadingButton ? (
                   <LoadingButton
                     loading
@@ -572,7 +572,7 @@ const SupervisedLearningContent = ({
                   Performance
                 </Typography>
               </Grid>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                 <div className="table-responsive">
                   <table
                     className="table table-light table-hover text-center"

@@ -181,7 +181,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
                 }}
                 size="medium"
               >
-                run alignment
+                run
               </Button>
             )}
           </Grid>

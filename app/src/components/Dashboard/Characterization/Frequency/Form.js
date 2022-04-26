@@ -172,7 +172,7 @@ const Form = ({ setData, setOpenSnackbar, setError, setSeverity }) => {
                     }}
                     size="medium"
                   >
-                    run characterization
+                    run
                   </Button>
                 )}
               </Grid>

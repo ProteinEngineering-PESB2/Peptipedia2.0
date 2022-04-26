@@ -348,7 +348,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           </Grid>
         </Grid>
         <Grid container spacing={2} sx={{ marginTop: 1 }}>
-          <Grid item lg={3} md={4} xs={12} sx={{ marginBottom: 4 }}>
+          <Grid item lg={3} md={4} sm={5} xs={12} sx={{ marginBottom: 4 }}>
             <label htmlFor="contained-button-file" style={{ width: "100%" }}>
               <Input
                 id="contained-button-file"
@@ -379,7 +379,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} md={6} sm={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="encoding-type-label">Encoding Type</InputLabel>
               <Select
@@ -400,7 +400,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           </Grid>
           {encodingTypeValue === "phisicochemical_properties" ||
           encodingTypeValue === "digital_signal_processing" ? (
-            <Grid item lg={6} md={6} xs={12}>
+            <Grid item lg={6} md={6} sm={6} xs={12}>
               <FormControl sx={{ width: "100%" }}>
                 <InputLabel id="property-label">Property</InputLabel>
                 <Select
@@ -431,7 +431,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           ) : (
             <></>
           )}
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} md={6} sm={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="algorithm-select-label">Algorithm</InputLabel>
               <Select
@@ -454,7 +454,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           {algorithmValue === "kmeans" ||
           algorithmValue === "birch" ||
           algorithmValue === "agglomerative" ? (
-            <Grid item lg={6} md={6} xs={12}>
+            <Grid item lg={6} md={6} sm={6} xs={12}>
               <TextField
                 placeholder="K-Value"
                 label="K-Value"
@@ -470,7 +470,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           )}
           {algorithmValue === "agglomerative" && (
             <>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
                 <FormControl sx={{ width: "100%" }} color="warning" focused>
                   <InputLabel id="linkage-label">Linkage</InputLabel>
                   <Select
@@ -486,7 +486,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
                 <FormControl
                   sx={{ width: "100%" }}
                   color="warning"
@@ -512,7 +512,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           )}
           {algorithmValue === "optics" ? (
             <>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
                 <TextField
                   placeholder="Min Samples"
                   label="Min Samples"
@@ -523,7 +523,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                   sx={{ width: "100%" }}
                 />
               </Grid>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
                 <TextField
                   placeholder="Xi"
                   label="Xi"
@@ -534,7 +534,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                   sx={{ width: "100%" }}
                 />
               </Grid>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
                 <TextField
                   placeholder="Min Cluster Size"
                   label="Min Cluster Size"
@@ -551,7 +551,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
           )}
         </Grid>
         <Grid container sx={{ marginTop: 3 }} spacing={2}>
-          <Grid item lg={3} md={4} xs={12}>
+          <Grid item lg={3} md={4} sm={5} xs={12}>
             {loading ? (
               <LoadingButton
                 loading
@@ -579,7 +579,7 @@ const Form = ({ setRes, setOpenSnackbar, setMessage, setSeverity }) => {
                     : false
                 }
               >
-                Run Clustering
+                Run
               </Button>
             )}
           </Grid>

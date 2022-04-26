@@ -16,6 +16,7 @@ import { pca } from "../../../services/clustering";
 
 import DataTable from "../DataTable";
 import CircularLoading from "../CircularLoading";
+import { Box } from "@mui/system";
 
 const ClusteringContent = ({
   res,
@@ -204,12 +205,12 @@ const ClusteringContent = ({
       ) : (
         <>
           <Grid container spacing={3}>
-            <Grid item lg={12} md={12} xs={12}>
+            <Grid item xl={2} lg={2.5} md={3.5} sm={5} xs={12}>
               <Button
                 variant="contained"
                 sx={{
                   backgroundColor: "#2962ff",
-                  width: '100%',
+                  width: "100%",
                   ":hover": { backgroundColor: "#2962ff" },
                 }}
                 size="medium"
@@ -291,47 +292,33 @@ const ClusteringContent = ({
             </Grid>
           </Grid>
           <Grid container spacing={3} sx={{ marginTop: 2 }}>
-            {isNormal ? (
-              <Grid item lg={12} md={12} xs={12}>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  sx={{
-                    backgroundColor: "#2962ff",
-                    ":hover": { backgroundColor: "#2962ff" },
-                  }}
-                  onClick={handlePCA}
-                >
-                  Apply Pca
-                </Button>
-              </Grid>
-            ) : (
-              <Grid item lg={3.8} md={4.5} xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Grid container spacing={1}>
-                    <Grid item lg={5.5} xs={6}>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          backgroundColor: "#2962ff",
-                          width: "100%",
-                          height: "100%",
-                          ":hover": { backgroundColor: "#2962ff" },
-                        }}
-                        size="large"
-                        onClick={handlePCA}
-                      >
-                        Apply PCA
-                      </Button>
-                    </Grid>
-                    <Grid item lg={6.5} xs={6}>
-                      <FormControl fullWidth disabled={isNormal ? true : false}>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xl={1.5} lg={2} md={2} sm={3} xs={6}>
+                    <Button
+                      variant="contained"
+                      size="medium"
+                      sx={{
+                        backgroundColor: "#2962ff",
+                        ":hover": { backgroundColor: "#2962ff" },
+                        height: "100%",
+                        width: "100%",
+                      }}
+                      onClick={handlePCA}
+                    >
+                      Apply Pca
+                    </Button>
+                  </Grid>
+                  <Grid item xl={1.5} lg={2} md={2} sm={3} xs={6}>
+                    {isNormal === false && (
+                      <FormControl fullWidth>
                         <InputLabel id="kernel-label">Kernel</InputLabel>
                         <Select
                           labelId="kernel-label"
@@ -346,50 +333,51 @@ const ClusteringContent = ({
                           <MenuItem value="cosine">Cosinie</MenuItem>
                         </Select>
                       </FormControl>
+                    )}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  {loadingPCA ? (
+                    <Box sx={{ marginTop: 4 }}>
+                      <CircularLoading />
+                    </Box>
+                  ) : (
+                    <Grid container spacing={4}>
+                      <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 4 }}>
+                        <Paper
+                          sx={{
+                            p: 2,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Plot
+                            data={dataScatter}
+                            layout={layoutScatter}
+                            useResizeHandler
+                            className="w-full"
+                          />
+                        </Paper>
+                      </Grid>
+                      <Grid item xl={2} lg={3} md={3} sm={5} xs={12}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "#2962ff",
+                            ":hover": { backgroundColor: "#2962ff" },
+                            width: '100%'
+                          }}
+                          size="large"
+                          onClick={downloadPCA}
+                        >
+                          Download PCA
+                        </Button>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            )}
-          </Grid>
-          <Grid container spacing={3} sx={{ marginTop: 2 }}>
-            {loadingPCA ? (
-              <CircularLoading />
-            ) : (
-              dataScatter.length > 0 && (
-                <>
-                  <Grid item lg={12} md={12} xs={12}>
-                    <Paper
-                      sx={{
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <Plot
-                        data={dataScatter}
-                        layout={layoutScatter}
-                        useResizeHandler
-                        className="w-full"
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item lg={12} md={12} xs={12}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#2962ff",
-                        ":hover": { backgroundColor: "#2962ff" },
-                      }}
-                      size="medium"
-                      onClick={downloadPCA}
-                    >
-                      Download PCA
-                    </Button>
-                  </Grid>
-                </>
-              )
-            )}
+                  )}
+                </Grid>
+              </Paper>
+            </Grid>
           </Grid>
           <Grid container spacing={3} sx={{ marginTop: 4 }}></Grid>
         </>

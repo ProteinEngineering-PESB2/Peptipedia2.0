@@ -99,7 +99,7 @@ const Database = () => {
 
   return (
     <>
-      <Grid container spacing={5} sx={{ marginTop: 4 }}>
+      <Grid container spacing={5} sx={{ marginTop: 2 }}>
         {snackbarZIPMessage.length > 0 && (
           <SnackbarComponent
             open={openSnackbarZIP}
@@ -153,7 +153,7 @@ const Database = () => {
             PageMaker including versions of Lorem Ipsum.
           </p>
         </Grid>
-        <Grid item lg={2.6} md={3.5} xs={12}>
+        <Grid item lg={2.6} md={3.5} sm={4} xs={12}>
           {loadingZIP ? (
             <LoadingButton
               loading
@@ -178,7 +178,7 @@ const Database = () => {
             </Button>
           )}
         </Grid>
-        <Grid item lg={2.6} md={3.5} xs={12}>
+        <Grid item lg={2.6} md={3.5} sm={4} xs={12}>
           {loadingSQL ? (
             <LoadingButton
               loading
@@ -200,7 +200,7 @@ const Database = () => {
             </Button>
           )}
         </Grid>
-        <Grid item lg={2.6} md={3.5} xs={12}>
+        <Grid item lg={2.6} md={3.5} sm={4} xs={12}>
           {loadingFasta ? (
             <LoadingButton
               loading

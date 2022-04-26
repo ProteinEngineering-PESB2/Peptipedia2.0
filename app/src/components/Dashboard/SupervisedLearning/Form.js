@@ -127,7 +127,7 @@ const Form = ({
     <>
       <form onSubmit={onSubmit}>
         <Grid container spacing={2}>
-          <Grid item lg={6} md={6} xs={12} sx={{ marginBottom: 2 }}>
+          <Grid item lg={3} md={4} sm={5} xs={12} sx={{ marginBottom: 2 }}>
             <label htmlFor="contained-button-file" style={{ width: "100%" }}>
               <Input
                 id="contained-button-file"
@@ -157,7 +157,7 @@ const Form = ({
           </Grid>
         </Grid>
         <Grid container spacing={2} sx={{ marginTop: 1 }}>
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} sm={6} md={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="encoding-type-label">Encoding Type</InputLabel>
               <Select
@@ -178,7 +178,7 @@ const Form = ({
           </Grid>
           {encodingTypeValue === "phisicochemical_properties" ||
           encodingTypeValue === "digital_signal_processing" ? (
-            <Grid item lg={6} md={6} xs={12}>
+            <Grid item lg={6} sm={6} md={6} xs={12}>
               <FormControl sx={{ width: "100%" }}>
                 <InputLabel id="property-label">Property</InputLabel>
                 <Select
@@ -209,7 +209,7 @@ const Form = ({
           ) : (
             <></>
           )}
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} sm={6} md={6} xs={12}>
             <TextField
               placeholder="Number of folds for cross validation"
               label="Number of folds for cross validation"
@@ -218,7 +218,7 @@ const Form = ({
               sx={{ width: "100%" }}
             />
           </Grid>
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} sm={6} md={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="task-type-label">Task Type</InputLabel>
               <Select
@@ -232,7 +232,7 @@ const Form = ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} sm={6} md={6} xs={12}>
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="algorithm-type-label">Algorithm Type</InputLabel>
               <Select
@@ -268,7 +268,7 @@ const Form = ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={6} md={6} xs={12}>
+          <Grid item lg={6} sm={6} md={6} xs={12}>
             <FormControl fullWidth>
               <InputLabel id="test-size-label">Test Size</InputLabel>
               <Select
@@ -289,7 +289,7 @@ const Form = ({
           </Grid>
           <Grid item lg={12} xs={12} sx={{ marginTop: 3 }}>
             <Grid container spacing={2}>
-              <Grid item lg={6} md={6} xs={12}>
+              <Grid item lg={3} md={4} sm={5} xs={12}>
                 {loading ? (
                   <LoadingButton
                     loading
@@ -314,7 +314,7 @@ const Form = ({
                       (fileInput === null || fileInput === undefined) && true
                     }
                   >
-                    Run Training
+                    Run
                   </Button>
                 )}
               </Grid>

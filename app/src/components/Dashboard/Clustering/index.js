@@ -17,7 +17,7 @@ const Clustering = () => {
 
   return (
     <>
-      <Grid container spacing={5} sx={{ marginTop: 4 }}>
+      <Grid container spacing={5} sx={{ marginTop: 2 }}>
         {message.length > 0 && (
           <Snackbar
             open={openSnackbar}
