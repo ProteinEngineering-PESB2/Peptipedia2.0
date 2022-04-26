@@ -18,7 +18,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import CircularLoading from "../../CircularLoading";
 
 const ComponentBlastMultipleAlignments = forwardRef((props, ref) => (
-  <div className="wrapper" ref={ref}>
+  <div className="wrapper d-none d-sm-block" ref={ref}>
     <div id="blast-multiple-alignments"></div>
   </div>
 ));
@@ -111,11 +111,11 @@ const BlastContent = ({
               </Button>
             )}
           </Grid>
-          <Grid container spacing={3}>
+          {/* <Grid container spacing={3}>
             <Grid item lg={12} md={12} xs={12}>
               <Typography variant="h6">Blast Multiple Alignments</Typography>
             </Grid>
-            <Grid item lg={8} md={8} xs={12}>
+            <Grid item lg={5} md={4} xs={3.5}>
               <Paper
                 sx={{
                   p: 2,
@@ -165,7 +165,7 @@ const BlastContent = ({
             <Grid item lg={12} xs={12} marginTop={2}>
               <Typography variant="h6">Blast Alignments Table</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item lg={5} md={4} xs={3.5}>
               <Paper
                 sx={{
                   p: 2,
@@ -173,7 +173,7 @@ const BlastContent = ({
                   flexDirection: "column",
                 }}
               >
-                <div className="table-responsive">
+                <div className="table-responsive d-none d-sm-block">
                   <div id="blast-alignments-table"></div>
                 </div>
               </Paper>
@@ -181,7 +181,7 @@ const BlastContent = ({
             <Grid item lg={12} xs={12} marginTop={2}>
               <Typography variant="h6">Blast Single Alignment</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item lg={5} md={4} xs={3.5}>
               <Paper
                 sx={{
                   p: 2,
@@ -189,10 +189,10 @@ const BlastContent = ({
                   flexDirection: "column",
                 }}
               >
-                <div id="blast-single-alignment"></div>
+                <div id="blast-single-alignment" className="d-none d-sm-block"></div>
               </Paper>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       )}
     </>
