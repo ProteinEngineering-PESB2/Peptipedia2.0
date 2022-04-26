@@ -16,7 +16,7 @@ import RenderSection from "../../components/Dashboard/RenderSection";
 import { Main, drawerWidth } from "../../components/Dashboard/utils";
 
 const Dashboard = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [section, setSection] = useState("home");
 
   return (
