@@ -9,6 +9,7 @@ const SupervisedLearningForm = ({
   setOpenSnackbar,
   setMessage,
   setSeverity,
+  setOptions,
 }) => {
   return (
     <>
@@ -27,6 +28,7 @@ const SupervisedLearningForm = ({
               setOpenSnackbar={setOpenSnackbar}
               setMessage={setMessage}
               setSeverity={setSeverity}
+              setOptions={setOptions}
             />
           </Paper>
         </Grid>

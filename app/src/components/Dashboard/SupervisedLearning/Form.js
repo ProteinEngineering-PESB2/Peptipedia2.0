@@ -25,6 +25,7 @@ const Form = ({
   setOpenSnackbar,
   setMessage,
   setSeverity,
+  setOptions
 }) => {
   const [fileInput, setFileInput] = useState(null);
   const [encodingTypeValue, setEncodingTypeValue] =
@@ -103,8 +104,6 @@ const Form = ({
     try {
       const res = await supervisedLearning(post);
 
-      console.log(res)
-
       if (res.status === "error") {
         setSeverity("error");
         setMessage(res.description);
@@ -112,6 +111,10 @@ const Form = ({
         setLoading(false);
       } else {
         setSelectedTaskType(taskType);
+        setOptions({
+          encoding: encodingTypeValue,
+          selected_property: propertyValue
+        })
         setData(res);
         setLoading(false);
       }

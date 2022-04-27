@@ -14,6 +14,7 @@ const SupervisedLearning = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("");
+  const [options, setOptions] = useState({})
 
   return (
     <>
@@ -38,6 +39,7 @@ const SupervisedLearning = () => {
             setOpenSnackbar={setOpenSnackbar}
             setMessage={setMessage}
             setSeverity={setSeverity}
+            setOptions={setOptions}
           />
         </Grid>
         {data && (
@@ -48,11 +50,12 @@ const SupervisedLearning = () => {
               setOpenSnackbar={setOpenSnackbar}
               setMessage={setMessage}
               setSeverity={setSeverity}
+              options={options}
             />
           </Grid>
         )}
       </Grid>
-      <Grid container spacing={3} sx={{ marginTop: 3 }}></Grid>
+      <Grid container spacing={3} sx={{ marginTop: 5 }}></Grid>
     </>
   );
 };

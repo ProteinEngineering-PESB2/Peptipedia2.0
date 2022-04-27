@@ -5,10 +5,27 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { Button, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  TextField,
+} from "@mui/material";
 
 import { useEffect, useState, useCallback } from "react";
+import { styled } from "@mui/system";
 
 import CircularLoading from "../CircularLoading";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
+import DataTable from "../DataTable";
+
+const Input = styled("input")({
+  display: "none",
+  width: "100%",
+});
 
 const SupervisedLearningContent = ({
   data,
@@ -16,6 +33,7 @@ const SupervisedLearningContent = ({
   setOpenSnackbar,
   setMessage,
   setSeverity,
+  options,
 }) => {
   const [dataHeatmap, setDataHeatmap] = useState([]);
   const [dataHeatmapTesting, setDataHeatmapTesting] = useState([]);
@@ -25,6 +43,27 @@ const SupervisedLearningContent = ({
   const [dataBoxPlot, setDataBoxPlot] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
+  const [showFormNewData, setShowFormNewData] = useState(false);
+  const [fileType, setFileType] = useState("text");
+  const [fileInputNew, setFileInputNew] = useState(null);
+  const [textInput, setTextInput] = useState("");
+  const [loadingPredictNewData, setLoadingPredictNewData] = useState(false);
+  const [columns, setColumns] = useState([]);
+  const [dataTable, setDataTable] = useState([]);
+
+  const handleChangeFileType = (e) => {
+    setFileType(e.target.value);
+    setTextInput("");
+    setFileInputNew(null);
+  };
+
+  const handleChangeTextInput = (e) => {
+    setTextInput(e.target.value);
+  };
+
+  const handleChangeFileInputNew = (e) => {
+    setFileInputNew(e.target.files[0]);
+  };
 
   const parseDataHeatmap = useCallback(() => {
     const array = [
@@ -233,38 +272,77 @@ const SupervisedLearningContent = ({
     parseDataBoxPlot,
   ]);
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoadingPredictNewData(true);
+
+    let post;
+
+    if (fileType === "text") {
+      if (options.encoding === "one_hot_encoding") {
+        post = {
+          data: textInput,
+          options: {
+            job_path: data.job_path,
+            encoding: options.encoding,
+          },
+        };
+      } else {
+        post = {
+          data: textInput,
+          options: {
+            job_path: data.job_path,
+            encoding: options.encoding,
+            selected_property: options.selected_property,
+          },
+        };
+      }
+    } else {
+      let optionsRequest;
+      if (options.encoding === "one_hot_encoding") {
+        optionsRequest = new Blob([
+          JSON.stringify({
+            job_path: data.job_path,
+            encoding: options.encoding,
+          }),
+        ]);
+      } else {
+        optionsRequest = new Blob([
+          JSON.stringify({
+            job_path: data.job_path,
+            encoding: options.encoding,
+            selected_property: options.selected_property,
+          }),
+        ]);
+      }
+
+      post = new FormData();
+      post.append("file", fileInputNew);
+      post.append("options", optionsRequest);
+    }
+
+    try {
+      const res = await axios.post("/api/use_model/", post);
+
+      setColumns(res.data.result.columns);
+      setDataTable(res.data.result.data);
+
+      setLoadingPredictNewData(false);
+    } catch (error) {
+      console.log(error);
+      setLoadingPredictNewData(false);
+    }
+  };
+
   return (
     <>
       {loading ? (
         <CircularLoading />
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {selectedTaskType === "classification" && (
             <>
-              <Grid item xl={2} lg={2.5} md={2.8} sm={4} xs={12}>
-                {loadingButton ? (
-                  <LoadingButton
-                    loading
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                  >
-                    Loading{" "}
-                  </LoadingButton>
-                ) : (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundColor: "#2962ff",
-                      ":hover": { backgroundColor: "#2962ff" },
-                      width: "100%",
-                    }}
-                    onClick={downloadModel}
-                  >
-                    Download Model
-                  </Button>
-                )}
-              </Grid>
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Performance
@@ -282,7 +360,7 @@ const SupervisedLearningContent = ({
                         <th>Accuracy</th>
                         {data.result.performance.f1 && <th>F1</th>}
                         {data.result.performance.f1_weighted && (
-                          <td>F1 Weighted</td>
+                          <th>F1 Weighted</th>
                         )}
                         {data.result.performance.recall && <th>Recall</th>}
                         {data.result.performance.recall_weighted && (
@@ -682,6 +760,190 @@ const SupervisedLearningContent = ({
                 </Paper>
               </Grid>
             </>
+          )}
+          <Grid item xl={2} lg={2.5} md={3} sm={5} xs={12}>
+            {loadingButton ? (
+              <LoadingButton
+                loading
+                variant="contained"
+                color="primary"
+                size="large"
+              >
+                Loading{" "}
+              </LoadingButton>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#2962ff",
+                  ":hover": { backgroundColor: "#2962ff" },
+                  width: "100%",
+                }}
+                onClick={downloadModel}
+                size="large"
+              >
+                Download Model
+              </Button>
+            )}
+          </Grid>
+          <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#2962ff",
+                ":hover": { backgroundColor: "#2962ff" },
+                width: "100%",
+              }}
+              size="large"
+              onClick={() => setShowFormNewData(true)}
+            >
+              Use model with new data
+            </Button>
+          </Grid>
+          {showFormNewData === true && (
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <form onSubmit={onSubmit}>
+                  <Grid container spacing={2}>
+                    <Grid item lg={12} xs={12}>
+                      <FormControl>
+                        <FormLabel id="label-file-type">File Type</FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="label-file-type"
+                          name="row-file-alignment-type"
+                        >
+                          <FormControlLabel
+                            checked={fileType === "text"}
+                            onChange={handleChangeFileType}
+                            value="text"
+                            control={<Radio />}
+                            label="Text"
+                          />
+                          <FormControlLabel
+                            checked={fileType === "file"}
+                            onChange={handleChangeFileType}
+                            value="file"
+                            control={<Radio />}
+                            label="File"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    <Grid item lg={12} md={12} xs={12}>
+                      <TextField
+                        label="Enter Amino Acid sequences"
+                        multiline
+                        rows={11}
+                        sx={{ width: "100%" }}
+                        value={textInput}
+                        onChange={handleChangeTextInput}
+                        disabled={fileType === "file"}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={2} sx={{ marginTop: 1 }}>
+                    <Grid item xl={3.15} lg={3.2} md={4.2} sm={4.25} xs={12}>
+                      <label
+                        htmlFor="contained-button-file-new"
+                        style={{ width: "100%" }}
+                      >
+                        <Input
+                          id="contained-button-file-new"
+                          type="file"
+                          onChange={handleChangeFileInputNew}
+                        />
+                        <Button
+                          variant="outlined"
+                          component="span"
+                          endIcon={<CloudUploadIcon />}
+                          color={
+                            fileInputNew
+                              ? fileInputNew.name
+                                ? "success"
+                                : "primary"
+                              : "primary"
+                          }
+                          sx={{ width: "100%" }}
+                          disabled={fileType === "text"}
+                        >
+                          {fileInputNew
+                            ? fileInputNew.name
+                              ? fileInputNew.name
+                              : "Upload Fasta"
+                            : "Upload Fasta"}
+                        </Button>
+                      </label>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    xl={3}
+                    lg={3}
+                    md={4}
+                    sm={4.05}
+                    xs={12}
+                    sx={{ marginTop: 4.2 }}
+                  >
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        {loadingPredictNewData ? (
+                          <LoadingButton
+                            loading
+                            variant="contained"
+                            sx={{ width: "100%", backgroundColor: "#2962ff" }}
+                            size="medium"
+                          >
+                            Loading{" "}
+                          </LoadingButton>
+                        ) : (
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={
+                              textInput === "" &&
+                              (fileInputNew === null ||
+                                fileInputNew === undefined)
+                            }
+                            sx={{
+                              width: "100%",
+                              backgroundColor: "#2962ff",
+                              ":hover": { backgroundColor: "#2962ff" },
+                            }}
+                            size="medium"
+                          >
+                            run
+                          </Button>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Paper>
+            </Grid>
+          )}
+          {dataTable.length > 0 && (
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <DataTable
+                  data={dataTable}
+                  columns={columns}
+                  title={"Model with new data"}
+                />
+              </Paper>
+            </Grid>
           )}
         </Grid>
       )}
