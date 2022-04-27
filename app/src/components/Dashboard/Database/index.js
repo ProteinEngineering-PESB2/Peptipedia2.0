@@ -1,6 +1,6 @@
 import { Grid, Typography, Button } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
@@ -21,6 +21,19 @@ const Database = () => {
   const [openSnackbarFasta, setOpenSnackbarFasta] = useState(false);
   const [snackbarFastaMessage, setSnackbarFastaMessage] = useState("");
   const [snackbarFastaSeverity, setSnackbarFastaSeverity] = useState("");
+
+  const credentials = useCallback(async() => {
+    try {
+      const res = await axios.get("/api/get_ftp_data")
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    credentials()
+  }, [credentials])
 
   const downloadZIP = async () => {
     try {

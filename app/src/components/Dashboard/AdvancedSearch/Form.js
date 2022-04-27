@@ -19,6 +19,7 @@ import {
   getGeneOntologyWithoutTerm,
   databaseResultsCount,
   parameters,
+  getActivities,
 } from "../../../services/advanced_search";
 
 // Fields
@@ -27,7 +28,7 @@ import MolecularWeightField from "./Fields/MolecularWeightField";
 import IsoelectricPointField from "./Fields/IsoelectricPointField";
 import ChargeField from "./Fields/ChargeField";
 import ChargeDensityField from "./Fields/ChargeDensityField";
-// import ActivityField from "./Fields/ActivityField";
+import ActivityField from "./Fields/ActivityField";
 import TaxonomyField from "./Fields/TaxonomyField";
 import DatabaseField from "./Fields/DatabaseField";
 import GeneOntologyField from "./Fields/GeneOntologyField";
@@ -61,7 +62,7 @@ const Form = ({
   const [valueCharge, setValueCharge] = useState([20, 100]);
   const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
   const [valueDatabase, setValueDatabase] = useState({});
-  // const [valueActivity, setValueActivity] = useState("");
+  const [valueActivity, setValueActivity] = useState({});
   const [valueTaxonomy, setValueTaxonomy] = useState({});
   const [valuePfam, setValuePfam] = useState({});
   const [valueGeneOntology, setValueGeneOnotology] = useState({});
@@ -104,6 +105,7 @@ const Form = ({
   const [databases, setDatabases] = useState([]);
   const [pfams, setPfams] = useState([]);
   const [geneOntologies, setGeneOntologies] = useState([]);
+  const [activities, setActivities] = useState([]);
 
   const initialTaxonomies = useCallback(async () => {
     try {
@@ -149,6 +151,17 @@ const Form = ({
     }
   }, [setSeverity, setMessage, setOpenSnackbar]);
 
+  const initialActivities = useCallback(async () => {
+    try {
+      const res = await getActivities();
+      setActivities(res.result);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
+    }
+  }, [setSeverity, setMessage, setOpenSnackbar]);
+
   const initialParameters = useCallback(async () => {
     try {
       const res = await parameters();
@@ -180,6 +193,7 @@ const Form = ({
     initialTaxonomies();
     initialDatabases();
     initialGeneOntology();
+    initialActivities();
     setLoading(false);
   }, [
     initialTaxonomies,
@@ -187,6 +201,7 @@ const Form = ({
     initialGeneOntology,
     initialParameters,
     initialDatabases,
+    initialActivities,
   ]);
 
   const handleChangeQueryText = (e) => {
@@ -217,10 +232,6 @@ const Form = ({
   const handleChangeValueSequence = (e) => {
     setValueSequence(e.target.value);
   };
-
-  // const handleChangeValueActivity = (e, newValue) => {
-  //   setValueActivity(newValue);
-  // };
 
   // Operators
   const handleChangeLogicOperatorLength = (e) => {
@@ -501,8 +512,20 @@ const Form = ({
             selectedOperators
           );
         }
-        // if (value === "Activity")
-        //   query += selectInput(value, valueActivity, index, selectedOperators);
+        if (value === "Activity") {
+          query += selectInput(
+            value,
+            valueActivity.label,
+            index,
+            selectedOperators
+          );
+          queryWithId += selectInput(
+            value,
+            valueActivity.value,
+            index,
+            selectedOperators
+          );
+        }
         if (value === "Database") {
           query += selectInput(
             value,
@@ -669,20 +692,20 @@ const Form = ({
                     options={databases}
                   />
                 )}
-                {/* {option === "Activity" && (
+                {option === "Activity" && (
                   <ActivityField
                     valueActivity={valueActivity}
-                    handleChangeValueActivity={handleChangeValueActivity}
+                    setValueActivity={setValueActivity}
                     logicOperatorValueForActivity={
                       logicOperatorValueForActivity
                     }
                     setLogicOperatorValueForActivity={
                       setLogicOperatorValueForActivity
                     }
-                    selectedOptions={selectedOptions}
                     index={index}
+                    options={activities}
                   />
-                )} */}
+                )}
                 {option === "Taxonomy" && (
                   <TaxonomyField
                     valueTaxonomy={valueTaxonomy}
@@ -796,6 +819,10 @@ const Form = ({
                         : false ||
                           (selectedOptions.includes("Sequence") &&
                             valueSequence === "")
+                        ? true
+                        : false ||
+                          (selectedOptions.includes("Activity") &&
+                            valueActivity.value === undefined)
                         ? true
                         : false
                     }

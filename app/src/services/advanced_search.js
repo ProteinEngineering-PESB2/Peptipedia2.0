@@ -56,3 +56,9 @@ export const parameters = async () => {
 
   return res.data;
 };
+
+export const getActivities = async () => {
+  const res = await axios.get("/api/activity_list/");
+
+  return res.data;
+};

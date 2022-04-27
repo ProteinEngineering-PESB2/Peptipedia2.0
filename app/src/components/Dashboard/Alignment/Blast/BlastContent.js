@@ -111,7 +111,7 @@ const BlastContent = ({
               </Button>
             )}
           </Grid>
-          {/* <Grid container spacing={3} sx={{ marginTop: 1 }}>
+          <Grid container spacing={3} sx={{ marginTop: 1 }}>
             <Grid item lg={12} md={12} xs={12}>
               <Typography variant="h6">Blast Multiple Alignments</Typography>
             </Grid>
@@ -192,7 +192,7 @@ const BlastContent = ({
                 <div id="blast-single-alignment"></div>
               </Paper>
             </Grid>
-          </Grid> */}
+          </Grid>
         </Grid>
       )}
     </>

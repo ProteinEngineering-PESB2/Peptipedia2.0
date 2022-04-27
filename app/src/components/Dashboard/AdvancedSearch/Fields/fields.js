@@ -5,7 +5,7 @@ export const fields = [
   { label: "Charge" },
   { label: "Charge Density" },
   { label: "Database" },
-  // { label: "Activity" },
+  { label: "Activity" },
   { label: "Taxonomy" },
   { label: "Pfam" },
   { label: "Gene Ontology" },
