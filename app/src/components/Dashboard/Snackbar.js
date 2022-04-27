@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography"
 const vertical = "top";
 const horizontal = "center";
 
-const SnackbarComponent = ({ open, setOpen, severity, message }) => {
+const SnackbarComponent = ({ open, setOpen, severity, message, time }) => {
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -19,7 +19,7 @@ const SnackbarComponent = ({ open, setOpen, severity, message }) => {
       open={open}
       anchorOrigin={{ vertical, horizontal }}
       key={vertical + horizontal}
-      autoHideDuration={6000}
+      autoHideDuration={time ? time : 8000}
       onClose={handleClose}
     >
       <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>

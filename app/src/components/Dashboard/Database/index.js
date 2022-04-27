@@ -1,39 +1,26 @@
 import { Grid, Typography, Button } from "@mui/material";
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
 
 const Database = () => {
-  const [loadingZIP, setLoadingZIP] = useState(false);
-  const [loadingSQL, setLoadingSQL] = useState(false);
-  const [loadingFasta, setLoadingFasta] = useState(false);
+  const [loadingZIP, setLoadingZIP] = useStateIfMounted(false);
+  const [loadingSQL, setLoadingSQL] = useStateIfMounted(false);
+  const [loadingFasta, setLoadingFasta] = useStateIfMounted(false);
 
-  const [openSnackbarZIP, setOpenSnackbarZIP] = useState(false);
-  const [snackbarZIPMessage, setSnackbarZIPMessage] = useState("");
-  const [snackbarZIPSeverity, setSnackbarZIPSeverity] = useState("");
+  const [openSnackbarZIP, setOpenSnackbarZIP] = useStateIfMounted(false);
+  const [snackbarZIPMessage, setSnackbarZIPMessage] = useStateIfMounted("");
+  const [snackbarZIPSeverity, setSnackbarZIPSeverity] = useStateIfMounted("");
 
-  const [openSnackbarSQL, setOpenSnackbarSQL] = useState(false);
-  const [snackbarSQLMessage, setSnackbarSQLMessage] = useState("");
-  const [snackbarSQLSeverity, setSnackbarSQLSeverity] = useState("");
+  const [openSnackbarSQL, setOpenSnackbarSQL] = useStateIfMounted(false);
+  const [snackbarSQLMessage, setSnackbarSQLMessage] = useStateIfMounted("");
+  const [snackbarSQLSeverity, setSnackbarSQLSeverity] = useStateIfMounted("");
 
-  const [openSnackbarFasta, setOpenSnackbarFasta] = useState(false);
-  const [snackbarFastaMessage, setSnackbarFastaMessage] = useState("");
-  const [snackbarFastaSeverity, setSnackbarFastaSeverity] = useState("");
-
-  const credentials = useCallback(async() => {
-    try {
-      const res = await axios.get("/api/get_ftp_data")
-      console.log(res.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
-
-  useEffect(() => {
-    credentials()
-  }, [credentials])
+  const [openSnackbarFasta, setOpenSnackbarFasta] = useStateIfMounted(false);
+  const [snackbarFastaMessage, setSnackbarFastaMessage] = useStateIfMounted("");
+  const [snackbarFastaSeverity, setSnackbarFastaSeverity] = useStateIfMounted("");
 
   const downloadZIP = async () => {
     try {
@@ -63,7 +50,10 @@ const Database = () => {
   const downloadSQL = async () => {
     try {
       setLoadingSQL(true);
-      const res = await axios.get("/files/downloads/dump.sql", {
+      setSnackbarSQLSeverity("success");
+      setSnackbarSQLMessage("The download has started. You can continue using our services. Do not close the page");
+      setOpenSnackbarSQL(true);
+      const res = await axios.get("/files/downloads/backup.sql", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -127,6 +117,7 @@ const Database = () => {
             setOpen={setOpenSnackbarSQL}
             message={snackbarSQLMessage}
             severity={snackbarSQLSeverity}
+            time={20000}
           />
         )}
         {snackbarFastaMessage.length > 0 && (

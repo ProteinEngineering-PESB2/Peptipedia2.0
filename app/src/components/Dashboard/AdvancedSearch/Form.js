@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -55,13 +55,19 @@ const Form = ({
   const [queryText, setQueryText] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadingButton, setLoadingButton] = useStateIfMounted(false);
-  const [params, setParams] = useState({});
+  const [params, setParams] = useStateIfMounted({});
 
-  const [valueLength, setValueLength] = useState([]);
-  const [valueMolecularWeight, setValueMolecularWeight] = useState([20, 100]);
-  const [valueIsoelectricPoint, setValueIsoelectricPoint] = useState([20, 100]);
-  const [valueCharge, setValueCharge] = useState([20, 100]);
-  const [valueChargeDensity, setValueChargeDensity] = useState([20, 100]);
+  const [valueLength, setValueLength] = useStateIfMounted([]);
+  const [valueMolecularWeight, setValueMolecularWeight] = useStateIfMounted([
+    20, 100,
+  ]);
+  const [valueIsoelectricPoint, setValueIsoelectricPoint] = useStateIfMounted([
+    20, 100,
+  ]);
+  const [valueCharge, setValueCharge] = useStateIfMounted([20, 100]);
+  const [valueChargeDensity, setValueChargeDensity] = useStateIfMounted([
+    20, 100,
+  ]);
   const [valueDatabase, setValueDatabase] = useState({});
   const [valueActivity, setValueActivity] = useState({});
   const [valueTaxonomy, setValueTaxonomy] = useState({});
@@ -102,11 +108,11 @@ const Form = ({
   const [logicOperatorValueForSequence, setLogicOperatorValueForSequence] =
     useState("AND");
 
-  const [taxonomies, setTaxonomies] = useState([]);
-  const [databases, setDatabases] = useState([]);
-  const [pfams, setPfams] = useState([]);
-  const [geneOntologies, setGeneOntologies] = useState([]);
-  const [activities, setActivities] = useState([]);
+  const [taxonomies, setTaxonomies] = useStateIfMounted([]);
+  const [databases, setDatabases] = useStateIfMounted([]);
+  const [pfams, setPfams] = useStateIfMounted([]);
+  const [geneOntologies, setGeneOntologies] = useStateIfMounted([]);
+  const [activities, setActivities] = useStateIfMounted([]);
 
   const initialTaxonomies = useCallback(async () => {
     try {
@@ -117,7 +123,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setMessage, setOpenSnackbar, setSeverity]);
+  }, [setMessage, setOpenSnackbar, setSeverity, setTaxonomies]);
 
   const initialPfams = useCallback(async () => {
     try {
@@ -128,7 +134,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setSeverity, setMessage, setOpenSnackbar]);
+  }, [setSeverity, setMessage, setOpenSnackbar, setPfams]);
 
   const initialDatabases = useCallback(async () => {
     try {
@@ -139,7 +145,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setMessage, setSeverity, setOpenSnackbar]);
+  }, [setMessage, setSeverity, setOpenSnackbar, setDatabases]);
 
   const initialGeneOntology = useCallback(async () => {
     try {
@@ -150,7 +156,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setSeverity, setMessage, setOpenSnackbar]);
+  }, [setSeverity, setMessage, setOpenSnackbar, setGeneOntologies]);
 
   const initialActivities = useCallback(async () => {
     try {
@@ -161,7 +167,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setSeverity, setMessage, setOpenSnackbar]);
+  }, [setSeverity, setMessage, setOpenSnackbar, setActivities]);
 
   const initialParameters = useCallback(async () => {
     try {
@@ -186,7 +192,17 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setMessage, setSeverity, setOpenSnackbar]);
+  }, [
+    setMessage,
+    setSeverity,
+    setOpenSnackbar,
+    setParams,
+    setValueLength,
+    setValueMolecularWeight,
+    setValueIsoelectricPoint,
+    setValueCharge,
+    setValueChargeDensity,
+  ]);
 
   useEffect(() => {
     initialParameters();
