@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -53,7 +54,7 @@ const Form = ({
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [queryText, setQueryText] = useState("");
   const [loading, setLoading] = useState(true);
-  const [loadingButton, setLoadingButton] = useState(false);
+  const [loadingButton, setLoadingButton] = useStateIfMounted(false);
   const [params, setParams] = useState({});
 
   const [valueLength, setValueLength] = useState([]);

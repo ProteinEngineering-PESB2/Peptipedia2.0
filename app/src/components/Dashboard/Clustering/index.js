@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useStateIfMounted } from "use-state-if-mounted";
 
 import Grid from "@mui/material/Grid";
@@ -11,9 +10,9 @@ import Snackbar from "../Snackbar";
 const Clustering = () => {
   const [res, setRes] = useStateIfMounted();
 
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useStateIfMounted(false);
+  const [message, setMessage] = useStateIfMounted("");
+  const [severity, setSeverity] = useStateIfMounted("");
 
   return (
     <>

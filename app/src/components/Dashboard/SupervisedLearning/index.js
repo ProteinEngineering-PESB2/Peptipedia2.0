@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,12 +9,12 @@ import SupervisedLearningContent from "./SupervisedLearningContent";
 import Snackbar from "../Snackbar";
 
 const SupervisedLearning = () => {
-  const [data, setData] = useState();
-  const [selectedTaskType, setSelectedTaskType] = useState("");
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
-  const [options, setOptions] = useState({})
+  const [data, setData] = useStateIfMounted();
+  const [selectedTaskType, setSelectedTaskType] = useStateIfMounted("");
+  const [openSnackbar, setOpenSnackbar] = useStateIfMounted(false);
+  const [message, setMessage] = useStateIfMounted("");
+  const [severity, setSeverity] = useStateIfMounted("");
+  const [options, setOptions] = useStateIfMounted({})
 
   return (
     <>

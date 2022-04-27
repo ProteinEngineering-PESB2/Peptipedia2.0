@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState, useCallback } from "react";
+import { useStateIfMounted } from "use-state-if-mounted";
 import { styled } from "@mui/system";
 
 import CircularLoading from "../CircularLoading";
@@ -47,9 +48,10 @@ const SupervisedLearningContent = ({
   const [fileType, setFileType] = useState("text");
   const [fileInputNew, setFileInputNew] = useState(null);
   const [textInput, setTextInput] = useState("");
-  const [loadingPredictNewData, setLoadingPredictNewData] = useState(false);
-  const [columns, setColumns] = useState([]);
-  const [dataTable, setDataTable] = useState([]);
+  const [loadingPredictNewData, setLoadingPredictNewData] =
+    useStateIfMounted(false);
+  const [columns, setColumns] = useStateIfMounted([]);
+  const [dataTable, setDataTable] = useStateIfMounted([]);
 
   const handleChangeFileType = (e) => {
     setFileType(e.target.value);
@@ -330,7 +332,9 @@ const SupervisedLearningContent = ({
 
       setLoadingPredictNewData(false);
     } catch (error) {
-      console.log(error);
+      setSeverity("error");
+      setMessage("Error predicting new data");
+      setOpenSnackbar(true);
       setLoadingPredictNewData(false);
     }
   };

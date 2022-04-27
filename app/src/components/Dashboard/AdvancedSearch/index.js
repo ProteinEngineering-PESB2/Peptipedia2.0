@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,12 +9,12 @@ import AdvancedSearchContent from "./AdvancedSearchContent";
 import Snackbar from "../Snackbar";
 
 const AdvancedSearch = () => {
-  const [queries, setQueries] = useState([]);
-  const [queriesWithID, setQueriesWithID] = useState([]);
-  const [counts, setCounts] = useState([]);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
+  const [queries, setQueries] = useStateIfMounted([]);
+  const [queriesWithID, setQueriesWithID] = useStateIfMounted([]);
+  const [counts, setCounts] = useStateIfMounted([]);
+  const [openSnackbar, setOpenSnackbar] = useStateIfMounted(false);
+  const [message, setMessage] = useStateIfMounted("");
+  const [severity, setSeverity] = useStateIfMounted("");
 
   return (
     <>
