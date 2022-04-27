@@ -178,7 +178,7 @@ const Database = () => {
               }}
               onClick={downloadZIP}
             >
-              Download as ZIP
+              Download as CSV
             </Button>
           )}
         </Grid>
