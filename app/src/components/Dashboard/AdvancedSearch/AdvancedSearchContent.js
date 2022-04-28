@@ -27,16 +27,19 @@ const AdvancedSearchContent = ({
   setOpenSnackbar,
   setMessage,
   setSeverity,
-  setPeptideID
+  setPeptideID,
+  querySelected,
+  setQuerySelected,
+  totalTable,
+  setTotalTable,
+  pageTable,
+  setPageTable,
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataTable, setDataTable] = useState([]);
   const [columnsTable, setColumnsTable] = useState([]);
-  const [pageTable, setPageTable] = useState(0);
-  const [totalTable, setTotalTable] = useState(20);
   const [loadingTable, setLoadingTable] = useState(false);
-  const [querySelected, setQuerySelected] = useState("");
 
   const options = {
     selectableRowsHideCheckboxes: true,
@@ -106,14 +109,14 @@ const AdvancedSearchContent = ({
             let parcial_data = res.data[d];
             parcial_data.push(
               <Button variant="text" color="info">
-                <InfoIcon onClick={() => setPeptideID(res.data[d][0])}/>
+                <InfoIcon onClick={() => setPeptideID(res.data[d][0])} />
               </Button>
             );
-            new_data.push(parcial_data)
+            new_data.push(parcial_data);
           }
 
-          const new_columns = res.columns
-          new_columns.push("Options")
+          const new_columns = res.columns;
+          new_columns.push("Options");
 
           setDataTable(new_data);
           setColumnsTable(new_columns);
@@ -131,6 +134,15 @@ const AdvancedSearchContent = ({
 
   useEffect(() => {
     setLoading(true);
+
+    if (querySelected !== "") {
+      searchDatabase({
+        query: querySelected,
+        page: pageTable,
+        count: totalTable,
+      });
+    }
+
     const d = [];
     let cont = 1;
     queries.forEach((q) => {

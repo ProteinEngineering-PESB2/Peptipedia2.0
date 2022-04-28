@@ -17,6 +17,9 @@ const AdvancedSearch = () => {
   const [message, setMessage] = useStateIfMounted("");
   const [severity, setSeverity] = useStateIfMounted("");
   const [peptideID, setPeptideID] = useStateIfMounted(0);
+  const [pageTable, setPageTable] = useStateIfMounted(0);
+  const [totalTable, setTotalTable] = useStateIfMounted(20);
+  const [querySelected, setQuerySelected] = useStateIfMounted("");
 
   return (
     <>
@@ -72,6 +75,12 @@ const AdvancedSearch = () => {
                   setMessage={setMessage}
                   setSeverity={setSeverity}
                   setPeptideID={setPeptideID}
+                  pageTable={pageTable}
+                  setPageTable={setPageTable}
+                  querySelected={querySelected}
+                  setQuerySelected={setQuerySelected}
+                  totalTable={totalTable}
+                  setTotalTable={setTotalTable}
                 />
               </Grid>
             )}
