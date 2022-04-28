@@ -129,7 +129,16 @@ const AdvancedSearchContent = ({
         setLoadingTable(false);
       }
     },
-    [querySelected, setMessage, setSeverity, setOpenSnackbar, setPeptideID]
+    [
+      querySelected,
+      setMessage,
+      setSeverity,
+      setOpenSnackbar,
+      setPeptideID,
+      querySelected,
+      pageTable,
+      totalTable,
+    ]
   );
 
   useEffect(() => {

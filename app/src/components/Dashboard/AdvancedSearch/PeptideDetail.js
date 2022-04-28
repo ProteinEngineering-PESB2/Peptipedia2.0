@@ -1,5 +1,14 @@
-import { Typography, Grid, Box, Button, Paper } from "@mui/material";
-import { useCallback, useEffect } from "react";
+import {
+  Typography,
+  Grid,
+  Box,
+  Button,
+  FilledInput,
+  InputAdornment,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
@@ -7,6 +16,8 @@ import CircularLoading from "../CircularLoading";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CancelIcon from "@mui/icons-material/Cancel";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function PeptideDetail({
   peptideID,
@@ -15,6 +26,7 @@ export default function PeptideDetail({
   setMessage,
   setOpenSnackbar,
 }) {
+  const [sequence, setSequence] = useStateIfMounted("");
   const [dataInfo, setDataInfo] = useStateIfMounted([]);
   const [dataGOColumns, setDataGOColumns] = useStateIfMounted([]);
   const [dataGOData, setDataGOData] = useStateIfMounted([]);
@@ -22,11 +34,17 @@ export default function PeptideDetail({
   const [pfamData, setPfamData] = useStateIfMounted([]);
   const [activitiesColumns, setActivitiesColumns] = useStateIfMounted([]);
   const [activitiesData, setActivitiesData] = useStateIfMounted([]);
+  const [taxonomiesData, setTaxonomiesData] = useStateIfMounted([]);
+  const [taxonomiesColumns, setTaxonomiesColumns] = useStateIfMounted([]);
+  const [databasesColumns, setDatabasesColumns] = useStateIfMounted([]);
+  const [databasesData, setDatabasesData] = useStateIfMounted([]);
   const [loading, setLoading] = useStateIfMounted(true);
+  const [copied, setCopied] = useState(false);
 
   const getInfoFromPeptide = useCallback(async () => {
     try {
       const res = await axios.get(`/api/get_info_from_peptide/${peptideID}`);
+      setSequence(res.data.result[0].sequence);
       setDataInfo(res.data.result);
     } catch (error) {
       setSeverity("error");
@@ -85,19 +103,55 @@ export default function PeptideDetail({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
+  }, [setSeverity, setMessage, setOpenSnackbar]);
+
+  const getTaxonomiesFromPeptide = useCallback(async () => {
+    try {
+      const res = await axios.get(`/api/get_tax_from_peptide/${peptideID}`);
+      setTaxonomiesData(res.data.result.data);
+      setTaxonomiesColumns(res.data.result.columns);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
+    }
+  }, [setSeverity, setMessage, setOpenSnackbar]);
+
+  const getDatabasesFromPeptide = useCallback(async () => {
+    try {
+      const res = await axios.get(`/api/get_db_from_peptide/${peptideID}`);
+      console.log(res.data.result);
+      setDatabasesColumns(res.data.result.columns);
+      setDatabasesData(res.data.result.data);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
+    }
   }, []);
+
+  const handleCopied = () => {
+    setCopied(true);
+    setSeverity("success");
+    setMessage("Copied sequence");
+    setOpenSnackbar(true);
+  };
 
   useEffect(() => {
     getInfoFromPeptide();
     getGOFromPeptide();
     getPfamFromPeptide();
     getActivitiesFromPeptide();
+    getTaxonomiesFromPeptide();
+    getDatabasesFromPeptide();
     setLoading(false);
   }, [
     getInfoFromPeptide,
     getGOFromPeptide,
     getPfamFromPeptide,
     getActivitiesFromPeptide,
+    getTaxonomiesFromPeptide,
+    getDatabasesFromPeptide,
   ]);
 
   return (
@@ -129,6 +183,37 @@ export default function PeptideDetail({
                 <KeyboardBackspaceIcon sx={{ fontSize: 30 }} />
               </Button>
             </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Sequence
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <FilledInput
+              id="filled-multiline-static"
+              multiline
+              rows={5}
+              defaultValue={sequence}
+              variant="filled"
+              fullWidth
+              endAdornment={
+                <CopyToClipboard text={sequence}>
+                  <InputAdornment
+                    position="end"
+                    sx={{ display: "flex", alignItems: "end", marginBottom: 8 }}
+                  >
+                    <Tooltip title="Copy" onClick={handleCopied}>
+                      <IconButton edge="end">
+                        <ContentCopyIcon
+                          color={copied ? "primary" : "inherit"}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                </CopyToClipboard>
+              }
+            />
           </Grid>
           {dataInfo.length === 1 && (
             <>
@@ -216,6 +301,38 @@ export default function PeptideDetail({
                   title="Activitiy"
                   columns={activitiesColumns}
                   data={activitiesData}
+                />
+              </Grid>
+            </>
+          )}
+          {taxonomiesData.length > 0 && (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Taxonomy
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <DataTable
+                  title="Taxonomy"
+                  columns={taxonomiesColumns}
+                  data={taxonomiesData}
+                />
+              </Grid>
+            </>
+          )}
+          {databasesData.length > 0 && (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Databases
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <DataTable
+                  title="Database"
+                  columns={databasesColumns}
+                  data={databasesData}
                 />
               </Grid>
             </>
