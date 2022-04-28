@@ -31,7 +31,13 @@ const AdvancedSearch = () => {
         )}
         {peptideID > 0 ? (
           <Grid item lg={12} md={12} xs={12}>
-            <PeptideDetail peptideID={peptideID} setPeptideID={setPeptideID} />
+            <PeptideDetail
+              peptideID={peptideID}
+              setPeptideID={setPeptideID}
+              setOpenSnackbar={setOpenSnackbar}
+              setMessage={setMessage}
+              setSeverity={setSeverity}
+            />
           </Grid>
         ) : (
           <>
