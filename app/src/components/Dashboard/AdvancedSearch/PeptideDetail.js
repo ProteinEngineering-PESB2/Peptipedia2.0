@@ -7,6 +7,13 @@ import {
   InputAdornment,
   IconButton,
   Tooltip,
+  TableContainer,
+  Paper,
+  Table,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableHead,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -18,6 +25,18 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
 export default function PeptideDetail({
   peptideID,
@@ -223,9 +242,47 @@ export default function PeptideDetail({
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={12} md={8} lg={7} xl={6}>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        {dataInfo[0].length && <TableCell>Length</TableCell>}
+                        {dataInfo[0].molecular_weight && (
+                          <TableCell>Molecular Weight</TableCell>
+                        )}
+                        {dataInfo[0].isoelectric_point && (
+                          <TableCell>Isoelectric Point</TableCell>
+                        )}
+                        {dataInfo[0].charge && <TableCell>Charge</TableCell>}
+                        {dataInfo[0].charge_density && (
+                          <TableCell>Charge Density</TableCell>
+                        )}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        {dataInfo[0].length && (
+                          <TableCell>{dataInfo[0].length}</TableCell>
+                        )}
+                        {dataInfo[0].length && (
+                          <TableCell>{dataInfo[0].molecular_weight}</TableCell>
+                        )}
+                        {dataInfo[0].length && (
+                          <TableCell>{dataInfo[0].isoelectric_point}</TableCell>
+                        )}
+                        {dataInfo[0].length && (
+                          <TableCell>{dataInfo[0].charge}</TableCell>
+                        )}
+                        {dataInfo[0].length && (
+                          <TableCell>{dataInfo[0].charge_density}</TableCell>
+                        )}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
                 <div
                   className="table-responsive"
-                  style={{ fontWeight: "bold" }}
+                  style={{ fontWeight: "bold", marginTop: 10 }}
                 >
                   <table className="table table-hover text-center table-striped">
                     <thead>
