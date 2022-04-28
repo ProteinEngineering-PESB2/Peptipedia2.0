@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import InfoIcon from "@mui/icons-material/Info";
 
 import DataTable from "../DataTable";
 import CircularLoading from "../CircularLoading";
@@ -26,6 +27,7 @@ const AdvancedSearchContent = ({
   setOpenSnackbar,
   setMessage,
   setSeverity,
+  setPeptideID
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,8 +101,22 @@ const AdvancedSearchContent = ({
           setOpenSnackbar(true);
           setLoadingTable(false);
         } else if (res.status === "success") {
-          setDataTable(res.data);
-          setColumnsTable(res.columns);
+          let new_data = [];
+          for (let d = 0; d < res.data.length; d++) {
+            let parcial_data = res.data[d];
+            parcial_data.push(
+              <Button variant="text" color="info">
+                <InfoIcon onClick={() => setPeptideID(res.data[d][0])}/>
+              </Button>
+            );
+            new_data.push(parcial_data)
+          }
+
+          const new_columns = res.columns
+          new_columns.push("Options")
+
+          setDataTable(new_data);
+          setColumnsTable(new_columns);
           setLoadingTable(false);
         }
       } catch (error) {
@@ -110,7 +126,7 @@ const AdvancedSearchContent = ({
         setLoadingTable(false);
       }
     },
-    [querySelected, setMessage, setSeverity, setOpenSnackbar]
+    [querySelected, setMessage, setSeverity, setOpenSnackbar, setPeptideID]
   );
 
   useEffect(() => {
@@ -129,7 +145,7 @@ const AdvancedSearchContent = ({
         <Box>
           <Button
             variant="text"
-            color="info"
+            color="primary"
             onClick={() =>
               searchDatabase({ query: query, page: 0, count: count })
             }

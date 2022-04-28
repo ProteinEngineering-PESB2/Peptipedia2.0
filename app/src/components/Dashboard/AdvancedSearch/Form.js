@@ -123,7 +123,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setMessage, setOpenSnackbar, setSeverity, setTaxonomies]);
+  }, [setMessage, setOpenSnackbar, setSeverity]);
 
   const initialPfams = useCallback(async () => {
     try {
@@ -134,7 +134,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setSeverity, setMessage, setOpenSnackbar, setPfams]);
+  }, [setSeverity, setMessage, setOpenSnackbar]);
 
   const initialDatabases = useCallback(async () => {
     try {
@@ -145,7 +145,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setMessage, setSeverity, setOpenSnackbar, setDatabases]);
+  }, [setMessage, setSeverity, setOpenSnackbar]);
 
   const initialGeneOntology = useCallback(async () => {
     try {
@@ -156,7 +156,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setSeverity, setMessage, setOpenSnackbar, setGeneOntologies]);
+  }, [setSeverity, setMessage, setOpenSnackbar]);
 
   const initialActivities = useCallback(async () => {
     try {
@@ -167,7 +167,7 @@ const Form = ({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, [setSeverity, setMessage, setOpenSnackbar, setActivities]);
+  }, [setSeverity, setMessage, setOpenSnackbar]);
 
   const initialParameters = useCallback(async () => {
     try {
@@ -196,12 +196,6 @@ const Form = ({
     setMessage,
     setSeverity,
     setOpenSnackbar,
-    setParams,
-    setValueLength,
-    setValueMolecularWeight,
-    setValueIsoelectricPoint,
-    setValueCharge,
-    setValueChargeDensity,
   ]);
 
   useEffect(() => {

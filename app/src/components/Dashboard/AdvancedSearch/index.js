@@ -1,10 +1,11 @@
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import AdvancedSearchForm from "./AdvancedSearchForm";
 import AdvancedSearchContent from "./AdvancedSearchContent";
+import PeptideDetail from "./PeptideDetail";
 
 import Snackbar from "../Snackbar";
 
@@ -15,6 +16,7 @@ const AdvancedSearch = () => {
   const [openSnackbar, setOpenSnackbar] = useStateIfMounted(false);
   const [message, setMessage] = useStateIfMounted("");
   const [severity, setSeverity] = useStateIfMounted("");
+  const [peptideID, setPeptideID] = useStateIfMounted(0);
 
   return (
     <>
@@ -27,36 +29,47 @@ const AdvancedSearch = () => {
             message={message}
           />
         )}
-        <Grid item lg={12} md={12} xs={12}>
-          <Typography variant="h4" style={{ fontWeight: "bold" }}>Advanced Search</Typography>
-        </Grid>
-        <Grid item lg={12} md={12} xs={12}>
-          <AdvancedSearchForm
-            queries={queries}
-            setQueries={setQueries}
-            queriesWithID={queriesWithID}
-            setQueriesWithID={setQueriesWithID}
-            counts={counts}
-            setCounts={setCounts}
-            setOpenSnackbar={setOpenSnackbar}
-            setMessage={setMessage}
-            setSeverity={setSeverity}
-          />
-        </Grid>
-        {queries.length > 0 && (
+        {peptideID > 0 ? (
           <Grid item lg={12} md={12} xs={12}>
-            <AdvancedSearchContent
-              queries={queries}
-              setQueries={setQueries}
-              queriesWithID={queriesWithID}
-              setQueriesWithID={setQueriesWithID}
-              counts={counts}
-              setCounts={setCounts}
-              setOpenSnackbar={setOpenSnackbar}
-              setMessage={setMessage}
-              setSeverity={setSeverity}
-            />
+            <PeptideDetail peptideID={peptideID} setPeptideID={setPeptideID} />
           </Grid>
+        ) : (
+          <>
+            <Grid item lg={12} md={12} xs={12}>
+              <Typography variant="h4" style={{ fontWeight: "bold" }}>
+                Advanced Search
+              </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              <AdvancedSearchForm
+                queries={queries}
+                setQueries={setQueries}
+                queriesWithID={queriesWithID}
+                setQueriesWithID={setQueriesWithID}
+                counts={counts}
+                setCounts={setCounts}
+                setOpenSnackbar={setOpenSnackbar}
+                setMessage={setMessage}
+                setSeverity={setSeverity}
+              />
+            </Grid>
+            {queries.length > 0 && (
+              <Grid item lg={12} md={12} xs={12}>
+                <AdvancedSearchContent
+                  queries={queries}
+                  setQueries={setQueries}
+                  queriesWithID={queriesWithID}
+                  setQueriesWithID={setQueriesWithID}
+                  counts={counts}
+                  setCounts={setCounts}
+                  setOpenSnackbar={setOpenSnackbar}
+                  setMessage={setMessage}
+                  setSeverity={setSeverity}
+                  setPeptideID={setPeptideID}
+                />
+              </Grid>
+            )}
+          </>
         )}
       </Grid>
     </>
