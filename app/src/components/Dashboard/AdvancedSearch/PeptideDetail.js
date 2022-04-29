@@ -26,6 +26,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import RemoveIcon from "@mui/icons-material/Remove";
+import pv from "bio-pv";
 
 export default function PeptideDetail({
   peptideID,
@@ -167,7 +168,12 @@ export default function PeptideDetail({
     try {
       const res = await axios.get(`/api/get_structure/${peptideID}`);
       if (res.data.status === "success") {
-        setPath(res.data.path);
+        setPath(res.data.path.path);
+        const res_pdb = await axios.get(res.data.path.path);
+        const structure = pv.io.pdb(res_pdb.data);
+        const chain = structure.select({ chain: "A" });
+        const viewer = pv.Viewer(document.getElementById("content-pdb"));
+        viewer.cartoon("protein", structure);
       }
     } catch (error) {
       setSeverity("error");
@@ -217,7 +223,7 @@ export default function PeptideDetail({
                 alignItems: "center",
               }}
             >
-              <Typography variant="h4" style={{ fontWeight: "bold" }}>
+              <Typography variant="h4">
                 Peptide {peptideID}
               </Typography>
               <Button
@@ -233,6 +239,18 @@ export default function PeptideDetail({
               </Button>
             </Box>
           </Grid>
+          {path !== "" && (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  PDB Structure
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <div id="content-pdb" style={{ width: '100%' }}></div>
+              </Grid>
+            </>
+          )}
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               Sequence
@@ -386,15 +404,6 @@ export default function PeptideDetail({
                   columns={databasesColumns}
                   data={databasesData}
                 />
-              </Grid>
-            </>
-          )}
-          {path !== "" && (
-            <>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  PDB Structure
-                </Typography>
               </Grid>
             </>
           )}
