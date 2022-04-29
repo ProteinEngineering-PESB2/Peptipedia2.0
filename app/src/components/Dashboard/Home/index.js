@@ -5,7 +5,7 @@ import About from "./About";
 // import Statistics from "./Statistics";
 import Services from "./Services";
 import Team from "./Team";
-import FAQs from "./FAQs";
+// import FAQs from "./FAQs";
 import Contact from "./Contact";
 import Resources from "./Resources";
 
@@ -31,11 +31,11 @@ const Home = () => {
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Resources/>
       </Grid>
-      <Grid container spacing={3} sx={{ marginTop: 5 }}>
+      {/* <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>
           <FAQs />
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>
           <Contact />

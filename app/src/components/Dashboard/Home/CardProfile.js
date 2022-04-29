@@ -9,19 +9,17 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import Claudio from "../../../assets/claudio.jpeg";
-
-const CardProfile = () => {
+const CardProfile = ({ name, rol, image }) => {
   return (
     <>
       <Card sx={{ width: "95%" }}>
-        <CardMedia component="img" height="320" image={Claudio} alt="profile" />
+        <CardMedia component="img" height="400" image={image} alt="profile" className="image-center"/>
         <CardContent sx={{ textAlign: "center" }}>
           <Typography variant="h5" component="div">
-            Claudio Guevara
+            {name}
           </Typography>
           <Typography variant="body2" color="text.secodary">
-            Frontend Development
+            {rol}
           </Typography>
         </CardContent>
         <CardActions sx={{ paddingBottom: 3, marginTop: 1 }}>

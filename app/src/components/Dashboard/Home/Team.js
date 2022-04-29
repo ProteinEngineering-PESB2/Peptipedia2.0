@@ -5,21 +5,23 @@ import Typography from "@mui/material/Typography";
 
 import CardProfile from "./CardProfile";
 
+import Claudio from "../../../assets/claudio.jpeg";
+import Fran from "../../../assets/fran.jpeg"
+import UnknownMan from "../../../assets/hombre-desconocido.jpg"
+
 const responsive = {
   0: { items: 1 },
   568: { items: 2 },
   1024: { items: 3 },
+  1500: { items: 4 },
 };
 
 const Team = () => {
   const items = [
-    <CardProfile />,
-    <CardProfile />,
-    <CardProfile />,
-    <CardProfile />,
-    <CardProfile />,
-    <CardProfile />,
-    <CardProfile />,
+    <CardProfile name="Claudio Guevara" rol="Frontend Development" image={Claudio}/>,
+    <CardProfile name="Francisca Rodríguez" rol="Frontend Development" image={Fran}/>,
+    <CardProfile name="Francisca Rodríguez" rol="Frontend Development" image={UnknownMan}/>,
+    <CardProfile name="Francisca Rodríguez" rol="Frontend Development" image={UnknownMan}/>,
   ];
 
   return (

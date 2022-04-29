@@ -65,7 +65,7 @@ const About = () => {
             width: '100%',
           }}
         >
-          <img src={Peptipedia} alt="header" style={{ height: "33rem" }}/>
+          <img src={Peptipedia} alt="header" className="img-peptipedia"/>
         </Grid>
       </Grid>
     </>

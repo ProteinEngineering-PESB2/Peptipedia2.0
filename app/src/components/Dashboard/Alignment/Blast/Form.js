@@ -73,7 +73,6 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
         setOpenSnackbar(true);
       } else {
         const { path } = res;
-
         const { data } = await axios.get(path);
 
         setLoading(false);
