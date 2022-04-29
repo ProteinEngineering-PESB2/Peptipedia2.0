@@ -3,7 +3,16 @@ import axios from "axios";
 
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import { Button, Typography } from "@mui/material";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
   FormControl,
@@ -353,95 +362,110 @@ const SupervisedLearningContent = ({
                 </Typography>
               </Grid>
               <Grid item lg={6} md={6} xs={12}>
-                <div
-                  className="table-responsive"
-                  style={{ fontWeight: "bold" }}
-                >
-                  <table className="table table-hover text-center table-striped">
-                    <thead>
-                      <tr>
-                        <th>Set</th>
-                        <th>Accuracy</th>
-                        {data.result.performance.f1 && <th>F1</th>}
-                        {data.result.performance.f1_weighted && (
-                          <th>F1 Weighted</th>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Set</TableCell>
+                        <TableCell>Accuracy</TableCell>
+                        {data.result.performance.f1 && (
+                          <TableCell>F1</TableCell>
                         )}
-                        {data.result.performance.recall && <th>Recall</th>}
+                        {data.result.performance.f1_weighted && (
+                          <TableCell>F1 Weighted</TableCell>
+                        )}
+                        {data.result.performance.recall && (
+                          <TableCell>Recall</TableCell>
+                        )}
                         {data.result.performance.recall_weighted && (
-                          <th>Recall Weighted</th>
+                          <TableCell>Recall Weighted</TableCell>
                         )}
                         {data.result.performance.precision && (
-                          <th>Precision</th>
+                          <TableCell>Precision</TableCell>
                         )}
                         {data.result.performance.precision_weighted && (
-                          <th>Precision Weighted</th>
+                          <TableCell>Precision Weighted</TableCell>
                         )}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.result.performance && (
-                        <tr className="table-active">
-                          <td>Training</td>
-                          <td>{data.result.performance.accuracy}</td>
-                          {data.result.performance.f1 && (
-                            <td>{data.result.performance.f1}</td>
-                          )}
-                          {data.result.performance.f1_weighted && (
-                            <td>{data.result.performance.f1_weighted}</td>
-                          )}
-                          {data.result.performance.recall && (
-                            <td>{data.result.performance.recall}</td>
-                          )}
-                          {data.result.performance.recall_weighted && (
-                            <td>{data.result.performance.recall_weighted}</td>
-                          )}
-                          {data.result.performance.precision && (
-                            <td>{data.result.performance.precision}</td>
-                          )}
-                          {data.result.performance.precision_weighted && (
-                            <td>
-                              {data.result.performance.precision_weighted}
-                            </td>
-                          )}
-                        </tr>
-                      )}
-                      {data.result.performance_testing && (
-                        <tr className="table-active">
-                          <td>Testing</td>
-                          <td>{data.result.performance_testing.accuracy}</td>
-                          {data.result.performance_testing.f1 && (
-                            <td>{data.result.performance_testing.f1}</td>
-                          )}
-                          {data.result.performance_testing.f1_weighted && (
-                            <td>
-                              {data.result.performance_testing.f1_weighted}
-                            </td>
-                          )}
-                          {data.result.performance_testing.recall && (
-                            <td>{data.result.performance_testing.recall}</td>
-                          )}
-                          {data.result.performance_testing.recall_weighted && (
-                            <td>
-                              {data.result.performance_testing.recall_weighted}
-                            </td>
-                          )}
-                          {data.result.performance_testing.precision && (
-                            <td>{data.result.performance_testing.precision}</td>
-                          )}
-                          {data.result.performance_testing
-                            .precision_weighted && (
-                            <td>
-                              {
-                                data.result.performance_testing
-                                  .precision_weighted
-                              }
-                            </td>
-                          )}
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Training</TableCell>
+                        {data.result.performance.accuracy && (
+                          <TableCell>
+                            {data.result.performance.accuracy}
+                          </TableCell>
+                        )}
+                        {data.result.performance.f1 && (
+                          <TableCell>{data.result.performance.f1}</TableCell>
+                        )}
+                        {data.result.performance.f1_weighted && (
+                          <TableCell>
+                            {data.result.performance.f1_weighted}
+                          </TableCell>
+                        )}
+                        {data.result.performance.recall && (
+                          <TableCell>
+                            {data.result.performance.recall}
+                          </TableCell>
+                        )}
+                        {data.result.performance.recall_weighted && (
+                          <TableCell>
+                            {data.result.performance.recall_weighted}
+                          </TableCell>
+                        )}
+                        {data.result.performance.precision && (
+                          <TableCell>
+                            {data.result.performance.precision}
+                          </TableCell>
+                        )}
+                        {data.result.performance.precision_weighted && (
+                          <TableCell>
+                            {data.result.performance.precision_weighted}
+                          </TableCell>
+                        )}
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Testing</TableCell>
+                        {data.result.performance_testing.accuracy && (
+                          <TableCell>
+                            {data.result.performance_testing.accuracy}
+                          </TableCell>
+                        )}
+                        {data.result.performance_testing.f1 && (
+                          <TableCell>
+                            {data.result.performance_testing.f1}
+                          </TableCell>
+                        )}
+                        {data.result.performance_testing.f1_weighted && (
+                          <TableCell>
+                            {data.result.performance_testing.f1_weighted}
+                          </TableCell>
+                        )}
+                        {data.result.performance_testing.recall && (
+                          <TableCell>
+                            {data.result.performance_testing.recall}
+                          </TableCell>
+                        )}
+                        {data.result.performance_testing.recall_weighted && (
+                          <TableCell>
+                            {data.result.performance_testing.recall_weighted}
+                          </TableCell>
+                        )}
+                        {data.result.performance_testing.precision && (
+                          <TableCell>
+                            {data.result.performance_testing.precision}
+                          </TableCell>
+                        )}
+                        {data.result.performance_testing.precision_weighted && (
+                          <TableCell>
+                            {data.result.performance_testing.precision_weighted}
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -596,58 +620,75 @@ const SupervisedLearningContent = ({
                 </Typography>
               </Grid>
               <Grid item lg={6} md={8} xs={12}>
-                <div className="table-responsive">
-                  <table
-                    className="table table-hover text-center table-striped"
-                    style={{ width: "100%", fontWeight: "bold" }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Metric Name</th>
-                        <th>Metric Value</th>
-                        <th>P-value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="table-active">
-                        <td>Kendall</td>
-                        <td>{data.result.corr.kendall.kendalltau}</td>
-                        <td>{data.result.corr.kendall.pvalue}</td>
-                      </tr>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Metric Name</TableCell>
+                        <TableCell>Metric Value</TableCell>
+                        <TableCell>P-value</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Kendall</TableCell>
+                        <TableCell>
+                          {data.result.corr.kendall.kendalltau}
+                        </TableCell>
+                        <TableCell>{data.result.corr.kendall.pvalue}</TableCell>
+                      </TableRow>
                       {data.result.corr_testing && (
-                        <tr className="table-active">
-                          <td>Kendall Testing</td>
-                          <td>{data.result.corr_testing.kendall.kendalltau}</td>
-                          <td>{data.result.corr_testing.kendall.pvalue}</td>
-                        </tr>
+                        <TableRow>
+                          <TableCell>Kendall Testing</TableCell>
+                          <TableCell>
+                            {data.result.corr_testing.kendall.kendalltau}
+                          </TableCell>
+                          <TableCell>
+                            {data.result.corr_testing.kendall.pvalue}
+                          </TableCell>
+                        </TableRow>
                       )}
-                      <tr className="table-active">
-                        <td>Pearson</td>
-                        <td>{data.result.corr.pearson.pearsonr}</td>
-                        <td>{data.result.corr.pearson.pvalue}</td>
-                      </tr>
+                      <TableRow>
+                        <TableCell>Pearson</TableCell>
+                        <TableCell>
+                          {data.result.corr.pearson.pearsonr}
+                        </TableCell>
+                        <TableCell>{data.result.corr.pearson.pvalue}</TableCell>
+                      </TableRow>
                       {data.result.corr_testing && (
-                        <tr className="table-active">
-                          <td>Kendall Testing</td>
-                          <td>{data.result.corr_testing.pearson.pearsonr}</td>
-                          <td>{data.result.corr_testing.pearson.pvalue}</td>
-                        </tr>
+                        <TableRow>
+                          <TableCell>Kendall Testing</TableCell>
+                          <TableCell>
+                            {data.result.corr_testing.pearson.pearsonr}
+                          </TableCell>
+                          <TableCell>
+                            {data.result.corr_testing.pearson.pvalue}
+                          </TableCell>
+                        </TableRow>
                       )}
-                      <tr className="table-active">
-                        <td>Spearman</td>
-                        <td>{data.result.corr.spearman.spearmanr}</td>
-                        <td>{data.result.corr.spearman.pvalue}</td>
-                      </tr>
+                      <TableRow>
+                        <TableCell>Spearman</TableCell>
+                        <TableCell>
+                          {data.result.corr.spearman.spearmanr}
+                        </TableCell>
+                        <TableCell>
+                          {data.result.corr.spearman.pvalue}
+                        </TableCell>
+                      </TableRow>
                       {data.result.corr_testing && (
-                        <tr className="table-active">
-                          <td>Kendall Testing</td>
-                          <td>{data.result.corr_testing.spearman.spearmanr}</td>
-                          <td>{data.result.corr_testing.spearman.pvalue}</td>
-                        </tr>
+                        <TableRow>
+                          <TableCell>Kendall Testing</TableCell>
+                          <TableCell>
+                            {data.result.corr_testing.spearman.spearmanr}
+                          </TableCell>
+                          <TableCell>
+                            {data.result.corr_testing.spearman.pvalue}
+                          </TableCell>
+                        </TableRow>
                       )}
-                    </tbody>
-                  </table>
-                </div>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
               <Grid item lg={12} xs={12} marginTop={2}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -655,61 +696,64 @@ const SupervisedLearningContent = ({
                 </Typography>
               </Grid>
               <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                <div className="table-responsive">
-                  <table
-                    className="table table-light table-hover text-center"
-                    style={{ fontWeight: "bold" }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Set</th>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Set</TableCell>
                         {data.result.performance.neg_median_absolute_error && (
-                          <th>Negative Median Absolute Error</th>
+                          <TableCell>Negative Median Absolute Error</TableCell>
                         )}
                         {data.result.performance
                           .neg_root_mean_squared_error && (
-                          <th>Negative Root Mean Squared Error</th>
+                          <TableCell>
+                            Negative Root Mean Squared Error
+                          </TableCell>
                         )}
-                        {data.result.performance.r2 && <th>R2</th>}
-                      </tr>
-                    </thead>
-                    <tbody>
+                        {data.result.performance.r2 && (
+                          <TableCell>R2</TableCell>
+                        )}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
                       {data.result.performance && (
-                        <tr className="table-active">
-                          <td>Training</td>
-                          <td>
+                        <TableRow>
+                          <TableCell>Training</TableCell>
+                          <TableCell>
                             {data.result.performance.neg_median_absolute_error}
-                          </td>
-                          <td>
+                          </TableCell>
+                          <TableCell>
                             {
                               data.result.performance
                                 .neg_root_mean_squared_error
                             }
-                          </td>
-                          <td>{data.result.performance.r2}</td>
-                        </tr>
+                          </TableCell>
+                          <TableCell>{data.result.performance.r2}</TableCell>
+                        </TableRow>
                       )}
                       {data.result.performance_testing && (
-                        <tr className="table-active">
-                          <td>Testing</td>
-                          <td>
+                        <TableRow>
+                          <TableCell>Testing</TableCell>
+                          <TableCell>
                             {
                               data.result.performance_testing
                                 .neg_median_absolute_error
                             }
-                          </td>
-                          <td>
+                          </TableCell>
+                          <TableCell>
                             {
                               data.result.performance_testing
                                 .neg_root_mean_squared_error
                             }
-                          </td>
-                          <td>{data.result.performance_testing.r2}</td>
-                        </tr>
+                          </TableCell>
+                          <TableCell>
+                            {data.result.performance_testing.r2}
+                          </TableCell>
+                        </TableRow>
                       )}
-                    </tbody>
-                  </table>
-                </div>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
               <Grid item lg={12} xs={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>

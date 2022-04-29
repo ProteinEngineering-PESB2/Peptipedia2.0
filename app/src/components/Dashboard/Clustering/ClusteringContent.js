@@ -17,6 +17,7 @@ import { pca } from "../../../services/clustering";
 import DataTable from "../DataTable";
 import CircularLoading from "../CircularLoading";
 import { Box } from "@mui/system";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 const ClusteringContent = ({
   res,
@@ -220,45 +221,34 @@ const ClusteringContent = ({
               </Button>
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <DataTable
-                  title="Clustering Table"
-                  data={data}
-                  columns={columns}
-                />
-              </Paper>
+              <DataTable
+                title="Clustering Table"
+                data={data}
+                columns={columns}
+              />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
               <Typography variant="h6">Clustering Performance</Typography>
             </Grid>
             <Grid item lg={6} md={8} xs={12}>
-              <div className="table-responsive">
-                <table
-                  className="table table-light table-hover text-center"
-                  style={{ width: "100%" }}
-                >
-                  <thead>
-                    <tr>
-                      <th>Calinski-Harabasz index</th>
-                      <th>Davies-Bouldin Index</th>
-                      <th>Silhouette Coefficient</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="table-active">
-                      <td>{res.performance.calinski}</td>
-                      <td>{res.performance.dalvies}</td>
-                      <td>{res.performance.siluetas}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Calinski-Harabasz index</TableCell>
+                      <TableCell>Davies-Bouldin Index</TableCell>
+                      <TableCell>Silhouette Coefficient</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>{res.performance.calinski}</TableCell>
+                      <TableCell>{res.performance.dalvies}</TableCell>
+                      <TableCell>{res.performance.siluetas}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Grid>
           </Grid>
           <Grid container spacing={3} sx={{ marginTop: 2 }}>

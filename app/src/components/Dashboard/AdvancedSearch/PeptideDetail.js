@@ -25,18 +25,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { styled } from '@mui/material/styles';
-import { tableCellClasses } from '@mui/material/TableCell';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+import RemoveIcon from "@mui/icons-material/Remove";
 
 export default function PeptideDetail({
   peptideID,
@@ -58,6 +47,7 @@ export default function PeptideDetail({
   const [databasesColumns, setDatabasesColumns] = useStateIfMounted([]);
   const [databasesData, setDatabasesData] = useStateIfMounted([]);
   const [loading, setLoading] = useStateIfMounted(true);
+  const [path, setPath] = useStateIfMounted("");
   const [copied, setCopied] = useState(false);
 
   const getInfoFromPeptide = useCallback(async () => {
@@ -139,9 +129,46 @@ export default function PeptideDetail({
   const getDatabasesFromPeptide = useCallback(async () => {
     try {
       const res = await axios.get(`/api/get_db_from_peptide/${peptideID}`);
-      console.log(res.data.result);
+      let new_data = [];
+      if (res.data.result.data.length > 0) {
+        for (let i = 0; i < res.data.result.data.length; i++) {
+          let parcial_data = [
+            res.data.result.data[i][0],
+            res.data.result.data[i][1] === null ? (
+              <RemoveIcon />
+            ) : (
+              res.data.result.data[i][1]
+            ),
+          ];
+          new_data.push(parcial_data);
+        }
+      }
+
       setDatabasesColumns(res.data.result.columns);
-      setDatabasesData(res.data.result.data);
+      setDatabasesData(new_data);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
+    }
+  }, [setSeverity, setMessage, setOpenSnackbar]);
+
+  const getPatentsFromPeptide = useCallback(async () => {
+    try {
+      const res = await axios.get(`/api/get_patent_from_peptide/${peptideID}`);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpenSnackbar(true);
+    }
+  }, [setSeverity, setMessage, setOpenSnackbar]);
+
+  const getStructureFromPeptide = useCallback(async () => {
+    try {
+      const res = await axios.get(`/api/get_structure/${peptideID}`);
+      if (res.data.status === "success") {
+        setPath(res.data.path);
+      }
     } catch (error) {
       setSeverity("error");
       setMessage("Service no available");
@@ -163,6 +190,8 @@ export default function PeptideDetail({
     getActivitiesFromPeptide();
     getTaxonomiesFromPeptide();
     getDatabasesFromPeptide();
+    getPatentsFromPeptide();
+    getStructureFromPeptide();
     setLoading(false);
   }, [
     getInfoFromPeptide,
@@ -171,6 +200,7 @@ export default function PeptideDetail({
     getActivitiesFromPeptide,
     getTaxonomiesFromPeptide,
     getDatabasesFromPeptide,
+    getPatentsFromPeptide,
   ]);
 
   return (
@@ -280,41 +310,6 @@ export default function PeptideDetail({
                     </TableBody>
                   </Table>
                 </TableContainer>
-                <div
-                  className="table-responsive"
-                  style={{ fontWeight: "bold", marginTop: 10 }}
-                >
-                  <table className="table table-hover text-center table-striped">
-                    <thead>
-                      <tr>
-                        {dataInfo[0].length && <th>Length</th>}
-                        {dataInfo[0].molecular_weight && (
-                          <th>Molecular Weight</th>
-                        )}
-                        {dataInfo[0].isoelectric_point && (
-                          <th>Isoelectric Point</th>
-                        )}
-                        {dataInfo[0].charge && <th>Charge</th>}
-                        {dataInfo[0].charge_density && <th>Charge Density</th>}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="table-active">
-                        {dataInfo[0].length && <th>{dataInfo[0].length}</th>}
-                        {dataInfo[0].molecular_weight && (
-                          <th>{dataInfo[0].molecular_weight}</th>
-                        )}
-                        {dataInfo[0].isoelectric_point && (
-                          <th>{dataInfo[0].isoelectric_point}</th>
-                        )}
-                        {dataInfo[0].charge && <th>{dataInfo[0].charge}</th>}
-                        {dataInfo[0].charge_density && (
-                          <th>{dataInfo[0].charge_density}</th>
-                        )}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </Grid>
             </>
           )}
@@ -391,6 +386,15 @@ export default function PeptideDetail({
                   columns={databasesColumns}
                   data={databasesData}
                 />
+              </Grid>
+            </>
+          )}
+          {path !== "" && (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  PDB Structure
+                </Typography>
               </Grid>
             </>
           )}
