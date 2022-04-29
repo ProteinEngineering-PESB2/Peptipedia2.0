@@ -233,6 +233,7 @@ export default function PeptideDetail({
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                marginBottom: 2,
               }}
             >
               <Typography variant="h4" sx={{ fontWeight: "bold" }}>
@@ -251,13 +252,13 @@ export default function PeptideDetail({
               </Button>
             </Box>
           </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Typography variant="h6" sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>
+              PDB Structure {path === "" && (<Typography variant="subtitle1" sx={{ marginLeft: 1, fontWeight: "bold" }}>(Structure not found)</Typography>)}
+            </Typography>
+          </Grid>
           {path !== "" && (
             <>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  PDB Structure
-                </Typography>
-              </Grid>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
                 <div id="content-pdb" style={{ width: "100%" }}></div>
               </Grid>
@@ -378,7 +379,7 @@ export default function PeptideDetail({
                   Activity
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Grid item xs={12} sm={12} md={7} lg={6} xl={5}>
                 <DataTable
                   title="Activitiy"
                   columns={activitiesColumns}
@@ -394,7 +395,7 @@ export default function PeptideDetail({
                   Taxonomy
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Grid item xs={12} sm={12} md={7} lg={6} xl={5}>
                 <DataTable
                   title="Taxonomy"
                   columns={taxonomiesColumns}
@@ -410,7 +411,7 @@ export default function PeptideDetail({
                   Databases
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Grid item xs={12} sm={12} md={7} lg={6} xl={5}>
                 <DataTable
                   title="Database"
                   columns={databasesColumns}
