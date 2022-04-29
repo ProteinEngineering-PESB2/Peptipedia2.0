@@ -14,7 +14,7 @@ const About = () => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item marginTop={3}>
-          <p className="lead" style={{ textAlign: "justify" }}>
+          <Typography align="justify" paragraph={true} variant="caption" sx={{ fontSize: 20 }}>
             Peptides have attracted attention during the last decades due to
             their extraordinary therapeutic properties. Different computational
             tools have been developed to take advantage of existing information,
@@ -40,8 +40,15 @@ const About = () => {
             for non-commercial use as an open-access software, licensed under
             the GNU General Public License, version GPL 3.0. The web platform is
             publicly available at peptipedia.cl. Database URL: Both the source
-            code and sample data sets are available in the <a href="https://github.com/ProteinEngineering-PESB2/peptipedia" target="_blank" style={{ textDecoration: "none" }}>GitHub repository.</a>
-          </p>
+            code and sample data sets are available in the{" "}
+            <a
+              href="https://github.com/ProteinEngineering-PESB2/peptipedia"
+              target="_blank"
+              style={{ textDecoration: "none" }}
+            >
+              GitHub repository.
+            </a>
+          </Typography>
         </Grid>
         {/* <Grid
           item
