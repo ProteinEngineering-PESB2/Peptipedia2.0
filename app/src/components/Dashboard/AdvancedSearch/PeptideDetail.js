@@ -167,13 +167,24 @@ export default function PeptideDetail({
   const getStructureFromPeptide = useCallback(async () => {
     try {
       const res = await axios.get(`/api/get_structure/${peptideID}`);
-      if (res.data.status === "success") {
+      if (res.data.status === "success" && path === "") {
         setPath(res.data.path.path);
+
         const res_pdb = await axios.get(res.data.path.path);
+
+        const options = {
+          width: 700,
+          height: 700,
+          antialias: true,
+          quality: "medium",
+        };
+
         const structure = pv.io.pdb(res_pdb.data);
-        const chain = structure.select({ chain: "A" });
-        const viewer = pv.Viewer(document.getElementById("content-pdb"));
+        const viewer = pv.Viewer(
+          document.getElementById("content-pdb", options)
+        );
         viewer.cartoon("protein", structure);
+        viewer.centerOn(structure);
       }
     } catch (error) {
       setSeverity("error");
@@ -207,6 +218,7 @@ export default function PeptideDetail({
     getTaxonomiesFromPeptide,
     getDatabasesFromPeptide,
     getPatentsFromPeptide,
+    getStructureFromPeptide,
   ]);
 
   return (
@@ -223,7 +235,7 @@ export default function PeptideDetail({
                 alignItems: "center",
               }}
             >
-              <Typography variant="h4">
+              <Typography variant="h4" sx={{ fontWeight: "bold" }}>
                 Peptide {peptideID}
               </Typography>
               <Button
@@ -246,8 +258,8 @@ export default function PeptideDetail({
                   PDB Structure
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <div id="content-pdb" style={{ width: '100%' }}></div>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
+                <div id="content-pdb" style={{ width: "100%" }}></div>
               </Grid>
             </>
           )}

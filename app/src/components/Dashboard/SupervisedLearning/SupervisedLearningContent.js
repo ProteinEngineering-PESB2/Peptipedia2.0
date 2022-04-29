@@ -48,6 +48,7 @@ const SupervisedLearningContent = ({
   const [dataHeatmap, setDataHeatmap] = useState([]);
   const [dataHeatmapTesting, setDataHeatmapTesting] = useState([]);
   const [dataBar, setDataBar] = useState([]);
+  const [dataBarTesting, setDataBarTesting] = useState([]);
   const [dataErrorBars, setDataErrorBars] = useState([]);
   const [dataScatter, setDataScatter] = useState([]);
   const [dataBoxPlot, setDataBoxPlot] = useState([]);
@@ -184,15 +185,9 @@ const SupervisedLearningContent = ({
         type: "bar",
       };
 
-      setDataBar([
-        traceSensibility,
-        traceSensibilityTesting,
-        traceSensivity,
-        traceSensivityTesting,
-      ]);
-    } else {
-      setDataBar([traceSensibility, traceSensivity]);
+      setDataBarTesting([traceSensibilityTesting, traceSensivityTesting]);
     }
+    setDataBar([traceSensibility, traceSensivity]);
   }, [data]);
 
   const parseDataScatter = useCallback(() => {
@@ -565,7 +560,14 @@ const SupervisedLearningContent = ({
                   Sensibility Analysis
                 </Typography>
               </Grid>
-              <Grid item log={12} md={12} xs={12}>
+              <Grid
+                item
+                xl={data.result.analysis_testing ? 6 : 12}
+                lg={data.result.analysis_testing ? 6 : 12}
+                md={data.result.analysis_testing ? 6 : 12}
+                sm={12}
+                xs={12}
+              >
                 <Paper
                   sx={{
                     p: 2,
@@ -586,6 +588,29 @@ const SupervisedLearningContent = ({
                   />
                 </Paper>
               </Grid>
+              {data.result.analysis_testing && (
+                <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataBarTesting}
+                      layout={{
+                        autosize: true,
+                        height: 430,
+                        barmode: "group",
+                        title: "Sensibility Analysis Testing",
+                      }}
+                      useResizeHandler
+                      className="w-full h-full"
+                    />
+                  </Paper>
+                </Grid>
+              )}
             </>
           )}
           {selectedTaskType === "regression" && (
