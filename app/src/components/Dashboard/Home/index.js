@@ -7,6 +7,7 @@ import Services from "./Services";
 import Team from "./Team";
 import FAQs from "./FAQs";
 import Contact from "./Contact";
+import Resources from "./Resources";
 
 const Home = () => {
   return (
@@ -26,6 +27,9 @@ const Home = () => {
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Team />
+      </Grid>
+      <Grid container spacing={3} sx={{ marginTop: 5 }}>
+        <Resources/>
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Grid item lg={12} md={12} xs={12}>

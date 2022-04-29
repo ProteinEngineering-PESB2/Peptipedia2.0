@@ -61,7 +61,6 @@ const Dashboard = (props) => {
             position="fixed"
             sx={{ backgroundColor: "#EEEEEE", padding: 0.5 }}
           >
-            <Container maxWidth="xl" sx={{ marginRight: 34 }}>
             <Toolbar>
               <IconButton
                 aria-label="open drawer"
@@ -76,7 +75,6 @@ const Dashboard = (props) => {
                 <FormatAlignJustifyIcon />
               </IconButton>
             </Toolbar>
-            </Container>
           </AppBar>
         </ElevationScroll>
         <Container maxWidth="xl" sx={{ paddingY: 8 }}>

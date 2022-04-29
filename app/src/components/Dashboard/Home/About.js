@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import Fornite from "../../../assets/Fortnite_Two Color.svg";
+import Peptipedia from "../../../assets/peptipedia.jpg";
 
 const About = () => {
   return (
@@ -12,9 +12,14 @@ const About = () => {
       >
         What is Peptipedia?
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item marginTop={3}>
-          <Typography align="justify" paragraph={true} variant="caption" sx={{ fontSize: 20 }}>
+      <Grid container spacing={4}>
+        <Grid item marginTop={3} xl={12} lg={12} md={12}>
+          <Typography
+            align="justify"
+            paragraph={true}
+            variant="caption"
+            sx={{ fontSize: 23 }}
+          >
             Peptides have attracted attention during the last decades due to
             their extraordinary therapeutic properties. Different computational
             tools have been developed to take advantage of existing information,
@@ -42,26 +47,26 @@ const About = () => {
             publicly available at peptipedia.cl. Database URL: Both the source
             code and sample data sets are available in the{" "}
             <a
-              href="https://github.com/ProteinEngineering-PESB2/peptipedia"
+              href="https://github.com/ProteinEngineering-PESB2/Peptipedia2.0"
               target="_blank"
+              rel="noreferrer"
               style={{ textDecoration: "none" }}
             >
               GitHub repository.
             </a>
           </Typography>
         </Grid>
-        {/* <Grid
+        <Grid
           item
-          lg={5}
-          xs={12}
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            width: '100%',
           }}
         >
-          <img src={Fornite} alt="header" style={{ height: "15rem" }} />
-        </Grid> */}
+          <img src={Peptipedia} alt="header" style={{ height: "33rem" }}/>
+        </Grid>
       </Grid>
     </>
   );
