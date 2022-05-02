@@ -137,6 +137,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
               id="contained-button-file"
               type="file"
               onChange={handleChangeFileInput}
+              disabled={fileType === "text"}
             />
             <Button
               variant="outlined"

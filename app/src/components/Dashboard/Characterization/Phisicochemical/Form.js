@@ -199,6 +199,7 @@ const Form = ({
               id="contained-button-file"
               type="file"
               onChange={handleChangeFileInput}
+              disabled={fileType === "text"}
             />
             <Button
               variant="outlined"
