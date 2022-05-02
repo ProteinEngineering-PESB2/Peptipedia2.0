@@ -193,7 +193,7 @@ export default function PeptideDetail({
       setMessage("Service no available");
       setOpenSnackbar(true);
     }
-  }, []);
+  }, [setSeverity, setMessage, setOpenSnackbar]);
 
   const handleCopied = () => {
     setCopied(true);
