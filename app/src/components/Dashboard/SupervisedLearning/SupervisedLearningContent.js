@@ -362,7 +362,9 @@ const SupervisedLearningContent = ({
                     <TableHead>
                       <TableRow>
                         <TableCell>Set</TableCell>
-                        <TableCell>Accuracy</TableCell>
+                        {data.result.performance.accuracy && (
+                          <TableCell>Accuracy</TableCell>
+                        )}
                         {data.result.performance.f1 && (
                           <TableCell>F1</TableCell>
                         )}
@@ -420,44 +422,50 @@ const SupervisedLearningContent = ({
                           </TableCell>
                         )}
                       </TableRow>
-                      <TableRow>
-                        <TableCell>Testing</TableCell>
-                        {data.result.performance_testing.accuracy && (
-                          <TableCell>
-                            {data.result.performance_testing.accuracy}
-                          </TableCell>
-                        )}
-                        {data.result.performance_testing.f1 && (
-                          <TableCell>
-                            {data.result.performance_testing.f1}
-                          </TableCell>
-                        )}
-                        {data.result.performance_testing.f1_weighted && (
-                          <TableCell>
-                            {data.result.performance_testing.f1_weighted}
-                          </TableCell>
-                        )}
-                        {data.result.performance_testing.recall && (
-                          <TableCell>
-                            {data.result.performance_testing.recall}
-                          </TableCell>
-                        )}
-                        {data.result.performance_testing.recall_weighted && (
-                          <TableCell>
-                            {data.result.performance_testing.recall_weighted}
-                          </TableCell>
-                        )}
-                        {data.result.performance_testing.precision && (
-                          <TableCell>
-                            {data.result.performance_testing.precision}
-                          </TableCell>
-                        )}
-                        {data.result.performance_testing.precision_weighted && (
-                          <TableCell>
-                            {data.result.performance_testing.precision_weighted}
-                          </TableCell>
-                        )}
-                      </TableRow>
+                      {data.result.performance_testing && (
+                        <TableRow>
+                          <TableCell>Testing</TableCell>
+                          {data.result.performance_testing.accuracy && (
+                            <TableCell>
+                              {data.result.performance_testing.accuracy}
+                            </TableCell>
+                          )}
+                          {data.result.performance_testing.f1 && (
+                            <TableCell>
+                              {data.result.performance_testing.f1}
+                            </TableCell>
+                          )}
+                          {data.result.performance_testing.f1_weighted && (
+                            <TableCell>
+                              {data.result.performance_testing.f1_weighted}
+                            </TableCell>
+                          )}
+                          {data.result.performance_testing.recall && (
+                            <TableCell>
+                              {data.result.performance_testing.recall}
+                            </TableCell>
+                          )}
+                          {data.result.performance_testing.recall_weighted && (
+                            <TableCell>
+                              {data.result.performance_testing.recall_weighted}
+                            </TableCell>
+                          )}
+                          {data.result.performance_testing.precision && (
+                            <TableCell>
+                              {data.result.performance_testing.precision}
+                            </TableCell>
+                          )}
+                          {data.result.performance_testing
+                            .precision_weighted && (
+                            <TableCell>
+                              {
+                                data.result.performance_testing
+                                  .precision_weighted
+                              }
+                            </TableCell>
+                          )}
+                        </TableRow>
+                      )}
                     </TableBody>
                   </Table>
                 </TableContainer>

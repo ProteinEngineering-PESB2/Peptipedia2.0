@@ -50,10 +50,10 @@ const Form = ({
   setMessage,
   setSeverity,
 }) => {
-  const [optionsValue, setOptionsValue] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [queryText, setQueryText] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [optionsValue, setOptionsValue] = useStateIfMounted([]);
+  const [selectedOptions, setSelectedOptions] = useStateIfMounted([]);
+  const [queryText, setQueryText] = useStateIfMounted("");
+  const [loading, setLoading] = useStateIfMounted(true);
   const [loadingButton, setLoadingButton] = useStateIfMounted(false);
   const [params, setParams] = useStateIfMounted({});
 
@@ -68,12 +68,12 @@ const Form = ({
   const [valueChargeDensity, setValueChargeDensity] = useStateIfMounted([
     20, 100,
   ]);
-  const [valueDatabase, setValueDatabase] = useState({});
-  const [valueActivity, setValueActivity] = useState({});
-  const [valueTaxonomy, setValueTaxonomy] = useState({});
-  const [valuePfam, setValuePfam] = useState({});
-  const [valueGeneOntology, setValueGeneOnotology] = useState({});
-  const [valueSequence, setValueSequence] = useState("");
+  const [valueDatabase, setValueDatabase] = useStateIfMounted({});
+  const [valueActivity, setValueActivity] = useStateIfMounted({});
+  const [valueTaxonomy, setValueTaxonomy] = useStateIfMounted({});
+  const [valuePfam, setValuePfam] = useStateIfMounted({});
+  const [valueGeneOntology, setValueGeneOnotology] = useStateIfMounted({});
+  const [valueSequence, setValueSequence] = useStateIfMounted("");
 
   const [logicOperatorValueForLength, setLogicOperatorValueForLength] =
     useState("AND");

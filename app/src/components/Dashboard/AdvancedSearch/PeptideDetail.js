@@ -14,6 +14,7 @@ import {
   TableCell,
   TableBody,
   TableHead,
+  Badge,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -50,6 +51,7 @@ export default function PeptideDetail({
   const [loading, setLoading] = useStateIfMounted(true);
   const [path, setPath] = useStateIfMounted("");
   const [copied, setCopied] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const getInfoFromPeptide = useCallback(async () => {
     try {
@@ -195,9 +197,10 @@ export default function PeptideDetail({
 
   const handleCopied = () => {
     setCopied(true);
-    setSeverity("success");
-    setMessage("Copied sequence");
-    setOpenSnackbar(true);
+    setShowTooltip(true);
+    setTimeout(() => {
+      setShowTooltip(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -253,8 +256,19 @@ export default function PeptideDetail({
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Typography variant="h6" sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>
-              PDB Structure {path === "" && (<Typography variant="subtitle1" sx={{ marginLeft: 1, fontWeight: "bold" }}>(Structure not found)</Typography>)}
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}
+            >
+              PDB Structure{" "}
+              {path === "" && (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ marginLeft: 1, fontWeight: "bold" }}
+                >
+                  (Structure not found)
+                </Typography>
+              )}
             </Typography>
           </Grid>
           {path !== "" && (
@@ -283,7 +297,11 @@ export default function PeptideDetail({
                     position="end"
                     sx={{ display: "flex", alignItems: "end", marginBottom: 8 }}
                   >
-                    <Tooltip title="Copy" onClick={handleCopied}>
+                    <Tooltip
+                      title={showTooltip ? "Copied sequence" : ""}
+                      onClick={handleCopied}
+                      open={showTooltip}
+                    >
                       <IconButton edge="end">
                         <ContentCopyIcon
                           color={copied ? "primary" : "inherit"}

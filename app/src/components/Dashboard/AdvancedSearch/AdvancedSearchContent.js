@@ -1,6 +1,7 @@
 import MUIDataTable from "mui-datatables";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
+import { useStateIfMounted } from "use-state-if-mounted"
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -35,11 +36,11 @@ const AdvancedSearchContent = ({
   pageTable,
   setPageTable,
 }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [dataTable, setDataTable] = useState([]);
-  const [columnsTable, setColumnsTable] = useState([]);
-  const [loadingTable, setLoadingTable] = useState(false);
+  const [data, setData] = useStateIfMounted([]);
+  const [loading, setLoading] = useStateIfMounted(true);
+  const [dataTable, setDataTable] = useStateIfMounted([]);
+  const [columnsTable, setColumnsTable] = useStateIfMounted([]);
+  const [loadingTable, setLoadingTable] = useStateIfMounted(false);
 
   const options = {
     selectableRowsHideCheckboxes: true,
@@ -67,6 +68,10 @@ const AdvancedSearchContent = ({
         (value, index) => index !== position
       );
       const countsReset = counts.filter((value, index) => index !== position);
+
+      if (queriesReset.length === 0) {
+        setQuerySelected("")
+      }
 
       setQueries(queriesReset);
       setQueriesWithID(queriesWithIDReset);
