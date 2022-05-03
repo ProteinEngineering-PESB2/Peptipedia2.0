@@ -1,0 +1,246 @@
+>as:Bradykinin-1-Lycosa erythrognatha|sp:P0C7S8|1 Bradykinin-potentiating peptide S (BPP-S) from the venom of the spider Lycosa erythrognatha
+QAPWPDTISPP
+
+>as:U18-ctenitoxin-Co1a|sp:P85029|2 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+ITFSKIYRSCKSDSDCGNQKCARGRCV
+
+>as:U22-ctenitoxin-Co1a|sp:P85237|3 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+EWCGTNSDCGEGECCTGGSFNRH
+
+>as:U20-ctenitoxin-Co1a|sp:P85236|4 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+GFCAEAGIKCNDIHCCGNLKCKAVGSNRV
+
+>as:Kinin-1-Lycosa erythognatha|sp:P58396|5 N-terminal fragment of kinin-like peptide (Peptide-S) from the venom of the spider Lycosa erythrognatha
+RLVLEVXASVEADV
+
+>as:M-lycotoxin-Ls3b|sp:P0C2U7|6 Antimicrobial peptide (Lycocitin 2) from the spider Lycosa singoriensis
+GRLQAFLAKMKEIAAQTL
+
+>as:U1-lycotoxin-Ls1a|sp:P0C2U9|7 Peptide from the spider Lycosa singoriensis
+AGIGKIGDFIKKAIAKYKN
+
+>as:M-lycotoxin-Ls4a|sp:P0C2V0|8 Peptide from the spider Lycosa singoriensis
+MIASHLAFEKLSKLGSKHTML
+
+>as:U18-ctenitoxin-Co1b|sp:P85030|9 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+ITFSKIYRSCKSNSVCGNQKCVRGRCV
+
+>as:U24-ctenitoxin-Pn1a|sp:P84032|10 Toxin from venom of the spider Phoneutria nigriventer with unknown molecular target
+ARPKSDCEKHRESTEKTGTIMKLIPKCKENSDYEELQCYEDSKFCVCYDKKGHAASPIST
+KVKECGCYLKQKERKDSGRESAIIPQCEEDGKWAKKQLWEFNKSCWCVDEKGEQVGKIHH
+DCDSLKCE
+
+>as:U21-ctenitoxin-Pn1a|sp:P84033|11 Toxin from venom of the spider Phoneutria nigriventer with suggested protease activity
+IVYGVKDTPGKYPWMVSIERVKDVMKQACGGAILNENKI
+
+>as:Techylectin-1-Phoneutria nigriventer|sp:P85031|12 Techylectin-like toxin from venom of the spider Phoneutria nigriventer
+LSTTCEGKDKGICNLNLALQLITDVRDNFPVCPSPPLPIDCEEVLQRDFKAIPNPIDVYC
+DMVTDGGGWTVIQRRGDFHGPIDYFYKDWQSYKKGFGDIEKEFWLGNENIFGLSNQRYAL
+YDTFANDDEDHKYMLHISGYKGDAGDSMIGVHNEQKFSTKDKNDNFPGATSCAQLYKGGW
+WYNQCHVSNLNGQYLKSYADGVIWRSWKGYHESLGWTEIKIKDVK
+
+>as:CRISP-1-Phoneutria keyserlingi|sp:P85860|13 CRISP-1-Phoneutria keyserlingi (Allergen (antigen 5)) from the venom of the spider Phoneutria keyserlingi
+GLCPDKYKRYSLQHSFCLPTCVSCAFYSKDVRYWLKNYILYQHNNLRNVVASGRSYGVDH
+VPRICLTVVTRIGCGYLFRKYTNVICNYGPRGNVEGEEIYKGGDICSACPANTCCGDGCK
+YHGLCKFGEPNLPEIFYCGFNGESDCR
+
+>as:U3-ctenitoxin-Asp1a|sp:P84001|14 Toxin from venom of the spider Ancylometes spec. with unknown molecular target
+ANACTKQADCAEDECCLDNLFFKRPYCEMRYGAGKRCAAASVYKEDKDLY
+
+>as:U1-ctenitoxin-Asp1a|sp:P84027|15 Toxin from venom of the spider Ancylometes spec. with unknown molecular target
+SDNEFPSGCIEFGKECDLDKGNCQCCRRNGYCSCAVN
+
+>as:delta-ctenitoxin-Asp2e|sp:P84028|16 Toxin from venom of the spider Ancylometes spec. with unknown molecular target
+ATCAGQDKPCKVNCDCCGERGECVCGGPCICRQGNVFIAWSKLMTCK
+
+>A0FKN6|17 Astacin-like metalloprotease toxin precursor.
+MIKYIGVFAFLVGGFCHDFETVISNQDPIVDGMRLVEGDMLFDDGPLFTERNAVKYDQQL
+WPNGEIVYEISPGLRQYEQIIREAMRTYEDNTCIKFRRRTNEADYVNIHVGDRCYSRVGK
+SFRGGPQPLSLGRGCTDFGTILHELGHSVGFDHEHSRADRDEFLIIHKENIKNGSEHNFD
+KLWENNTRTIGPFDYDSIMLYGAYAFSKDTRKFKTMEPVEPGLPMKSVIQKGKLSYYDIV
+KVNKLYKCPPVNPYPGGIRPYVNV
+
+>as:SphingomyelinaseD(LiSicTox-alphaV1)|sp:A4USB4|19 Sphingomyelinase D (EC 3.1.4.41; LiRecDT6) from the spider Loxosceles intermedia
+MLCFFVLFFCCGTVLLEGADIDEIEHADKRRPIWNMGHMVNAVYQIDEFVDLGANAIETD
+VTFTKSANAEYTYHGVPCDCHRWCKKWEYVNDFLKALRRATTPGDAKYRSQLILVVFDLK
+TDYLTASTAYDAGKDFAKRLLQHYWNGGSNGGRAYIILSIPDLAHYKFINGFKEQLKTQG
+HEDLLAKVGYDFWGNEDLSSTRAAFQKAGVQDKEHIWQSDGITNCWLRTLKRVREAVANR
+DSSNGYINKVYYWTVDKYASVRDAINAGADGIMTNYPNVIVDVLKENDFKGKFRMATYND
+NPWETFK
+
+>as:omega-hexatoxin-Ar1a_1|20 Translation omega-hexatoxin-Ar1a insecticidal toxin (XenFW194) from Sydney funnel-web spider Atrax robustus.
+MNTATGFIVLLVLATVLGAIEAEDAVPDFEGGFASHAREDTVGGKIRRSSVCIPSGQPCP
+YNEHCCSGSCTYKENENGNTVQRCD
+
+>as:omega-hexatoxin-Ar1a_3|sp:P83580|20 Insecticidal toxin from Sydney funnel-web spider Atrax robustus
+SSVCIPSGQPCPYNEHCCSGSCTYKENENGNTVQRCD
+
+>as:omega-hexatoxin-Ar1b_1|gb:ABP63654|21 Translation omega-hexatoxin-Ar1b Insecticidal toxin (XenFW208) from Sydney funnel-web spider Atrax robustus.
+MNTATGFIVLLVLATVLGCIEAGESHVREDAMGRARRGACTPTGQPCPYNESCCSGSCQE
+QLNENGHTVKRCV
+
+>as:omega-hexatoxin-Ar1c|gb:ABP63655|22 Translation omega-hexatoxin-Ar1c Insecticidal toxin (XenFW137) from Sydney funnel-web spider Atrax robustus.
+MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCS
+QSCTFKENENANTVKRCD
+
+>as:omega-hexatoxin-Ar1d_1|gb:ABP63656|23 Translation omega-hexatoxin-Ar1d insecticidal toxin (XenFW141) from Sydney funnel-web spider Atrax robustus
+MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENCCS
+QSCTFKENENGNTVKRCD
+
+>as:omega-hexatoxin-Ar1d_4|23 Translation omega-hexatoxin-Ar1d insecticidal toxin (XenFW143) from Sydney funnel-web spider Atrax robustus
+MNTATGVIALLVLVTVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENCCS
+QSCTFKENENGNTVKRCD
+
+>as:omega-hexatoxin-Ar1e_1|gb:ABP63657|24 Translation of omega-hexatoxin-Ar1e insecticidal toxin (XenFW139) from Sydney funnel-web spider Atrax robustus
+MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENCCS
+KSCTYKENENGNTVQRCD
+
+>as:omega-hexatoxin-Ar1f|gb:ABP63658|25 Translation of omega-hexatoxin-Ar1f insecticidal toxin (XenFW135) from Sydney funnel-web spider Atrax robustus
+MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENCCS
+QSCTFKENETGNTVKRCD
+
+>as:beta-theraphotoxin-Gr1b|sp:P61408|26 Analgesic toxin from venom of the spider Grammostola rosea that is suggested to target voltage-gated sodium channels
+YCQKWLWTCDSERKCCEDMVCRLWCKKRL
+
+>as:kappa-theraphotoxin-Gr2c_1|sp:P61409|27 Toxin from venom of the spider Grammostola rosea that inhibits mechanosensitive channels
+YCQKWMWTCDEERKCCEGLVCRLWCKKKIEW
+
+>as:kappa-theraphotoxin-Gr2c_3|sp:M5AWU7|27 Toxin from venom of the spider Grammostola rosea that inhibits mechanosensitive channels
+MKAFFVILGLALLCAYSFALEEQDQLSLRNDLLTVMFAENSELIPETEERYCQKWMWTCD
+EERKCCEGLVCRLWCKKKIEW
+
+>as:kappa-theraphotoxin-Gr2c_2|sp:M5AYD2|27 Toxin from venom of the spider Grammostola rosea that inhibits mechanosensitive channels
+MKAFFVILGLALLCAYSFALEEQDQLSLRNDLLTVMFAENSELTPETEERYCQKWMWTCD
+EERKCCEGLVCRLWCKKKIEW
+
+>as:U1-nemetoxin-Csp1a|sp:P60976|28 Translation U1-nemetoxin-Csp1a insecticidal toxin from spider Calisoga sp.
+MKYFVVFCVLIIAVAAFTSAAEDGEVFEENPLEFPKTIQKRCISARYPCSNSKDCCSGNC
+GTFWTCYIRKDPCSKECLAP
+
+>as:U1-nemetoxin-Csp1b|sp:P60977|29 Insecticidal toxin from spider Calisoga sp.
+CISARYPCSNSKDCCSGNCGTFWTCFIRKDPCSKECLAP
+
+
+>as:U1-nemetoxin-Csp1c|sp:P60978|30 Insecticidal toxin from spider Calisoga sp.
+CISARYPCSNSKDCCSGSCGIFWTCYLRKDPCSKECLAP
+
+>as:U14-ctenitoxin-Co1b|sp:P85145|39 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+GSCLELGKYCDGSKDDCQCCRDNAYCGCDIFGYNWE
+
+>as:U14-ctenitoxin-Co1c|sp:P85146|40 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+GSCLELGEYCNGSKDDCQCCRDNAYCGCDIF
+
+>as:U21-ctenitoxin-Co1a|sp:P85032|41 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+APCTYPGQQCKSDDECCHGTCKTAFIGRICMR
+
+>as:U4-ctenitoxin-Co1c|sp:P85144|42 Toxin from venom of the spider Ctenus ornatus with unknown molecular target
+GGCINHGQPCDGDKNDCQCCRDNGYCNCDGIFGLKWNCKC
+
+>as:kappa-theraphotoxin-Cg1a_1|sp:P0C247|43 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium and sodium channels
+MKVSVLITLAVLGVMFVWASAAELEERGSDQRDSPAWLKSMERIFQSGERECRKMFGGCS
+VDSDCCAHLGCKPTLKYCAWDGTFGK
+
+>as:kappa-theraphotoxin-Cg1a_2|sp:B1P1E3|43 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium and sodium channels
+MKVSVLITLAVLGVMFVWTSAAELEERGSDQRDSPAWLKSMERIFQSEERECRKMFGGCS
+VDSDCCAHLGCKPTLKYCAWDGTFGK
+
+>as:kappa-theraphotoxin-Cg1a_3|sp:B1P1E2|43 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium and sodium channels
+MKASVLITLAVLGVMFVWASAAELEERGSDQRDSPAWLKSMERIFQSEERECRKMFGGCS
+VDSDCCAHLGCKPTLKYCAWDGTFGK
+
+>as:kappa-theraphotoxin-Cg1a_4|sp:B1P1E1|43 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium and sodium channels
+MKVSVVITLAVLGVMFVWASAAELEERGSDQRDSPAWLKSMERIFQSEERECRKMFGGCS
+VDSDCCAHLGCKPTLKYCAWDGTFGK
+
+>as:kappa-theraphotoxin-Cg1a_5|sp:B1P1E0|43 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium and sodium channels
+MKVSVLITLAVLGVMFVWASAAELEERGSDQRDSPAWLKSMERIFRSEERECRKMFGGCS
+VDSDCCAHLGCKPTLKYCAWDGTFGK
+
+>as:kappa-theraphotoxin-Cg1a_6|sp:B1P1D9|43 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium and sodium channels
+MKVSVLITLAVLGVMFVWASAAELEERGSDQRDSPAWLKSMERIFQSEERECRKMFGGCS
+VDSDCCAHLGCKPTLKYCAWDGTFGK
+
+>as:kappa-theraphotoxin-Cg2a_1|sp:P0C5X7|44 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium channels
+YCQKWMWTCDSERKCCEGYVCELWCKYNL
+
+>as:kappa-theraphotoxin-Cg2a_2|sp:B1P1B5|44 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated potassium channels
+MKGSAFAIILGLVVLCACSFAEDEQDQFASPNELLRSMFLESRHELIPEVEGRYCQKWMW
+TCDSERKCCEGYVCELWCKYNLG
+
+>as:delta-theraphotoxin-Cg1a_1|sp:P83974|45 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits inactivation of voltage-gated sodium and activiation of potassium channels
+MKTSILFVIFSLALLFALSAATEIEETDRACGQFWWKCGEGKPPCCANFACKIGLYLCIW
+SP
+
+>as:delta-theraphotoxin-Cg1a_2|sp:B1P1B7|45 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits inactivation of voltage-gated sodium and activiation of potassium channels
+MKTSILFVIFSLALLFALSAATEIEETDRACGQFWWKCGEGKPPCCANFACKIGLYLCIW
+SP
+
+>as:delta-theraphotoxin-Cg1a_3|gb:B1P1B8|45 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits inactivation of voltage-gated sodium and activiation of potassium channels
+MKTSILFVIFSLALVFALSPATEIEETDRACGQFWWKCGEGKPPCCANFACKIGLYLCIW
+SP
+
+>as:beta/kappa-theraphotoxin-Cg1a|sp:P62520|46 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated sodium and potassium channels
+MKNTSILFILGLALLLVLAFEAQVGESDGECGGFWWKCGRGKPPCCKGYACSKTWGWCAV
+EAP
+
+>as:beta-theraphotoxin-Cg2a|sp:Q2PAY4|47 Toxin from venom of the spider Chilobrachys guangxiensis that inhibits voltage-gated sodium and potassium channels
+MKASVFAVILGLVVLCACSFAEDEQDQFVSPNELLKSMFVESRHEFTPEVEGRYCQKWMW
+TCDSKRACCEGLRCKLWCRKIIG
+
+>as:U1-theraphotoxin-Cg1a_1|sp:B1P1A3|48 Toxin from venom of the spider Chilobrachys guangxiensis with unknown molecular target and function
+MKTSALFVIFGLVLLFCNSFAAELKTTGRGCGGLMAGCDGKSTFCCSGYNCSPTWKWCVY
+ARPGRR
+
+>as:U1-theraphotoxin-Cg1a_2|sp:P0C2X7|48 Partial sequence of a toxin from venom of the spider Chilobrachys guangxiensis with unknown molecular target and function
+GCGGLMAGCDGKSTFCCSGYNCSPTWKWCVYARP
+
+>as:U1-theraphotoxin-Cg1a_3|sp:B1P1A4|48 Toxin from venom of the spider Chilobrachys guangxiensis with unknown molecular target and function
+MKTSALFVIFGLVLLFCNSFAAELEMTGRGCGGLMAGCDGKSTFCCSGYNCSPTWKWCVY
+ARPGRR
+
+>as:M-zodatoxin-Lt1a|sp:Q1ELT9|49 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt1a (Latarcin-1) from the spider Lachesana tarabaevi.
+MKYFVVALALAVALVCIAESTAYDVNEELENELDDLSDAAWLAKAAEDLQALDDFEESEE
+SRSMWSGMWRRKLKKLRNALKKKLKGEK
+
+>as:M-zodatoxin-Lt2a|sp:Q1ELU1|50 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt2a (Latarcin-2a) from the spider Lachesana tarabaevi.
+MKYFVIALALAVALVCIAESTAYEVNEELENELDDLDDAAWLAVAEELQGLEDFEESRGL
+FGKLIKKFGRKAISYAVKKARGKH
+
+>as:M-zodatoxin-Lt2b|sp:Q1ELU0|51 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt2b (Latarcin-2b) from the spider Lachesana tarabaevi.
+MKYFVIALALAVALVCIAESTAYEVNEELENELDDLDDAAWLAVAEELQGLEDFEESRGL
+FGKLIKKFGRKAISYAVKKARGKN
+
+>as:M-zodatoxin-Lt3a|sp:Q1ELU3|52 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt3a (Latarcin-3a) from the spider Lachesana tarabaevi.
+MKTYAVLLALVVAFVCIAESTGYPVEDLEDDELTELEAEALLEDLLEDLELEDLDYNEEA
+RSWKSMAKKLKEYMEKLKQRAG
+
+>as:M-zodatoxin-Lt3b|sp:Q1ELU2|53 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt3b (Latarcin-3b) from the spider Lachesana tarabaevi.
+MKTYAVLLALVVAFVCIAESTGYPVEDLEDDELTELEAEALLEDLLEDLELEDLDYNEEA
+RSWASMAKKLKEYMEKLKQRAG
+
+>as:M-zodatoxin-Lt4a|sp:Q1ELU5|54 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt4a (Latarcin-4a) from the spider Lachesana tarabaevi.
+MKFSIIALALAVAFVCVAESRSEEEGYDVSEEIQAEELEEAERGGIDRKLMEVVNNLRKV
+QGREDSEEAGRGGINRKLMEMVNNLRKVQGREDSEEAGRGGINRKLMEMVNNLRKVQGRE
+DSEEAGRGGINRKLMEMVNNLRKVQGREDSEEAGRGGINRKLMEMVNNLRKVQGREDTEE
+ARGLKDKFKSMGEKLKQYIQTWKAKFG
+
+>as:M-zodatoxin-Lt4b|sp:Q1ELU4|55 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt4b (Latarcin-4b) from the spider Lachesana tarabaevi.
+MKFSIIALALAVAFVCVAESRSEEEGYDVSEEIQAEELEEAARGGINRKLMEMVNKLRKV
+QGREDSEDAGRAGINRKLMEMVNKLRKVQGREDTEEAGRGGINRKLMEMVNKLRKVQGRE
+DSEEAGRGGINRKLMEMVNKLRKVQGREDTEEARSLKDKVKSMGEKLKQYIQTWKAKFG
+
+>as:M-zodatoxin-Lt5a|sp:Q1ELU9|56 Translation of cDNA sequence for antimicrobial and cytolytic toxin M-zodatoxin-Lt5a (Latarcin-5) from the spider Lachesana tarabaevi.
+MKYCVVILALLVALVCITESRSTETGYAVAETLEDNDLDELQAYLEEIAEASEMEDFSNI
+EEARGFFGKMKEYFKKFGASFKRRFANLKKRLG
+
+>as:M-zodatoxin-Lt6a/b|sp:Q1ELU8|57 Precursor encoding both M-zodatoxin-Lt6a and -6b (Latarcin-6a/6b) from the spider Lachesana tarabaevi.
+MKYFVVALTLAVAFVCIEECKTVEIGYAVSEDFDQNEIDNEEARQAFKTFTPDWNKIRND
+AKRMQDNLEQMKKRFNLNLEEARQAFQTFKPDWNKIRYDAMKMQTSLGQMKKRFNL
+
+>as:M-zodatoxin-Lt6a/c|sp:Q1ELU7|58 Precursor encoding both M-zodatoxin-Lt6a and -6c (Latarcin-6a/6c) from the spider Lachesana tarabaevi.
+MKYFVVALTLAVAFVCIEECKTVEIGYAVSEDFDQNEIDNDEARQAFKTFTPDWNKIRND
+AKRMQDNLEQMKKKFNLNLEEARQAFQTFKPDWNKIRYDAMKMQTSLGQMKKRFNL
+
+>as:M-zodatoxin-Lt7a|sp:Q1ELV0|59 Linear peptide of unknown activity (Latarcin-7) from the spider Lachesana tarabaevi.
+MKFYVVALALLVAFVCIAESRSVETERAVDADLEDDLDDLEEYLEGIAEALELEDFPDTE
+EARGETFDKLKEKLKTFYQKLVEKAEDLKGDLKAKLS

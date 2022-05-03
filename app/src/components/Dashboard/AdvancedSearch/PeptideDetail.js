@@ -167,12 +167,15 @@ export default function PeptideDetail({
   }, [setSeverity, setMessage, setOpenSnackbar]);
 
   const getStructureFromPeptide = useCallback(async () => {
+    console.log("hola")
     try {
       const res = await axios.get(`/api/get_structure/${peptideID}`);
       if (res.data.status === "success" && path === "") {
-        setPath(res.data.path.path);
+        const new_path = res.data.path.substring(2,res.data.path.length)
 
-        const res_pdb = await axios.get(res.data.path.path);
+        setPath(new_path);
+
+        const res_pdb = await axios.get(new_path);
 
         const options = {
           width: 700,
@@ -204,24 +207,22 @@ export default function PeptideDetail({
   };
 
   useEffect(() => {
+    getStructureFromPeptide()
     getInfoFromPeptide();
     getGOFromPeptide();
     getPfamFromPeptide();
     getActivitiesFromPeptide();
     getTaxonomiesFromPeptide();
     getDatabasesFromPeptide();
-    getPatentsFromPeptide();
-    getStructureFromPeptide();
     setLoading(false);
   }, [
+    getStructureFromPeptide,
     getInfoFromPeptide,
     getGOFromPeptide,
     getPfamFromPeptide,
     getActivitiesFromPeptide,
     getTaxonomiesFromPeptide,
     getDatabasesFromPeptide,
-    getPatentsFromPeptide,
-    getStructureFromPeptide,
   ]);
 
   return (
