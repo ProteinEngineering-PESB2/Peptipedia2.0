@@ -10,20 +10,10 @@ class multiple_sequence_alignment(config_tool):
         super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
         self.output_path = static_folder
         self.output_file = os.path.realpath("{}/{}.out".format(self.output_path, str(round(random()*10**20))))
-        self.distance_matrix_file = os.path.realpath("{}/{}.dist".format(self.output_path, str(round(random()*10**20))))
 
     def execute_clustalo(self):
-        command = "clustalo -i {} -o {} --distmat-out={} --full".format(self.temp_file_path, self.output_file, self.distance_matrix_file)
+        command = "clustalo -i {} -o {} --full".format(self.temp_file_path, self.output_file)
         os.system(command)
-
-        f = open(self.distance_matrix_file, "r")
-        distance_matrix = f.read()
-        f.close()
-        df = pd.DataFrame([row.split() for row in distance_matrix.splitlines()[1:]])
-        ids = list(df[0])
-        ids.insert(0, "id")
-        df.columns = ids
-        data_json = json.loads(df.to_json(orient = "records"))
 
         f = open(self.output_file, "r")
         output_text = f.read()
@@ -43,4 +33,4 @@ class multiple_sequence_alignment(config_tool):
             dictionary["id"] = i+1
             result.append(dictionary)
         self.delete_file()
-        return result, data_json
+        return result

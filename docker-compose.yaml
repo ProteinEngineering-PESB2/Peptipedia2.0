@@ -4,6 +4,9 @@ services:
     build: ./backend/
     volumes:
       -  ./backend/src:/app/src
+      -  ./bd/backup.sql:/app/src/files/downloads/backup.sql
+      -  ./bd/dump.fasta:/app/src/files/downloads/dump.fasta
+      -  ./bd/dump_csv.zip:/app/src/files/downloads/dump_csv.zip
     ports:
       - "8001:8001"
   app :
@@ -15,14 +18,3 @@ services:
       - "backend"
     ports:
       - "3000:3000"
-  ftp_server:
-    image: delfer/alpine-ftp-server
-    volumes:
-      - ./bd/backup.sql:/ftp/peptipedia/backup.sql
-      - ./bd/dump_csv.zip:/ftp/peptipedia/dump_csv.zip
-      - ./bd/dump.fasta:/ftp/peptipedia/dump.fasta
-    ports:
-      - "21:21"
-      - "21000-21010:21000-21010"
-    environment:
-      - USERS=peptipedia|chapalapachala123
