@@ -103,7 +103,6 @@ const Form = ({
 
     try {
       const res = await supervisedLearning(post);
-
       if (res.status === "error") {
         setSeverity("error");
         setMessage(res.description);
