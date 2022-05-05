@@ -92,7 +92,6 @@ const ClusteringContent = ({
 
     try {
       const res = await pca(post);
-
       setPathPCA(res.path);
 
       const uniqueLabels = [];

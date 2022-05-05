@@ -104,7 +104,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
         setLoading(false);
         setOpenSnackbar(true);
       } else {
-        const res = await axios.get(`/files/${fileName.result}`, {
+        const res = await axios.get(`${fileName.result}`, {
           responseType: "blob",
         });
         const url = window.URL.createObjectURL(new Blob([res.data]));

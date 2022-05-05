@@ -48,15 +48,6 @@ const BlastContent = ({
   const downloadBlast = async () => {
     setLoadingButton(true);
     try {
-      // const res = await axios.get(path, {
-      //   responseType: "blob",
-      // });
-      // const url = window.URL.createObjectURL(new Blob([res.data]));
-      // const link = document.createElement("a");
-      // link.href = url;
-      // link.setAttribute("download", "result.txt");
-      // document.body.appendChild(link);
-      // link.click();
       const res = await axios.get(path, {
         responseType: "blod",
       });
