@@ -16,7 +16,8 @@ import {
   TableHead,
   Badge,
 } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, forwardRef, useRef } from "react";
+import { ProSeqViewer } from "proseqviewer/dist";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
@@ -29,6 +30,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import RemoveIcon from "@mui/icons-material/Remove";
 import pv from "bio-pv";
 
+const ComponentPrint = forwardRef((props, ref) => (
+  <div id="psv" ref={ref}></div>
+));
+
 export default function PeptideDetail({
   peptideID,
   setPeptideID,
@@ -36,6 +41,7 @@ export default function PeptideDetail({
   setMessage,
   setOpenSnackbar,
 }) {
+  const componentRef = useRef();
   const [sequence, setSequence] = useStateIfMounted("");
   const [dataInfo, setDataInfo] = useStateIfMounted([]);
   const [dataGOColumns, setDataGOColumns] = useStateIfMounted([]);
@@ -156,26 +162,13 @@ export default function PeptideDetail({
     }
   }, [setSeverity, setMessage, setOpenSnackbar]);
 
-  const getPatentsFromPeptide = useCallback(async () => {
-    try {
-      const res = await axios.get(`/api/get_patent_from_peptide/${peptideID}`);
-    } catch (error) {
-      setSeverity("error");
-      setMessage("Service no available");
-      setOpenSnackbar(true);
-    }
-  }, [setSeverity, setMessage, setOpenSnackbar]);
-
   const getStructureFromPeptide = useCallback(async () => {
-    console.log("hola")
     try {
       const res = await axios.get(`/api/get_structure/${peptideID}`);
       if (res.data.status === "success" && path === "") {
-        const new_path = res.data.path.substring(2,res.data.path.length)
+        setPath(res.data.path);
 
-        setPath(new_path);
-
-        const res_pdb = await axios.get(new_path);
+        const res_pdb = await axios.get(res.data.path);
 
         const options = {
           width: 700,
@@ -184,12 +177,40 @@ export default function PeptideDetail({
           quality: "medium",
         };
 
+        console.log(res.data);
+
         const structure = pv.io.pdb(res_pdb.data);
+        const residues_equal = structure.select({
+          rindices: res.data.equal_res,
+        });
+        const residues_similar = structure.select({
+          rindices: res.data.similar_res,
+        });
+        const residues_different = structure.select({
+          rindices: res.data.different_res,
+        });
         const viewer = pv.Viewer(
           document.getElementById("content-pdb", options)
         );
-        viewer.cartoon("protein", structure);
+        //viewer.cartoon("protein", structure);
+        const geom_equal = viewer.cartoon("protein", residues_equal);
+        geom_equal.colorBy(pv.color.uniform("darkblue"));
+        const geom_similar = viewer.cartoon("protein", residues_similar);
+        geom_similar.colorBy(pv.color.uniform("lightblue"));
+        const geom_different = viewer.cartoon("protein", residues_different);
+        geom_different.colorBy(pv.color.uniform("white"));
+
+        // viewer.centerOn(residues_equal);
+        // viewer.centerOn(residues_similar)
+        // viewer.centerOn(residues_different)
         viewer.centerOn(structure);
+
+        const options_msa = {
+          sequenceColor: "clustal",
+        };
+
+        const psv = new ProSeqViewer("psv");
+        psv.draw({ sequences: res.data.alignment, options: options_msa });
       }
     } catch (error) {
       setSeverity("error");
@@ -207,7 +228,7 @@ export default function PeptideDetail({
   };
 
   useEffect(() => {
-    getStructureFromPeptide()
+    getStructureFromPeptide();
     getInfoFromPeptide();
     getGOFromPeptide();
     getPfamFromPeptide();
@@ -257,29 +278,6 @@ export default function PeptideDetail({
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}
-            >
-              PDB Structure{" "}
-              {path === "" && (
-                <Typography
-                  variant="subtitle1"
-                  sx={{ marginLeft: 1, fontWeight: "bold" }}
-                >
-                  (Structure not found)
-                </Typography>
-              )}
-            </Typography>
-          </Grid>
-          {path !== "" && (
-            <>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
-                <div id="content-pdb" style={{ width: "100%" }}></div>
-              </Grid>
-            </>
-          )}
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               Sequence
             </Typography>
@@ -314,6 +312,49 @@ export default function PeptideDetail({
               }
             />
           </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}
+            >
+              PDB Structure{" "}
+              {path === "" && (
+                <Typography
+                  variant="subtitle1"
+                  sx={{ marginLeft: 1, fontWeight: "bold" }}
+                >
+                  (Structure not found)
+                </Typography>
+              )}
+            </Typography>
+          </Grid>
+          {path !== "" && (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
+                <div id="content-pdb" style={{ width: "100%" }}></div>
+              </Grid>
+            </>
+          )}
+          {path !== "" && (
+            <>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Multiple Sequence Alignment
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <ComponentPrint ref={componentRef} />
+                </Paper>
+              </Grid>
+            </>
+          )}
           {dataInfo.length === 1 && (
             <>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>

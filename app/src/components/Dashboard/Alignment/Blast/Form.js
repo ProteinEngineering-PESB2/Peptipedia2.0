@@ -80,6 +80,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
         setPath(path);
       }
     } catch (error) {
+      console.log(error)
       setSeverity("error");
       setError("Service not available");
       setOpenSnackbar(true);
