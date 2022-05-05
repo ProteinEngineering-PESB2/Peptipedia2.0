@@ -29,6 +29,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import RemoveIcon from "@mui/icons-material/Remove";
 import pv from "bio-pv";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const ComponentPrint = forwardRef((props, ref) => (
   <div id="psv" ref={ref}></div>
@@ -74,8 +75,29 @@ export default function PeptideDetail({
   const getGOFromPeptide = useCallback(async () => {
     try {
       const res = await axios.get(`/api/get_go_from_peptide/${peptideID}`);
-      setDataGOColumns(res.data.result.columns);
-      setDataGOData(res.data.result.data);
+      const new_data = [];
+      for (let i = 0; i < res.data.result.data.length; i++) {
+        const id_go = res.data.result.data[i][0]
+          ? res.data.result.data[i][0]
+          : "";
+        const new_array = [
+          ...res.data.result.data[i],
+          <Button>
+            <a
+              href={`http://amigo.geneontology.org/amigo/term/${id_go}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <VisibilityIcon />
+            </a>
+          </Button>,
+        ];
+        new_data.push(new_array);
+      }
+
+      const new_columns = [...res.data.result.columns, "Options"];
+      setDataGOColumns(new_columns);
+      setDataGOData(new_data);
     } catch (error) {
       setSeverity("error");
       setMessage("Service no available");
@@ -86,8 +108,29 @@ export default function PeptideDetail({
   const getPfamFromPeptide = useCallback(async () => {
     try {
       const res = await axios.get(`/api/get_pfam_from_peptide/${peptideID}`);
-      setPfamColumns(res.data.result.columns);
-      setPfamData(res.data.result.data);
+      const new_data = []
+      for (let i = 0; i < res.data.result.data.length; i++) {
+
+        const accession = res.data.result.data[i][0] ? res.data.result.data[i][0] : ""
+        const new_array = [
+          ...res.data.result.data[i],
+          <Button>
+            <a
+              href={`http://pfam.xfam.org/family/${accession}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <VisibilityIcon />
+            </a>
+          </Button>,
+        ];
+        new_data.push(new_array)
+      }
+
+      const new_columns = [...res.data.result.columns, "Options"];
+
+      setPfamColumns(new_columns);
+      setPfamData(new_data);
     } catch (error) {
       setSeverity("error");
       setMessage("Service no available");
@@ -176,8 +219,6 @@ export default function PeptideDetail({
           antialias: true,
           quality: "medium",
         };
-
-        console.log(res.data);
 
         const structure = pv.io.pdb(res_pdb.data);
         const residues_equal = structure.select({
