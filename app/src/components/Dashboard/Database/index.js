@@ -53,7 +53,7 @@ const Database = () => {
       setSnackbarSQLSeverity("success");
       setSnackbarSQLMessage("The download has started. You can continue using our services. Do not close the page");
       setOpenSnackbarSQL(true);
-      const res = await axios.get("/files/downloads/backup.sql", {
+      const res = await axios.get("/files/downloads/backup_sql.zip", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -78,7 +78,7 @@ const Database = () => {
   const downloadFasta = async () => {
     try {
       setLoadingFasta(true);
-      const res = await axios.get("/files/downloads/dump.fasta", {
+      const res = await axios.get("/files/downloads/dump_fasta.zip", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));

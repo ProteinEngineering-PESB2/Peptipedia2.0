@@ -35,6 +35,7 @@ class supervised_algorithms(config_tool):
         run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation, self.test_size)
         response_training = run_instance.training_model()
         if self.test_size != 0:
+            print("hola")
             response_testing = run_instance.testing_model()
             if self.task == "regression":
                 temp = response_testing["performance"]
@@ -84,7 +85,6 @@ class supervised_algorithms(config_tool):
             fft_encoding = run_fft_encoding.run_fft_encoding(self.data, selected_property, self.path_config_aaindex_encoder)
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()
-
     def dump_joblib(self):
         dump(self.model, self.job_path)
 
@@ -127,7 +127,8 @@ class use_model(config_tool):
 
         prediction = self.model.predict(self.dataset_encoded)
         self.data["prediction"] = prediction
-        return json.loads(self.data.to_json(orient="records"))
+        self.data = self.data[["id", "prediction", "sequence"]]
+        return {"status": "success", "data": self.data.values.tolist(), "columns": [i.capitalize() for i in self.data.columns.tolist()]}
 
     def process_encoding_stage(self):
         encoding_option = self.options['encoding']

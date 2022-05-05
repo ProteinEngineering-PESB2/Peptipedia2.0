@@ -86,7 +86,11 @@ class verify_csv:
                             if self.more_than_n():
                                 res_is_protein = self.is_protein()
                                 if res_is_protein[0]:
-                                    return {"status": "success"}
+                                    good_length = self.ver_length()
+                                    if good_length[0]:
+                                        return {"status": "success"}
+                                    else:
+                                        return {"status": "error", "description": "Protein length invalid (id={})".format(good_length[1])}
                                 else:
                                     return {"status": "error", "description": "Not proteins (id={})".format(res_is_protein[1])}
                             else:
@@ -141,6 +145,13 @@ class verify_csv:
                     return False, row.id
         return True, None
 
+    def ver_length(self):
+        for index, row in self.data.iterrows():
+            sequence = row.sequence
+            if len(sequence) > 150 or len(sequence) < 2:
+                return False, row.id
+        return True, None
+
     def null_values(self):
         data = self.data
         data_without_na = self.data.dropna()
@@ -168,7 +179,11 @@ class verify_fasta:
                     if self.more_than_n():
                         res_is_protein = self.is_protein()
                         if res_is_protein[0]:
-                            return {"status": "success"}
+                            good_length = self.ver_length()
+                            if good_length[0]:
+                                return {"status": "success"}
+                            else:
+                                return {"status": "error", "description": "Protein length invalid (id={})".format(good_length[1])}
                         else:
                             return {"status": "error", "description": "Not proteins (id={})".format(res_is_protein[1])}
                     else:
@@ -211,6 +226,13 @@ class verify_fasta:
             for letter in str(record.seq):
                 if letter not in alphabet:
                     return False, record.id
+        return True, None
+
+    def ver_length(self):
+        for row in self.fasta:
+            sequence = row.seq
+            if len(sequence) > 150 or len(sequence) < 2:
+                return False, row.id
         return True, None
 
 class interface:

@@ -6,7 +6,7 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
-from modules.supervised_learning import supervised_algorithms, model, use_model
+from modules.supervised_learning import supervised_algorithms, use_model
 from modules.pca_process import pca_process
 from modules.utils import interface
 from modules.search import search
@@ -14,7 +14,7 @@ from modules.database import database
 from modules.structure import structure
 from flask import Flask, request
 from flask_cors import CORS
-
+from random import random
 import os
 import configparser
 
@@ -66,13 +66,14 @@ class api:
 
     @server.route('/api/msa/', methods=["POST"])
     def api_msa():
+        print(request)
         data, is_json, is_file = interface.parse_information_no_options(request)
         msa = multiple_sequence_alignment(data, temp_folder, static_folder, is_file, is_json, int(config["msa"]["max_sequences"]), int(config["msa"]["min_sequences"]))
         check = msa.get_check()
         if(check["status"] == "error"):
             return check
-        result, distance_matrix = msa.execute_clustalo()
-        return {"result": result, "distance_matrix": distance_matrix}
+        result = msa.execute_clustalo()
+        return {"result": result}
 
     ###Characterization###
     @server.route('/api/phisicochemical/', methods=["POST"])
@@ -121,7 +122,7 @@ class api:
     @server.route('/api/encoding/', methods=["POST"])
     def api_encoding():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
-        code = encoding(data, options, static_folder, temp_folder, is_file, is_json, int(config["encoding"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
+        code = encoding(data, options, static_folder, temp_folder, is_file, is_json, int(config["encoding"]["max_sequences"]), int(config["encoding"]["min_sequences"]), path_aa_index)
         check = code.get_check()
         if(check["status"] == "error"):
             return check
@@ -154,9 +155,7 @@ class api:
         if(check["status"] == "error"):
             return check
         result = sl.run()
-        print(result)
         job_path = sl.job_path
-        print(job_path)
         return {"result": result, "job_path": job_path}
 
     @server.route('/api/use_model/', methods=["POST"])
@@ -168,20 +167,6 @@ class api:
             return check
         prediction = use.get_prediction()
         return {"result": prediction}
-
-
-    @server.route('/api/publish_model/', methods=["POST"])
-    def api_publish_model():
-        post_data = request.json
-        mod = model(db)
-        mod.save_job(post_data)
-        return {"status": "success"}
-
-    @server.route('/api/list_models/', methods=["GET"])
-    def api_list_models():
-        mod = model(db)
-        return {"result": mod.list_models()}
-
 
     ###Advanced search###
     @server.route('/api/count/', methods=["POST"])
@@ -199,7 +184,6 @@ class api:
         search_obj = search(request.json)
         where, limit, offset = search_obj.parse_search()
         result = db.select_peptides(where, limit, offset)
-        print(result)
         return result
 
     @server.route('/api/database_list/', methods=["GET"])
@@ -234,7 +218,6 @@ class api:
     def api_min_max_parameters():
         result = db.get_min_max_parameters()
         return {"result": result}
-
 
     ###Profile
     @server.route('/api/get_go_from_peptide/<idpeptide>', methods=["GET"])
@@ -272,15 +255,38 @@ class api:
         result = db.get_db_from_peptide(idpeptide)
         return {"result": result}
 
-    @server.route('/api/get_structure/<uniprot>', methods=["GET"])
-    def api_get_structure(uniprot):
-        struct = structure(static_folder)
-        res = struct.get_alphafold(uniprot)
-        return {"path": res}
-
-    @server.route('/api/get_ftp_data/', methods=["GET"])
-    def api_get_ftp_data():
-        return {"credentials": dict(config["ftp"])}
+    @server.route('/api/get_structure/<idpeptide>', methods=["GET"])
+    def api_get_structure(idpeptide):
+        uniprot = db.get_uniprot(idpeptide)
+        if uniprot:
+            struct = structure(static_folder)
+            res_structure = struct.get_alphafold(uniprot)
+            res_sequence = struct.get_sequence(uniprot)
+            if(res_structure["status"] == "success" and res_sequence["status"] == "success"):
+                path_sequence = res_sequence["path"]
+                f = open(path_sequence, "r")
+                fasta_text = f.read()
+                f.close()
+                info = db.get_info_from_peptide(idpeptide)
+                sequence = info[0]["sequence"]
+                #merged_path = "/".join(path_sequence.split("/")[0:2]) +"/"+ str(round(random()*10**20)) + ".fasta"
+                request = {}
+                data = fasta_text + ">" + idpeptide + "\n" + sequence
+                is_json = True
+                is_file = False
+                msa = multiple_sequence_alignment(data, temp_folder, static_folder, is_file, is_json, int(config["msa"]["max_sequences"]), int(config["msa"]["min_sequences"]))
+                alignment = msa.execute_clustalo()
+                equal_res = []
+                similar_res = []
+                for index, i in enumerate(zip(alignment[0]["sequence"],alignment[1]["sequence"])):
+                    if i[0] == i[1]:
+                        equal_res.append(index)
+                    elif (i[0] != i[1] and i[1] != "-"):
+                        similar_res.append(index)
+                return {"status": "success", "path": res_structure["path"], "fasta": res_sequence["path"], "uniprot_id": uniprot, "alignment": alignment, "equal_res": equal_res, "similar_res": similar_res}
+            else:
+                return {"status": "error", "Description": "Structure not found"}
+        return {"status": "error", "Description": "Structure not found"}
 
     def get_server(self):
         return server

@@ -24,6 +24,7 @@ class run_one_hot(encoder):
         id_sequences = []
         matrix_encoding = []
         for index, row in dataset.iterrows():
+            print(row)
             sequence = row.sequence
             id_sequences.append(row.id)
             for residue in sequence:
