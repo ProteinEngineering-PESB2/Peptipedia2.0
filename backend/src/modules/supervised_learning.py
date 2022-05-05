@@ -35,7 +35,6 @@ class supervised_algorithms(config_tool):
         run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation, self.test_size)
         response_training = run_instance.training_model()
         if self.test_size != 0:
-            print("hola")
             response_testing = run_instance.testing_model()
             if self.task == "regression":
                 temp = response_testing["performance"]
@@ -87,21 +86,6 @@ class supervised_algorithms(config_tool):
             self.dataset_encoded = fft_encoding.appy_fft()
     def dump_joblib(self):
         dump(self.model, self.job_path)
-
-class model:
-    def __init__(self, db):
-        self.db = db
-
-    def save_job(self, post_data):
-        post_data["options"]["date"] = date.today()
-        df = pd.DataFrame([post_data["options"]])
-        json_obj = json.dumps(post_data["model_results"]) 
-        df["model_results"] = str(json_obj)
-        
-        self.db.save_job(df)
-    
-    def list_models(self):
-        return self.db.get_all_models()
 
 class use_model(config_tool):
     def __init__(self, data, options, temp_folder, static_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):

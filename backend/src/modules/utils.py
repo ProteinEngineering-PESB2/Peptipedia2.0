@@ -9,11 +9,7 @@ class config_tool:
     def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1, is_fasta = True):
         self.data = data
         self.temp_folder = temp_folder
-        if is_fasta:
-            end = ".fasta"
-        else:
-            end = ".csv"
-        self.temp_file_path = "{}/{}{}".format(self.temp_folder, str(round(random()*10**20)), end)
+        self.temp_file_path = "{}/{}".format(self.temp_folder, str(round(random()*10**20)))
         if(is_json):
             self.create_file()
         elif(is_file):
@@ -22,9 +18,6 @@ class config_tool:
             self.check = verify_fasta(self.temp_file_path, max_sequences, min_number_sequences).verify()
         else:
             self.check = verify_csv(self.temp_file_path, max_sequences, min_number_sequences).verify()
-
-    def get_check(self):
-        return self.check
 
     def create_file(self):
         f = open(self.temp_file_path, "w")
@@ -74,7 +67,7 @@ class verify_csv:
         self.min_number_sequences = min_number_sequences
         try:
             self.data = pd.read_csv(self.path)
-        except:
+        except Exception as e:
             self.data = [False]
 
     def verify(self):
@@ -104,9 +97,9 @@ class verify_csv:
             else:
                 return {"status": "error", "description": "Data has null values"}
         else:
-            return {"status": "error", "description": "Not a fasta file / ASCII error"}
+            return {"status": "error", "description": "Not a csv file / ASCII error"}
 
-    def unique_ids(self):
+    def unique_ids(self): 
         ids = self.data.id
         unique_ids = self.data.id.unique()
         if len(ids) == len(unique_ids):

@@ -21,6 +21,7 @@ class structure:
             print(e)
             return {"status": "error"}
     def get_sequence(self, uniprot_id):
+        uniprot_id = uniprot_id.split(".")[0]
         try:
             response = requests.get("https://www.uniprot.org/uniprot/{}.fasta".format(uniprot_id))
             f = open(self.output_fasta_path, "w")

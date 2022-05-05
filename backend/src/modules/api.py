@@ -134,7 +134,7 @@ class api:
     def api_clustering():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
         clustering_object = unsupervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, int(config["clustering"]["max_sequences"]), int(config["clustering"]["min_sequences"]), path_aa_index)
-        check = clustering_object.get_check()
+        check = clustering_object.check
         if(check["status"] == "error"):
             return check
         result = clustering_object.process_by_options()
@@ -151,7 +151,7 @@ class api:
     def api_supervised_learning():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
         sl = supervised_algorithms(data, options, static_folder, temp_folder, is_file, is_json, int(config["supervised_learning"]["max_sequences"]), int(config["supervised_learning"]["min_sequences"]), path_aa_index)
-        check = sl.get_check()
+        check = sl.check
         if(check["status"] == "error"):
             return check
         result = sl.run()
@@ -269,7 +269,6 @@ class api:
                 f.close()
                 info = db.get_info_from_peptide(idpeptide)
                 sequence = info[0]["sequence"]
-                #merged_path = "/".join(path_sequence.split("/")[0:2]) +"/"+ str(round(random()*10**20)) + ".fasta"
                 request = {}
                 data = fasta_text + ">" + idpeptide + "\n" + sequence
                 is_json = True
@@ -278,12 +277,20 @@ class api:
                 alignment = msa.execute_clustalo()
                 equal_res = []
                 similar_res = []
-                for index, i in enumerate(zip(alignment[0]["sequence"],alignment[1]["sequence"])):
-                    if i[0] == i[1]:
-                        equal_res.append(index)
-                    elif (i[0] != i[1] and i[1] != "-"):
-                        similar_res.append(index)
-                return {"status": "success", "path": res_structure["path"], "fasta": res_sequence["path"], "uniprot_id": uniprot, "alignment": alignment, "equal_res": equal_res, "similar_res": similar_res}
+                different_res = []
+                subject = alignment[0]["sequence"]
+                query = alignment[1]["sequence"]
+                a = 0
+                for index, i in enumerate(subject):
+                    if i != "-":
+                        if i == query[index]:
+                            equal_res.append(a)
+                        elif (i != query[index] and query[index] != "-"):
+                            similar_res.append(a)
+                        else:
+                            different_res.append(index)
+                        a += 1
+                return {"status": "success", "path": res_structure["path"], "fasta": res_sequence["path"], "uniprot_id": uniprot, "alignment": alignment, "equal_res": equal_res, "similar_res": similar_res, "different_res": different_res}
             else:
                 return {"status": "error", "Description": "Structure not found"}
         return {"status": "error", "Description": "Structure not found"}
