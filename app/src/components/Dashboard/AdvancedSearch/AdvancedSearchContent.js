@@ -35,6 +35,7 @@ const AdvancedSearchContent = ({
   setTotalTable,
   pageTable,
   setPageTable,
+  peptideID
 }) => {
   const [data, setData] = useStateIfMounted([]);
   const [loading, setLoading] = useStateIfMounted(true);
@@ -149,12 +150,13 @@ const AdvancedSearchContent = ({
   useEffect(() => {
     setLoading(true);
 
-    if (querySelected !== "") {
+    if (querySelected !== "" && peptideID === 0) {
       searchDatabase({
         query: querySelected,
         page: pageTable,
         count: totalTable,
       });
+      setPeptideID(-1)
     }
 
     const d = [];

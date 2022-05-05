@@ -81,6 +81,7 @@ const AdvancedSearch = () => {
                   setQuerySelected={setQuerySelected}
                   totalTable={totalTable}
                   setTotalTable={setTotalTable}
+                  peptideID={peptideID}
                 />
               </Grid>
             )}
