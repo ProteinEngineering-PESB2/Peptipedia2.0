@@ -6,7 +6,7 @@ from modules.encoding import encoding
 from modules.pfam_domain import pfam
 from modules.frequency_analysis import frequency_analysis
 from modules.clustering_process import unsupervised_algorithms
-from modules.supervised_learning import supervised_algorithms, model, use_model
+from modules.supervised_learning import supervised_algorithms, use_model
 from modules.pca_process import pca_process
 from modules.utils import interface
 from modules.search import search
@@ -156,7 +156,6 @@ class api:
             return check
         result = sl.run()
         job_path = sl.job_path
-        print(job_path)
         return {"result": result, "job_path": job_path}
 
     @server.route('/api/use_model/', methods=["POST"])
@@ -185,7 +184,6 @@ class api:
         search_obj = search(request.json)
         where, limit, offset = search_obj.parse_search()
         result = db.select_peptides(where, limit, offset)
-        print(result)
         return result
 
     @server.route('/api/database_list/', methods=["GET"])

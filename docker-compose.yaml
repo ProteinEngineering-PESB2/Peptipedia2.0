@@ -4,8 +4,8 @@ services:
     build: ./backend/
     volumes:
       -  ./backend/src:/app/src
-      -  ./bd/backup.sql:/app/src/files/downloads/backup.sql
-      -  ./bd/dump.fasta:/app/src/files/downloads/dump.fasta
+      -  ./bd/backup.sql:/app/src/files/downloads/backup_sql.zip
+      -  ./bd/dump.fasta:/app/src/files/downloads/dump_fasta.zip
       -  ./bd/dump_csv.zip:/app/src/files/downloads/dump_csv.zip
     ports:
       - "8001:8001"
