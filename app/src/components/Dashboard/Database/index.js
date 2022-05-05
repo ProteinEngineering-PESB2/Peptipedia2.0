@@ -25,6 +25,9 @@ const Database = () => {
   const downloadZIP = async () => {
     try {
       setLoadingZIP(true);
+      setSnackbarZIPSeverity("success");
+      setSnackbarZIPMessage("The download has started. You can continue using our services. Do not close the page");
+      setOpenSnackbarZIP(true);
       const res = await axios.get("/files/downloads/dump_csv.zip", {
         responseType: "blob",
       });
@@ -78,6 +81,9 @@ const Database = () => {
   const downloadFasta = async () => {
     try {
       setLoadingFasta(true);
+      setSnackbarFastaSeverity("success");
+      setSnackbarFastaMessage("The download has started. You can continue using our services. Do not close the page");
+      setOpenSnackbarFasta(true);
       const res = await axios.get("/files/downloads/dump_fasta.zip", {
         responseType: "blob",
       });
