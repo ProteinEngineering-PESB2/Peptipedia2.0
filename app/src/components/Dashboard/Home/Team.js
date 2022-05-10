@@ -9,7 +9,8 @@ import Claudio from "../../../assets/claudio.jpeg";
 import Fran from "../../../assets/fran.jpeg"
 import David from "../../../assets/david.jpeg"
 import Sanzana from "../../../assets/sanzana.jpeg"
-import UnknownMan from "../../../assets/hombre-desconocido.jpg"
+import Gabriel from "../../../assets/gabriel.jpeg"
+//import UnknownMan from "../../../assets/hombre-desconocido.jpg"
 
 const responsive = {
   0: { items: 1 },
@@ -20,10 +21,11 @@ const responsive = {
 
 const Team = () => {
   const items = [
-    <CardProfile name="Claudio Guevara" rol="Frontend Development" image={Claudio}/>,
-    <CardProfile name="Francisca Rodríguez" rol="Research" image={Fran}/>,
-    <CardProfile name="David Medina" rol="Research" image={David}/>,
-    <CardProfile name="Benjamin Sanzana" rol="Research" image={Sanzana}/>,
+    <CardProfile name="Claudio Guevara" rol="Frontend Developer" image={Claudio}/>,
+    <CardProfile name="Francisca Rodríguez" rol="Researcher" image={Fran}/>,
+    <CardProfile name="Gabriel Cabas" rol="Backend Developer & Data engineer" image={Gabriel}/>,
+    <CardProfile name="David Medina" rol="Researcher" image={David}/>,
+    <CardProfile name="Benjamin Sanzana" rol="Researcher" image={Sanzana}/>,
   ];
 
   return (
