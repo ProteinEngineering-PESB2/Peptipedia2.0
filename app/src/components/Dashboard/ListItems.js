@@ -14,6 +14,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import TranslateIcon from '@mui/icons-material/Translate';
 
 const ListItems = ({ section, setSection }) => {
   return (
@@ -91,6 +92,32 @@ const ListItems = ({ section, setSection }) => {
               sx={{ fontWeight: section === "advanced-search" && "bold" }}
             >
               Search
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
+      <ListSubheader>Tools</ListSubheader>
+      <List component="div" disablePadding>
+        <ListItemButton
+          disableRipple
+          sx={{
+            pl: 2,
+            margin: "6px 14px",
+            padding: "9px",
+            borderRadius: "8px",
+            backgroundColor: section === "converter" ? "#2962ff" : "#fff",
+            color: section === "converter" ? "#fff" : "#000",
+            "&:hover": {
+              background: "#2962ff",
+              color: "#fff",
+            },
+          }}
+          onClick={() => setSection("converter")}
+        >
+          <TranslateIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography sx={{ fontWeight: section === "converter" && "bold" }}>
+              Fasta converter
             </Typography>
           </ListItemText>
         </ListItemButton>

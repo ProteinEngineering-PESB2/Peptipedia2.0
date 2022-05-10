@@ -1,4 +1,5 @@
 import Home from "./Home";
+import FastaConverter from "./FastaConverter";
 import Database from "./Database";
 import Blast from "./Alignment/Blast";
 import MSA from "./Alignment/MSA";
@@ -15,6 +16,7 @@ const RenderSection = ({ section }) => {
   return (
     <>
       {section === "home" && <Home/>}
+      {section === "converter" && <FastaConverter/>}
       {section === "database" && <Database/>}
       {section === "blast" && <Blast />}
       {section === "msa" && <MSA />}

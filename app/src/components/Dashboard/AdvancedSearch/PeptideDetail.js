@@ -14,7 +14,6 @@ import {
   TableCell,
   TableBody,
   TableHead,
-  Badge,
 } from "@mui/material";
 import { useCallback, useEffect, useState, forwardRef, useRef } from "react";
 import { ProSeqViewer } from "proseqviewer/dist";
@@ -265,7 +264,7 @@ export default function PeptideDetail({
     setShowTooltip(true);
     setTimeout(() => {
       setShowTooltip(false);
-    }, 3000);
+    }, 2000);
   };
 
   useEffect(() => {

@@ -145,9 +145,8 @@ const BlastContent = ({ data, setError, setSeverity, setOpenSnackbar }) => {
             <Paper
               sx={{
                 p: 2,
-                display: "flex",
                 flexDirection: "column",
-                display: showPSV === false && "none",
+                display: showPSV === false ? "none" : "flex",
               }}
             >
               <ComponentPrint ref={componentRef} />
