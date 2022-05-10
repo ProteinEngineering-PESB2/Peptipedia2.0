@@ -53,15 +53,12 @@ export default function FastaConverter() {
     }
   };
 
-  const handleChangeSequences = async (e) => {
-    setSequences(e.target.value);
-
+  const getFasta = async (value) => {
     try {
       const post = {
-        data: e.target.value,
+        data: value,
       };
       const res = await axios.post("/api/fasta_convertor/", post);
-      console.log(res);
       setNewSequences(res.data.text);
       setPath(res.data.path);
       setCopied(false);
@@ -71,6 +68,15 @@ export default function FastaConverter() {
       setSnackbarMessage("Error converting to fasta");
       setOpenSnackbar(true);
     }
+  };
+
+  const handleChangeSequences = async (e) => {
+    setSequences(e.target.value)
+    let value = e.target.value
+    const time = setTimeout(() => {
+      getFasta(value)
+    }, 1000)
+    return () => clearTimeout(time)
   };
 
   return (
