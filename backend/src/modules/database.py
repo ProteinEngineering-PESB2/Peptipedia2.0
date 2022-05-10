@@ -129,6 +129,10 @@ class database:
         data = pd.read_sql("select sequence, length, molecular_weight, charge_density, isoelectric_point, charge from peptide where idpeptide = {}".format(idpeptide), con=self.conn)
         return json.loads(data.to_json(orient="records")) 
 
+    def get_sequence_from_peptide(self, idpeptide):
+        data = pd.read_sql("select sequence from peptide where idpeptide = {}".format(idpeptide), con=self.conn)
+        return json.loads(data.to_json(orient="records"))[0]["sequence"]
+
     def get_act_from_peptide(self, idpeptide):
         data = pd.read_sql("select act.name, pha.is_predicted from peptide_has_activity pha join activity act on pha.idactivity = act.idactivity and pha.idpeptide = {}".format(idpeptide), con=self.conn)
         return {"status": "success", "data": data.values.tolist(), "columns": data.columns.tolist()}

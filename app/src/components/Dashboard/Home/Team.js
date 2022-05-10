@@ -7,6 +7,8 @@ import CardProfile from "./CardProfile";
 
 import Claudio from "../../../assets/claudio.jpeg";
 import Fran from "../../../assets/fran.jpeg"
+import David from "../../../assets/david.jpeg"
+import Sanzana from "../../../assets/sanzana.jpeg"
 import UnknownMan from "../../../assets/hombre-desconocido.jpg"
 
 const responsive = {
@@ -19,9 +21,9 @@ const responsive = {
 const Team = () => {
   const items = [
     <CardProfile name="Claudio Guevara" rol="Frontend Development" image={Claudio}/>,
-    <CardProfile name="Francisca Rodríguez" rol="Frontend Development" image={Fran}/>,
-    <CardProfile name="Francisca Rodríguez" rol="Frontend Development" image={UnknownMan}/>,
-    <CardProfile name="Francisca Rodríguez" rol="Frontend Development" image={UnknownMan}/>,
+    <CardProfile name="Francisca Rodríguez" rol="Research" image={Fran}/>,
+    <CardProfile name="David Medina" rol="Research" image={David}/>,
+    <CardProfile name="Benjamin Sanzana" rol="Research" image={Sanzana}/>,
   ];
 
   return (

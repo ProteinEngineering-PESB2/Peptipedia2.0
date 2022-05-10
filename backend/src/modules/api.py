@@ -58,18 +58,20 @@ class api:
     def api_alignment():
         data, is_json, is_file = interface.parse_information_no_options(request)
         align = alignment(data, temp_folder, static_folder, is_file, is_json, int(config["blast"]["max_sequences"]), int(config["blast"]["min_sequences"]))
-        check = align.get_check()
+        check = align.check
         if(check["status"] == "error"):
             return check
         result = align.execute_blastp()
-        return {"path": result.replace("./", "/")}
+        table_parsed = align.parse_response()
+        aligns = align.get_alignments()
+        return {"path": result.replace("./", "/"), "table": table_parsed, "aligns": aligns}
 
     @server.route('/api/msa/', methods=["POST"])
     def api_msa():
         print(request)
         data, is_json, is_file = interface.parse_information_no_options(request)
         msa = multiple_sequence_alignment(data, temp_folder, static_folder, is_file, is_json, int(config["msa"]["max_sequences"]), int(config["msa"]["min_sequences"]))
-        check = msa.get_check()
+        check = msa.check
         if(check["status"] == "error"):
             return check
         result = msa.execute_clustalo()
@@ -80,7 +82,7 @@ class api:
     def api_phisicochemical():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
         modlamp = modlamp_descriptor(data, options, temp_folder, is_file, is_json, int(config["physicochemical"]["max_sequences"]), int(config["physicochemical"]["min_sequences"]))
-        check = modlamp.get_check()
+        check = modlamp.check
         if(check["status"] == "error"):
             return check
         result = modlamp.execute_modlamp()
@@ -90,29 +92,31 @@ class api:
     def api_gene_ontology():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
         go = gene_ontology(data, options, temp_folder, is_file, is_json, int(config["gene_ontology"]["max_sequences"]), int(config["gene_ontology"]["min_sequences"]))
-        check = go.get_check()
+        check = go.check
         if(check["status"] == "error"):
             return check
         result = go.process()
-        if (result == []):
-            return {"status": "error", "description": "No result for this sequences"}
+        if (len(result) == 0):
+            return {"status": "error", "description": "There's no significant results for this sequences"}
         return {"result": result}
 
     @server.route('/api/pfam/', methods=["POST"])
     def api_pfam():
         data, is_json, is_file = interface.parse_information_no_options(request)
         pf = pfam(data, temp_folder, is_file, is_json, int(config["pfam"]["max_sequences"]), int(config["pfam"]["min_sequences"]))
-        check = pf.get_check()
+        check = pf.check
         if(check["status"] == "error"):
             return check
         result = pf.process()
+        if(len(result) == 0):
+            return {"status": "error", "description": "There's no significant results for this sequences"}
         return {"result": result}
 
     @server.route('/api/frequency/', methods=["POST"])
     def api_frequency():
         data, is_json, is_file = interface.parse_information_no_options(request)
         frequency_object = frequency_analysis(data, temp_folder, is_file, is_json, int(config["frequency"]["max_sequences"]), int(config["frequency"]["min_sequences"]))
-        check = frequency_object.get_check()
+        check = frequency_object.check
         if(check["status"] == "error"):
             return check
         result = frequency_object.exec_process()
@@ -123,7 +127,7 @@ class api:
     def api_encoding():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
         code = encoding(data, options, static_folder, temp_folder, is_file, is_json, int(config["encoding"]["max_sequences"]), int(config["encoding"]["min_sequences"]), path_aa_index)
-        check = code.get_check()
+        check = code.check
         if(check["status"] == "error"):
             return check
         result = code.process()
@@ -162,7 +166,7 @@ class api:
     def api_use_model():
         data, options, is_json, is_file = interface.parse_information_with_options(request)
         use = use_model(data, options, static_folder, temp_folder, is_file, is_json, int(config["use_model"]["max_sequences"]), int(config["use_model"]["min_sequences"]), path_aa_index)
-        check = use.get_check()
+        check = use.check
         if(check["status"] == "error"):
             return check
         prediction = use.get_prediction()

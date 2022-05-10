@@ -29,19 +29,16 @@ class encoding(config_tool):
         self.data = self.create_df(f.read())
         f.close()
         if self.one_hot_encoding:
-            print("One Hot encoding")
             one_hot = run_one_hot(self.data)
             result = one_hot.run_parallel_encoding()
             result.to_csv("{}/one_hot_encoding.csv".format(self.results_folder))
         if self.phisicochemical_properties:
-            print("Physicochemical properties")
             os.mkdir("{}/physicochemical_properties".format(self.results_folder))
             for selected_property in self.list_clusters:
                 physicochemical_encoding = run_physicochemical_properties(self.data, selected_property, self.path_config_aaindex_encoder)
                 result = physicochemical_encoding.run_parallel_encoding()
                 result.to_csv("{}/physicochemical_properties/{}.csv".format(self.results_folder, selected_property))
         if self.digital_signal_processing:
-            print("Digital signal processing")
             os.mkdir("{}/digital_signal_processing".format(self.results_folder))
             for selected_property in self.list_clusters:
                 fft_encoding = run_fft_encoding(self.data, selected_property, self.path_config_aaindex_encoder)
@@ -53,6 +50,5 @@ class encoding(config_tool):
     
     def compress(self):
         command = "zip -r {}.zip {}/".format(self.results_folder, self.results_folder)
-        print(command)
         os.system(command)
         

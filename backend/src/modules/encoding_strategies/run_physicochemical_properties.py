@@ -13,7 +13,6 @@ class run_physicochemical_properties(encoder):
     def encoding_data(self, dataset):
         matrix_sequence_encoding = []
         for index, row in dataset.iterrows():
-            print(row)
             sequence = row.sequence
             sequence = sequence.upper()
             sequence_encoding = self.encoding_sequence(sequence, self.dataset_cluster['component_1'])
@@ -30,6 +29,5 @@ class run_physicochemical_properties(encoder):
                 residue_index = self.residues.index(residue)
                 sequence_encoding.append(value_property[residue_index])
             except:
-                #print("Residue {} not found".format(residue))
                 pass
         return sequence_encoding

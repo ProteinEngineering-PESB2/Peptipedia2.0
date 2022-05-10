@@ -10,10 +10,16 @@ class config_tool:
         self.data = data
         self.temp_folder = temp_folder
         self.temp_file_path = "{}/{}".format(self.temp_folder, str(round(random()*10**20)))
+        if(is_fasta):
+            self.temp_file_path+=".fasta"
+        else:
+            self.temp_file_path+=".csv"
+
         if(is_json):
             self.create_file()
         elif(is_file):
             self.save_file()
+            
         if(is_fasta):
             self.check = verify_fasta(self.temp_file_path, max_sequences, min_number_sequences).verify()
         else:
@@ -26,12 +32,6 @@ class config_tool:
 
     def save_file(self):
         self.data.save(self.temp_file_path)
-
-    def delete_file(self):
-        try:
-            os.remove(self.temp_file_path)
-        except Exception as e:
-            print(e)
 
     def create_csv_from_fasta(self):
         f = open(self.temp_file_path, "r")
@@ -152,7 +152,6 @@ class verify_csv:
             return True
         return False
 
-
 class verify_fasta:
 
     def __init__(self, path, max_number_sequences, min_number_sequences = 1):
@@ -162,7 +161,7 @@ class verify_fasta:
         try:
             self.fasta = list(SeqIO.parse(self.path, "fasta"))
             SeqIO.write(self.fasta, self.path, "fasta")
-        except:
+        except Exception as e:
             self.fasta = [False]
 
     def verify(self):

@@ -8,9 +8,7 @@ class encoder:
 
     def run_parallel_encoding(self):
         cpu_number = mp.cpu_count()
-        print('Dividiendo dataframe entre {} cores'.format(cpu_number))
         df_split = np.array_split(self.dataset, cpu_number)
-        print("Ejecutando Codificacion...")
         with mp.Pool(cpu_number) as pool:
             self.df_encoding = pd.concat(pool.map(self.encoding_data, df_split))
         self.df_encoding.rename(columns=dict( (col, "P_" + str(col)) for col in self.df_encoding.columns if type(col) == int), inplace=True)
