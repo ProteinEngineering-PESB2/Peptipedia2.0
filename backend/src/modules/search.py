@@ -69,7 +69,7 @@ class search():
         return phrase
 
     def parse_search(self):
-        logic = self.query["query"]
+        logic = "("+self.query["query"]+")"
         try:
             limit = self.query["limit"]
         except:
