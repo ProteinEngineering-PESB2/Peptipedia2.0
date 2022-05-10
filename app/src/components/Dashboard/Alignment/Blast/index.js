@@ -10,8 +10,7 @@ import BlastContent from "./BlastContent";
 import Snackbar from "../../Snackbar";
 
 const Blast = () => {
-  const [data, setData] = useStateIfMounted([]);
-  const [path, setPath] = useStateIfMounted("");
+  const [data, setData] = useStateIfMounted(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState("");
   const [severity, setSeverity] = useState("");
@@ -36,17 +35,14 @@ const Blast = () => {
             setOpenSnackbar={setOpenSnackbar}
             setError={setError}
             setSeverity={setSeverity}
-            setPath={setPath}
           />
         </Grid>
-        {data.length > 0 && (
+        {data !== null && (
           <BlastContent
             data={data}
-            path={path}
             setError={setError}
             setSeverity={setSeverity}
             setOpenSnackbar={setOpenSnackbar}
-            setPath={setPath}
           />
         )}
       </Grid>

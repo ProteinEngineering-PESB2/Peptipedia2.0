@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 import Form from "./Form";
 
-const BlastForm = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
+const BlastForm = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={8} lg={8} xl={8} sx={{ margin: "start" }}>
@@ -19,7 +19,6 @@ const BlastForm = ({ setData, setError, setSeverity, setOpenSnackbar, setPath })
             setError={setError}
             setSeverity={setSeverity}
             setOpenSnackbar={setOpenSnackbar}
-            setPath={setPath}
           />
         </Paper>
       </Grid>

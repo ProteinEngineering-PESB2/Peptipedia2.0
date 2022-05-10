@@ -1,54 +1,70 @@
 import axios from "axios";
-import blasterjs from "biojs-vis-blasterjs";
-import { useState } from "react";
+import { useState, forwardRef, useEffect, useRef } from "react";
 
-import { useEffect, useRef, forwardRef } from "react";
 import { useStateIfMounted } from "use-state-if-mounted";
-import {
-  exportComponentAsJPEG,
-  exportComponentAsPNG,
-} from "react-component-export-image";
+import { ProSeqViewer } from "proseqviewer/dist";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import CircularLoading from "../../CircularLoading";
+import DataTable from "../../DataTable";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import { Box } from "@mui/material";
 
-const ComponentBlastMultipleAlignments = forwardRef((props, ref) => (
-  <div className="wrapper" ref={ref}>
-    <div id="blast-multiple-alignments"></div>
-  </div>
+const options = {
+  sequenceColor: "clustal",
+};
+
+const ComponentPrint = forwardRef((props, ref) => (
+  <div id="psv" ref={ref}></div>
 ));
 
-const BlastContent = ({
-  data,
-  path,
-  setError,
-  setSeverity,
-  setOpenSnackbar,
-}) => {
-  const componentBlastMultipleAlignmentsRef = useRef();
+const BlastContent = ({ data, setError, setSeverity, setOpenSnackbar }) => {
   const [loading, setLoading] = useStateIfMounted(true);
   const [loadingButton, setLoadingButton] = useState(false);
+  const [dataTable, setDataTable] = useState([]);
+  const [columnsTable, setColumnsTable] = useState([]);
+  const [loadingPSV, setLoadingPSV] = useState(null);
+
+  const componentRef = useRef();
+
+  const alignment = (id) => {
+    setLoadingPSV(true);
+    const psv = new ProSeqViewer("psv");
+    psv.draw({ sequences: data.aligns[id], options });
+    setLoadingPSV(false);
+  };
+
+  const parseData = () => {
+    const new_data_table = [];
+    for (let i = 0; i < data.table.data.length; i++) {
+      const new_data = [
+        ...data.table.data[i],
+        <Button onClick={() => alignment(data.table.data[i][0])}>
+          <FormatAlignCenterIcon />
+        </Button>,
+      ];
+      new_data_table.push(new_data);
+    }
+    const new_columns = [...data.table.columns, "Alignment"];
+    setColumnsTable(new_columns);
+    setDataTable(new_data_table);
+  };
 
   useEffect(() => {
     setLoading(true);
-    new blasterjs({
-      string: data,
-      multipleAlignments: "blast-multiple-alignments",
-      alignmentsTable: "blast-alignments-table",
-      singleAlignment: "blast-single-alignment",
-    });
+    parseData();
+    alignment(data.table.data[0][0]);
     setLoading(false);
-  });
+  }, []);
 
   const downloadBlast = async () => {
     setLoadingButton(true);
     try {
-      const res = await axios.get(path, {
+      const res = await axios.get(data.path, {
         responseType: "blod",
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -77,7 +93,15 @@ const BlastContent = ({
         <CircularLoading />
       ) : (
         <Grid item lg={12} md={12} xs={12}>
-          <Grid item xl={2.05} lg={2.05} md={2.65} sm={4.15} xs={12} sx={{ marginBottom: 3 }}>
+          <Grid
+            item
+            xl={2.05}
+            lg={2.05}
+            md={2.65}
+            sm={4.15}
+            xs={12}
+            sx={{ marginBottom: 3 }}
+          >
             {loadingButton ? (
               <LoadingButton
                 loading
@@ -102,87 +126,31 @@ const BlastContent = ({
               </Button>
             )}
           </Grid>
-          <Grid container spacing={3} sx={{ marginTop: 1 }}>
-            <Grid item lg={12} md={12} xs={12}>
-              <Typography variant="h6">Blast Multiple Alignments</Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <ComponentBlastMultipleAlignments
-                  ref={componentBlastMultipleAlignmentsRef}
-                />
-              </Paper>
-            </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+            sx={{ marginTop: 4 }}
+          >
+            <DataTable
+              title="Blast Alignment"
+              columns={columnsTable}
+              data={dataTable}
+            />
           </Grid>
-          <Grid container spacing={3} marginTop={0}>
-            <Grid item lg={2} md={3} xs={6}>
-              <Button
-                variant="contained"
-                onClick={() =>
-                  exportComponentAsPNG(componentBlastMultipleAlignmentsRef)
-                }
-                size="medium"
-                sx={{
-                  backgroundColor: "#2962ff",
-                  width: "100%",
-                  ":hover": { backgroundColor: "#2962ff" },
-                }}
-              >
-                Export as PNG
-              </Button>
-            </Grid>
-            <Grid item lg={2} md={3} xs={6}>
-              <Button
-                variant="contained"
-                onClick={() =>
-                  exportComponentAsJPEG(componentBlastMultipleAlignmentsRef)
-                }
-                size="medium"
-                sx={{
-                  backgroundColor: "#2962ff",
-                  width: "100%",
-                  ":hover": { backgroundColor: "#2962ff" },
-                }}
-              >
-                Export as JPG
-              </Button>
-            </Grid>
-            <Grid item lg={12} xs={12} marginTop={2}>
-              <Typography variant="h6">Blast Alignments Table</Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div className="table-responsive">
-                  <div id="blast-alignments-table"></div>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item lg={12} xs={12} marginTop={2}>
-              <Typography variant="h6">Blast Single Alignment</Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div id="blast-single-alignment"></div>
-              </Paper>
-            </Grid>
+          <Grid sx={{ marginTop: 4 }}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <ComponentPrint ref={componentRef} />
+            </Paper>
           </Grid>
         </Grid>
       )}

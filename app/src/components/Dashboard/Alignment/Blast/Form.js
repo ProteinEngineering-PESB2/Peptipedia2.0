@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { useState } from "react";
 import { useStateIfMounted } from "use-state-if-mounted";
 
@@ -25,7 +23,7 @@ const Input = styled("input")({
   width: "100%",
 });
 
-const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
+const Form = ({ setData, setError, setSeverity, setOpenSnackbar }) => {
   const [fileType, setFileType] = useState("text");
   const [textInput, setTextInput] = useState("");
   const [fileInput, setFileInput] = useState(null);
@@ -52,7 +50,7 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
     let res;
 
     setLoading(true);
-    setData([]);
+    setData(null);
 
     if (fileType === "text") {
       post = {
@@ -72,15 +70,10 @@ const Form = ({ setData, setError, setSeverity, setOpenSnackbar, setPath }) => {
         setLoading(false);
         setOpenSnackbar(true);
       } else {
-        const { path } = res;
-        const { data } = await axios.get(path);
-
+        setData(res);
         setLoading(false);
-        setData(data);
-        setPath(path);
       }
     } catch (error) {
-      console.log(error)
       setSeverity("error");
       setError("Service not available");
       setOpenSnackbar(true);
