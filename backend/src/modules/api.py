@@ -12,6 +12,7 @@ from modules.utils import interface
 from modules.search import search
 from modules.database import database
 from modules.structure import structure
+from modules.fasta_convertor import fasta_convertor
 from flask import Flask, request
 from flask_cors import CORS
 from random import random
@@ -298,6 +299,14 @@ class api:
             else:
                 return {"status": "error", "Description": "Structure not found"}
         return {"status": "error", "Description": "Structure not found"}
+    @server.route('/api/fasta_convertor/', methods=["POST"])
+    def api_fasta_convertor():
+        text = request.json["data"]
+        limit = int(config["fasta_convertor"]["length"])
+        f_convert = fasta_convertor(static_folder, text, limit)
+        fasta_text = f_convert.convert()
+        fasta_path = f_convert.save_file()
+        return {"path": fasta_path, "text": fasta_text}
 
     def get_server(self):
         return server
