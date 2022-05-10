@@ -33,6 +33,12 @@ class config_tool:
     def save_file(self):
         self.data.save(self.temp_file_path)
 
+    def delete_file(self):
+        try:
+            os.remove(self.temp_file_path)
+        except Exception as e:
+            print(e)
+
     def create_csv_from_fasta(self):
         f = open(self.temp_file_path, "r")
         data = f.read()
