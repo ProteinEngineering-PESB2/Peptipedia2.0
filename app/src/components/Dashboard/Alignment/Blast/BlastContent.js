@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, forwardRef, useEffect, useRef } from "react";
+import { useState, forwardRef, useEffect, useRef, useCallback } from "react";
 
 import { useStateIfMounted } from "use-state-if-mounted";
 import { ProSeqViewer } from "proseqviewer/dist";
@@ -12,33 +12,31 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import CircularLoading from "../../CircularLoading";
 import DataTable from "../../DataTable";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import { Box } from "@mui/material";
 
 const options = {
   sequenceColor: "clustal",
 };
 
 const ComponentPrint = forwardRef((props, ref) => (
-  <div id="psv" ref={ref}></div>
+  <div id="psv-blast" ref={ref}></div>
 ));
 
 const BlastContent = ({ data, setError, setSeverity, setOpenSnackbar }) => {
   const [loading, setLoading] = useStateIfMounted(true);
-  const [loadingButton, setLoadingButton] = useState(false);
-  const [dataTable, setDataTable] = useState([]);
-  const [columnsTable, setColumnsTable] = useState([]);
-  const [loadingPSV, setLoadingPSV] = useState(null);
+  const [loadingButton, setLoadingButton] = useStateIfMounted(false);
+  const [dataTable, setDataTable] = useStateIfMounted([]);
+  const [columnsTable, setColumnsTable] = useStateIfMounted([]);
+  const [showPSV, setShowPSV] = useState(false);
 
   const componentRef = useRef();
 
-  const alignment = (id) => {
-    setLoadingPSV(true);
-    const psv = new ProSeqViewer("psv");
+  const alignment = useCallback((id) => {
+    setShowPSV(true);
+    const psv = new ProSeqViewer("psv-blast");
     psv.draw({ sequences: data.aligns[id], options });
-    setLoadingPSV(false);
-  };
+  }, []);
 
-  const parseData = () => {
+  const parseData = useCallback(() => {
     const new_data_table = [];
     for (let i = 0; i < data.table.data.length; i++) {
       const new_data = [
@@ -52,14 +50,16 @@ const BlastContent = ({ data, setError, setSeverity, setOpenSnackbar }) => {
     const new_columns = [...data.table.columns, "Alignment"];
     setColumnsTable(new_columns);
     setDataTable(new_data_table);
-  };
+  }, []);
 
   useEffect(() => {
     setLoading(true);
+    const id = data.table.data[0][0];
+    const psv = new ProSeqViewer("psv-blast");
+    psv.draw({ sequences: data.aligns[id], options });
     parseData();
-    alignment(data.table.data[0][0]);
     setLoading(false);
-  }, []);
+  }, [parseData, alignment]);
 
   const downloadBlast = async () => {
     setLoadingButton(true);
@@ -141,12 +141,13 @@ const BlastContent = ({ data, setError, setSeverity, setOpenSnackbar }) => {
               data={dataTable}
             />
           </Grid>
-          <Grid sx={{ marginTop: 4 }}>
+          <Grid item xs={12} sx={{ marginTop: 4 }}>
             <Paper
               sx={{
                 p: 2,
                 display: "flex",
                 flexDirection: "column",
+                display: showPSV === false && "none",
               }}
             >
               <ComponentPrint ref={componentRef} />
