@@ -9,7 +9,7 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -53,10 +53,17 @@ export default function FastaConverter() {
     }
   };
 
-  const getFasta = async (value) => {
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      getFasta(sequences)
+    }, 1000)
+    return () => clearTimeout(delay)
+  }, [sequences])
+
+  const getFasta = async (sequences) => {
     try {
       const post = {
-        data: value,
+        data: sequences,
       };
       const res = await axios.post("/api/fasta_convertor/", post);
       setNewSequences(res.data.text);
@@ -68,15 +75,6 @@ export default function FastaConverter() {
       setSnackbarMessage("Error converting to fasta");
       setOpenSnackbar(true);
     }
-  };
-
-  const handleChangeSequences = async (e) => {
-    setSequences(e.target.value)
-    let value = e.target.value
-    const time = setTimeout(() => {
-      getFasta(value)
-    }, 1000)
-    return () => clearTimeout(time)
   };
 
   return (
@@ -111,7 +109,7 @@ export default function FastaConverter() {
                   multiline
                   rows={30}
                   value={sequences}
-                  onChange={handleChangeSequences}
+                  onChange={(e) => setSequences(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
