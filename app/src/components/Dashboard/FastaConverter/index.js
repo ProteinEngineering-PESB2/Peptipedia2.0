@@ -43,7 +43,7 @@ export default function FastaConverter() {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "codifications.fasta");
+      link.setAttribute("download", "data.fasta");
       document.body.appendChild(link);
       link.click();
     } catch (error) {

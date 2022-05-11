@@ -7,7 +7,8 @@ class fasta_convertor:
     
     def convert(self):
         self.fasta_text = ""
-        for i, row in enumerate(self.text.split("\n")):
+        splitted = [a.strip() for a in self.text.split("\n") if a.strip() != ""]
+        for i, row in enumerate(splitted):
             res = ">sequence " + str(i) + "\n" + "\n".join(
                 [row[y - self.limit:y] for y in range(self.limit, len(row) + self.limit, self.limit)]
                 ) + "\n"
