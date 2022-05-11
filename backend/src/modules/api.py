@@ -272,6 +272,9 @@ class api:
                 f = open(path_sequence, "r")
                 fasta_text = f.read()
                 f.close()
+                id_fasta = fasta_text.split("\n")[0].split(" ")[0]
+                seq_fasta = "\n".join(fasta_text.split("\n")[1:])
+                fasta_text = id_fasta+"\n"+seq_fasta
                 info = db.get_info_from_peptide(idpeptide)
                 sequence = info[0]["sequence"]
                 request = {}
