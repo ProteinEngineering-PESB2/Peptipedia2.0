@@ -110,7 +110,7 @@ const Form = ({ setOpenSnackbar, setMessage, setSeverity }) => {
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "codifications.zip");
+        link.setAttribute("download", "encoding.zip");
         document.body.appendChild(link);
         link.click();
 
