@@ -79,7 +79,7 @@ export default function FastaConverter() {
 
   return (
     <>
-      <Grid container spacing={5} sx={{ marginTop: 2 }}>
+      <Grid container spacing={2}>
         {snackbarMessage.length > 0 && (
           <SnackbarComponent
             open={openSnackbar}

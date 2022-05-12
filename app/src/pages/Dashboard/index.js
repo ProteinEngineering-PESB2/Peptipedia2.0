@@ -77,7 +77,7 @@ const Dashboard = (props) => {
             </Toolbar>
           </AppBar>
         </ElevationScroll>
-        <Container maxWidth="xl" sx={{ paddingY: 8 }}>
+        <Container maxWidth="lg" sx={{ paddingY: 8 }}>
           <RenderSection section={section} />
         </Container>
       </Box>
