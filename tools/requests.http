@@ -324,3 +324,13 @@ Content-Type: application/json
 {
     "data": "fdsafdsa\nfdsafdsfdsfdsafdsafs\nrewrqwdjskadjksadjksakdsajkfsjafkdsajkfdsjfkdsafjdsafhdsgehaikfds\njfuwihrqwiruewjfdsfhasiufwjkdasfhudsiafdjsafewqnreuhfadojkfdsafhudsfidksnfudsahfdsaiofndskafdusaifojnfdasufiadsofjunadsfasrewqrwerr"
 }
+
+###
+
+GET {{api}}/get_db_statistics/
+###
+
+GET {{api}}/get_all_act_statistics/
+###
+
+GET {{api}}/get_specific_act_statistics/6

@@ -154,3 +154,29 @@ class database:
             return str(data.values[0][0])
         except:
             return None
+
+    def get_db_statistics(self):
+        data = pd.read_sql("""select db.name, COUNT(phdhi.idpeptide), db.app_url from peptide_has_db_has_index phdhi 
+        join db on db.id_db = phdhi.id_db
+        group by db.name, db.app_url ;""", con=self.conn)
+        print(data)
+        return {"status": "success", "data": data.values.tolist(), "columns": data.columns.tolist()}
+
+    def get_all_act_statistics(self):
+        data = pd.read_sql("""select act.name as Activity, COUNT(pha.idpeptide) as Peptides from peptide_has_activity pha
+        join activity act on act.idactivity = pha.idactivity 
+        group by act."name";""", con=self.conn)
+        print(data)
+        return {"status": "success", "data": data.values.tolist(), "columns": data.columns.tolist()}
+
+    def get_specific_act_statistics(self, idactivity):
+        data = pd.read_sql("""select p.length, p.charge, p.molecular_weight, 
+        p.charge_density, p.isoelectric_point from peptide_has_activity pha
+        join peptide p on p.idpeptide = pha.idpeptide and pha.idactivity = {}""".format(idactivity), con=self.conn)
+        description = data.describe()
+        length = {a: round(b, 3) for a, b in zip(description.index.tolist(), description.length.values.tolist())}
+        charge = {a: round(b, 3) for a, b in zip(description.charge.index.tolist(), description.charge.values.tolist())}
+        molecular_weight = {a: round(b, 3) for a, b in zip(description.molecular_weight.index.tolist(),description.molecular_weight.values.tolist())}
+        charge_density = {a: round(b, 5) for a, b in zip(description.charge_density.index.tolist(), description.charge_density.values.tolist())}
+        isoelectric_point = {a: round(b, 4) for a, b in zip(description.isoelectric_point.index.tolist(), description.isoelectric_point.values.tolist())}
+        return {"status": "success", "length": length, "charge":charge, "molecular_weight":molecular_weight, "charge_density": charge_density, "isoelectric_point": isoelectric_point}

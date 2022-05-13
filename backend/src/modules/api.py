@@ -57,6 +57,7 @@ class api:
     ###Alignments###
     @server.route('/api/alignment/', methods=["POST"])
     def api_alignment():
+        print(request)
         data, is_json, is_file = interface.parse_information_no_options(request)
         align = alignment(data, temp_folder, static_folder, is_file, is_json, int(config["blast"]["max_sequences"]), int(config["blast"]["min_sequences"]))
         check = align.check
@@ -310,6 +311,21 @@ class api:
         fasta_text = f_convert.convert()
         fasta_path = f_convert.save_file()
         return {"path": fasta_path, "text": fasta_text}
+
+    @server.route('/api/get_db_statistics/', methods=["GET"])
+    def api_get_db_statistics():
+        res = db.get_db_statistics()
+        return res
+
+    @server.route('/api/get_all_act_statistics/', methods=["GET"])
+    def api_get_all_act_statistics():
+        res = db.get_all_act_statistics()
+        return res
+
+    @server.route('/api/get_specific_act_statistics/<idactivity>', methods=["GET"])
+    def api_get_specific_act_statistics(idactivity):
+        res = db.get_specific_act_statistics(idactivity)
+        return res
 
     def get_server(self):
         return server
