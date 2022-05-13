@@ -12,7 +12,7 @@ import Resources from "./Resources";
 const Home = () => {
   return (
     <>
-      <Grid container spacing={3} sx={{ marginTop: 2 }}>
+      <Grid container spacing={3}>
         <Grid item lg={12} md={12} xs={12} sx={{ textAlign: "center" }}>
           <Header />
         </Grid>

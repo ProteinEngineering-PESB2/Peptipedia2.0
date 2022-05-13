@@ -15,7 +15,7 @@ const CardProfile = ({ name, rol, image, github, linkedin }) => {
       <Card sx={{ width: "95%" }}>
         <CardMedia
           component="img"
-          height="400"
+          height="350"
           image={image}
           alt="profile"
           className="image-center"
