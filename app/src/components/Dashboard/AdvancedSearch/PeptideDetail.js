@@ -207,7 +207,7 @@ export default function PeptideDetail({
   const getStructureFromPeptide = useCallback(async () => {
     try {
       const res = await axios.get(`/api/get_structure/${peptideID}`);
-      if (res.data.status === "success" && path === "") {
+      if (res.data.status === "success" && path === "" && path !== "error") {
         setPath(res.data.path);
 
         const res_pdb = await axios.get(res.data.path);
@@ -253,9 +253,10 @@ export default function PeptideDetail({
         psv.draw({ sequences: res.data.alignment, options: options_msa });
       }
     } catch (error) {
-      setSeverity("error");
-      setMessage("Service no available");
-      setOpenSnackbar(true);
+      setPath("error")
+      // setSeverity("error");
+      // setMessage("Service no available");
+      // setOpenSnackbar(true);
     }
   }, [setSeverity, setMessage, setOpenSnackbar]);
 
@@ -310,6 +311,7 @@ export default function PeptideDetail({
                 sx={{
                   backgroundColor: "#2962ff",
                   ":hover": { backgroundColor: "#2962ff" },
+                  p: 2,
                 }}
                 onClick={() => setPeptideID(0)}
               >
@@ -358,7 +360,7 @@ export default function PeptideDetail({
               sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}
             >
               PDB Structure{" "}
-              {path === "" && (
+              {(path === "" || path === "error") && (
                 <Typography
                   variant="subtitle1"
                   sx={{ marginLeft: 1, fontWeight: "bold" }}
@@ -368,14 +370,14 @@ export default function PeptideDetail({
               )}
             </Typography>
           </Grid>
-          {path !== "" && (
+          {(path !== "" && path !== "error") && (
             <>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
                 <div id="content-pdb" style={{ width: "100%" }}></div>
               </Grid>
             </>
           )}
-          {path !== "" && (
+          {(path !== "" && path !== "error") && (
             <>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
