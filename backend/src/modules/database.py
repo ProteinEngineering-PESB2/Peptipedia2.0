@@ -2,7 +2,9 @@ from sqlalchemy import create_engine, text
 import pandas as pd
 import json
 import os
-
+from collections import defaultdict
+from pprint import pprint
+import json
 class database:
 
     def __init__(self, config):
@@ -180,3 +182,23 @@ class database:
         charge_density = {a: round(b, 5) for a, b in zip(description.charge_density.index.tolist(), description.charge_density.values.tolist())}
         isoelectric_point = {a: round(b, 4) for a, b in zip(description.isoelectric_point.index.tolist(), description.isoelectric_point.values.tolist())}
         return {"status": "success", "length": length, "charge":charge, "molecular_weight":molecular_weight, "charge_density": charge_density, "isoelectric_point": isoelectric_point}
+
+    def build_tree(self, d, val, resume):
+        response = [{"atributes": {"id": id_, "count": int(resume[resume.activity == name]["peptides"].values[0])}, 'name': name, 'children': self.build_tree(d, id_, resume)} for id_, name in d[val]]
+        return response
+
+    def get_tree(self):
+        parents = defaultdict(list)
+        data = pd.read_sql("activity", con=self.conn)
+        data = data.sort_values(by="level")
+        parents = defaultdict(list)
+
+        resume = pd.read_sql("""select act.name as Activity, COUNT(pha.idpeptide) as Peptides from peptide_has_activity pha
+        join activity act on act.idactivity = pha.idactivity 
+        group by act."name";""", con=self.conn)
+        
+        for i, row in data.iterrows():
+            parents[row.parent].append((row.idactivity, row["name"]))
+        tree = {"id": 0, "name": "All Peptides", "children": self.build_tree(parents, 0, resume)}
+        return {"status": "success", "tree": tree}
+        

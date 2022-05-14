@@ -326,6 +326,11 @@ class api:
     def api_get_specific_act_statistics(idactivity):
         res = db.get_specific_act_statistics(idactivity)
         return res
+    
+    @server.route('/api/get_tree/', methods=["GET"])
+    def api_get_tree():
+        res = db.get_tree()
+        return res
 
     def get_server(self):
         return server
