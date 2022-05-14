@@ -1,9 +1,46 @@
 import { Grid, Typography, Button } from "@mui/material";
 import axios from "axios";
-import { useStateIfMounted } from "use-state-if-mounted"
+import { useStateIfMounted } from "use-state-if-mounted";
+import Tree from "react-d3-tree";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
+
+const orgChart = {
+  name: "CEO",
+  children: [
+    {
+      name: "Manager",
+      attributes: {
+        department: "Production",
+      },
+      children: [
+        {
+          name: "Foreman",
+          attributes: {
+            department: "Fabrication",
+          },
+          children: [
+            {
+              name: "Worker",
+            },
+          ],
+        },
+        {
+          name: "Foreman",
+          attributes: {
+            department: "Assembly",
+          },
+          children: [
+            {
+              name: "Worker",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
 
 const Database = () => {
   const [loadingZIP, setLoadingZIP] = useStateIfMounted(false);
@@ -20,13 +57,16 @@ const Database = () => {
 
   const [openSnackbarFasta, setOpenSnackbarFasta] = useStateIfMounted(false);
   const [snackbarFastaMessage, setSnackbarFastaMessage] = useStateIfMounted("");
-  const [snackbarFastaSeverity, setSnackbarFastaSeverity] = useStateIfMounted("");
+  const [snackbarFastaSeverity, setSnackbarFastaSeverity] =
+    useStateIfMounted("");
 
   const downloadZIP = async () => {
     try {
       setLoadingZIP(true);
       setSnackbarZIPSeverity("success");
-      setSnackbarZIPMessage("The download has started. You can continue using our services. Do not close the page");
+      setSnackbarZIPMessage(
+        "The download has started. You can continue using our services. Do not close the page"
+      );
       setOpenSnackbarZIP(true);
       const res = await axios.get("/files/downloads/dump_csv.zip", {
         responseType: "blob",
@@ -54,7 +94,9 @@ const Database = () => {
     try {
       setLoadingSQL(true);
       setSnackbarSQLSeverity("success");
-      setSnackbarSQLMessage("The download has started. You can continue using our services. Do not close the page");
+      setSnackbarSQLMessage(
+        "The download has started. You can continue using our services. Do not close the page"
+      );
       setOpenSnackbarSQL(true);
       const res = await axios.get("/files/downloads/backup_sql.zip", {
         responseType: "blob",
@@ -82,7 +124,9 @@ const Database = () => {
     try {
       setLoadingFasta(true);
       setSnackbarFastaSeverity("success");
-      setSnackbarFastaMessage("The download has started. You can continue using our services. Do not close the page");
+      setSnackbarFastaMessage(
+        "The download has started. You can continue using our services. Do not close the page"
+      );
       setOpenSnackbarFasta(true);
       const res = await axios.get("/files/downloads/dump_fasta.zip", {
         responseType: "blob",
@@ -140,28 +184,7 @@ const Database = () => {
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} xs={12}>
-          <p className="lead" style={{ textAlign: "justify" }}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-            <br></br>
-            <br></br>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </p>
+          <Tree data={orgChart}/>
         </Grid>
         <Grid item lg={2.6} md={3.5} sm={4} xs={12}>
           {loadingZIP ? (
