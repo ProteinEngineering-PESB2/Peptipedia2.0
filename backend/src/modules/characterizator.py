@@ -73,5 +73,4 @@ class gene_ontology(config_tool):
             except Exception as e:
                 print(e)
                 print("No result for biological process")
-        print(results)
         return results

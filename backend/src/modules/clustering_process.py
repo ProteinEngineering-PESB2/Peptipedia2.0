@@ -14,7 +14,7 @@ class unsupervised_algorithms(config_tool):
         self.dataset_encoded = None
         self.is_normal = True
         self.path_config_aaindex_encoder = path_aa_index
-        if(self.get_check() == {"status": "success"}):
+        if(self.check == {"status": "success"}):
             self.check = self.check_options()
 
     def check_options(self):
@@ -136,5 +136,4 @@ class unsupervised_algorithms(config_tool):
             pvalue = result.pvalue
             if (pvalue > 0.05):
                 is_normal = False
-        print(is_normal)
         return is_normal

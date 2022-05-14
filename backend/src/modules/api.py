@@ -13,12 +13,15 @@ from modules.search import search
 from modules.database import database
 from modules.structure import structure
 from modules.fasta_convertor import fasta_convertor
+
 from flask import Flask, request
 from flask_cors import CORS
+
 from random import random
 import os
 import configparser
 
+##Reads config file and asign folder names. 
 config = configparser.ConfigParser()
 config.read("config.ini")
 
@@ -29,40 +32,46 @@ downloads_folder = static_folder +"/"+ config["folders"]["downloads_folder"]
 results_folder = static_folder +"/"+ config["folders"]["results_folder"]
 path_aa_index = config["folders"]["path_aa_index"]
 
+##Connects to database and instance interface.
 db = database(config)
 interface = interface()
 
+##Create folders
 try:
     os.mkdir(temp_folder)
 except Exception as e:
-    print(e)
+    pass
 try:
     os.mkdir(static_folder)
 except Exception as e:
-    print(e)
+    pass
 try:
     os.mkdir(alignments_folder)
     os.mkdir(downloads_folder)
     os.mkdir(results_folder)
 except Exception as e:
-    print(e)
+    pass
 if not os.path.isdir(path_aa_index):
-    print(path_aa_index, "is not a folder")
     exit()
 
+##Create the server and asign static folder
 server = Flask(__name__, static_folder = os.path.realpath(static_folder))
+#Cors
 CORS(server)
 
 class api:
     ###Alignments###
     @server.route('/api/alignment/', methods=["POST"])
     def api_alignment():
-        print(request)
+        #Recieve either a fasta file or text. Interface will process and get data and bool variables. 
         data, is_json, is_file = interface.parse_information_no_options(request)
-        align = alignment(data, temp_folder, static_folder, is_file, is_json, int(config["blast"]["max_sequences"]), int(config["blast"]["min_sequences"]))
-        check = align.check
-        if(check["status"] == "error"):
-            return check
+        align = alignment(data, temp_folder, static_folder, 
+                        is_file, is_json, int(config["blast"]["max_sequences"]), 
+                        int(config["blast"]["min_sequences"]))
+        #Check file integrity
+        if(align.check["status"] == "error"):
+            return align.check
+        #Get results and parse
         result = align.execute_blastp()
         table_parsed = align.parse_response()
         aligns = align.get_alignments()
@@ -311,6 +320,11 @@ class api:
         fasta_text = f_convert.convert()
         fasta_path = f_convert.save_file()
         return {"path": fasta_path, "text": fasta_text}
+
+    @server.route('/api/get_general_act_statistic/', methods=["GET"])
+    def api_get_general_act_statistic():
+        res = db.get_general_act_statistic()
+        return res
 
     @server.route('/api/get_db_statistics/', methods=["GET"])
     def api_get_db_statistics():
