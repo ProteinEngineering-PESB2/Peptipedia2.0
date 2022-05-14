@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { Grid, Typography, Button, Link, Paper } from "@mui/material";
+import { Grid, Typography, Button, Link, Paper, Box } from "@mui/material";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
@@ -14,7 +14,6 @@ const Database = () => {
   const [loading, setLoading] = useStateIfMounted(true);
   const [columnsDBStatistics, setColumnsDBStatistics] = useStateIfMounted([]);
   const [dataDBStatistics, setDataDBStatistics] = useStateIfMounted([]);
-  const [dataBarActivities, setDataBarActivities] = useStateIfMounted([]);
   const [dataActivities, setDataActivities] = useStateIfMounted([]);
   const [columnsActivities, setColumnsActivities] = useStateIfMounted([]);
   const [open, setOpen] = useStateIfMounted(false);
@@ -46,17 +45,16 @@ const Database = () => {
       for (let i = 0; i < res.data.data.length; i++) {
         if (res.data.data[i].length === 3) {
           const parcial_data = [
-            res.data.data[i][0],
-            res.data.data[i][1],
             <Link href={res.data.data[i][2]} target="_blank">
-              <VisibilityIcon />
+              {res.data.data[i][0]}
             </Link>,
+            res.data.data[i][1],
           ];
           new_data.push(parcial_data);
         }
       }
 
-      setColumnsDBStatistics(res.data.columns);
+      setColumnsDBStatistics([res.data.columns[0], res.data.columns[1]]);
       setDataDBStatistics(new_data);
     } catch (error) {
       setSeverity("error");
@@ -68,17 +66,6 @@ const Database = () => {
   const getAllActivities = async () => {
     try {
       const res = await axios.get("/api/get_all_act_statistics/");
-      const data = [
-        {
-          x: res.data.x,
-          y: res.data.y,
-          type: "bar",
-          marker: {
-            color: "#2962ff",
-          },
-        },
-      ];
-      setDataBarActivities(data);
       setDataActivities(res.data.data);
       setColumnsActivities(res.data.columns);
     } catch (error) {
@@ -301,45 +288,27 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <Typography variant="h6">Database Statistics</Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <DataTable
-                title="Database Statistics"
-                columns={columnsDBStatistics}
-                data={dataDBStatistics}
-              />
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <Typography variant="h6">Database Statistics</Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Plot
-                  data={dataBarActivities}
-                  layout={{
-                    autosize: true,
-                    height: 430,
-                    title: "All Activities",
-                  }}
-                  useResizeHandler
-                  className="w-full h-full"
-                />
-              </Paper>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12}>
-              <DataTable
-                title="All Activities"
-                data={dataActivities}
-                columns={columnsActivities}
-              />
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <Box sx={{ height: "100%" }}>
+                  <DataTable
+                    title="Database Statistics"
+                    columns={columnsDBStatistics}
+                    data={dataDBStatistics}
+                  />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <Box sx={{ height: "100%" }}>
+                  <DataTable
+                    title="All Activities"
+                    data={dataActivities}
+                    columns={columnsActivities}
+                  />
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </>
