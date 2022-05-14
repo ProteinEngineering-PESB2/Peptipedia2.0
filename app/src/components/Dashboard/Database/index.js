@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Grid, Typography, Button, Link, Box } from "@mui/material";
+import { Grid, Typography, Button, Link, Box, Paper } from "@mui/material";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
@@ -333,10 +333,21 @@ const Database = () => {
                   </Box>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <div id="treeWrapper" style={{ width: "100%", height: "50em" }}>
-                  <Tree data={dataTree} orientation="vertical" />
-                </div>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ marginTop: 3 }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    id="treeWrapper"
+                    style={{ width: "100%", height: "40rem" }}
+                  >
+                    <Tree data={dataTree} orientation="vertical" />
+                  </div>
+                </Paper>
               </Grid>
             </Grid>
           </Grid>
