@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
-import { Grid, Typography, Button, Link, Paper, Box } from "@mui/material";
+import { useEffect } from "react";
+import { Grid, Typography, Button, Link, Box } from "@mui/material";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
@@ -7,8 +7,6 @@ import DataTable from "../DataTable";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
 import CircularLoading from "../CircularLoading";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import Plot from "react-plotly.js";
 
 const Database = () => {
   const [loading, setLoading] = useStateIfMounted(true);
@@ -45,7 +43,7 @@ const Database = () => {
       for (let i = 0; i < res.data.data.length; i++) {
         if (res.data.data[i].length === 3) {
           const parcial_data = [
-            <Link href={res.data.data[i][2]} target="_blank">
+            <Link href={res.data.data[i][2]} target="_blank" sx={{ textDecoration: "none" }}>
               {res.data.data[i][0]}
             </Link>,
             res.data.data[i][1],
@@ -288,7 +286,7 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ marginTop: 1 }}>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <Box sx={{ height: "100%" }}>
