@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { Grid, Typography, Button, Link } from "@mui/material";
+import { Grid, Typography, Button, Link, Paper } from "@mui/material";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
@@ -7,11 +7,16 @@ import DataTable from "../DataTable";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
 import CircularLoading from "../CircularLoading";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Plot from "react-plotly.js";
 
 const Database = () => {
   const [loading, setLoading] = useStateIfMounted(true);
   const [columnsDBStatistics, setColumnsDBStatistics] = useStateIfMounted([]);
   const [dataDBStatistics, setDataDBStatistics] = useStateIfMounted([]);
+  const [dataBarActivities, setDataBarActivities] = useStateIfMounted([]);
+  const [dataActivities, setDataActivities] = useStateIfMounted([]);
+  const [columnsActivities, setColumnsActivities] = useStateIfMounted([]);
   const [open, setOpen] = useStateIfMounted(false);
   const [message, setMessage] = useStateIfMounted("");
   const [severity, setSeverity] = useStateIfMounted("");
@@ -44,7 +49,7 @@ const Database = () => {
             res.data.data[i][0],
             res.data.data[i][1],
             <Link href={res.data.data[i][2]} target="_blank">
-              {res.data.data[i][2]}
+              <VisibilityIcon />
             </Link>,
           ];
           new_data.push(parcial_data);
@@ -60,8 +65,32 @@ const Database = () => {
     }
   };
 
+  const getAllActivities = async () => {
+    try {
+      const res = await axios.get("/api/get_all_act_statistics/");
+      const data = [
+        {
+          x: res.data.x,
+          y: res.data.y,
+          type: "bar",
+          marker: {
+            color: "#2962ff",
+          },
+        },
+      ];
+      setDataBarActivities(data);
+      setDataActivities(res.data.data);
+      setColumnsActivities(res.data.columns);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpen(true);
+    }
+  };
+
   useEffect(() => {
     getDBStatistics();
+    getAllActivities();
     setLoading(false);
   }, []);
 
@@ -280,6 +309,36 @@ const Database = () => {
                 title="Database Statistics"
                 columns={columnsDBStatistics}
                 data={dataDBStatistics}
+              />
+            </Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              <Typography variant="h6">Database Statistics</Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Plot
+                  data={dataBarActivities}
+                  layout={{
+                    autosize: true,
+                    height: 430,
+                    title: "All Activities",
+                  }}
+                  useResizeHandler
+                  className="w-full h-full"
+                />
+              </Paper>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              <DataTable
+                title="All Activities"
+                data={dataActivities}
+                columns={columnsActivities}
               />
             </Grid>
           </Grid>
