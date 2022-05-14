@@ -345,7 +345,7 @@ const Database = () => {
                     id="treeWrapper"
                     style={{ width: "100%", height: "40rem" }}
                   >
-                    <Tree data={dataTree} orientation="vertical" />
+                    <Tree data={dataTree} orientation="vertical" initialDepth={1}/>
                   </div>
                 </Paper>
               </Grid>
