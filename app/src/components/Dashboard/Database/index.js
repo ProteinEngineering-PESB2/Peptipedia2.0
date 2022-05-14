@@ -3,6 +3,7 @@ import { Grid, Typography, Button, Link, Box } from "@mui/material";
 import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
+import Tree from "react-d3-tree";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
@@ -14,6 +15,7 @@ const Database = () => {
   const [dataDBStatistics, setDataDBStatistics] = useStateIfMounted([]);
   const [dataActivities, setDataActivities] = useStateIfMounted([]);
   const [columnsActivities, setColumnsActivities] = useStateIfMounted([]);
+  const [dataTree, setDataTree] = useStateIfMounted({});
   const [open, setOpen] = useStateIfMounted(false);
   const [message, setMessage] = useStateIfMounted("");
   const [severity, setSeverity] = useStateIfMounted("");
@@ -43,7 +45,11 @@ const Database = () => {
       for (let i = 0; i < res.data.data.length; i++) {
         if (res.data.data[i].length === 3) {
           const parcial_data = [
-            <Link href={res.data.data[i][2]} target="_blank" sx={{ textDecoration: "none" }}>
+            <Link
+              href={res.data.data[i][2]}
+              target="_blank"
+              sx={{ textDecoration: "none" }}
+            >
               {res.data.data[i][0]}
             </Link>,
             res.data.data[i][1],
@@ -73,9 +79,21 @@ const Database = () => {
     }
   };
 
+  const getTree = async () => {
+    try {
+      const res = await axios.get("/api/get_tree/");
+      setDataTree(res.data.tree);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpen(true);
+    }
+  };
+
   useEffect(() => {
     getDBStatistics();
     getAllActivities();
+    getTree();
     setLoading(false);
   }, []);
 
@@ -286,26 +304,39 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ marginTop: 1 }}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={12}
+              xl={12}
+              sx={{ marginTop: 1 }}
+            >
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <Box sx={{ height: "100%" }}>
-                  <DataTable
-                    title="Database Statistics"
-                    columns={columnsDBStatistics}
-                    data={dataDBStatistics}
-                  />
+                    <DataTable
+                      title="Database Statistics"
+                      columns={columnsDBStatistics}
+                      data={dataDBStatistics}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <Box sx={{ height: "100%" }}>
-                  <DataTable
-                    title="All Activities"
-                    data={dataActivities}
-                    columns={columnsActivities}
-                  />
+                    <DataTable
+                      title="All Activities"
+                      data={dataActivities}
+                      columns={columnsActivities}
+                    />
                   </Box>
                 </Grid>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <div id="treeWrapper" style={{ width: "100%", height: "50em" }}>
+                  <Tree data={dataTree} orientation="vertical" />
+                </div>
               </Grid>
             </Grid>
           </Grid>
