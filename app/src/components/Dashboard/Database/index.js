@@ -343,9 +343,15 @@ const Database = () => {
                 >
                   <div
                     id="treeWrapper"
-                    style={{ width: "100%", height: "40rem" }}
+                    style={{ width: "100%", height: "20rem" }}
                   >
-                    <Tree data={dataTree} orientation="vertical" initialDepth={1}/>
+                    <Tree
+                    data={dataTree}
+                    orientation="vertical"
+                    initialDepth={1}
+                    enableLegacyTransitions={true}
+                    translate={{ x: 550, y: 100 }}
+                  />
                   </div>
                 </Paper>
               </Grid>
