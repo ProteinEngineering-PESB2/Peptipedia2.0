@@ -70,8 +70,16 @@ const Database = () => {
   const getAllActivities = async () => {
     try {
       const res = await axios.get("/api/get_all_act_statistics/");
-      setDataActivities(res.data.data);
-      setColumnsActivities(res.data.columns);
+      const new_data = [];
+      for (let i = 0; i < res.data.data.length; i++) {
+        if (res.data.data[i].length === 3) {
+          const parcial_data = [res.data.data[i][1], res.data.data[i][2]];
+          new_data.push(parcial_data)
+        }
+      }
+      console.log(new_data)
+      setDataActivities(new_data);
+      setColumnsActivities(["activity", "peptides"]);
     } catch (error) {
       setSeverity("error");
       setMessage("Service no available");
@@ -304,6 +312,38 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
+            <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
+                <Typography variant="h6">Activity Tree</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={12}
+              >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    id="treeWrapper"
+                    style={{ width: "100%", height: "40rem" }}
+                  >
+                    <Tree
+                      data={dataTree}
+                      orientation="vertical"
+                      initialDepth={1}
+                      enableLegacyTransitions={true}
+                      translate={{ x: 550, y: 250 }}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
             <Grid
               item
               xs={12}
@@ -332,28 +372,6 @@ const Database = () => {
                     />
                   </Box>
                 </Grid>
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ marginTop: 3 }}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    id="treeWrapper"
-                    style={{ width: "100%", height: "20rem" }}
-                  >
-                    <Tree
-                    data={dataTree}
-                    orientation="vertical"
-                    initialDepth={1}
-                    enableLegacyTransitions={true}
-                    translate={{ x: 550, y: 100 }}
-                  />
-                  </div>
-                </Paper>
               </Grid>
             </Grid>
           </Grid>
