@@ -74,10 +74,10 @@ const Database = () => {
       for (let i = 0; i < res.data.data.length; i++) {
         if (res.data.data[i].length === 3) {
           const parcial_data = [res.data.data[i][1], res.data.data[i][2]];
-          new_data.push(parcial_data)
+          new_data.push(parcial_data);
         }
       }
-      console.log(new_data)
+      console.log(new_data);
       setDataActivities(new_data);
       setColumnsActivities(["activity", "peptides"]);
     } catch (error) {
@@ -312,38 +312,35 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
-            <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
-                <Typography variant="h6">Activity Tree</Typography>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-                xl={12}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    id="treeWrapper"
-                    style={{ width: "100%", height: "40rem" }}
+            {dataTree !== {} && (
+              <>
+                <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
+                  <Typography variant="h6">Activity Tree</Typography>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
                   >
-                    <Tree
-                      data={dataTree}
-                      orientation="vertical"
-                      initialDepth={1}
-                      enableLegacyTransitions={true}
-                      translate={{ x: 550, y: 250 }}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
+                    <div
+                      id="treeWrapper"
+                      style={{ width: "100%", height: "40rem" }}
+                    >
+                      <Tree
+                        data={dataTree}
+                        orientation="horizontal"
+                        initialDepth={1}
+                        enableLegacyTransitions={true}
+                        translate={{ x: 400, y: 250 }}
+                      />
+                    </div>
+                  </Paper>
+                </Grid>
+              </>
+            )}
             <Grid
               item
               xs={12}
@@ -354,24 +351,28 @@ const Database = () => {
               sx={{ marginTop: 1 }}
             >
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <Box sx={{ height: "100%" }}>
-                    <DataTable
-                      title="Database Statistics"
-                      columns={columnsDBStatistics}
-                      data={dataDBStatistics}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <Box sx={{ height: "100%" }}>
-                    <DataTable
-                      title="All Activities"
-                      data={dataActivities}
-                      columns={columnsActivities}
-                    />
-                  </Box>
-                </Grid>
+                {dataDBStatistics.length > 0 && (
+                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <Box sx={{ height: "100%" }}>
+                      <DataTable
+                        title="Database Statistics"
+                        columns={columnsDBStatistics}
+                        data={dataDBStatistics}
+                      />
+                    </Box>
+                  </Grid>
+                )}
+                {dataActivities.length > 0 && (
+                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <Box sx={{ height: "100%" }}>
+                      <DataTable
+                        title="All Activities"
+                        data={dataActivities}
+                        columns={columnsActivities}
+                      />
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
