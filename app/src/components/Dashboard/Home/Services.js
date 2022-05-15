@@ -13,7 +13,7 @@ import BiotechIcon from "@mui/icons-material/Biotech";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 
-const Services = () => {
+const Services = ({ setSection }) => {
   return (
     <>
       <Grid item lg={12} xs={12}>
@@ -25,7 +25,12 @@ const Services = () => {
         </Typography>
         <Grid container spacing={3} sx={{ marginTop: 3 }}>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
-            <Card variant="elevation" className="ho" sx={{ height: "100%" }}>
+            <Card
+              variant="elevation"
+              className="ho"
+              sx={{ height: "100%" }}
+              onClick={() => setSection("blast")}
+            >
               <CardContent
                 sx={{
                   display: "flex",
@@ -39,7 +44,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Alignment Sequence
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Use of the BLAST (Basic Local Alignment Search Tool) algorithm
                   against the Peptipedia database.
                 </Typography>
@@ -48,6 +57,7 @@ const Services = () => {
           </Grid>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
             <Card
+              onClick={() => setSection("msa")}
               variant="elevation"
               className="ho"
               sx={{ backgroundColor: "#2962ff", color: "#fff", height: "100%" }}
@@ -65,7 +75,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Multi Alignment Sequence
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Use ClustalW to build an MSA from the specified sequences.
                 </Typography>
               </CardContent>
@@ -74,6 +88,7 @@ const Services = () => {
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
             <Card variant="elevation" className="ho" sx={{ height: "100%" }}>
               <CardContent
+                onClick={() => setSection("pfam")}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -86,7 +101,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Pfam Prediction
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Predict protein families and domains in a set of peptides
                   entered.
                 </Typography>
@@ -95,6 +114,7 @@ const Services = () => {
           </Grid>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
             <Card
+              onClick={() => setSection("gene_ontology")}
               variant="elevation"
               className="ho"
               sx={{ backgroundColor: "#2962ff", color: "#fff", height: "100%" }}
@@ -112,7 +132,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   GO Searching
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Predict Gene Ontology terms (Biological process, molecular
                   function or cellular component) in a set of entered peptides.
                 </Typography>
@@ -122,6 +146,7 @@ const Services = () => {
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
             <Card variant="elevation" className="ho" sx={{ height: "100%" }}>
               <CardContent
+                onClick={() => setSection("frequency")}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -134,7 +159,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Frequency Evaluation
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Performs a count of amino acid frequencies in peptide
                   sequences.
                 </Typography>
@@ -143,6 +172,7 @@ const Services = () => {
           </Grid>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
             <Card
+              onClick={() => setSection("phisicochemical")}
               variant="elevation"
               className="ho"
               sx={{ backgroundColor: "#2962ff", color: "#fff", height: "100%" }}
@@ -160,7 +190,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Properties Estimation
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Performs an estimation of physicochemical properties (length,
                   molecular weight, charge, charge density and isoelectric
                   point) for a group of sequences.
@@ -169,7 +203,12 @@ const Services = () => {
             </Card>
           </Grid>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
-            <Card variant="elevation" className="ho" sx={{ height: "100%" }}>
+            <Card
+              variant="elevation"
+              className="ho"
+              sx={{ height: "100%" }}
+              onClick={() => setSection("codifications")}
+            >
               <CardContent
                 sx={{
                   display: "flex",
@@ -183,7 +222,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Encoding Sequences
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   Numerically encodes the amino acid sequences entered, in order
                   to use Machine Learning models.
                 </Typography>
@@ -192,6 +235,7 @@ const Services = () => {
           </Grid>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
             <Card
+              onClick={() => setSection("clustering")}
               variant="elevation"
               className="ho"
               sx={{ backgroundColor: "#2962ff", color: "#fff", height: "100%" }}
@@ -209,7 +253,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Clustering
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium">
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   It performs sequence clustering, using numerical coding
                   techniques and PCA analysis.
                 </Typography>
@@ -217,7 +265,12 @@ const Services = () => {
             </Card>
           </Grid>
           <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
-            <Card variant="elevation" className="ho" sx={{ height: "100%" }}>
+            <Card
+              variant="elevation"
+              className="ho"
+              sx={{ height: "100%" }}
+              onClick={() => setSection("supervised-learning")}
+            >
               <CardContent
                 sx={{
                   display: "flex",
@@ -231,7 +284,11 @@ const Services = () => {
                 <Typography marginY={3} fontWeight="bold" variant="h5">
                   Training Predictive Models
                 </Typography>
-                <Typography variant="subtitle1" fontSize={18} fontWeight="medium"> 
+                <Typography
+                  variant="subtitle1"
+                  fontSize={18}
+                  fontWeight="medium"
+                >
                   It employs supervised learning algorithms on sets of input
                   sequences. Allows training, testing and prediction using new
                   data sets.

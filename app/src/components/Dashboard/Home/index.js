@@ -9,7 +9,7 @@ import Team from "./Team";
 import Contact from "./Contact";
 import Resources from "./Resources";
 
-const Home = () => {
+const Home = ({ setSection }) => {
   return (
     <>
       <Grid container spacing={3}>
@@ -23,7 +23,7 @@ const Home = () => {
         </Grid>
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
-        <Services />
+        <Services setSection={setSection}/>
       </Grid>
       <Grid container spacing={3} sx={{ marginTop: 5 }}>
         <Team />

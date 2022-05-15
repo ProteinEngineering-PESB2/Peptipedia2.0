@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 // Components
 import ListItems from "../../components/Dashboard/ListItems";
 import RenderSection from "../../components/Dashboard/RenderSection";
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -74,11 +74,20 @@ const Dashboard = (props) => {
               >
                 <FormatAlignJustifyIcon />
               </IconButton>
+              <Typography
+                color="#2962ff"
+                variant="h4"
+                fontWeight="bold"
+                onClick={() => setSection("home")}
+                sx={{ cursor: "pointer" }}
+              >
+                Peptipedia
+              </Typography>
             </Toolbar>
           </AppBar>
         </ElevationScroll>
         <Container maxWidth="lg" sx={{ paddingY: 8 }}>
-          <RenderSection section={section} />
+          <RenderSection section={section} setSection={setSection} />
         </Container>
       </Box>
       <Drawer open={open} onClose={() => setOpen(false)}>

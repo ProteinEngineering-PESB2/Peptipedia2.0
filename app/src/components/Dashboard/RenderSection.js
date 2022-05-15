@@ -12,10 +12,10 @@ import Clustering from "./Clustering";
 import SupervisedLearning from "./SupervisedLearning";
 import AdvancedSearch from "./AdvancedSearch";
 
-const RenderSection = ({ section }) => {
+const RenderSection = ({ section, setSection }) => {
   return (
     <>
-      {section === "home" && <Home/>}
+      {section === "home" && <Home setSection={setSection}/>}
       {section === "converter" && <FastaConverter/>}
       {section === "database" && <Database/>}
       {section === "blast" && <Blast />}
