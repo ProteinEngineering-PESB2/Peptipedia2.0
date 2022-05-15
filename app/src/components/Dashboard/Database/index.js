@@ -18,9 +18,12 @@ const Database = () => {
   const [columnsActivities, setColumnsActivities] = useStateIfMounted([]);
   const [dataTree, setDataTree] = useStateIfMounted({});
   const [dataPie, setDataPie] = useStateIfMounted([]);
+  const [dataBoxplot, setDataBoxplot] = useStateIfMounted([]);
   const [open, setOpen] = useStateIfMounted(false);
   const [message, setMessage] = useStateIfMounted("");
   const [severity, setSeverity] = useStateIfMounted("");
+  const [loadingBoxplot, setLoadingBoxplot] = useStateIfMounted(false);
+  const [nameActivity, setNameActivity] = useStateIfMounted("")
 
   const [loadingZIP, setLoadingZIP] = useStateIfMounted(false);
   const [loadingSQL, setLoadingSQL] = useStateIfMounted(false);
@@ -77,7 +80,7 @@ const Database = () => {
         if (res.data.data[i].length === 3) {
           const parcial_data = [
             <Link
-              onClick={() => getSpecificActivity(res.data.data[i][0])}
+              onClick={() => getSpecificActivity(res.data.data[i][0], res.data.data[i][1])}
               sx={{ textDecoration: "none", cursor: "pointer" }}
             >
               {res.data.data[i][1]}
@@ -96,14 +99,18 @@ const Database = () => {
     }
   };
 
-  const getSpecificActivity = async (id) => {
+  const getSpecificActivity = async (id, name) => {
+    setLoadingBoxplot(true);
     try {
       const res = await axios.get(`/api/get_specific_act_statistics/${id}`);
-      console.log(res.data);
+      setDataBoxplot(res.data.data);
+      setNameActivity(name)
+      setLoadingBoxplot(false);
     } catch (error) {
       setSeverity("error");
       setMessage("Service no available");
       setOpen(true);
+      setLoadingBoxplot(false);
     }
   };
 
@@ -414,10 +421,51 @@ const Database = () => {
                 )}
               </Grid>
             </Grid>
+            {dataBoxplot.length > 0 && (
+              <>
+                {loadingBoxplot ? (
+                  <CircularLoading />
+                ) : (
+                  <>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      lg={12}
+                      xl={12}
+                      sx={{ marginTop: 3 }}
+                    >
+                      <Paper
+                        sx={{
+                          p: 2,
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Plot
+                          data={dataBoxplot}
+                          layout={{
+                            autosize: true,
+                            height: 430,
+                            title: `Activity ${nameActivity} statistics`,
+                            grid: {rows: 1, columns: 5, pattern: 'independent'},
+                          }}
+                          useResizeHandler
+                          className="w-full h-full"
+                        />
+                      </Paper>
+                    </Grid>
+                  </>
+                )}
+              </>
+            )}
             {dataPie.length > 0 && (
               <>
                 <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
-                  <Typography variant="h6">General Activity Statistic</Typography>
+                  <Typography variant="h6">
+                    General Activity Statistic
+                  </Typography>
                 </Grid>
                 <Grid
                   item
