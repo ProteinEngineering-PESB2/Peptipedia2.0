@@ -73,13 +73,31 @@ const Database = () => {
       const new_data = [];
       for (let i = 0; i < res.data.data.length; i++) {
         if (res.data.data[i].length === 3) {
-          const parcial_data = [res.data.data[i][1], res.data.data[i][2]];
+          const parcial_data = [
+            <Link
+              onClick={() => getSpecificActivity(res.data.data[i][0])}
+              sx={{ textDecoration: "none", cursor: "pointer" }}
+            >
+              {res.data.data[i][1]}
+            </Link>,
+            res.data.data[i][2],
+          ];
           new_data.push(parcial_data);
         }
       }
-      console.log(new_data);
       setDataActivities(new_data);
       setColumnsActivities(["activity", "peptides"]);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpen(true);
+    }
+  };
+
+  const getSpecificActivity = async (id) => {
+    try {
+      const res = await axios.get(`/api/get_specific_act_statistics/${id}`);
+      console.log(res.data);
     } catch (error) {
       setSeverity("error");
       setMessage("Service no available");
