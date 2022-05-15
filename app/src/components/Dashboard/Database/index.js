@@ -358,6 +358,43 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
+            {dataPie.length > 0 && (
+              <>
+                <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
+                  <Typography variant="h6">
+                    General Activity Statistic
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  sx={{ marginTop: 1 }}
+                >
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataPie}
+                      layout={{
+                        autosize: true,
+                        height: 430,
+                        title: "General Activity Statistic",
+                      }}
+                      useResizeHandler
+                      className="w-full h-full"
+                    />
+                  </Paper>
+                </Grid>
+              </>
+            )}
             {Object.keys(dataTree).length !== 0 && (
               <>
                 <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
@@ -458,43 +495,6 @@ const Database = () => {
                     </Grid>
                   </>
                 )}
-              </>
-            )}
-            {dataPie.length > 0 && (
-              <>
-                <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
-                  <Typography variant="h6">
-                    General Activity Statistic
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  lg={12}
-                  xl={12}
-                  sx={{ marginTop: 1 }}
-                >
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Plot
-                      data={dataPie}
-                      layout={{
-                        autosize: true,
-                        height: 430,
-                        title: "General Activity Statistic",
-                      }}
-                      useResizeHandler
-                      className="w-full h-full"
-                    />
-                  </Paper>
-                </Grid>
               </>
             )}
           </Grid>
