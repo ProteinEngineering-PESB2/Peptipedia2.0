@@ -4,6 +4,7 @@ import axios from "axios";
 import { useStateIfMounted } from "use-state-if-mounted";
 import DataTable from "../DataTable";
 import Tree from "react-d3-tree";
+import Plot from "react-plotly.js";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import SnackbarComponent from "../Snackbar";
@@ -16,6 +17,7 @@ const Database = () => {
   const [dataActivities, setDataActivities] = useStateIfMounted([]);
   const [columnsActivities, setColumnsActivities] = useStateIfMounted([]);
   const [dataTree, setDataTree] = useStateIfMounted({});
+  const [dataPie, setDataPie] = useStateIfMounted([]);
   const [open, setOpen] = useStateIfMounted(false);
   const [message, setMessage] = useStateIfMounted("");
   const [severity, setSeverity] = useStateIfMounted("");
@@ -116,10 +118,29 @@ const Database = () => {
     }
   };
 
+  const getGeneralStatistic = async () => {
+    try {
+      const res = await axios.get("/api/get_general_act_statistic/");
+      const data = [
+        {
+          values: res.data.values,
+          labels: res.data.labels,
+          type: "pie",
+        },
+      ];
+      setDataPie(data);
+    } catch (error) {
+      setSeverity("error");
+      setMessage("Service no available");
+      setOpen(true);
+    }
+  };
+
   useEffect(() => {
     getDBStatistics();
     getAllActivities();
     getTree();
+    getGeneralStatistic();
     setLoading(false);
   }, []);
 
@@ -330,7 +351,7 @@ const Database = () => {
                 </Button>
               )}
             </Grid>
-            {dataTree !== {} && (
+            {Object.keys(dataTree).length !== 0 && (
               <>
                 <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
                   <Typography variant="h6">Activity Tree</Typography>
@@ -393,6 +414,41 @@ const Database = () => {
                 )}
               </Grid>
             </Grid>
+            {dataPie.length > 0 && (
+              <>
+                <Grid item lg={12} md={12} xs={12} sx={{ marginTop: 3 }}>
+                  <Typography variant="h6">General Activity Statistic</Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  sx={{ marginTop: 1 }}
+                >
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataPie}
+                      layout={{
+                        autosize: true,
+                        height: 430,
+                        title: "General Activity Statistic",
+                      }}
+                      useResizeHandler
+                      className="w-full h-full"
+                    />
+                  </Paper>
+                </Grid>
+              </>
+            )}
           </Grid>
         </>
       )}
