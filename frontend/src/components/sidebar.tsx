@@ -27,18 +27,25 @@ export default function Sidebar() {
   return (
     <List component="nav">
       <ListSubheader>Dashboard</ListSubheader>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "home" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "home" ? "#2962ff" : "#fff",
             color: section === "home" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -55,18 +62,25 @@ export default function Sidebar() {
         </ListItemButton>
       </List>
       <ListSubheader>Database</ListSubheader>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "database" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "database" ? "#2962ff" : "#fff",
             color: section === "database" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -81,17 +95,27 @@ export default function Sidebar() {
             </Typography>
           </ListItemText>
         </ListItemButton>
+      </List>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "advanced-search" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "advanced-search" ? "#2962ff" : "#fff",
             color: section === "advanced-search" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -110,18 +134,23 @@ export default function Sidebar() {
         </ListItemButton>
       </List>
       <ListSubheader>Tools</ListSubheader>
-      <List component="div" disablePadding>
+      <List
+        sx={{
+          p: "2px",
+          backgroundColor: section === "converter-fasta" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "converter-fasta" ? "#2962ff" : "#fff",
             color: section === "converter-fasta" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -130,7 +159,7 @@ export default function Sidebar() {
           <TranslateIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
-              sx={{ 
+              sx={{
                 fontWeight: section === "converter-fasta" ? "bold" : "normal",
               }}
             >
@@ -140,18 +169,26 @@ export default function Sidebar() {
         </ListItemButton>
       </List>
       <ListSubheader>Bionformatic Tools</ListSubheader>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor:
+            section === "alignment-sequence" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "alignment-sequence" ? "#2962ff" : "#fff",
             color: section === "alignment-sequence" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -161,7 +198,8 @@ export default function Sidebar() {
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "alignment-sequence" ? "bold" : "normal",
+                fontWeight:
+                  section === "alignment-sequence" ? "bold" : "normal",
               }}
             >
               Alignment Sequence
@@ -169,18 +207,26 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "msa" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "msa" ? "#2962ff" : "#fff",
             color: section === "msa" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -198,18 +244,26 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "pfam" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "pfam" ? "#2962ff" : "#fff",
             color: section === "pfam" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -227,18 +281,26 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "gene-ontology" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "gene-ontology" ? "#2962ff" : "#fff",
             color: section === "gene-ontology" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -257,18 +319,25 @@ export default function Sidebar() {
         </ListItemButton>
       </List>
       <ListSubheader>Static Tools</ListSubheader>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "frequency" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "frequency" ? "#2962ff" : "#fff",
             color: section === "frequency" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -286,18 +355,26 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "phisicochemical" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "phisicochemical" ? "#2962ff" : "#fff",
             color: section === "phisicochemical" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -316,18 +393,25 @@ export default function Sidebar() {
         </ListItemButton>
       </List>
       <ListSubheader>Machine Learning Tools</ListSubheader>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "encoding" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "encoding" ? "#2962ff" : "#fff",
             color: section === "encoding" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -345,18 +429,26 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "clustering" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "clustering" ? "#2962ff" : "#fff",
             color: section === "clustering" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -374,18 +466,26 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "supervised-learning" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
         <ListItemButton
           disableRipple
           sx={{
-            pl: 2,
-            margin: "6px 14px",
-            padding: "9px",
-            borderRadius: "8px",
-            backgroundColor: section === "supervised-learning" ? "#2962ff" : "#fff",
             color: section === "supervised-learning" ? "#fff" : "#000",
             "&:hover": {
-              background: "#2962ff",
               color: "#fff",
             },
           }}
@@ -395,7 +495,8 @@ export default function Sidebar() {
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "supervised-learning" ? "bold" : "normal",
+                fontWeight:
+                  section === "supervised-learning" ? "bold" : "normal",
               }}
             >
               Training Predictive Models
