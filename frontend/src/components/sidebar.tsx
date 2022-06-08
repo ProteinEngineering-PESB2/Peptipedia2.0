@@ -88,8 +88,8 @@ export default function Sidebar() {
             margin: "6px 14px",
             padding: "9px",
             borderRadius: "8px",
-            backgroundColor: section === "advanced_search" ? "#2962ff" : "#fff",
-            color: section === "advanced_search" ? "#fff" : "#000",
+            backgroundColor: section === "advanced-search" ? "#2962ff" : "#fff",
+            color: section === "advanced-search" ? "#fff" : "#000",
             "&:hover": {
               background: "#2962ff",
               color: "#fff",
@@ -101,7 +101,7 @@ export default function Sidebar() {
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "advanced_search" ? "bold" : "normal",
+                fontWeight: section === "advanced-search" ? "bold" : "normal",
               }}
             >
               Advanced Search
@@ -148,20 +148,20 @@ export default function Sidebar() {
             margin: "6px 14px",
             padding: "9px",
             borderRadius: "8px",
-            backgroundColor: section === "blast" ? "#2962ff" : "#fff",
-            color: section === "blast" ? "#fff" : "#000",
+            backgroundColor: section === "alignment-sequence" ? "#2962ff" : "#fff",
+            color: section === "alignment-sequence" ? "#fff" : "#000",
             "&:hover": {
               background: "#2962ff",
               color: "#fff",
             },
           }}
-          onClick={() => navigate("/blast")}
+          onClick={() => navigate("/alignment-sequence")}
         >
           <FormatAlignCenterIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "blast" ? "bold" : "normal",
+                fontWeight: section === "alignment-sequence" ? "bold" : "normal",
               }}
             >
               Alignment Sequence
@@ -235,8 +235,8 @@ export default function Sidebar() {
             margin: "6px 14px",
             padding: "9px",
             borderRadius: "8px",
-            backgroundColor: section === "gene_ontology" ? "#2962ff" : "#fff",
-            color: section === "gene_ontology" ? "#fff" : "#000",
+            backgroundColor: section === "gene-ontology" ? "#2962ff" : "#fff",
+            color: section === "gene-ontology" ? "#fff" : "#000",
             "&:hover": {
               background: "#2962ff",
               color: "#fff",
@@ -248,7 +248,7 @@ export default function Sidebar() {
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "gene_ontology" ? "bold" : "normal",
+                fontWeight: section === "gene-ontology" ? "bold" : "normal",
               }}
             >
               GO Searching
