@@ -19,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/database" element={<Database />} />
+          <Route path="*" element={<Home/>}/>
         </Routes>
       </BrowserRouter>
     </AppProvider>

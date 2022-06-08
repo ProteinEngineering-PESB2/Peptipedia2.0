@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 import Layout from "../components/layout"
-import AppContext from "../context/AppContext"
+import { useAppContext } from "../hooks/useAppContext"
 
 export default function Home() {
-    const { toggleSection } = useContext(AppContext)
+    const { toggleSection } = useAppContext()
 
     useEffect(() => {
         toggleSection("home")
