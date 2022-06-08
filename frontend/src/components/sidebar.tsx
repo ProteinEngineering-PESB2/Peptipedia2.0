@@ -5,13 +5,14 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom"
 
 import { Home, Storage } from "@mui/icons-material";
+import AppContext from "../context/AppContext";
 
 export default function Sidebar() {
-  const [section, setSection] = useState("home");
+  const { section } = useContext(AppContext)
   const navigate = useNavigate()
 
   return (
