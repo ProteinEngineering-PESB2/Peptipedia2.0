@@ -14,6 +14,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 
+import Sidebar from "./sidebar";
+
 const drawerWidth = 240;
 
 interface Props {
@@ -28,36 +30,6 @@ export default function ResponsiveDrawer(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const drawer = (
-    <div>
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -86,7 +58,7 @@ export default function ResponsiveDrawer(props: Props) {
             },
           }}
         >
-          {drawer}
+          <Sidebar/>
         </Drawer>
         <Drawer
           variant="permanent"
@@ -99,7 +71,7 @@ export default function ResponsiveDrawer(props: Props) {
           }}
           open
         >
-          {drawer}
+          <Sidebar/>
         </Drawer>
       </Box>
       <Box
@@ -126,7 +98,7 @@ export default function ResponsiveDrawer(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ ml: -3, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
