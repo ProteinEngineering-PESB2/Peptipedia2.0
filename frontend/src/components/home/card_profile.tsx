@@ -8,10 +8,24 @@ import Typography from "@mui/material/Typography";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
-const CardProfile = ({ name, rol, image, github, linkedin }) => {
+interface Props {
+  name: string;
+  rol: string;
+  image: string;
+  github: string;
+  linkedin: string;
+}
+
+export default function CardProfile({
+  name,
+  rol,
+  image,
+  github,
+  linkedin,
+}: Props) {
   return (
     <>
-      <Card sx={{ width: "95%" }}>
+      {/* <Card sx={{ width: "50%" }}>
         <CardMedia
           component="img"
           height="350"
@@ -37,28 +51,18 @@ const CardProfile = ({ name, rol, image, github, linkedin }) => {
             }}
           >
             {linkedin && (
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={linkedin} target="_blank" rel="noreferrer">
                 <LinkedInIcon sx={{ color: "#000" }} />
               </a>
             )}
             {github && (
-              <a
-                href={github}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={github} target="_blank" rel="noreferrer">
                 <GitHubIcon sx={{ color: "#000" }} />
               </a>
             )}
           </Box>
         </CardActions>
-      </Card>
+      </Card> */}
     </>
   );
-};
-
-export default CardProfile;
+}
