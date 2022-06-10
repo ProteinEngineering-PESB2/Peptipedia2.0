@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
 import Layout from "../components/layout";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function AlignmentSequence() {
-  const { toggleSection } = useAppContext();
-
-  useEffect(() => {
-    toggleSection("alignment-sequence");
-  }, []);
+  useHandleSection({section: "alignment-sequence"})
 
   return (
     <Layout>

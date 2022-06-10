@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
 import Layout from "../components/layout";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function Clustering() {
-  const { toggleSection } = useAppContext();
-
-  useEffect(() => {
-    toggleSection("clustering");
-  }, []);
+  useHandleSection({section: "clustering"})
 
   return (
     <Layout>

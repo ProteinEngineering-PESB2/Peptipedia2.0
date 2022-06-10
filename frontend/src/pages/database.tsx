@@ -1,13 +1,8 @@
-import { useEffect } from "react";
 import Layout from "../components/layout";
-import { useAppContext } from "../hooks/useAppContext";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function Database() {
-  const { toggleSection } = useAppContext()
-
-  useEffect(() => {
-    toggleSection("database")
-  }, [])
+  useHandleSection({section: "database"})
 
   return (
     <Layout>

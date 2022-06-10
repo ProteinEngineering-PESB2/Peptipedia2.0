@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
 import Layout from "../components/layout";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function GeneOntology() {
-  const { toggleSection } = useAppContext();
-
-  useEffect(() => {
-    toggleSection("gene-ontology");
-  }, []);
+  useHandleSection({section: "gene-ontology"})
 
   return (
     <Layout>

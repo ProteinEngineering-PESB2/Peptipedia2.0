@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
 import Layout from "../components/layout";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function AdvancedSearch() {
-  const { toggleSection } = useAppContext();
-
-  useEffect(() => {
-    toggleSection("advanced-search");
-  }, []);
+  useHandleSection({section: "advanced-search"})
 
   return (
     <Layout>

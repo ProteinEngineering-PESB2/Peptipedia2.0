@@ -137,7 +137,7 @@ export default function Sidebar() {
       <List
         sx={{
           p: "2px",
-          backgroundColor: section === "converter-fasta" ? "#2962ff" : "#fff",
+          backgroundColor: section === "fasta-converter" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           "&:hover": {
@@ -149,21 +149,21 @@ export default function Sidebar() {
         <ListItemButton
           disableRipple
           sx={{
-            color: section === "converter-fasta" ? "#fff" : "#000",
+            color: section === "fasta-converter" ? "#fff" : "#000",
             "&:hover": {
               color: "#fff",
             },
           }}
-          onClick={() => navigate("/converter-fasta")}
+          onClick={() => navigate("/fasta-converter")}
         >
           <TranslateIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "converter-fasta" ? "bold" : "normal",
+                fontWeight: section === "fasta-converter" ? "bold" : "normal",
               }}
             >
-              Converter Fasta
+              Fasta Converter
             </Typography>
           </ListItemText>
         </ListItemButton>
@@ -360,7 +360,7 @@ export default function Sidebar() {
         disablePadding
         sx={{
           p: "2px",
-          backgroundColor: section === "phisicochemical" ? "#2962ff" : "#fff",
+          backgroundColor: section === "physicochemical" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           marginY: "10px",
@@ -373,18 +373,18 @@ export default function Sidebar() {
         <ListItemButton
           disableRipple
           sx={{
-            color: section === "phisicochemical" ? "#fff" : "#000",
+            color: section === "physicochemical" ? "#fff" : "#000",
             "&:hover": {
               color: "#fff",
             },
           }}
-          onClick={() => navigate("/phisicochemical")}
+          onClick={() => navigate("/physicochemical")}
         >
           <SquareFootIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "phisicochemical" ? "bold" : "normal",
+                fontWeight: section === "physicochemical" ? "bold" : "normal",
               }}
             >
               Properties Estimation

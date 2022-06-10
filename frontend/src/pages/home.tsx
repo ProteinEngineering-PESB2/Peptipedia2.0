@@ -1,19 +1,14 @@
-import { useEffect } from "react";
 import Layout from "../components/layout";
-import { useAppContext } from "../hooks/useAppContext";
 
 import Header from "../components/home/header";
 import About from "../components/home/about";
 import Services from "../components/home/service";
 import PeptipediaTeam from "../components/home/team";
 import Resource from "../components/home/resources";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function Home() {
-  const { toggleSection } = useAppContext();
-
-  useEffect(() => {
-    toggleSection("home");
-  }, []);
+  useHandleSection({section: "home"})
 
   return (
     <Layout>

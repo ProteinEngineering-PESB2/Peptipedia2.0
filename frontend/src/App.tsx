@@ -24,13 +24,13 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/database" element={<Database />} />
           <Route path="/advanced-search" element={<AdvancedSearch />} />
-          <Route path="/converter-fasta" element={<ConverterFasta />} />
+          <Route path="/fasta-converter" element={<ConverterFasta />} />
           <Route path="/alignment-sequence" element={<AlignmentSequence />} />
           <Route path="/msa" element={<MultiAlignmentSequence />} />
           <Route path="/pfam" element={<Pfam />} />
           <Route path="/gene-ontology" element={<GeneOntology />} />
           <Route path="/frequency" element={<Frequency />} />
-          <Route path="/phisicochemical" element={<Phisicochemical />} />
+          <Route path="/physicochemical" element={<Phisicochemical />} />
           <Route path="/encoding" element={<Encoding />} />
           <Route path="/clustering" element={<Clustering />} />
           <Route path="/supervised-learning" element={<SupervisedLearning />} />

@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
 import Layout from "../components/layout";
+import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function Encoding() {
-  const { toggleSection } = useAppContext();
-
-  useEffect(() => {
-    toggleSection("encoding");
-  }, []);
+  useHandleSection({section: "encoding"})
 
   return (
     <Layout>
