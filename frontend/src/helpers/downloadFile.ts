@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 const process = (e: ProgressEvent<EventTarget>): any => {
   if (!e.lengthComputable) return;
   const downloadingPercentage = Math.floor((e.loaded / e.total) * 100);
-  console.log(downloadingPercentage);
+  toast.loading(`Downloading (${downloadingPercentage}%)`)
 };
 
 export const downloadFile = (url: string): void => {
