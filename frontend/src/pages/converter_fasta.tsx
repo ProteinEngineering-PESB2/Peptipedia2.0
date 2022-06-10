@@ -16,6 +16,8 @@ import { useHandleSection } from "../hooks/useHandleSection";
 import { useEffect, useState } from "react";
 import { fasta_converter } from "../services/fasta_converter";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
+import { downloadFile } from "../helpers/downloadFile";
 
 export default function ConverterFasta() {
   const [sequences, setSequences] = useState<string>("");
@@ -48,7 +50,9 @@ export default function ConverterFasta() {
       const { path, text } = res;
       setNewSequences(text);
       setPath(path);
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Error converting fasta");
+    }
   };
 
   return (
@@ -85,8 +89,8 @@ export default function ConverterFasta() {
                         position="end"
                         sx={{
                           display: "flex",
-                          alignItems: "center",
-                          marginBottom: 80,
+                          alignItems: "end",
+                          marginBottom: 75,
                         }}
                       >
                         <Tooltip
@@ -105,6 +109,26 @@ export default function ConverterFasta() {
                         </Tooltip>
                       </InputAdornment>
                     </CopyToClipboard>
+                    <InputAdornment
+                      position="end"
+                      sx={{
+                        display: "flex",
+                        alignItems: "end",
+                        marginTop: 75,
+                      }}
+                    >
+                      <Tooltip title="Download">
+                        <span>
+                          <IconButton
+                            edge="end"
+                            disabled={path === "" ? true : false}
+                            onClick={() => downloadFile(path)}
+                          >
+                            <DownloadIcon />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
+                    </InputAdornment>
                   </Stack>
                 }
               />

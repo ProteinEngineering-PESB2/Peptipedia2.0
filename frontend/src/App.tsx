@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast"
 
 import AppProvider from "./context/AppProvider";
 // Pages
@@ -19,6 +20,7 @@ import SupervisedLearning from "./pages/supervised_learning";
 export default function App() {
   return (
     <AppProvider>
+      <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>
+      <Toaster/>
+      </>
     </AppProvider>
   );
 }
