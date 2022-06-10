@@ -18,13 +18,16 @@ import { fasta_converter } from "../services/fasta_converter";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import { downloadFile } from "../helpers/downloadFile";
+import BackdropComponent from "../components/backdrop_component";
 
-export default function ConverterFasta() {
+export default function FastaConverter() {
   const [sequences, setSequences] = useState<string>("");
   const [newSequences, setNewSequences] = useState<string>("");
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
   const [path, setPath] = useState<string>("");
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
+  const [percentage, setPercentage] = useState<number>(0);
 
   useHandleSection({ section: "fasta-converter" });
 
@@ -58,6 +61,7 @@ export default function ConverterFasta() {
   return (
     <Layout>
       <>
+        <BackdropComponent open={openBackdrop} percentage={percentage} />
         <Box>
           <Typography variant="h4" style={{ fontWeight: "bold" }}>
             Fasta Converter
@@ -122,7 +126,14 @@ export default function ConverterFasta() {
                           <IconButton
                             edge="end"
                             disabled={path === "" ? true : false}
-                            onClick={() => downloadFile(path)}
+                            onClick={() =>
+                              downloadFile({
+                                url: path,
+                                name: "file.fasta",
+                                setOpenBackdrop: setOpenBackdrop,
+                                setPercentage: setPercentage,
+                              })
+                            }
                           >
                             <DownloadIcon />
                           </IconButton>

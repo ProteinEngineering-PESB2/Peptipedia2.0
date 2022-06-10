@@ -1,25 +1,39 @@
-import JsFileDownloader from "js-file-downloader";
+import { Dispatch, SetStateAction } from "react";
+import axios from "axios";
+import fileDownload from "js-file-download";
 import toast from "react-hot-toast";
 
-const process = (e: ProgressEvent<EventTarget>): any => {
-  if (!e.lengthComputable) return;
-  const downloadingPercentage = Math.floor((e.loaded / e.total) * 100);
-  toast.loading(`Downloading (${downloadingPercentage}%)`)
-};
+interface Props {
+  url: string;
+  name: string;
+  setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
+  setPercentage: Dispatch<SetStateAction<number>>;
+}
 
-export const downloadFile = (url: string): void => {
-  const download = new JsFileDownloader({
-    url,
-    autoStart: false,
-    process: process,
-  });
-
-  download
-    .start()
-    .then(() => {
-      toast.success("Downloaded file");
-    })
-    .catch(() => {
-      toast.error("Error downloading file");
+export const downloadFile = async ({
+  url,
+  name,
+  setOpenBackdrop,
+  setPercentage,
+}: Props): Promise<void> => {
+  setOpenBackdrop(true);
+  try {
+    const res = await axios({
+      url: url,
+      method: "GET",
+      responseType: "blob",
+      onDownloadProgress: (progressEvent) => {
+        let percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setPercentage(percentCompleted);
+      },
     });
+    fileDownload(res.data, name);
+    setOpenBackdrop(false);
+  } catch (error) {
+    toast.error("Error downloading file");
+    setOpenBackdrop(false);
+    setPercentage(0);
+  }
 };

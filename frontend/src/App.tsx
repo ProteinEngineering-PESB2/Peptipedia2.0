@@ -6,7 +6,7 @@ import AppProvider from "./context/AppProvider";
 import Home from "./pages/home";
 import Database from "./pages/database";
 import AdvancedSearch from "./pages/advanced_search";
-import ConverterFasta from "./pages/converter_fasta";
+import FastaConverter from "./pages/fasta_converter";
 import AlignmentSequence from "./pages/alignment_sequence";
 import MultiAlignmentSequence from "./pages/msa";
 import Pfam from "./pages/pfam";
@@ -26,7 +26,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/database" element={<Database />} />
           <Route path="/advanced-search" element={<AdvancedSearch />} />
-          <Route path="/fasta-converter" element={<ConverterFasta />} />
+          <Route path="/fasta-converter" element={<FastaConverter />} />
           <Route path="/alignment-sequence" element={<AlignmentSequence />} />
           <Route path="/msa" element={<MultiAlignmentSequence />} />
           <Route path="/pfam" element={<Pfam />} />
