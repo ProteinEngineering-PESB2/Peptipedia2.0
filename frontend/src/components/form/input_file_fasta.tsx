@@ -2,7 +2,7 @@ import { FormControl, Button } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { FastaInputType } from "../../helpers/types";
+import { PostData } from "../../utils/interfaces";
 
 const Input = styled("input")({
   display: "none",
@@ -10,18 +10,14 @@ const Input = styled("input")({
 });
 
 interface Props {
-  fastaInput: FastaInputType;
-  setFastaInput: Dispatch<SetStateAction<FastaInputType>>;
-  fileType: string;
+  data: PostData;
+  setData: Dispatch<SetStateAction<PostData>>;
 }
 
-export default function InputFileFasta({
-  fastaInput,
-  setFastaInput,
-  fileType,
-}: Props) {
+export default function InputFileFasta({ data, setData }: Props) {
   const handleChangeFastaInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFastaInput(e.target.files![0]);
+    console.log(e.target.files[0].name)
+    setData({ ...data, fastaInput: e.target.files![0] });
   };
 
   return (
@@ -30,7 +26,7 @@ export default function InputFileFasta({
         <Input
           id="contained-button-file"
           type="file"
-          disabled={fileType === "text"}
+          disabled={data.fileType === "text"}
           onChange={handleChangeFastaInput}
         />
         <Button
@@ -38,8 +34,9 @@ export default function InputFileFasta({
           component="span"
           endIcon={<CloudUploadIcon />}
           sx={{ width: { xl: "12rem" } }}
+          disabled={data.fileType === "text"}
         >
-          upload fasta
+          Upload Fasta
         </Button>
       </label>
     </FormControl>

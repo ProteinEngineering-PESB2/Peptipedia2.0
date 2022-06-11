@@ -4,32 +4,23 @@ import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
 import { FormEvent, useState } from "react";
-import { FastaInputType } from "../../helpers/types";
+import { PostData } from "../../utils/interfaces";
+import { InitialValuePostData } from "../../utils/initial_values";
 
 export default function AlignmentSequenceForm() {
-  const [fileType, setFileType] = useState<string>("text");
-  const [fastaText, setFastaText] = useState<string>("");
-  const [fastaInput, setFastaInput] = useState<FastaInputType>(null);
+  const [data, setData] = useState<PostData>(InitialValuePostData);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("hello world");
+    console.log(data)
   };
 
   return (
     <FormContainer>
       <form onSubmit={onSubmit}>
-        <InputFileType fileType={fileType} setFileType={setFileType} />
-        <TextFieldFasta
-          fastaText={fastaText}
-          setFastaText={setFastaText}
-          fileType={fileType}
-        />
-        <InputFileFasta
-          fastaInput={fastaInput}
-          setFastaInput={setFastaInput}
-          fileType={fileType}
-        />
+        <InputFileType data={data} setData={setData} />
+        <TextFieldFasta data={data} setData={setData}/>
+        <InputFileFasta data={data} setData={setData} />
         <ButtonRun />
       </form>
     </FormContainer>

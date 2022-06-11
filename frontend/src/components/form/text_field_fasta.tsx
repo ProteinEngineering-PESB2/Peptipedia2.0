@@ -1,19 +1,15 @@
 import { FormControl, TextField } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { PostData } from "../../utils/interfaces";
 
 interface Props {
-  fastaText: string;
-  setFastaText: Dispatch<SetStateAction<string>>;
-  fileType: string;
+  data: PostData;
+  setData: Dispatch<SetStateAction<PostData>>;
 }
 
-export default function TextFieldFasta({
-  fastaText,
-  setFastaText,
-  fileType,
-}: Props) {
+export default function TextFieldFasta({ data, setData }: Props) {
   const handleChangeFastaText = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFastaText(e.target.value);
+    setData({ ...data, fastaText: e.target.value });
   };
 
   return (
@@ -23,9 +19,9 @@ export default function TextFieldFasta({
         multiline
         rows={11}
         sx={{ width: "100%" }}
-        value={fastaText}
+        value={data.fastaText}
         onChange={handleChangeFastaText}
-        disabled={fileType === "file"}
+        disabled={data.fileType === "file"}
       />
     </FormControl>
   );

@@ -6,15 +6,16 @@ import {
   Radio,
 } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { PostData } from "../../utils/interfaces";
 
 interface Props {
-  fileType: string;
-  setFileType: Dispatch<SetStateAction<string>>;
+  data: PostData;
+  setData: Dispatch<SetStateAction<PostData>>;
 }
 
-export default function InputFileType({ fileType, setFileType }: Props) {
+export default function InputFileType({ data, setData }: Props) {
   const handleChangeFileType = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFileType((e.target as HTMLInputElement).value);
+    setData({ ...data, fileType: (e.target as HTMLInputElement).value });
   };
 
   return (
@@ -24,20 +25,20 @@ export default function InputFileType({ fileType, setFileType }: Props) {
         row
         aria-labelledby="label-file-type"
         name="row-file-alignment-type"
-        value={fileType}
+        value={data.fileType}
         onChange={handleChangeFileType}
       >
         <FormControlLabel
           value="text"
           control={<Radio />}
           label="Text"
-          checked={fileType === "text"}
+          checked={data.fileType === "text"}
         />
         <FormControlLabel
           value="file"
           control={<Radio />}
           label="File"
-          checked={fileType === "file"}
+          checked={data.fileType === "file"}
         />
       </RadioGroup>
     </FormControl>
