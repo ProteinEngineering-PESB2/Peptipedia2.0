@@ -4,8 +4,3 @@ export interface PostData {
     fastaFile: null | File
     fastaFileName: string
 }
-
-export interface IBackdrop {
-    open: boolean
-    percentage: number
-}

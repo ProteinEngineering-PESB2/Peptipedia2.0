@@ -1,4 +1,5 @@
-import { Backdrop, Typography } from "@mui/material";
+import { Backdrop, Stack, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
   open: boolean;
@@ -11,7 +12,10 @@ export default function BackdropComponent({ open, percentage }: Props) {
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={open}
     >
-      <Typography variant="h4">Downloading {percentage}%</Typography>
+      <Stack spacing={2} direction="row">
+        <CircularProgress color="inherit" />{" "}
+        <Typography variant="h4"> {percentage}%</Typography>
+      </Stack>
     </Backdrop>
   );
 }

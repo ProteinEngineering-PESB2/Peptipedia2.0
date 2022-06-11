@@ -4,11 +4,8 @@ import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
 import { FormEvent, useState } from "react";
-import { IBackdrop, PostData } from "../../utils/interfaces";
-import {
-  InitialValueBackdrop,
-  InitialValuePostData,
-} from "../../utils/initial_values";
+import { PostData } from "../../utils/interfaces";
+import { InitialValuePostData } from "../../utils/initial_values";
 import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
 import { requestPost } from "../../services/api";
 import toast from "react-hot-toast";
@@ -16,20 +13,20 @@ import BackdropComponent from "../backdrop_component";
 
 export default function AlignmentSequenceForm() {
   const [data, setData] = useState<PostData>(InitialValuePostData);
-  const [backdrop, setBackdrop] = useState<IBackdrop>(InitialValueBackdrop);
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
+  const [percentage, setPercentage] = useState<number>(0);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setBackdrop({ ...backdrop, open: true });
+    setOpenBackdrop(true);
 
     const postData = parserFormDataWithoutOptions(data);
 
     try {
       const { data } = await requestPost({
-        url: "/api/msa",
+        url: "/api/alignment",
         postData: postData,
-        backdrop,
-        setBackdrop,
+        setPercentage,
       });
 
       if (data.status === "error") {
@@ -38,19 +35,17 @@ export default function AlignmentSequenceForm() {
         console.log(data);
       }
 
-      setBackdrop({ ...backdrop, open: false });
+      setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
-      setBackdrop({ ...backdrop, open: false });
+      setOpenBackdrop(false);
+      setPercentage(0);
     }
   };
 
   return (
     <>
-      <BackdropComponent
-        open={backdrop.open}
-        percentage={backdrop.percentage}
-      />
+      <BackdropComponent open={openBackdrop} percentage={percentage} />
       <FormContainer>
         <form onSubmit={onSubmit}>
           <InputFileType data={data} setData={setData} />
