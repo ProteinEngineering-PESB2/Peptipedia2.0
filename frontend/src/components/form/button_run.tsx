@@ -1,6 +1,11 @@
 import { FormControl, Button } from "@mui/material";
+import { PostData } from "../../utils/interfaces";
 
-export default function ButtonRun() {
+interface Props {
+  data: PostData;
+}
+
+export default function ButtonRun({ data }: Props) {
   return (
     <FormControl fullWidth sx={{ marginTop: 2 }}>
       <Button
@@ -12,6 +17,7 @@ export default function ButtonRun() {
           ":hover": { backgroundColor: "#3A6CF6" },
         }}
         size="medium"
+        disabled={data.fastaText === "" && data.fastaFile === null && true}
       >
         run
       </Button>

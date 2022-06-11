@@ -1,1 +1,1 @@
-export type FastaInputType = null | File;
+export type FastaFileType = null | File;

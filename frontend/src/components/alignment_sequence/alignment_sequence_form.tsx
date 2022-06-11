@@ -12,16 +12,16 @@ export default function AlignmentSequenceForm() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(data)
+    console.log(data);
   };
 
   return (
     <FormContainer>
       <form onSubmit={onSubmit}>
         <InputFileType data={data} setData={setData} />
-        <TextFieldFasta data={data} setData={setData}/>
+        <TextFieldFasta data={data} setData={setData} />
         <InputFileFasta data={data} setData={setData} />
-        <ButtonRun />
+        <ButtonRun data={data} />
       </form>
     </FormContainer>
   );

@@ -1,7 +1,8 @@
-import { FastaInputType } from "./types"
+import { FastaFileType } from "./types"
 
 export interface PostData {
     fileType: string
     fastaText: string
-    fastaInput: FastaInputType
+    fastaFile: FastaFileType
+    fastaFileName: string
 }

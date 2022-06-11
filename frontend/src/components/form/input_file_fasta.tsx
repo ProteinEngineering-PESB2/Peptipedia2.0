@@ -16,8 +16,19 @@ interface Props {
 
 export default function InputFileFasta({ data, setData }: Props) {
   const handleChangeFastaInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.files[0].name)
-    setData({ ...data, fastaInput: e.target.files![0] });
+    if (e.target !== null && e.target.files !== null && e.target.files.length === 1) {
+      let nameFile = e.target.files[0].name;
+
+      if (e.target.files[0].name.length > 15) {
+        nameFile = e.target.files[0].name.substring(0, 12) + "...";
+      }
+
+      setData({
+        ...data,
+        fastaFile: e.target.files[0],
+        fastaFileName: nameFile,
+      });
+    }
   };
 
   return (
@@ -35,8 +46,9 @@ export default function InputFileFasta({ data, setData }: Props) {
           endIcon={<CloudUploadIcon />}
           sx={{ width: { xl: "12rem" } }}
           disabled={data.fileType === "text"}
+          color={data.fastaFileName !== "" ? "success" : "primary"}
         >
-          Upload Fasta
+          {data.fastaFileName !== "" ? data.fastaFileName : "Upload Fasta"}
         </Button>
       </label>
     </FormControl>
