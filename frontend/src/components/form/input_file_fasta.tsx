@@ -3,6 +3,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { PostData } from "../../utils/interfaces";
+import { EnumFileType } from "../../utils/enums";
 
 const Input = styled("input")({
   display: "none",
@@ -37,7 +38,7 @@ export default function InputFileFasta({ data, setData }: Props) {
         <Input
           id="contained-button-file"
           type="file"
-          disabled={data.fileType === "text"}
+          disabled={data.fileType === EnumFileType.TEXT}
           onChange={handleChangeFastaInput}
         />
         <Button
@@ -45,7 +46,7 @@ export default function InputFileFasta({ data, setData }: Props) {
           component="span"
           endIcon={<CloudUploadIcon />}
           sx={{ width: { xl: "12rem" } }}
-          disabled={data.fileType === "text"}
+          disabled={data.fileType === EnumFileType.TEXT}
           color={data.fastaFileName !== "" ? "success" : "primary"}
         >
           {data.fastaFileName !== "" ? data.fastaFileName : "Upload Fasta"}

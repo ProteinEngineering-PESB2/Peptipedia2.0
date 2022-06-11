@@ -6,6 +6,7 @@ import {
   Radio,
 } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { EnumFileType } from "../../utils/enums";
 import { PostData } from "../../utils/interfaces";
 
 interface Props {
@@ -32,13 +33,13 @@ export default function InputFileType({ data, setData }: Props) {
           value="text"
           control={<Radio />}
           label="Text"
-          checked={data.fileType === "text"}
+          checked={data.fileType === EnumFileType.TEXT}
         />
         <FormControlLabel
           value="file"
           control={<Radio />}
           label="File"
-          checked={data.fileType === "file"}
+          checked={data.fileType === EnumFileType.FILE}
         />
       </RadioGroup>
     </FormControl>

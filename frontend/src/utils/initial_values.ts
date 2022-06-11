@@ -1,7 +1,8 @@
+import { EnumFileType } from "./enums";
 import { PostData } from "./interfaces";
 
 export const InitialValuePostData: PostData = {
-    fileType: "text",
+    fileType: EnumFileType.TEXT,
     fastaText: "",
     fastaFile: null,
     fastaFileName: ""

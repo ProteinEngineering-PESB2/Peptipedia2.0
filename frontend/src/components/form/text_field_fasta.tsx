@@ -1,5 +1,6 @@
 import { FormControl, TextField } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { EnumFileType } from "../../utils/enums";
 import { PostData } from "../../utils/interfaces";
 
 interface Props {
@@ -21,7 +22,7 @@ export default function TextFieldFasta({ data, setData }: Props) {
         sx={{ width: "100%" }}
         value={data.fastaText}
         onChange={handleChangeFastaText}
-        disabled={data.fileType === "file"}
+        disabled={data.fileType === EnumFileType.FILE}
       />
     </FormControl>
   );
