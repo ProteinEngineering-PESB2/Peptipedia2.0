@@ -1,8 +1,11 @@
-import { FastaFileType } from "./types"
-
 export interface PostData {
     fileType: string
     fastaText: string
-    fastaFile: FastaFileType
+    fastaFile: null | File
     fastaFileName: string
+}
+
+export interface IBackdrop {
+    open: boolean
+    percentage: number
 }

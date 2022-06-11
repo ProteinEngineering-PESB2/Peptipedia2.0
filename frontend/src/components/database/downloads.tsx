@@ -1,6 +1,6 @@
 import { Box, Stack, Button } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { downloadFile } from "../../helpers/downloadFile";
+import { downloadFile } from "../../services/downloadFile";
 
 interface Props {
   setOpenBackdrop: Dispatch<SetStateAction<boolean>>;

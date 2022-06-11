@@ -15,7 +15,7 @@ export const downloadFile = async ({
   name,
   setOpenBackdrop,
   setPercentage,
-}: Props): Promise<void> => {
+}: Props): Promise<any> => {
   setOpenBackdrop(true);
   try {
     const res = await axios({

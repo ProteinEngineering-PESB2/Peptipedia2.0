@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { fasta_converter } from "../services/fasta_converter";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
-import { downloadFile } from "../helpers/downloadFile";
+import { downloadFile } from "../services/downloadFile";
 import BackdropComponent from "../components/backdrop_component";
 
 export default function FastaConverter() {
