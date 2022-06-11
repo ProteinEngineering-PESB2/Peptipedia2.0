@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import AppProvider from "./context/AppProvider";
 // Pages
@@ -18,29 +19,39 @@ import Clustering from "./pages/clustering";
 import SupervisedLearning from "./pages/supervised_learning";
 
 export default function App() {
+  const theme = createTheme();
+
   return (
     <AppProvider>
-      <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/database" element={<Database />} />
-          <Route path="/advanced-search" element={<AdvancedSearch />} />
-          <Route path="/fasta-converter" element={<FastaConverter />} />
-          <Route path="/alignment-sequence" element={<AlignmentSequence />} />
-          <Route path="/msa" element={<MultiAlignmentSequence />} />
-          <Route path="/pfam" element={<Pfam />} />
-          <Route path="/gene-ontology" element={<GeneOntology />} />
-          <Route path="/frequency" element={<Frequency />} />
-          <Route path="/physicochemical" element={<Phisicochemical />} />
-          <Route path="/encoding" element={<Encoding />} />
-          <Route path="/clustering" element={<Clustering />} />
-          <Route path="/supervised-learning" element={<SupervisedLearning />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster/>
-      </>
+      <ThemeProvider theme={theme}>
+        <>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/database" element={<Database />} />
+              <Route path="/advanced-search" element={<AdvancedSearch />} />
+              <Route path="/fasta-converter" element={<FastaConverter />} />
+              <Route
+                path="/alignment-sequence"
+                element={<AlignmentSequence />}
+              />
+              <Route path="/msa" element={<MultiAlignmentSequence />} />
+              <Route path="/pfam" element={<Pfam />} />
+              <Route path="/gene-ontology" element={<GeneOntology />} />
+              <Route path="/frequency" element={<Frequency />} />
+              <Route path="/physicochemical" element={<Phisicochemical />} />
+              <Route path="/encoding" element={<Encoding />} />
+              <Route path="/clustering" element={<Clustering />} />
+              <Route
+                path="/supervised-learning"
+                element={<SupervisedLearning />}
+              />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </BrowserRouter>
+          <Toaster />
+        </>
+      </ThemeProvider>
     </AppProvider>
   );
 }

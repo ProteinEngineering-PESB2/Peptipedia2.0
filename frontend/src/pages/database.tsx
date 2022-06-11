@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Layout from "../components/layout";
 import { useHandleSection } from "../hooks/useHandleSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Downloads from "../components/database/downloads";
 import BackdropComponent from "../components/backdrop_component";
 
