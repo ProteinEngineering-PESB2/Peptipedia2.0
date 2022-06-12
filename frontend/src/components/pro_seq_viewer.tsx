@@ -10,21 +10,25 @@ export default function ProSeqViewer({ sequences }: Props) {
   useProSeqViewer({ sequences });
 
   return (
-    <Paper
-      sx={{
-        p: 2,
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: {
-          xs: "20rem",
-          sm: "100%",
-          md: "100%",
-          lg: "100%",
-          xl: "100%",
-        },
-      }}
-    >
-      <div id="psv"></div>
-    </Paper>
+    <>
+      {sequences.length > 0 && (
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: {
+              xs: "20rem",
+              sm: "100%",
+              md: "100%",
+              lg: "100%",
+              xl: "100%",
+            },
+          }}
+        >
+          <div id="psv"></div>
+        </Paper>
+      )}
+    </>
   );
 }

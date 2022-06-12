@@ -1,16 +1,22 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import BlackdropComponent from "../../components/backdrop_component";
-import { ITable } from "../../utils/interfaces";
+import { IAlign, ITable } from "../../utils/interfaces";
 import ButtonDownloadPrimary from "../button_download_primary";
 import DataTable from "../datatable";
+import ProSeqViewer from "../pro_seq_viewer";
 
 interface Props {
   path: string;
   table: ITable;
+  sequences: IAlign[];
 }
 
-export default function AlignmentSequenceContent({ path, table }: Props) {
+export default function AlignmentSequenceContent({
+  path,
+  table,
+  sequences,
+}: Props) {
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
   const [percentage, setPercentage] = useState<number>(0);
 
@@ -27,6 +33,9 @@ export default function AlignmentSequenceContent({ path, table }: Props) {
       </Box>
       <Box marginTop={3}>
         <DataTable title="Alignment Sequence Result" table={table} />
+      </Box>
+      <Box marginTop={3}>
+        <ProSeqViewer sequences={sequences} />
       </Box>
     </>
   );

@@ -4,7 +4,7 @@ import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { ITable, PostData } from "../../utils/interfaces";
+import { IAlign, ITable, PostData } from "../../utils/interfaces";
 import {
   InitialValuePostData,
   InitialValueTable,
@@ -13,15 +13,26 @@ import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
 import { requestPost } from "../../services/api";
 import toast from "react-hot-toast";
 import BackdropComponent from "../backdrop_component";
+import { Button } from "@mui/material";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 
 interface Props {
   setPath: Dispatch<SetStateAction<string>>;
   setTable: Dispatch<SetStateAction<ITable>>;
+  setSequences: Dispatch<SetStateAction<IAlign[]>>;
 }
 
-export default function AlignmentSequenceForm({ setPath, setTable }: Props) {
+export default function AlignmentSequenceForm({
+  setPath,
+  setTable,
+  setSequences,
+}: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
+
+  const handleSequences = (aligns: IAlign[]) => {
+    setSequences(aligns);
+  };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,8 +51,23 @@ export default function AlignmentSequenceForm({ setPath, setTable }: Props) {
       if (data.status === "error") {
         toast.error(data.description);
       } else {
-        console.log(data);
-        const { path, table } = data;
+        const { path, table, aligns } = data;
+
+        for (let row in table.data) {
+          const id = table.data[row][0];
+          const filter_aligns = aligns[id];
+
+          table.data[row].push(
+            <Button
+              variant="text"
+              onClick={() => handleSequences(filter_aligns)}
+            >
+              <FormatAlignCenterIcon />
+            </Button>
+          );
+        }
+
+        table.columns.push("Options");
 
         setPath(path);
         setTable({

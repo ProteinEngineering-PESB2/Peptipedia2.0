@@ -17,7 +17,7 @@ export const useProSeqViewer = ({ sequences }: Props) => {
   useEffect(() => {
     const psv = new ProSeqViewer("psv");
     psv.draw({ sequences, options });
-  }, []);
+  }, [sequences]);
 
   return {};
 };
