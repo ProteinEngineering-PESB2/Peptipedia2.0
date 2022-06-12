@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
   open: boolean;
-  percentage: number;
+  percentage?: number;
 }
 
 export default function BackdropComponent({ open, percentage }: Props) {
@@ -14,7 +14,7 @@ export default function BackdropComponent({ open, percentage }: Props) {
     >
       <Stack spacing={2} direction="row">
         <CircularProgress color="inherit" />{" "}
-        <Typography variant="h4"> {percentage}%</Typography>
+        <Typography variant="h4"> {percentage && percentage + "%"}</Typography>
       </Stack>
     </Backdrop>
   );

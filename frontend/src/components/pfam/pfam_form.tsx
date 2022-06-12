@@ -1,60 +1,40 @@
-import FormContainer from "../form/form_container";
-import InputFileType from "../form/input_file_type";
-import InputFileFasta from "../form/input_file_fasta";
-import TextFieldFasta from "../form/text_field_fasta";
-import ButtonRun from "../form/button_run";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { ITable, PostData } from "../../utils/interfaces";
-import {
-  InitialValuePostData,
-  InitialValueTable,
-} from "../../utils/initial_values";
+import { FormEvent, useState } from "react";
 import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
-import { requestPost } from "../../services/api";
+import { InitialValuePostData } from "../../utils/initial_values";
+import { PostData } from "../../utils/interfaces";
+import ButtonRun from "../form/button_run";
+import FormContainer from "../form/form_container";
+import InputFileFasta from "../form/input_file_fasta";
+import InputFileType from "../form/input_file_type";
+import TextFieldFasta from "../form/text_field_fasta";
 import toast from "react-hot-toast";
+import { requestPost } from "../../services/api";
 import BackdropComponent from "../backdrop_component";
+import axios from "axios";
 
-interface Props {
-  setPath: Dispatch<SetStateAction<string>>;
-  setTable: Dispatch<SetStateAction<ITable>>;
-}
-
-export default function AlignmentSequenceForm({ setPath, setTable }: Props) {
+export default function PfamForm() {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setOpenBackdrop(true);
-    setPath("");
-    setTable(InitialValueTable);
 
     const postData = parserFormDataWithoutOptions(data);
 
     try {
       const { data } = await requestPost({
-        url: "/api/alignment",
-        postData: postData,
+        url: "/api/pfam",
+        postData,
       });
-
       if (data.status === "error") {
         toast.error(data.description);
       } else {
         console.log(data);
-        const { path, table } = data;
-
-        setPath(path);
-        setTable({
-          columns: table.columns,
-          data: table.data,
-        });
       }
-
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
-      setPath("");
-      setTable(InitialValueTable);
       setOpenBackdrop(false);
     }
   };
