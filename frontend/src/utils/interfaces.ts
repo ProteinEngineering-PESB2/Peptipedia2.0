@@ -11,7 +11,7 @@ export interface ITable {
 }
 
 export interface IAlign {
-    id: number
-    label: string
-    sequence: string
+  id: number;
+  label: string;
+  sequence: string;
 }
