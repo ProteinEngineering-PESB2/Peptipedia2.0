@@ -1,7 +1,6 @@
 import Layout from "../components/layout";
 import {
   Box,
-  Typography,
   Grid,
   TextField,
   FilledInput,
@@ -19,6 +18,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import { downloadFile } from "../services/downloadFile";
 import BackdropComponent from "../components/backdrop_component";
+import SectionTitle from "../components/section_title";
 
 export default function FastaConverter() {
   const [sequences, setSequences] = useState<string>("");
@@ -63,9 +63,7 @@ export default function FastaConverter() {
       <>
         <BackdropComponent open={openBackdrop} percentage={percentage} />
         <Box>
-          <Typography variant="h4" style={{ fontWeight: "bold" }}>
-            Fasta Converter
-          </Typography>
+          <SectionTitle title="Fasta Converter" />
         </Box>
         <Box marginTop={3}>
           <Grid container spacing={3}>

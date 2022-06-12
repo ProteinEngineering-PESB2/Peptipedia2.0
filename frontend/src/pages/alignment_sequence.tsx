@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Layout from "../components/layout";
 import { useHandleSection } from "../hooks/useHandleSection";
 import AlignmentSequenceForm from "../components/alignment_sequence/alignment_sequence_form";
@@ -6,6 +6,7 @@ import AlignmentSequenceContent from "../components/alignment_sequence/alignment
 import { useState } from "react";
 import { IAlign, ITable } from "../utils/interfaces";
 import { InitialValueTable } from "../utils/initial_values";
+import SectionTitle from "../components/section_title";
 
 export default function AlignmentSequence() {
   const [path, setPath] = useState<string>("");
@@ -18,9 +19,7 @@ export default function AlignmentSequence() {
     <Layout>
       <>
         <Box>
-          <Typography variant="h4" style={{ fontWeight: "bold" }}>
-            Alignment Sequence
-          </Typography>
+          <SectionTitle title="Alignment Sequence"/>
         </Box>
 
         <AlignmentSequenceForm

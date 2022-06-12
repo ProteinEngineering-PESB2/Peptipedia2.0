@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Layout from "../components/layout";
 import { useHandleSection } from "../hooks/useHandleSection";
 import { useState } from "react";
 import Downloads from "../components/database/downloads";
 import BackdropComponent from "../components/backdrop_component";
+import SectionTitle from "../components/section_title";
 
 export default function Database() {
   const [percentage, setPercentage] = useState<number>(0);
@@ -16,9 +17,7 @@ export default function Database() {
       <>
         <BackdropComponent open={openBackdrop} percentage={percentage} />
         <Box>
-          <Typography variant="h4" style={{ fontWeight: "bold" }}>
-            Peptipedia Database
-          </Typography>
+          <SectionTitle title="Database"/>
         </Box>
         <Downloads
           setOpenBackdrop={setOpenBackdrop}

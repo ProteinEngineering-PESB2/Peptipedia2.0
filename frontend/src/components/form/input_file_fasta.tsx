@@ -45,7 +45,7 @@ export default function InputFileFasta({ data, setData }: Props) {
           variant="outlined"
           component="span"
           endIcon={<CloudUploadIcon />}
-          sx={{ width: { xl: "12rem" } }}
+          sx={{ width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "12rem" } }}
           disabled={data.fileType === EnumFileType.TEXT}
           color={data.fastaFileName !== "" ? "success" : "primary"}
         >

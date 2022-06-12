@@ -1,8 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import Layout from "../components/layout";
 import MSAContent from "../components/msa/msa_content";
 import MSAForm from "../components/msa/msa_form";
+import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
 import { IAlign } from "../utils/interfaces";
 
@@ -15,9 +16,7 @@ export default function MultiAlignmentSequence() {
     <Layout>
       <>
         <Box>
-          <Typography variant="h4" style={{ fontWeight: "bold" }}>
-            Multi Alignment Sequence
-          </Typography>
+          <SectionTitle title="Multi Alignment Sequence" />
         </Box>
 
         <MSAForm setResult={setResult} />
