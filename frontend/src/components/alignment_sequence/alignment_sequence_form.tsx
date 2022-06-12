@@ -3,7 +3,7 @@ import InputFileType from "../form/input_file_type";
 import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { PostData } from "../../utils/interfaces";
 import { InitialValuePostData } from "../../utils/initial_values";
 import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
@@ -11,7 +11,11 @@ import { requestPost } from "../../services/api";
 import toast from "react-hot-toast";
 import BackdropComponent from "../backdrop_component";
 
-export default function AlignmentSequenceForm() {
+interface Props {
+  setPath: Dispatch<SetStateAction<string>>;
+}
+
+export default function AlignmentSequenceForm({ setPath }: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
   const [percentage, setPercentage] = useState<number>(0);
@@ -19,6 +23,7 @@ export default function AlignmentSequenceForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setOpenBackdrop(true);
+    setPath("");
 
     const postData = parserFormDataWithoutOptions(data);
 
@@ -32,12 +37,14 @@ export default function AlignmentSequenceForm() {
       if (data.status === "error") {
         toast.error(data.description);
       } else {
-        console.log(data);
+        const { path } = data;
+        setPath(path);
       }
 
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
+      setPath("")
       setOpenBackdrop(false);
       setPercentage(0);
     }
