@@ -14,6 +14,7 @@
     "@mui/material": "^5.8.3",
     "axios": "^0.27.2",
     "js-file-download": "^0.4.12",
+    "mui-datatables": "^4.2.2",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.0.0",
@@ -21,6 +22,7 @@
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@types/mui-datatables": "^3.7.9",
     "@types/react": "^18.0.0",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^18.0.0",

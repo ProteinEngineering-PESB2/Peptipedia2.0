@@ -22,10 +22,10 @@ export default function AlignmentSequence() {
           </Typography>
         </Box>
 
-        <AlignmentSequenceForm setPath={setPath} />
+        <AlignmentSequenceForm setPath={setPath} setTable={setTable} />
 
-        {(path !== "") && (
-          <AlignmentSequenceContent path={path}/>
+        {path !== "" && table.columns.length > 0 && table.data.length > 0 && (
+          <AlignmentSequenceContent path={path} table={table} />
         )}
       </>
     </Layout>

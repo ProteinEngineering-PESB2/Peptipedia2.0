@@ -12,12 +12,11 @@ export const requestPost = async ({
   postData,
   setPercentage,
 }: RequestPost): Promise<any> => {
+  setPercentage(0);
   return await axios.post(url, postData, {
     onUploadProgress: (event) => {
-      let percentCompleted1 = Math.round(
-        (event.loaded * 100) / event.total
-      );
-      console.log(percentCompleted1)
+      let percentCompleted1 = Math.round((event.loaded * 100) / event.total);
+      console.log(percentCompleted1);
     },
     onDownloadProgress: (progressEvent) => {
       let percentCompleted = Math.round(

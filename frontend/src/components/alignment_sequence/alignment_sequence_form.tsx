@@ -4,7 +4,7 @@ import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { PostData } from "../../utils/interfaces";
+import { ITable, PostData } from "../../utils/interfaces";
 import { InitialValuePostData } from "../../utils/initial_values";
 import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
 import { requestPost } from "../../services/api";
@@ -13,9 +13,10 @@ import BackdropComponent from "../backdrop_component";
 
 interface Props {
   setPath: Dispatch<SetStateAction<string>>;
+  setTable: Dispatch<SetStateAction<ITable>>
 }
 
-export default function AlignmentSequenceForm({ setPath }: Props) {
+export default function AlignmentSequenceForm({ setPath, setTable }: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
   const [percentage, setPercentage] = useState<number>(0);
@@ -37,8 +38,14 @@ export default function AlignmentSequenceForm({ setPath }: Props) {
       if (data.status === "error") {
         toast.error(data.description);
       } else {
-        const { path } = data;
+        console.log(data)
+        const { path, table } = data;
+
         setPath(path);
+        setTable({
+          columns: table.columns,
+          data: table.data
+        })
       }
 
       setOpenBackdrop(false);
