@@ -39,6 +39,7 @@ export default function AlignmentSequenceForm({
     setOpenBackdrop(true);
     setPath("");
     setTable(InitialValueTable);
+    setSequences([]);
 
     const postData = parserFormDataWithoutOptions(data);
 
@@ -81,6 +82,7 @@ export default function AlignmentSequenceForm({
       toast.error("Server error");
       setPath("");
       setTable(InitialValueTable);
+      setSequences([]);
       setOpenBackdrop(false);
     }
   };

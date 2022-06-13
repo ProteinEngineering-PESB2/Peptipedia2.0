@@ -33,7 +33,7 @@ export default function InputFileFasta({ data, setData }: Props) {
   };
 
   return (
-    <FormControl sx={{ marginY: 1 }}>
+    <FormControl sx={{ marginY: 1 }} fullWidth>
       <label htmlFor="contained-button-file" style={{ width: "100%" }}>
         <Input
           id="contained-button-file"
@@ -45,7 +45,7 @@ export default function InputFileFasta({ data, setData }: Props) {
           variant="outlined"
           component="span"
           endIcon={<CloudUploadIcon />}
-          sx={{ width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "12rem" } }}
+          sx={{ width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "100%" } }}
           disabled={data.fileType === EnumFileType.TEXT}
           color={data.fastaFileName !== "" ? "success" : "primary"}
         >

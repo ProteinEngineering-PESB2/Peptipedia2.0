@@ -12,7 +12,7 @@ export default function ButtonRun({ data }: Props) {
         type="submit"
         variant="contained"
         sx={{
-          width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "12rem" },
+          width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "100%" },
           backgroundColor: "#2962ff",
           ":hover": { backgroundColor: "#3A6CF6" },
         }}
