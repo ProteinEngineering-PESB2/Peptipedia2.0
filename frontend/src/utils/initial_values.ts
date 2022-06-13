@@ -6,6 +6,11 @@ export const InitialValuePostData: PostData = {
   fastaText: "",
   fastaFile: null,
   fastaFileName: "",
+  checkboxs: {
+    biological_process: true,
+    celular_component: true,
+    molecular_function: true,
+  },
 };
 
 export const InitialValueTable: ITable = {

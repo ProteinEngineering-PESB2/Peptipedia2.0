@@ -1,4 +1,6 @@
+import GeneOntologyForm from "../components/gene_ontology/gene_ontology_form";
 import Layout from "../components/layout";
+import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function GeneOntology() {
@@ -6,7 +8,13 @@ export default function GeneOntology() {
 
   return (
     <Layout>
-      <h1>GeneOntology</h1>
+      <>
+      
+      <SectionTitle  title="Gene Ontology"/> 
+
+      <GeneOntologyForm/>
+
+      </>
     </Layout>
   );
 }

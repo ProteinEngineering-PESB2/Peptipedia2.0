@@ -9,7 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "./sidebar";
 import { Container } from "@mui/material";
 
-const drawerWidth = 250;
+const drawerWidth = 255;
 
 interface Props {
   window?: () => Window;

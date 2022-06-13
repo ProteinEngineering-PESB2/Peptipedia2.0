@@ -3,6 +3,13 @@ export interface PostData {
   fastaText: string;
   fastaFile: null | File;
   fastaFileName: string;
+  checkboxs: ICheckboxs;
+}
+
+interface ICheckboxs {
+  molecular_function: boolean;
+  biological_process: boolean;
+  celular_component: boolean;
 }
 
 export interface ITable {
