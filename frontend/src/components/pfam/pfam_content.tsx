@@ -1,6 +1,7 @@
-import { Box, Paper } from "@mui/material";
+import { Box, FormControl, Paper } from "@mui/material";
 import { usePfamAutocomplete } from "../../hooks/usePfamAutocomplete";
 import { IDataPfam } from "../../utils/interfaces";
+import DataTable from "../datatable";
 import AutocompleteComponent from "../form/autocomplete_component";
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export default function PfamContent({ result }: Props) {
-  const { sequences, selectedSequence, handleSequenceSelected } =
+  const { sequences, selectedSequence, handleSequenceSelected, table } =
     usePfamAutocomplete({ result });
 
   return (
@@ -27,7 +28,10 @@ export default function PfamContent({ result }: Props) {
             title="Sequence"
             value={selectedSequence}
           />
-          <h1>{selectedSequence}</h1>
+
+          <FormControl fullWidth sx={{ marginTop: 2 }}>
+            <DataTable table={table} title="Pfam Result" />
+          </FormControl>
         </Paper>
       </Box>
     </>

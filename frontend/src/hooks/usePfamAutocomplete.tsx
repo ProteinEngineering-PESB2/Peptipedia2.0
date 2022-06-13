@@ -1,5 +1,6 @@
 import { useEffect, useState, SyntheticEvent } from "react";
 import { IDataPfam } from "../utils/interfaces";
+import { useDataTablePfam } from "./useDataTablePfam";
 
 interface Props {
   result: IDataPfam[];
@@ -8,6 +9,8 @@ interface Props {
 export function usePfamAutocomplete({ result }: Props) {
   const [sequences, setSequences] = useState<string[]>([]);
   const [selectedSequence, setSelectedSequence] = useState<string | null>("");
+
+  const { table } = useDataTablePfam({ result, selectedSequence });
 
   useEffect(() => {
     const unique_sequences: string[] = [];
@@ -31,6 +34,7 @@ export function usePfamAutocomplete({ result }: Props) {
   return {
     sequences,
     selectedSequence,
-    handleSequenceSelected
+    handleSequenceSelected,
+    table
   };
 }

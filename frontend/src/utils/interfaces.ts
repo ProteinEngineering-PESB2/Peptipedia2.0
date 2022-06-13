@@ -7,7 +7,7 @@ export interface PostData {
 
 export interface ITable {
   columns: Array<string>;
-  data: Array<Array<string | number>>;
+  data: Array<Array<any>>;
 }
 
 export interface IAlign {
