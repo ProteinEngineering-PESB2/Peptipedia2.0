@@ -6,6 +6,7 @@ import Services from "../components/home/service";
 import PeptipediaTeam from "../components/home/team";
 import Resource from "../components/home/resources";
 import { useHandleSection } from "../hooks/useHandleSection";
+import { Box } from "@mui/material";
 
 export default function Home() {
   useHandleSection({section: "home"})
@@ -16,7 +17,9 @@ export default function Home() {
         <Header />
         <About />
         <Services />
+        <Box sx={{ display: { xs: "none", sm: "block", md: "block", lg: "block", xl: "block" } }}>
         <PeptipediaTeam />
+        </Box>
         <Resource/>
       </>
     </Layout>

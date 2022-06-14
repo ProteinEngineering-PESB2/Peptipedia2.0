@@ -25,10 +25,10 @@ export default function CardProfile({
 }: Props) {
   return (
     <>
-      {/* <Card sx={{ width: "50%" }}>
+      <Card sx={{ width: "95%" }}>
         <CardMedia
           component="img"
-          height="350"
+          sx={{ height: "28rem" }}
           image={image}
           alt="profile"
           className="image-center"
@@ -62,7 +62,7 @@ export default function CardProfile({
             )}
           </Box>
         </CardActions>
-      </Card> */}
+      </Card>
     </>
   );
 }

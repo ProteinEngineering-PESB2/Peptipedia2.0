@@ -7,9 +7,10 @@ import { checkbox_list, ICheckbox } from "./checkbox_list";
 interface Props {
   data: PostData;
   setData: Dispatch<SetStateAction<PostData>>;
+  selectedCheckboxs: Array<string>;
 }
 
-export default function Checkboxs({ data, setData }: Props) {
+export default function Checkboxs({ data, setData, selectedCheckboxs }: Props) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
     setData({
       ...data,
@@ -28,18 +29,21 @@ export default function Checkboxs({ data, setData }: Props) {
 
   return (
     <FormGroup sx={{ marginY: 1 }}>
-      {checkbox_list.map((c: ICheckbox) => (
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={getChecked(c.id)}
-              onChange={(e) => handleChange(e, c.id)}
+      {checkbox_list.map(
+        (c: ICheckbox) =>
+          selectedCheckboxs.includes(c.id) && (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={getChecked(c.id)}
+                  onChange={(e) => handleChange(e, c.id)}
+                />
+              }
+              label={c.title}
+              key={c.id}
             />
-          }
-          label={c.title}
-          key={c.id}
-        />
-      ))}
+          )
+      )}
     </FormGroup>
   );
 }

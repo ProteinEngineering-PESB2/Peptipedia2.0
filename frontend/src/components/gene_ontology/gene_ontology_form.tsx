@@ -23,7 +23,15 @@ export default function GeneOntologyForm() {
           <InputFileType data={data} setData={setData} />
           <TextFieldFasta data={data} setData={setData} />
           <InputFileFasta data={data} setData={setData} />
-          <Checkboxs data={data} setData={setData} />
+          <Checkboxs
+            data={data}
+            setData={setData}
+            selectedCheckboxs={[
+              "molecular_function",
+              "biological_process",
+              "celular_component",
+            ]}
+          />
           <ButtonRun data={data} />
         </form>
       </FormContainer>
