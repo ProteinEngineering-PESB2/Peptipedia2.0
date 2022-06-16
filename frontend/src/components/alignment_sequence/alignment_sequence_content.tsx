@@ -23,7 +23,7 @@ export default function AlignmentSequenceContent({
   return (
     <>
       <BlackdropComponent open={openBackdrop} percentage={percentage} />
-      <Box marginTop={3}>
+      <Box marginTop={3} boxShadow={4}>
         <ButtonDownloadPrimary
           path={path}
           name="blast.txt"

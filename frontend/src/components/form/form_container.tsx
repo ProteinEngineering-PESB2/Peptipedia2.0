@@ -7,7 +7,7 @@ interface Props {
 
 export default function FormContainer({ children }: Props) {
   return (
-    <Box marginTop={3}>
+    <Box marginTop={3} boxShadow={4}>
       <Paper
         sx={{
           p: 2,

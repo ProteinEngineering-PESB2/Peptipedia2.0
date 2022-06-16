@@ -6,6 +6,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 
+import Background from "../assets/fondo.jpg";
+
 import Sidebar from "./sidebar";
 import { Container } from "@mui/material";
 
@@ -28,7 +30,17 @@ export default function ResponsiveDrawer(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100",
+        height: "100%",
+        minHeight: "100vh",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+      style={{ backgroundImage: `url(${Background})` }}
+    >
       <CssBaseline />
       <Box
         component="nav"

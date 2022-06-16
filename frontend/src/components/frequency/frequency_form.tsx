@@ -43,6 +43,7 @@ export default function FrequencyForm({ setResult }: Props) {
     } catch (error) {
       toast.error("Server error");
       setOpenBackdrop(false);
+      setResult([]);
     }
   };
 
