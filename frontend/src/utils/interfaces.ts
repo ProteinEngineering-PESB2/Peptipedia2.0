@@ -10,6 +10,11 @@ export interface ICheckboxs {
   molecular_function: boolean;
   biological_process: boolean;
   celular_component: boolean;
+  charge: boolean;
+  charge_density: boolean;
+  isoelectric_point: boolean;
+  molecular_weight: boolean;
+  length: boolean;
 }
 
 export interface ITable {
@@ -38,22 +43,31 @@ export interface IDataPfam {
 }
 
 interface IResultsPredictionGeneOntology {
-  id_go: string
-  probability: number
-  term: string
+  id_go: string;
+  probability: number;
+  term: string;
 }
 
 interface IPredictionGeneOntology {
-  id_seq: string
-  results: IResultsPredictionGeneOntology[]
+  id_seq: string;
+  results: IResultsPredictionGeneOntology[];
 }
 
 export interface IDataGeneOntology {
-  type: string
-  prediction: IPredictionGeneOntology[]
+  type: string;
+  prediction: IPredictionGeneOntology[];
 }
 
 export interface IDataFrequency {
-  id_seq: string
-  counts: Object
+  id_seq: string;
+  counts: Object;
+}
+
+export interface IDataPhysichochemical {
+  charge: number
+  charge_density: number
+  id: string
+  length: number
+  isoelectric_point: number
+  molecular_weight: number
 }

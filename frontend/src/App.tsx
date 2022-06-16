@@ -13,7 +13,7 @@ import MultiAlignmentSequence from "./pages/msa";
 import Pfam from "./pages/pfam";
 import GeneOntology from "./pages/gene_ontology";
 import Frequency from "./pages/frequency";
-import Phisicochemical from "./pages/phisicochemical";
+import Physicochemical from "./pages/physicochemical";
 import Encoding from "./pages/encoding";
 import Clustering from "./pages/clustering";
 import SupervisedLearning from "./pages/supervised_learning";
@@ -39,7 +39,7 @@ export default function App() {
               <Route path="/pfam" element={<Pfam />} />
               <Route path="/gene-ontology" element={<GeneOntology />} />
               <Route path="/frequency" element={<Frequency />} />
-              <Route path="/physicochemical" element={<Phisicochemical />} />
+              <Route path="/physicochemical" element={<Physicochemical />} />
               <Route path="/encoding" element={<Encoding />} />
               <Route path="/clustering" element={<Clustering />} />
               <Route

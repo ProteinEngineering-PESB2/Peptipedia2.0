@@ -18,4 +18,24 @@ export const checkbox_list: ICheckbox[] = [
     id: EnumCheckbox.CELULAR_COMPONENT,
     title: "Celular Component",
   },
+  {
+    id: EnumCheckbox.LENGTH,
+    title: "Length",
+  },
+  {
+    id: EnumCheckbox.MOLECULAR_WEIGHT,
+    title: "Molecular Weight",
+  },
+  {
+    id: EnumCheckbox.ISOELECTRIC_POINT,
+    title: "Isoelectric Point",
+  },
+  {
+    id: EnumCheckbox.CHARGE,
+    title: "Charge",
+  },
+  {
+    id: EnumCheckbox.CHARGE_DENSITY,
+    title: "Charge Density",
+  },
 ];

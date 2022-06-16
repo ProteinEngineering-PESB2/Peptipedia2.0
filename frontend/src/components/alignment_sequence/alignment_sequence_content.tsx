@@ -23,7 +23,7 @@ export default function AlignmentSequenceContent({
   return (
     <>
       <BlackdropComponent open={openBackdrop} percentage={percentage} />
-      <Box marginTop={3} boxShadow={4}>
+      <Box marginTop={3}>
         <ButtonDownloadPrimary
           path={path}
           name="blast.txt"
@@ -31,10 +31,10 @@ export default function AlignmentSequenceContent({
           setPercentage={setPercentage}
         />
       </Box>
-      <Box marginTop={3}>
+      <Box marginTop={3} boxShadow={4}>
         <DataTable title="Alignment Sequence Result" table={table} />
       </Box>
-      <Box marginTop={3}>
+      <Box marginTop={3} boxShadow={4}>
         <ProSeqViewer sequences={sequences} />
       </Box>
     </>

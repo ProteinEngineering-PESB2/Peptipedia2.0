@@ -10,6 +10,11 @@ export const InitialValuePostData: PostData = {
     biological_process: true,
     celular_component: true,
     molecular_function: true,
+    charge: true,
+    charge_density: true,
+    molecular_weight: true,
+    isoelectric_point: true,
+    length: true
   },
 };
 
