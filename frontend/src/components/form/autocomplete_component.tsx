@@ -18,7 +18,7 @@ export default function AutocompleteComponent({
   title,
 }: Props) {
   return (
-    <FormControl fullWidth>
+    <FormControl>
       <Autocomplete
         value={value}
         onChange={handleChangeValue}
@@ -27,10 +27,10 @@ export default function AutocompleteComponent({
         sx={{
           width: {
             xs: "100%",
-            sm: "30rem",
-            md: "30rem",
-            lg: "30rem",
-            xl: "30rem",
+            sm: "20rem",
+            md: "20rem",
+            lg: "20rem",
+            xl: "20rem",
           },
         }}
       />

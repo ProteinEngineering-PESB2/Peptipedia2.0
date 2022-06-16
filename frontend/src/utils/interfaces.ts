@@ -6,7 +6,7 @@ export interface PostData {
   checkboxs: ICheckboxs;
 }
 
-interface ICheckboxs {
+export interface ICheckboxs {
   molecular_function: boolean;
   biological_process: boolean;
   celular_component: boolean;
@@ -35,4 +35,20 @@ export interface IFormatDataPfam {
 export interface IDataPfam {
   id: string;
   data: IFormatDataPfam[];
+}
+
+interface IResultsPredictionGeneOntology {
+  id_go: string
+  probability: number
+  term: string
+}
+
+interface IPredictionGeneOntology {
+  id_seq: string
+  results: IResultsPredictionGeneOntology[]
+}
+
+export interface IDataGeneOntology {
+  type: string
+  prediction: IPredictionGeneOntology[]
 }
