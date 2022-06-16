@@ -14,7 +14,10 @@ export const InitialValuePostData: PostData = {
     charge_density: true,
     molecular_weight: true,
     isoelectric_point: true,
-    length: true
+    length: true,
+    one_hot_encoding: true,
+    physicochemical_properties: true,
+    digital_signal_processing: true,
   },
 };
 

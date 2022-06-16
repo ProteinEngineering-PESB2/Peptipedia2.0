@@ -33,6 +33,12 @@ export default function Checkboxs({ data, setData, selectedCheckboxs }: Props) {
     if (id === EnumCheckbox.MOLECULAR_WEIGHT)
       return data.checkboxs.molecular_weight;
     if (id === EnumCheckbox.LENGTH) return data.checkboxs.length;
+    if (id === EnumCheckbox.ONE_HOT_ENCODING)
+      return data.checkboxs.one_hot_encoding;
+    if (id === EnumCheckbox.PHYSICOCHEMICAL_PROPERTIES)
+      return data.checkboxs.physicochemical_properties;
+    if (id === EnumCheckbox.DIGITAL_SIGNAL_PROCESSING)
+      return data.checkboxs.digital_signal_processing;
   };
 
   return (

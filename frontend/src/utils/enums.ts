@@ -12,4 +12,7 @@ export enum EnumCheckbox {
   LENGTH = "length",
   ISOELECTRIC_POINT = "isoelectric_point",
   MOLECULAR_WEIGHT = "molecular_weight",
+  ONE_HOT_ENCODING = "one_hot_encoding",
+  PHYSICOCHEMICAL_PROPERTIES = "physicochemical_properties",
+  DIGITAL_SIGNAL_PROCESSING = "digital_signal_processing",
 }

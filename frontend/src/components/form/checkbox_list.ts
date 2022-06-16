@@ -38,4 +38,16 @@ export const checkbox_list: ICheckbox[] = [
     id: EnumCheckbox.CHARGE_DENSITY,
     title: "Charge Density",
   },
+  {
+    id: EnumCheckbox.ONE_HOT_ENCODING,
+    title: "One Hot Encoding",
+  },
+  {
+    id: EnumCheckbox.PHYSICOCHEMICAL_PROPERTIES,
+    title: "Physicochemical Properties",
+  },
+  {
+    id: EnumCheckbox.DIGITAL_SIGNAL_PROCESSING,
+    title: "Digital Signal Processing",
+  },
 ];

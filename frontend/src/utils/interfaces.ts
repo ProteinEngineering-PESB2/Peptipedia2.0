@@ -15,6 +15,9 @@ export interface ICheckboxs {
   isoelectric_point: boolean;
   molecular_weight: boolean;
   length: boolean;
+  one_hot_encoding: boolean;
+  physicochemical_properties: boolean;
+  digital_signal_processing: boolean;
 }
 
 export interface ITable {
@@ -64,10 +67,10 @@ export interface IDataFrequency {
 }
 
 export interface IDataPhysichochemical {
-  charge: number
-  charge_density: number
-  id: string
-  length: number
-  isoelectric_point: number
-  molecular_weight: number
+  charge: number;
+  charge_density: number;
+  id: string;
+  length: number;
+  isoelectric_point: number;
+  molecular_weight: number;
 }
