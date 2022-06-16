@@ -74,3 +74,8 @@ export interface IDataPhysichochemical {
   isoelectric_point: number;
   molecular_weight: number;
 }
+
+export interface IItemSelect {
+  value: string;
+  title: string;
+}

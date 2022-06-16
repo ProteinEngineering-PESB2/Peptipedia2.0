@@ -23,7 +23,7 @@ export default function GeneOntologyForm({ setResult }: Props) {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setOpenBackdrop(true);
-    setResult([])
+    setResult([]);
 
     const options = {
       molecular_function: data.checkboxs.molecular_function ? 1 : 0,
@@ -49,7 +49,7 @@ export default function GeneOntologyForm({ setResult }: Props) {
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
-      setResult([])
+      setResult([]);
       setOpenBackdrop(false);
     }
   };

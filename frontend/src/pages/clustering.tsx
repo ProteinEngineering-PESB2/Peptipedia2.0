@@ -1,4 +1,7 @@
+import ClusteringContent from "../components/clustering/clustering_content";
+import ClusteringForm from "../components/clustering/clustering_form";
 import Layout from "../components/layout";
+import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function Clustering() {
@@ -6,7 +9,13 @@ export default function Clustering() {
 
   return (
     <Layout>
-      <h1>Clustering</h1>
+      <>
+      <SectionTitle title="Clustering"/>
+
+      <ClusteringForm/>
+
+      <ClusteringContent/>
+      </>
     </Layout>
   );
 }
