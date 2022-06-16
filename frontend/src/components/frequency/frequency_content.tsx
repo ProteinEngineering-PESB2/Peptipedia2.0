@@ -1,4 +1,4 @@
-import { Box, FormControl, Paper } from "@mui/material";
+import { Box, FormControl, Grid, Paper } from "@mui/material";
 import { useChartFrequency } from "../../hooks/useChartFrequency";
 import { useSequenceAutocompleteFrequency } from "../../hooks/useSequencesAutocompleteFrequency";
 import { IDataFrequency } from "../../utils/interfaces";
@@ -25,12 +25,16 @@ export default function FrequencyContent({ result }: Props) {
             flexDirection: "column",
           }}
         >
-          <AutocompleteComponent
-            title="Sequence"
-            options={sequences}
-            value={selectedSequence}
-            handleChangeValue={handleChangeSelectedSequence}
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={7} lg={5} xl={4}>
+              <AutocompleteComponent
+                title="Sequence"
+                options={sequences}
+                value={selectedSequence}
+                handleChangeValue={handleChangeSelectedSequence}
+              />
+            </Grid>
+          </Grid>
 
           <FormControl sx={{ marginTop: 2 }}>
             <BarChart x={x} y={y} title="Frequency Analysis" />

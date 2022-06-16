@@ -1,4 +1,4 @@
-import { Box, FormControl, Paper } from "@mui/material";
+import { Box, FormControl, Grid, Paper } from "@mui/material";
 import { usePfamAutocomplete } from "../../hooks/usePfamAutocomplete";
 import { IDataPfam } from "../../utils/interfaces";
 import DataTable from "../datatable";
@@ -22,12 +22,16 @@ export default function PfamContent({ result }: Props) {
             flexDirection: "column",
           }}
         >
-          <AutocompleteComponent
-            options={sequences}
-            handleChangeValue={handleSequenceSelected}
-            title="Sequence"
-            value={selectedSequence}
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={9} md={7} lg={5} xl={4}>
+              <AutocompleteComponent
+                options={sequences}
+                handleChangeValue={handleSequenceSelected}
+                title="Sequence"
+                value={selectedSequence}
+              />
+            </Grid>
+          </Grid>
 
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <DataTable table={table} title="Pfam Result" />

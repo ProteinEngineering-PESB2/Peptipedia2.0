@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, FormControl } from "@mui/material";
+import { Box, Paper, FormControl, Grid } from "@mui/material";
 import { useDataTableGO } from "../../hooks/useDataTableGO";
 import { useSequenceAutocompleteGO } from "../../hooks/useSequenceAutocompleteGO";
 import { useTypeAutocompleteGO } from "../../hooks/useTypeAutocompleteGO";
@@ -33,21 +33,24 @@ export default function GeneOntologyContent({ result }: Props) {
             flexDirection: "column",
           }}
         >
-          <Stack direction="row" spacing={2}>
-            <AutocompleteComponent
-              title="Type"
-              options={types}
-              value={selectedType}
-              handleChangeValue={handleChangeSelectedType}
-            />
-            <AutocompleteComponent
-              title="Sequence"
-              options={sequences}
-              value={selectedSequence}
-              handleChangeValue={handleChangeSelectedSequence}
-            />
-          </Stack>
-
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={3} xl={2}>
+              <AutocompleteComponent
+                title="Type"
+                options={types}
+                value={selectedType}
+                handleChangeValue={handleChangeSelectedType}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={7} lg={5} xl={4}>
+              <AutocompleteComponent
+                title="Sequence"
+                options={sequences}
+                value={selectedSequence}
+                handleChangeValue={handleChangeSelectedSequence}
+              />
+            </Grid>
+          </Grid>
           <FormControl fullWidth sx={{ marginTop: 2 }}>
             <DataTable table={table} title="Gene Ontology Results" />
           </FormControl>

@@ -18,21 +18,12 @@ export default function AutocompleteComponent({
   title,
 }: Props) {
   return (
-    <FormControl>
+    <FormControl fullWidth>
       <Autocomplete
         value={value}
         onChange={handleChangeValue}
         options={options}
         renderInput={(params) => <TextField {...params} label={title} />}
-        sx={{
-          width: {
-            xs: "100%",
-            sm: "20rem",
-            md: "20rem",
-            lg: "20rem",
-            xl: "20rem",
-          },
-        }}
       />
     </FormControl>
   );
