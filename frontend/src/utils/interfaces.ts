@@ -52,3 +52,8 @@ export interface IDataGeneOntology {
   type: string
   prediction: IPredictionGeneOntology[]
 }
+
+export interface IDataFrequency {
+  id_seq: string
+  counts: Object
+}
