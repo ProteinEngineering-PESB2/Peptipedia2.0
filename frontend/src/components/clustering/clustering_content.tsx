@@ -54,6 +54,7 @@ export default function ClusteringContent({ result }: Props) {
           name="encoding.csv"
           setOpenBackdrop={setOpenBackdrop}
           setPercentage={setPercentage}
+          title="encoding"
         />
       </Box>
       <Box marginTop={3} boxShadow={4}>
@@ -66,26 +67,26 @@ export default function ClusteringContent({ result }: Props) {
               <Table>
                 <TableHead>
                   <TableRow>
-                    {result.performance.calinski && (
+                    {result.performance.calinski !== null && (
                       <TableCell>Calinski-Harabasz index</TableCell>
                     )}
-                    {result.performance.dalvies && (
+                    {result.performance.dalvies !== null && (
                       <TableCell>Davies-Bouldin Index</TableCell>
                     )}
-                    {result.performance.siluetas && (
+                    {result.performance.siluetas !== null && (
                       <TableCell>Davies-Bouldin Index</TableCell>
                     )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    {result.performance.calinski && (
+                    {result.performance.calinski !== null && (
                       <TableCell>{result.performance.calinski}</TableCell>
                     )}
-                    {result.performance.dalvies && (
+                    {result.performance.dalvies !== null && (
                       <TableCell>{result.performance.dalvies}</TableCell>
                     )}
-                    {result.performance.siluetas && (
+                    {result.performance.siluetas !== null && (
                       <TableCell>{result.performance.siluetas}</TableCell>
                     )}
                   </TableRow>
@@ -145,6 +146,7 @@ export default function ClusteringContent({ result }: Props) {
                   name="result.csv"
                   setOpenBackdrop={setOpenBackdrop}
                   setPercentage={setPercentage}
+                  title="pca"
                 />
               </Box>
             </>

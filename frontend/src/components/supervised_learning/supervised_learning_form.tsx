@@ -80,7 +80,6 @@ export default function SupervisedLearningForm({
       if (data.status === "error") {
         toast.error(data.description);
       } else {
-        console.log(data);
         const { job_path, result } = data;
 
         if (selectedTaskType === "classification")

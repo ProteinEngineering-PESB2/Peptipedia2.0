@@ -41,8 +41,6 @@ export default function EncodingForm() {
         url: "/api/encoding",
       });
 
-      console.log(data);
-
       if (data.status === "error") {
         toast.error(data.description);
       } else {

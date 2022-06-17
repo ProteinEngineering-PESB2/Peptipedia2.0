@@ -58,18 +58,10 @@ export default function SupervisedLearningContentClassification({
                 <TableHead>
                   <TableRow>
                     <TableCell>Set</TableCell>
-                    {result.result.performance.accuracy && (
-                      <TableCell>Accuracy</TableCell>
-                    )}
-                    {result.result.performance.f1_weighted && (
-                      <TableCell>F1 Weighted</TableCell>
-                    )}
-                    {result.result.performance.recall_weighted && (
-                      <TableCell>Recall Weighted</TableCell>
-                    )}
-                    {result.result.performance.precision_weighted && (
-                      <TableCell>Precision Weighted</TableCell>
-                    )}
+                    <TableCell>Accuracy</TableCell>
+                    <TableCell>F1 Weighted</TableCell>
+                    <TableCell>Recall Weighted</TableCell>
+                    <TableCell>Precision Weighted</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

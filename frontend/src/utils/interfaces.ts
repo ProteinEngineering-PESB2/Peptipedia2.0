@@ -109,7 +109,7 @@ export interface IDataClassificationSupervisedLearning {
       sensibility: number[];
       sensitivity: number[];
     };
-    analysis_testing: {
+    analysis_testing?: {
       categories: string[];
       sensibility: number[];
       sensitivity: number[];
@@ -174,13 +174,37 @@ export interface IDataRegressionSupervisedLearning {
         pvalue: number;
       };
     };
+    corr_testing?: {
+      kendall: {
+        kendalltau: number;
+        pvalue: number;
+      };
+      pearson: {
+        pearsonr: number;
+        pvalue: number;
+      };
+      spearman: {
+        spearmanr: number;
+        pvalue: number;
+      };
+    };
     error_values: number[];
+    error_values_testing?: number[];
     performance: {
       neg_median_absolute_error: number;
       neg_root_mean_squared_error: number;
       r2: number;
     };
+    performance_testing?: {
+      neg_median_absolute_error: number;
+      neg_root_mean_squared_error: number;
+      r2: number;
+    };
     scatter: {
+      x: number[];
+      y: number[];
+    };
+    scatter_testing: {
       x: number[];
       y: number[];
     };
