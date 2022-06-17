@@ -1,10 +1,10 @@
 import { SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
-import { algorithms } from "../utils/algorithms_clustering";
+import { algorithms_supervised_learning } from "../utils/algorithms_supervised_learning";
 
-export const useSelectAlgorithmClustering = () => {
+export const useSelectAlgorithmSupervisedLearning = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
-    algorithms[0].value
+    algorithms_supervised_learning[0].value
   );
 
   const handleChangeSelectedAlgorithm = (e: SelectChangeEvent): void => {
@@ -12,8 +12,8 @@ export const useSelectAlgorithmClustering = () => {
   };
 
   return {
-    algorithms,
     selectedAlgorithm,
     handleChangeSelectedAlgorithm,
+    algorithms_supervised_learning,
   };
 };

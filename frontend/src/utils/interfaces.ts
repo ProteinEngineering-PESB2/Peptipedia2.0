@@ -4,6 +4,8 @@ export interface PostData {
   fastaFile: null | File;
   fastaFileName: string;
   checkboxs: ICheckboxs;
+  csvFile: null | File;
+  csvFileName: string;
 }
 
 export interface ICheckboxs {

@@ -19,6 +19,8 @@ export const InitialValuePostData: PostData = {
     physicochemical_properties: true,
     digital_signal_processing: true,
   },
+  csvFile: null,
+  csvFileName: "",
 };
 
 export const InitialValueTable: ITable = {

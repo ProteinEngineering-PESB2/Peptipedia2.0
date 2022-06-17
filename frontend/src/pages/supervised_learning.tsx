@@ -1,4 +1,7 @@
+import FormContainer from "../components/form/form_container";
 import Layout from "../components/layout";
+import SectionTitle from "../components/section_title";
+import SupervisedLearningForm from "../components/supervised_learning/supervised_learning_form";
 import { useHandleSection } from "../hooks/useHandleSection";
 
 export default function SupervisedLearning() {
@@ -6,7 +9,11 @@ export default function SupervisedLearning() {
 
   return (
     <Layout>
-      <h1>SupervisedLearning</h1>
+      <>
+      <SectionTitle title="Supervised Learning"/>
+
+      <SupervisedLearningForm/>
+      </>
     </Layout>
   );
 }
