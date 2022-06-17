@@ -19,6 +19,7 @@ import { IDataClustering } from "../../utils/interfaces";
 import BackdropComponent from "../backdrop_component";
 import ButtonDownloadPrimary from "../button_download_primary";
 import PieChart from "../charts/pie_chart";
+import ScatterPlot from "../charts/scatter_plot";
 import DataTable from "../datatable";
 import SelectComponent from "../form/select_component";
 
@@ -35,12 +36,13 @@ export default function ClusteringContent({ result }: Props) {
   const { values, labels } = usePieChartClustering({ result });
   const { selectedKernel, handleChangeSelectedKernel, kernels } =
     useSelectLinearClustering();
-  const { handlePCA, pathPCA } = usePCAClustering({
-    is_normal: result.is_normal,
-    kernel: selectedKernel,
-    path: result.encoding_path,
-    setOpenBackdropPCA,
-  });
+  const { handlePCA, pathPCA, dataScatter, xmin, xmax, ymin, ymax } =
+    usePCAClustering({
+      is_normal: result.is_normal,
+      kernel: selectedKernel,
+      path: result.encoding_path,
+      setOpenBackdropPCA,
+    });
 
   return (
     <>
@@ -57,41 +59,42 @@ export default function ClusteringContent({ result }: Props) {
       <Box marginTop={3} boxShadow={4}>
         <DataTable table={table} title="Clustering Results" />
       </Box>
-      <Box
-        marginTop={3}
-        boxShadow={4}
-      >
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {result.performance.calinski && (
-                  <TableCell>Calinski-Harabasz index</TableCell>
-                )}
-                {result.performance.dalvies && (
-                  <TableCell>Davies-Bouldin Index</TableCell>
-                )}
-                {result.performance.siluetas && (
-                  <TableCell>Davies-Bouldin Index</TableCell>
-                )}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                {result.performance.calinski && (
-                  <TableCell>{result.performance.calinski}</TableCell>
-                )}
-                {result.performance.dalvies && (
-                  <TableCell>{result.performance.dalvies}</TableCell>
-                )}
-                {result.performance.siluetas && (
-                  <TableCell>{result.performance.siluetas}</TableCell>
-                )}
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xl={5} lg={6} md={8} sm={12} xs={12}>
+          <Box marginTop={3} boxShadow={4}>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    {result.performance.calinski && (
+                      <TableCell>Calinski-Harabasz index</TableCell>
+                    )}
+                    {result.performance.dalvies && (
+                      <TableCell>Davies-Bouldin Index</TableCell>
+                    )}
+                    {result.performance.siluetas && (
+                      <TableCell>Davies-Bouldin Index</TableCell>
+                    )}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    {result.performance.calinski && (
+                      <TableCell>{result.performance.calinski}</TableCell>
+                    )}
+                    {result.performance.dalvies && (
+                      <TableCell>{result.performance.dalvies}</TableCell>
+                    )}
+                    {result.performance.siluetas && (
+                      <TableCell>{result.performance.siluetas}</TableCell>
+                    )}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </Grid>
+      </Grid>
       <Box marginTop={3} boxShadow={4}>
         <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <PieChart labels={labels} values={values} />
@@ -100,7 +103,7 @@ export default function ClusteringContent({ result }: Props) {
       <Box marginTop={3} boxShadow={4}>
         <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <Grid container spacing={2}>
-            <Grid item xl={1.5} lg={2} md={2} sm={3} xs={6}>
+            <Grid item xl={1.5} lg={2} md={3} sm={6} xs={6}>
               <Button
                 variant="contained"
                 size="medium"
@@ -115,7 +118,7 @@ export default function ClusteringContent({ result }: Props) {
                 Apply PCA
               </Button>
             </Grid>
-            <Grid item xl={1.5} lg={2} md={2} sm={3} xs={6}>
+            <Grid item xl={1.5} lg={2} md={3} sm={6} xs={6}>
               <SelectComponent
                 title="Kernel"
                 items={kernels}
@@ -125,14 +128,26 @@ export default function ClusteringContent({ result }: Props) {
             </Grid>
           </Grid>
           {pathPCA !== "" && (
-            <Box marginTop={3}>
-              <ButtonDownloadPrimary
-                path={pathPCA}
-                name="result.csv"
-                setOpenBackdrop={setOpenBackdrop}
-                setPercentage={setPercentage}
-              />
-            </Box>
+            <>
+              <Box marginTop={3} sx={{ display: "flex", flexDirection: "column" }}>
+                <ScatterPlot
+                  title="Clustering with PCA"
+                  data={dataScatter}
+                  x_min={xmin}
+                  x_max={xmax}
+                  y_min={ymin}
+                  y_max={ymax}
+                />
+              </Box>
+              <Box marginTop={3}>
+                <ButtonDownloadPrimary
+                  path={pathPCA}
+                  name="result.csv"
+                  setOpenBackdrop={setOpenBackdrop}
+                  setPercentage={setPercentage}
+                />
+              </Box>
+            </>
           )}
         </Paper>
       </Box>
