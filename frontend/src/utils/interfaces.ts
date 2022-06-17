@@ -109,7 +109,17 @@ export interface IDataClassificationSupervisedLearning {
       sensibility: number[];
       sensitivity: number[];
     };
+    analysis_testing: {
+      categories: string[];
+      sensibility: number[];
+      sensitivity: number[];
+    };
     confusion_matrix: {
+      x: string[];
+      y: string[];
+      z: Array<number[]>;
+    };
+    confusion_matrix_testing?: {
       x: string[];
       y: string[];
       z: Array<number[]>;
@@ -133,6 +143,12 @@ export interface IDataClassificationSupervisedLearning {
       };
     };
     performance: {
+      accuracy: number;
+      f1_weighted: number;
+      precision_weighted: number;
+      recall_weighted: number;
+    };
+    performance_testing?: {
       accuracy: number;
       f1_weighted: number;
       precision_weighted: number;

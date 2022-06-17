@@ -1,15 +1,22 @@
-import { Button } from "@mui/material"
+import { Button } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { downloadFile } from "../services/downloadFile";
 
 interface Props {
-    path: string
-    name: string
-    setOpenBackdrop: Dispatch<SetStateAction<boolean>>
-    setPercentage: Dispatch<SetStateAction<number>>
+  path: string;
+  name: string;
+  setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
+  setPercentage: Dispatch<SetStateAction<number>>;
+  title: string
 }
 
-export default function ButtonDownloadPrimary({ path, name, setOpenBackdrop, setPercentage }: Props) {
+export default function ButtonDownloadPrimary({
+  path,
+  name,
+  setOpenBackdrop,
+  setPercentage,
+  title
+}: Props) {
   return (
     <Button
       variant="contained"
@@ -26,7 +33,7 @@ export default function ButtonDownloadPrimary({ path, name, setOpenBackdrop, set
         })
       }
     >
-      download blast
+      download {title}
     </Button>
   );
 }
