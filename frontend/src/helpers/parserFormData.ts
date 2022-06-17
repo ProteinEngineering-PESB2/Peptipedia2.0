@@ -28,7 +28,7 @@ export const parserFormDataWithOptions = (
 
     return postData;
   } else if (data.fileType === EnumFileType.FILE) {
-    const newOptions = new Blob([JSON.stringify(options)])
+    const newOptions = new Blob([JSON.stringify(options)]);
 
     const postData = new FormData();
     postData.append("file", data.fastaFile!);
@@ -36,4 +36,17 @@ export const parserFormDataWithOptions = (
 
     return postData;
   }
+};
+
+export const parserFormDataWithOptionsForCSV = (
+  data: PostData,
+  options: any
+): any => {
+  const newOptions = new Blob([JSON.stringify(options)]);
+
+  const postData = new FormData();
+  postData.append("file", data.csvFile!);
+  postData.append("options", newOptions);
+
+  return postData;
 };

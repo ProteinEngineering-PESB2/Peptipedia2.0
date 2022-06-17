@@ -100,3 +100,73 @@ export interface IDataClustering {
     value: number;
   }[];
 }
+
+export interface IDataClassificationSupervisedLearning {
+  job_path: string;
+  result: {
+    analysis: {
+      categories: string[];
+      sensibility: number[];
+      sensitivity: number[];
+    };
+    confusion_matrix: {
+      x: string[];
+      y: string[];
+      z: Array<number[]>;
+    };
+    learning_curve: {
+      error_testing: {
+        x: number[];
+        y: number[];
+      };
+      error_training: {
+        x: number[];
+        y: number[];
+      };
+      testing: {
+        x: number[];
+        y: number[];
+      };
+      training: {
+        x: number[];
+        y: number[];
+      };
+    };
+    performance: {
+      accuracy: number;
+      f1_weighted: number;
+      precision_weighted: number;
+      recall_weighted: number;
+    };
+  };
+}
+
+export interface IDataRegressionSupervisedLearning {
+  job_path: string;
+  result: {
+    corr: {
+      kendall: {
+        kendalltau: number;
+        pvalue: number;
+      };
+      pearson: {
+        pearsonr: number;
+        pvalue: number;
+      };
+      spearman: {
+        spearmanr: number;
+        pvalue: number;
+      };
+    };
+    error_values: number[];
+    performance: {
+      neg_median_absolute_error: number;
+      neg_root_mean_squared_error: number;
+      r2: number;
+    };
+    scatter: {
+      x: number[];
+      y: number[];
+    };
+  };
+}

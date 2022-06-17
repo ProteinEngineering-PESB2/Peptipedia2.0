@@ -1,10 +1,19 @@
 import { SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
-import { algorithms_supervised_learning } from "../utils/algorithms_supervised_learning";
+import {
+  algorithms_classification_supervised_learning,
+  algorithms_regression_supervised_learning,
+} from "../utils/algorithms_supervised_learning";
 
-export const useSelectAlgorithmSupervisedLearning = () => {
+interface Props {
+  taskType: string;
+}
+
+export const useSelectAlgorithmSupervisedLearning = ({ taskType }: Props) => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
-    algorithms_supervised_learning[0].value
+    taskType === "classification"
+      ? algorithms_classification_supervised_learning[0].value
+      : algorithms_regression_supervised_learning[0].value
   );
 
   const handleChangeSelectedAlgorithm = (e: SelectChangeEvent): void => {
@@ -14,6 +23,7 @@ export const useSelectAlgorithmSupervisedLearning = () => {
   return {
     selectedAlgorithm,
     handleChangeSelectedAlgorithm,
-    algorithms_supervised_learning,
+    algorithms_classification_supervised_learning,
+    algorithms_regression_supervised_learning,
   };
 };

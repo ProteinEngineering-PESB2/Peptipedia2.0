@@ -1,21 +1,42 @@
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
+import { parserFormDataWithOptionsForCSV } from "../../helpers/parserFormData";
 import { useSelectAlgorithmSupervisedLearning } from "../../hooks/useSelectAlgorithmSupervisedLearning";
 import { useSelectEncoding } from "../../hooks/useSelectEncoding";
 import { useSelectProperty } from "../../hooks/useSelectProperty";
 import { useTaskType } from "../../hooks/useTaskType";
 import { useTestSize } from "../../hooks/useTestSize";
 import { useTextFieldKValue } from "../../hooks/useTextFieldKValue";
+import { requestPost } from "../../services/api";
 import { InitialValuePostData } from "../../utils/initial_values";
-import { PostData } from "../../utils/interfaces";
+import {
+  IDataClassificationSupervisedLearning,
+  IDataRegressionSupervisedLearning,
+  PostData,
+} from "../../utils/interfaces";
+import BackdropComponent from "../backdrop_component";
 import ButtonRunCsv from "../form/button_run_csv";
 import FormContainer from "../form/form_container";
 import InputFileCSV from "../form/input_file_csv";
 import SelectComponent from "../form/select_component";
 import TextFieldComponent from "../form/text_field_component";
 
-export default function SupervisedLearningForm() {
+interface Props {
+  setResultClassification: Dispatch<
+    SetStateAction<IDataClassificationSupervisedLearning | null>
+  >;
+  setResultRegression: Dispatch<
+    SetStateAction<IDataRegressionSupervisedLearning | null>
+  >;
+}
+
+export default function SupervisedLearningForm({
+  setResultClassification,
+  setResultRegression,
+}: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   const { encodings, handleChangeSelectedEncoding, selectedEncoding } =
     useSelectEncoding();
@@ -28,16 +49,62 @@ export default function SupervisedLearningForm() {
     useTestSize();
   const {
     selectedAlgorithm,
-    algorithms_supervised_learning,
+    algorithms_classification_supervised_learning,
+    algorithms_regression_supervised_learning,
     handleChangeSelectedAlgorithm,
-  } = useSelectAlgorithmSupervisedLearning();
+  } = useSelectAlgorithmSupervisedLearning({ taskType: selectedTaskType });
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    setOpenBackdrop(true);
+    setResultClassification(null);
+    setResultRegression(null);
+
+    const options = {
+      encoding: selectedEncoding,
+      selected_property: selectedProperty,
+      task: selectedTaskType,
+      algorithm: selectedAlgorithm,
+      validation: parseInt(kvalue),
+      test_size: parseFloat(selectedTestSize),
+    };
+
+    const postData = parserFormDataWithOptionsForCSV(data, options);
+
+    try {
+      const { data } = await requestPost({
+        postData,
+        url: "/api/supervised_learning",
+      });
+
+      if (data.status === "error") {
+        toast.error(data.description);
+      } else {
+        console.log(data);
+        const { job_path, result } = data;
+
+        if (selectedTaskType === "classification")
+          setResultClassification({ job_path, result });
+        if (selectedTaskType === "regression")
+          setResultRegression({ job_path, result });
+      }
+
+      setOpenBackdrop(false);
+    } catch (error) {
+      toast.error("Server error");
+      setResultClassification(null);
+      setResultRegression(null);
+      setOpenBackdrop(false);
+    }
+  };
 
   return (
     <>
+      <BackdropComponent open={openBackdrop} />
       <Grid container spacing={2}>
         <Grid item xs={12} xl={4}>
           <FormContainer>
-            <form>
+            <form onSubmit={handleSubmit}>
               <InputFileCSV data={data} setData={setData} />
               <Grid container spacing={2} marginTop={1}>
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
@@ -48,14 +115,16 @@ export default function SupervisedLearningForm() {
                     value={selectedEncoding}
                   />
                 </Grid>
-                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
-                  <SelectComponent
-                    title="Property"
-                    items={properties}
-                    handleChange={handleChangeSelectedProperty}
-                    value={selectedProperty}
-                  />
-                </Grid>
+                {selectedEncoding !== "one_hot_encoding" && (
+                  <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                    <SelectComponent
+                      title="Property"
+                      items={properties}
+                      handleChange={handleChangeSelectedProperty}
+                      value={selectedProperty}
+                    />
+                  </Grid>
+                )}
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <TextFieldComponent
                     title="Number of folds cross validation"
@@ -74,7 +143,11 @@ export default function SupervisedLearningForm() {
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <SelectComponent
                     title="Algorithm Type"
-                    items={algorithms_supervised_learning}
+                    items={
+                      selectedTaskType === "classification"
+                        ? algorithms_classification_supervised_learning
+                        : algorithms_regression_supervised_learning
+                    }
                     handleChange={handleChangeSelectedAlgorithm}
                     value={selectedAlgorithm}
                   />

@@ -1,6 +1,6 @@
 import { IItemSelect } from "./interfaces";
 
-export const algorithms_supervised_learning: IItemSelect[] = [
+export const algorithms_classification_supervised_learning: IItemSelect[] = [
   {
     title: "Adaboost",
     value: "adaboost",
@@ -30,6 +30,37 @@ export const algorithms_supervised_learning: IItemSelect[] = [
     value: "nu_scv",
   },
   {
+    title: "Random Forest",
+    value: "random_forest",
+  },
+  {
+    title: "SVC",
+    value: "svc",
+  },
+  {
+    title: "KNN",
+    value: "knn",
+  },
+];
+
+export const algorithms_regression_supervised_learning: IItemSelect[] = [
+  {
+    title: "Adaboost",
+    value: "adaboost",
+  },
+  {
+    title: "Bagging",
+    value: "bagging",
+  },
+  {
+    title: "Decision Tree",
+    value: "descision_tree",
+  },
+  {
+    title: "Gradient",
+    value: "gradient_boosting",
+  },
+  {
     title: "Nu-SVR",
     value: "nu_svr",
   },
@@ -40,10 +71,6 @@ export const algorithms_supervised_learning: IItemSelect[] = [
   {
     title: "SVR",
     value: "svr",
-  },
-  {
-    title: "SVC",
-    value: "svc",
   },
   {
     title: "KNN",
