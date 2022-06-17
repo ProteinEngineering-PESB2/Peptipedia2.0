@@ -21,9 +21,10 @@ export default function PieChart({ values, labels }: Props) {
       layout={{
         autosize: true,
         margin: { t: 0, b: 0, l: 0, r: 0 },
+        height: 430,
       }}
       useResizeHandler
-      className="w-full"
+      className="w-full h-full"
     />
   );
 }
