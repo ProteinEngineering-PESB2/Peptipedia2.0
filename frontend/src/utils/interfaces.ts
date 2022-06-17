@@ -79,3 +79,22 @@ export interface IItemSelect {
   value: string;
   title: string;
 }
+
+export interface IDataClustering {
+  encoding_path: string;
+  is_normal: boolean;
+  performance: {
+    calinski: number;
+    dalvies: number;
+    siluetas: number;
+  };
+  data: {
+    id: string;
+    label: number;
+  }[];
+  resume: {
+    category: number;
+    percentage: number;
+    value: number;
+  }[];
+}

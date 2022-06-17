@@ -12,6 +12,7 @@ interface Props {
   value: string;
   handleChange: (e: SelectChangeEvent) => void;
   items: IItemSelect[];
+  disabled?: boolean
 }
 
 export default function SelectComponent({
@@ -19,6 +20,7 @@ export default function SelectComponent({
   value,
   handleChange,
   items,
+  disabled
 }: Props) {
   return (
     <FormControl fullWidth>
@@ -28,6 +30,7 @@ export default function SelectComponent({
         label={title}
         value={value}
         onChange={handleChange}
+        disabled={disabled}
       >
         {items.map((i) => (
           <MenuItem key={i.value} value={i.value}>
