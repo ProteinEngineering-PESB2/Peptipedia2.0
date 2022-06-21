@@ -37,9 +37,9 @@ export default function InputFileCSV({ data, setData }: Props) {
 
   return (
     <FormControl fullWidth>
-      <label htmlFor="contained-button-file" style={{ width: "100%" }}>
+      <label htmlFor="contained-button-file-csv" style={{ width: "100%" }}>
         <Input
-          id="contained-button-file"
+          id="contained-button-file-csv"
           type="file"
           onChange={handleChangeCsvInput}
         />

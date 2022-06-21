@@ -29,11 +29,17 @@ interface Props {
   setResultRegression: Dispatch<
     SetStateAction<IDataRegressionSupervisedLearning | null>
   >;
+  setTaskType: Dispatch<SetStateAction<string>>;
+  setEncoding: Dispatch<SetStateAction<string>>;
+  setProperty: Dispatch<SetStateAction<string>>;
 }
 
 export default function SupervisedLearningForm({
   setResultClassification,
   setResultRegression,
+  setTaskType,
+  setEncoding,
+  setProperty,
 }: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
@@ -82,12 +88,18 @@ export default function SupervisedLearningForm({
       } else {
         const { job_path, result } = data;
 
-        if (selectedTaskType === "classification")
+        if (selectedTaskType === "classification") {
+          setTaskType("classification");
           setResultClassification({ job_path, result });
-        if (selectedTaskType === "regression")
+        }
+        if (selectedTaskType === "regression") {
+          setTaskType("regression");
           setResultRegression({ job_path, result });
+        }
       }
 
+      setEncoding(selectedEncoding);
+      setProperty(selectedProperty);
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
