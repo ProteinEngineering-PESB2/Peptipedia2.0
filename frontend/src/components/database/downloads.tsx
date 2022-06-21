@@ -1,6 +1,6 @@
-import { Box, Stack, Button } from "@mui/material";
+import { Box, Stack, Button, Grid } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { downloadFile } from "../../services/downloadFile"
+import { downloadFile } from "../../services/downloadFile";
 
 interface Props {
   setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
@@ -10,56 +10,65 @@ interface Props {
 export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
   return (
     <Box marginTop={3}>
-      <Stack direction="row" spacing={2}>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            backgroundColor: "#2962ff",
-            ":hover": { backgroundColor: "#2962ff" },
-          }}
-          onClick={() =>
-            downloadFile({
-              url: "/files/downloads/dump_csv.zip",
-              name: "dump_csv.zip",
-              setOpenBackdrop: setOpenBackdrop,
-              setPercentage: setPercentage,
-            })
-          }
-        >
-          Download as CSV
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={() =>
-            downloadFile({
-              url: "/files/downloads/backup_sql.zip",
-              name: "dump_sql.zip",
-              setOpenBackdrop: setOpenBackdrop,
-              setPercentage: setPercentage,
-            })
-          }
-          color="warning"
-        >
-          Download as SQL
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={() =>
-            downloadFile({
-              url: "/files/downloads/dump_fasta.zip",
-              name: "dump_fasta.zip",
-              setOpenBackdrop: setOpenBackdrop,
-              setPercentage: setPercentage,
-            })
-          }
-          color="secondary"
-        >
-          Download as Fasta
-        </Button>
-      </Stack>
+      <Grid container spacing={2}>
+        <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              backgroundColor: "#2962ff",
+              ":hover": { backgroundColor: "#2962ff" },
+              width: "100%",
+            }}
+            onClick={() =>
+              downloadFile({
+                url: "/files/downloads/dump_csv.zip",
+                name: "dump_csv.zip",
+                setOpenBackdrop: setOpenBackdrop,
+                setPercentage: setPercentage,
+              })
+            }
+          >
+            Download as CSV
+          </Button>
+        </Grid>
+        <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() =>
+              downloadFile({
+                url: "/files/downloads/backup_sql.zip",
+                name: "dump_sql.zip",
+                setOpenBackdrop: setOpenBackdrop,
+                setPercentage: setPercentage,
+              })
+            }
+            color="warning"
+            sx={{ width: "100%" }}
+          >
+            Download as SQL
+          </Button>
+        </Grid>
+        <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() =>
+              downloadFile({
+                url: "/files/downloads/dump_fasta.zip",
+                name: "dump_fasta.zip",
+                setOpenBackdrop: setOpenBackdrop,
+                setPercentage: setPercentage,
+              })
+            }
+            sx={{ width: "100%" }}
+            color="secondary"
+          >
+            Download as Fasta
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

@@ -146,7 +146,7 @@ export default function SupervisedLearningContentClassification({
         )}
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+        <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
           <Box
             marginTop={3}
             boxShadow={4}

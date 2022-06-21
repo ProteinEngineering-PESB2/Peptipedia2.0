@@ -15,6 +15,7 @@ export default function DataTable({ table, title }: Props) {
       options={{
         selectableRowsHideCheckboxes: true,
         rowsPerPageOptions: [5, 10, 100],
+        responsive: "standard",
       }}
     />
   );
