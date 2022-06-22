@@ -18,7 +18,6 @@
     "plotly.js": "^2.12.1",
     "proseqviewer": "^1.1.9",
     "react": "^18.0.0",
-    "react-alice-carousel": "^2.6.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.0.0",
     "react-hot-toast": "^2.2.0",
