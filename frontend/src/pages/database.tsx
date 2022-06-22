@@ -15,7 +15,7 @@ import useLoadingComponent from "../hooks/useLoadingComponent";
 export default function Database() {
   const [percentage, setPercentage] = useState<number>(0);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
-  useLoadingComponent()
+  useLoadingComponent();
 
   useHandleSection({ section: "database" });
   const { tableStatistics } = useGetDBStatistics();
@@ -34,34 +34,42 @@ export default function Database() {
           setPercentage={setPercentage}
         />
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Box boxShadow={4} marginTop={3}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+            sx={{ marginTop: 3 }}
+          >
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                boxShadow: 4,
+              }}
+            >
+              <Plot
+                data={dataPie}
+                layout={{
+                  autosize: true,
+                  title: "General Activity Statistic",
+                  height: 400
                 }}
-              >
-                <Plot
-                  data={dataPie}
-                  layout={{
-                    autosize: true,
-                    height: 430,
-                    title: "General Activity Statistic",
-                  }}
-                  useResizeHandler
-                  className="w-full h-full"
-                />
-              </Paper>
-            </Box>
+                config={{ responsive: true }}
+                useResizeHandler={true}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </Paper>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>
             <Box boxShadow={4}>
               <DataTable table={tableStatistics} title="Database Statistics" />
             </Box>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>
             <Box boxShadow={4}>
               <DataTable table={tableActivitiies} title="All Activities" />
             </Box>
