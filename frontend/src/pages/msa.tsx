@@ -5,12 +5,14 @@ import MSAContent from "../components/msa/msa_content";
 import MSAForm from "../components/msa/msa_form";
 import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 import { IAlign } from "../utils/interfaces";
 
 export default function MultiAlignmentSequence() {
   const [result, setResult] = useState<IAlign[]>([]);
 
   useHandleSection({ section: "msa" });
+  useLoadingComponent();
 
   return (
     <Layout>

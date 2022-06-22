@@ -4,11 +4,13 @@ import ClusteringForm from "../components/clustering/clustering_form";
 import Layout from "../components/layout";
 import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 import { IDataClustering } from "../utils/interfaces";
 
 export default function Clustering() {
   const [result, setResult] = useState<IDataClustering | null>(null);
   useHandleSection({ section: "clustering" });
+  useLoadingComponent();
 
   return (
     <Layout>

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { IAlign, ITable } from "../utils/interfaces";
 import { InitialValueTable } from "../utils/initial_values";
 import SectionTitle from "../components/section_title";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 
 export default function AlignmentSequence() {
   const [path, setPath] = useState<string>("");
@@ -14,12 +15,13 @@ export default function AlignmentSequence() {
   const [sequences, setSequences] = useState<IAlign[]>([]);
 
   useHandleSection({ section: "alignment-sequence" });
+  useLoadingComponent();
 
   return (
     <Layout>
       <>
         <Box>
-          <SectionTitle title="Alignment Sequence"/>
+          <SectionTitle title="Alignment Sequence" />
         </Box>
 
         <AlignmentSequenceForm

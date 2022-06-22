@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { downloadFile } from "../services/downloadFile";
 import BackdropComponent from "../components/backdrop_component";
 import SectionTitle from "../components/section_title";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 
 export default function FastaConverter() {
   const [sequences, setSequences] = useState<string>("");
@@ -30,6 +31,7 @@ export default function FastaConverter() {
   const [percentage, setPercentage] = useState<number>(0);
 
   useHandleSection({ section: "fasta-converter" });
+  useLoadingComponent();
 
   const handleCopied = (): void => {
     setShowTooltip(true);

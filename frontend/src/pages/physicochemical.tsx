@@ -4,11 +4,13 @@ import PhysichochemicalContent from "../components/physicochemical/physicochemic
 import PhysichochemicalForm from "../components/physicochemical/physicochemical_form";
 import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 import { IDataPhysichochemical } from "../utils/interfaces";
 
 export default function Phisicochemical() {
   const [result, setResult] = useState<IDataPhysichochemical[]>([]);
   useHandleSection({ section: "physicochemical" });
+  useLoadingComponent();
 
   return (
     <Layout>

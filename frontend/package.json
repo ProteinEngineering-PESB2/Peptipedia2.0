@@ -23,7 +23,8 @@
     "react-dom": "^18.0.0",
     "react-hot-toast": "^2.2.0",
     "react-plotly.js": "^2.5.1",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "react-router-loading": "^1.0.0"
   },
   "devDependencies": {
     "@types/mui-datatables": "^3.7.9",

@@ -2,7 +2,7 @@ import { Box, Grid, Paper } from "@mui/material";
 import Layout from "../components/layout";
 import Plot from "react-plotly.js";
 import { useHandleSection } from "../hooks/useHandleSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Downloads from "../components/database/downloads";
 import BackdropComponent from "../components/backdrop_component";
 import SectionTitle from "../components/section_title";
@@ -10,10 +10,12 @@ import useGetDBStatistics from "../hooks/useGetDBStatistics";
 import DataTable from "../components/datatable";
 import useGetAllActivities from "../hooks/useGetAllActivities";
 import useGetGeneralStatistics from "../hooks/useGetGeneralStatistics";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 
 export default function Database() {
   const [percentage, setPercentage] = useState<number>(0);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
+  useLoadingComponent()
 
   useHandleSection({ section: "database" });
   const { tableStatistics } = useGetDBStatistics();
@@ -32,14 +34,7 @@ export default function Database() {
           setPercentage={setPercentage}
         />
         <Grid container spacing={2}>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-            lg={12}
-            xl={12}
-          >
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Box boxShadow={4} marginTop={3}>
               <Paper
                 sx={{

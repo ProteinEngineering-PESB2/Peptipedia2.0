@@ -7,9 +7,11 @@ import PeptipediaTeam from "../components/home/team";
 import Resource from "../components/home/resources";
 import { useHandleSection } from "../hooks/useHandleSection";
 import { Box } from "@mui/material";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 
 export default function Home() {
-  useHandleSection({section: "home"})
+  useHandleSection({ section: "home" });
+  useLoadingComponent();
 
   return (
     <Layout>
@@ -17,10 +19,20 @@ export default function Home() {
         <Header />
         <About />
         <Services />
-        <Box sx={{ display: { xs: "none", sm: "block", md: "block", lg: "block", xl: "block" } }}>
-        <PeptipediaTeam />
+        <Box
+          sx={{
+            display: {
+              xs: "none",
+              sm: "block",
+              md: "block",
+              lg: "block",
+              xl: "block",
+            },
+          }}
+        >
+          <PeptipediaTeam />
         </Box>
-        <Resource/>
+        <Resource />
       </>
     </Layout>
   );

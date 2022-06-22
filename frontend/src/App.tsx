@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -17,6 +17,7 @@ import Physicochemical from "./pages/physicochemical";
 import Encoding from "./pages/encoding";
 import Clustering from "./pages/clustering";
 import SupervisedLearning from "./pages/supervised_learning";
+import { Routes, Route } from "react-router-loading"
 
 export default function App() {
   const theme = createTheme();
@@ -27,26 +28,28 @@ export default function App() {
         <>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/database" element={<Database />} />
-              <Route path="/advanced-search" element={<AdvancedSearch />} />
-              <Route path="/fasta-converter" element={<FastaConverter />} />
+              <Route path="/" element={<Home />} loading/>
+              <Route path="/database" element={<Database />} loading/>
+              <Route path="/advanced-search" element={<AdvancedSearch />} loading/>
+              <Route path="/fasta-converter" element={<FastaConverter />} loading/>
               <Route
                 path="/alignment-sequence"
                 element={<AlignmentSequence />}
+                loading
               />
-              <Route path="/msa" element={<MultiAlignmentSequence />} />
-              <Route path="/pfam" element={<Pfam />} />
-              <Route path="/gene-ontology" element={<GeneOntology />} />
-              <Route path="/frequency" element={<Frequency />} />
-              <Route path="/physicochemical" element={<Physicochemical />} />
-              <Route path="/encoding" element={<Encoding />} />
-              <Route path="/clustering" element={<Clustering />} />
+              <Route path="/msa" element={<MultiAlignmentSequence />} loading/>
+              <Route path="/pfam" element={<Pfam />} loading/>
+              <Route path="/gene-ontology" element={<GeneOntology />} loading/>
+              <Route path="/frequency" element={<Frequency />} loading/>
+              <Route path="/physicochemical" element={<Physicochemical />} loading/>
+              <Route path="/encoding" element={<Encoding />} loading/>
+              <Route path="/clustering" element={<Clustering />} loading/>
               <Route
                 path="/supervised-learning"
                 element={<SupervisedLearning />}
+                loading
               />
-              <Route path="*" element={<Home />} />
+              <Route path="*" element={<Home />} loading/>
             </Routes>
           </BrowserRouter>
           <Toaster />

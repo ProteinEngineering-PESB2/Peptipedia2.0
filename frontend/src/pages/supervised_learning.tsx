@@ -15,6 +15,7 @@ import SupervisedLearningContentRegression from "../components/supervised_learni
 import SupervisedLearningForm from "../components/supervised_learning/supervised_learning_form";
 import { parserFormDataWithOptions } from "../helpers/parserFormData";
 import { useHandleSection } from "../hooks/useHandleSection";
+import useLoadingComponent from "../hooks/useLoadingComponent";
 import { requestPost } from "../services/api";
 import {
   InitialValuePostData,
@@ -42,6 +43,7 @@ export default function SupervisedLearning() {
     useState<IDataRegressionSupervisedLearning | null>(null);
 
   useHandleSection({ section: "supervised-learning" });
+  useLoadingComponent();
 
   const handleSubmitNewModel = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
