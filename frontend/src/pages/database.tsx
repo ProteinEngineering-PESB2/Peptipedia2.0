@@ -56,7 +56,7 @@ export default function Database() {
                 layout={{
                   autosize: true,
                   title: "General Activity Statistic",
-                  height: 400,
+                  height: 500,
                 }}
                 config={{ responsive: true }}
                 useResizeHandler={true}

@@ -113,7 +113,7 @@ export default function SupervisedLearningForm({
     <>
       <BackdropComponent open={openBackdrop} />
       <Grid container spacing={2}>
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={12} md={9} lg={6} xl={4}>
           <FormContainer>
             <form onSubmit={handleSubmit}>
               <InputFileCSV data={data} setData={setData} />
