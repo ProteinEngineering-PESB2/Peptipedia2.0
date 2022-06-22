@@ -102,7 +102,7 @@ export default function SupervisedLearning() {
           <SupervisedLearningContentRegression result={resultRegression} />
         )}
 
-        {taskType !== "" && (
+        {/* {taskType !== "" && (
           <Box marginTop={3}>
             <Typography
               variant="h5"
@@ -140,7 +140,7 @@ export default function SupervisedLearning() {
               </Grid>
             )}
           </Box>
-        )}
+        )} */}
       </>
     </Layout>
   );

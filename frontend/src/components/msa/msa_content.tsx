@@ -9,7 +9,19 @@ interface Props {
 export default function MSAContent({ result }: Props) {
   return (
     <>
-      <Box marginTop={3} boxShadow={4}>
+      <Box
+        marginTop={3}
+        boxShadow={4}
+        sx={{
+          maxWidth: {
+            xs: "20rem",
+            sm: "100%",
+            md: "100%",
+            lg: "100%",
+            xl: "100%",
+          },
+        }}
+      >
         <ProSeqViewer sequences={result} />
       </Box>
     </>

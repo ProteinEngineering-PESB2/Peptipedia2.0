@@ -23,7 +23,7 @@ export default function PfamContent({ result }: Props) {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={9} md={7} lg={5} xl={4}>
+            <Grid item xs={12} sm={12} md={7} lg={5} xl={4}>
               <AutocompleteComponent
                 options={sequences}
                 handleChangeValue={handleSequenceSelected}

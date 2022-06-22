@@ -29,12 +29,25 @@ export default function AlignmentSequenceContent({
           name="blast.txt"
           setOpenBackdrop={setOpenBackdrop}
           setPercentage={setPercentage}
+          title="Blast"
         />
       </Box>
       <Box marginTop={3} boxShadow={4}>
         <DataTable title="Alignment Sequence Result" table={table} />
       </Box>
-      <Box marginTop={3} boxShadow={4}>
+      <Box
+        marginTop={3}
+        boxShadow={4}
+        sx={{
+          maxWidth: {
+            xs: "20rem",
+            sm: "100%",
+            md: "100%",
+            lg: "100%",
+            xl: "100%",
+          },
+        }}
+      >
         <ProSeqViewer sequences={sequences} />
       </Box>
     </>

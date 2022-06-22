@@ -22,6 +22,9 @@ export default function PieChart({ values, labels }: Props) {
         autosize: true,
         margin: { t: 0, b: 0, l: 0, r: 0 },
         height: 430,
+        font: {
+          size: 15
+        }
       }}
       useResizeHandler
       className="w-full h-full"

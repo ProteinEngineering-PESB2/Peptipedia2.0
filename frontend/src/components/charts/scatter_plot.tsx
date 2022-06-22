@@ -37,6 +37,9 @@ export default function ScatterPlot({
           t: 100,
           pad: 4,
         },
+        font: {
+          size: 15
+        }
       }}
       useResizeHandler
       className="w-full h-full"

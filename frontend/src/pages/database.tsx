@@ -56,7 +56,7 @@ export default function Database() {
                 layout={{
                   autosize: true,
                   title: "General Activity Statistic",
-                  height: 400
+                  height: 400,
                 }}
                 config={{ responsive: true }}
                 useResizeHandler={true}
@@ -96,12 +96,13 @@ export default function Database() {
                     data={dataBoxplot}
                     layout={{
                       autosize: true,
-                      height: 430,
+                      height: 400,
                       title: `Activity ${nameActivity} statistics`,
                       grid: { rows: 1, columns: 5, pattern: "independent" },
                     }}
-                    useResizeHandler
-                    className="w-full h-full"
+                    config={{ responsive: true }}
+                    useResizeHandler={true}
+                    style={{ width: "100%", height: "100%" }}
                   />
                 </Paper>
               </Box>

@@ -51,54 +51,50 @@ export default function SupervisedLearningContentClassification({
         />
       </Box>
       <Grid container spacing={2}>
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-          <Box boxShadow={4} marginTop={3}>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
+        <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
+          <TableContainer component={Paper} sx={{ boxShadow: 4, marginTop: 3 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Set</TableCell>
+                  <TableCell>Accuracy</TableCell>
+                  <TableCell>F1 Weighted</TableCell>
+                  <TableCell>Recall Weighted</TableCell>
+                  <TableCell>Precision Weighted</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Training</TableCell>
+                  <TableCell>{result.result.performance.accuracy}</TableCell>
+                  <TableCell>{result.result.performance.f1_weighted}</TableCell>
+                  <TableCell>
+                    {result.result.performance.recall_weighted}
+                  </TableCell>
+                  <TableCell>
+                    {result.result.performance.precision_weighted}
+                  </TableCell>
+                </TableRow>
+                {result.result.performance_testing && (
                   <TableRow>
-                    <TableCell>Set</TableCell>
-                    <TableCell>Accuracy</TableCell>
-                    <TableCell>F1 Weighted</TableCell>
-                    <TableCell>Recall Weighted</TableCell>
-                    <TableCell>Precision Weighted</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>Training</TableCell>
-                    <TableCell>{result.result.performance.accuracy}</TableCell>
+                    <TableCell>Testing</TableCell>
                     <TableCell>
-                      {result.result.performance.f1_weighted}
+                      {result.result.performance_testing.accuracy}
                     </TableCell>
                     <TableCell>
-                      {result.result.performance.recall_weighted}
+                      {result.result.performance_testing.f1_weighted}
                     </TableCell>
                     <TableCell>
-                      {result.result.performance.precision_weighted}
+                      {result.result.performance_testing.recall_weighted}
+                    </TableCell>
+                    <TableCell>
+                      {result.result.performance_testing.precision_weighted}
                     </TableCell>
                   </TableRow>
-                  {result.result.performance_testing && (
-                    <TableRow>
-                      <TableCell>Testing</TableCell>
-                      <TableCell>
-                        {result.result.performance_testing.accuracy}
-                      </TableCell>
-                      <TableCell>
-                        {result.result.performance_testing.f1_weighted}
-                      </TableCell>
-                      <TableCell>
-                        {result.result.performance_testing.recall_weighted}
-                      </TableCell>
-                      <TableCell>
-                        {result.result.performance_testing.precision_weighted}
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
@@ -112,18 +108,22 @@ export default function SupervisedLearningContentClassification({
               data={dataHeatmap}
               layout={{
                 autosize: true,
-                height: 430,
+                height: 400,
                 title: "Confusion Matrix",
                 xaxis: { title: "Real Values" },
                 yaxis: { title: "Predicted Values" },
+                font: {
+                  size: 15,
+                },
               }}
-              useResizeHandler
-              className="w-full h-full"
+              config={{ responsive: true }}
+              useResizeHandler={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </Box>
         </Grid>
         {result.result.confusion_matrix_testing && (
-          <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+          <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
             <Box
               marginTop={3}
               boxShadow={4}
@@ -133,13 +133,17 @@ export default function SupervisedLearningContentClassification({
                 data={dataHeatmapTesting}
                 layout={{
                   autosize: true,
-                  height: 430,
+                  height: 400,
                   title: "Confusion Matrix Testing",
                   xaxis: { title: "Real Values" },
                   yaxis: { title: "Predicted Values" },
+                  font: {
+                    size: 15,
+                  },
                 }}
-                useResizeHandler
-                className="w-full h-full"
+                config={{ responsive: true }}
+                useResizeHandler={true}
+                style={{ width: "100%", height: "100%" }}
               />
             </Box>
           </Grid>
@@ -156,7 +160,7 @@ export default function SupervisedLearningContentClassification({
               data={dataErrorBars}
               layout={{
                 autosize: true,
-                height: 430,
+                height: 400,
                 title: "Learning Curve",
                 xaxis: {
                   title: "Training Examples",
@@ -167,16 +171,20 @@ export default function SupervisedLearningContentClassification({
                     ],
                   ],
                 },
+                font: {
+                  size: 15,
+                },
                 yaxis: { title: "Score" },
               }}
-              useResizeHandler
-              className="w-full h-full"
+              config={{ responsive: true }}
+              useResizeHandler={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </Box>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+        <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
           <Box
             marginTop={3}
             boxShadow={4}
@@ -189,14 +197,18 @@ export default function SupervisedLearningContentClassification({
                 height: 430,
                 barmode: "group",
                 title: "Sensibility Analysis",
+                font: {
+                  size: 15,
+                },
               }}
-              useResizeHandler
-              className="w-full h-full"
+              config={{ responsive: true }}
+              useResizeHandler={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </Box>
         </Grid>
         {result.result.analysis_testing && (
-          <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+          <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
             <Box
               marginTop={3}
               boxShadow={4}
@@ -209,9 +221,13 @@ export default function SupervisedLearningContentClassification({
                   height: 430,
                   barmode: "group",
                   title: "Sensibility Analysis Testing",
+                  font: {
+                    size: 15,
+                  },
                 }}
-                useResizeHandler
-                className="w-full h-full"
+                config={{ responsive: true }}
+                useResizeHandler={true}
+                style={{ width: "100%", height: "100%" }}
               />
             </Box>
           </Grid>

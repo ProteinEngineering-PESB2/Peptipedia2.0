@@ -61,39 +61,37 @@ export default function ClusteringContent({ result }: Props) {
         <DataTable table={table} title="Clustering Results" />
       </Box>
       <Grid container spacing={2}>
-        <Grid item xl={5} lg={6} md={8} sm={12} xs={12}>
-          <Box marginTop={3} boxShadow={4}>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    {result.performance.calinski !== null && (
-                      <TableCell>Calinski-Harabasz index</TableCell>
-                    )}
-                    {result.performance.dalvies !== null && (
-                      <TableCell>Davies-Bouldin Index</TableCell>
-                    )}
-                    {result.performance.siluetas !== null && (
-                      <TableCell>Davies-Bouldin Index</TableCell>
-                    )}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    {result.performance.calinski !== null && (
-                      <TableCell>{result.performance.calinski}</TableCell>
-                    )}
-                    {result.performance.dalvies !== null && (
-                      <TableCell>{result.performance.dalvies}</TableCell>
-                    )}
-                    {result.performance.siluetas !== null && (
-                      <TableCell>{result.performance.siluetas}</TableCell>
-                    )}
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+        <Grid item xl={5} lg={8} md={12} sm={12} xs={12}>
+          <TableContainer component={Paper} sx={{ boxShadow: 4, marginTop: 3 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {result.performance.calinski !== null && (
+                    <TableCell>Calinski-Harabasz index</TableCell>
+                  )}
+                  {result.performance.dalvies !== null && (
+                    <TableCell>Davies-Bouldin Index</TableCell>
+                  )}
+                  {result.performance.siluetas !== null && (
+                    <TableCell>Davies-Bouldin Index</TableCell>
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  {result.performance.calinski !== null && (
+                    <TableCell>{result.performance.calinski}</TableCell>
+                  )}
+                  {result.performance.dalvies !== null && (
+                    <TableCell>{result.performance.dalvies}</TableCell>
+                  )}
+                  {result.performance.siluetas !== null && (
+                    <TableCell>{result.performance.siluetas}</TableCell>
+                  )}
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Grid>
       </Grid>
       <Box marginTop={3} boxShadow={4}>
@@ -130,7 +128,10 @@ export default function ClusteringContent({ result }: Props) {
           </Grid>
           {pathPCA !== "" && (
             <>
-              <Box marginTop={3} sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                marginTop={3}
+                sx={{ display: "flex", flexDirection: "column" }}
+              >
                 <ScatterPlot
                   title="Clustering with PCA"
                   data={dataScatter}

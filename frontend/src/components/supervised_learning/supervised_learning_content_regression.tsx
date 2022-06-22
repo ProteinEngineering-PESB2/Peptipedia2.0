@@ -183,9 +183,13 @@ export default function SupervisedLearningContentRegression({ result }: Props) {
                 xaxis: { title: "Real Values" },
                 yaxis: { title: "Predicted Values" },
                 title: "Scatter Plot",
+                font: {
+                  size: 15,
+                },
               }}
-              useResizeHandler
-              className="w-full h-full"
+              config={{ responsive: true }}
+              useResizeHandler={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </Box>
         </Grid>
@@ -203,9 +207,13 @@ export default function SupervisedLearningContentRegression({ result }: Props) {
                 autosize: true,
                 height: 430,
                 title: "Error Plot",
+                font: {
+                  size: 15,
+                },
               }}
-              useResizeHandler
-              className="w-full h-full"
+              config={{ responsive: true }}
+              useResizeHandler={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </Box>
         </Grid>

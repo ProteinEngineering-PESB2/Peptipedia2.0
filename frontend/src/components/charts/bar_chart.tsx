@@ -23,6 +23,9 @@ export default function BarChart({ x, y, title }: Props) {
         autosize: true,
         height: 430,
         title: title,
+        font: {
+          size: 15
+        }
       }}
       useResizeHandler
       className="w-full h-full"

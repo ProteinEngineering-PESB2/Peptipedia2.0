@@ -69,7 +69,7 @@ export default function FastaConverter() {
         </Box>
         <Box marginTop={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
               <TextField
                 fullWidth
                 label="Enter sequences"
@@ -79,7 +79,7 @@ export default function FastaConverter() {
                 onChange={(e) => setSequences(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
               <FilledInput
                 fullWidth
                 disabled
