@@ -11,7 +11,7 @@ export default function ServiceCard({ service }: Props) {
   const navigate = useNavigate();
 
   return (
-    <Grid item xl={4} lg={4} md={3} sm={6} xs={12}>
+    <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
       <Card
         variant="elevation"
         className="ho"

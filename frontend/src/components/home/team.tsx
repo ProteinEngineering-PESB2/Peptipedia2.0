@@ -21,7 +21,7 @@ export default function PeptipediaTeam() {
       </Box>
       <Box marginTop={5}>
         <Grid container spacing={2}>
-          <Grid item xl={4}>
+          <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
               name="Claudio Guevara"
               rol="Frontend Developer"
@@ -30,7 +30,7 @@ export default function PeptipediaTeam() {
               linkedin="https://www.linkedin.com/in/claudio-guevara-v%C3%A1squez-0b7b3123a/"
             />
           </Grid>
-          <Grid item xl={4}>
+          <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
               name="Francisca Rodríguez"
               rol="Researcher"
@@ -39,7 +39,7 @@ export default function PeptipediaTeam() {
               linkedin="https://www.linkedin.com/in/fran-ro-ca/"
             />
           </Grid>
-          <Grid item xl={4}>
+          <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
               name="Gabriel Cabas"
               rol="Backend Developer & Data engineer"
@@ -48,7 +48,7 @@ export default function PeptipediaTeam() {
               linkedin="https://www.linkedin.com/in/gabriel-cabas-1834601b4/"
             />
           </Grid>
-          <Grid item xl={4}>
+          <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
               name="David Medina"
               rol="Researcher"
@@ -57,7 +57,7 @@ export default function PeptipediaTeam() {
               linkedin="https://www.linkedin.com/in/david-medina-924308224/"
             />
           </Grid>
-          <Grid item xl={4}>
+          <Grid item xl={4} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
               name="Benjamin Sanzana"
               rol="Researcher"

@@ -28,7 +28,7 @@ export default function CardProfile({
       <Card sx={{ width: "100%", boxShadow: 4 }} variant="elevation">
         <CardMedia
           component="img"
-          height="450"
+          sx={{ height: { xl: "28rem", lg: "23rem", md: "24rem", sm: "28rem", xs: "18rem" } }}
           image={image}
           alt="profile"
           className="image-center"

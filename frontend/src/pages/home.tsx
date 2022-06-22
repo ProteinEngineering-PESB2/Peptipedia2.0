@@ -21,19 +21,7 @@ export default function Home() {
           <Header />
           <About />
           <Services />
-          <Box
-            sx={{
-              display: {
-                xs: "none",
-                sm: "block",
-                md: "block",
-                lg: "block",
-                xl: "block",
-              },
-            }}
-          >
-            <PeptipediaTeam />
-          </Box>
+          <PeptipediaTeam />
           <Resource />
         </>
       </Layout>
