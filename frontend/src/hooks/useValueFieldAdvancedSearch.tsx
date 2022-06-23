@@ -19,12 +19,6 @@ export default function useValueFieldAdvancedSearch() {
   const [valueGeneOntology, setValueGeneOnotology] = useState({});
   const [valueSequence, setValueSequence] = useState("");
 
-  const [taxonomies, setTaxonomies] = useState([]);
-  const [databases, setDatabases] = useState([]);
-  const [pfams, setPfams] = useState([]);
-  const [geneOntologies, setGeneOntologies] = useState([]);
-  const [activities, setActivities] = useState([]);
-
   // Handle Change Fields
   const handleChangeValueLength = (e: Event, newValue: number | number[]) => {
     setValueLength(newValue);
@@ -66,5 +60,13 @@ export default function useValueFieldAdvancedSearch() {
     handleChangeValueCharge,
     valueChargeDensity,
     handleChangeValueChargeDensity,
+    valueDatabase,
+    setValueDatabase,
+    valueActivity,
+    setValueActivity,
+    valueTaxonomy,
+    setValueTaxonomy,
+    valuePfam,
+    setValuePfam
   };
 }

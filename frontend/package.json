@@ -24,6 +24,7 @@
     "react-plotly.js": "^2.5.1",
     "react-router-dom": "^6.3.0",
     "react-router-loading": "^1.0.0",
+    "react-select": "^5.3.2",
     "react-spinners": "^0.12.0"
   },
   "devDependencies": {

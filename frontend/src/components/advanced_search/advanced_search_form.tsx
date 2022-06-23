@@ -15,11 +15,19 @@ import MolecularWeightField from "./fields/molecular_weight";
 import IsoelectricPointField from "./fields/isoelectric_point";
 import ChargeField from "./fields/charge";
 import ChargeDensityField from "./fields/charge_density";
+import DatabaseField from "./fields/database";
+import ActivityField from "./fields/activity";
+import TaxonomyField from "./fields/taxonomy";
+import PfamField from "./fields/pfam";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import useValueFieldAdvancedSearch from "../../hooks/useValueFieldAdvancedSearch";
 import useValueLogicOperator from "../../hooks/useValueLogicOperator";
+import useGetDatabases from "../../hooks/useGetDatabases";
+import useGetActivities from "../../hooks/useGetActivities";
+import useGetTaxonomies from "../../hooks/useGetTaxonomies";
+import useGetPfam from "../../hooks/useGetPfams";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -42,6 +50,14 @@ export default function AdvancedSearchForm() {
     handleChangeValueChargeDensity,
     handleChangeValueIsoelectricPoint,
     handleChangeValueMolecularWeight,
+    valueDatabase,
+    setValueDatabase,
+    setValueActivity,
+    valueActivity,
+    setValueTaxonomy,
+    valueTaxonomy,
+    setValuePfam,
+    valuePfam,
   } = useValueFieldAdvancedSearch();
 
   const {
@@ -55,7 +71,20 @@ export default function AdvancedSearchForm() {
     logicOperatorValueForIsoelectricPoint,
     logicOperatorValueForLength,
     logicOperatorValueForMolecularWeight,
+    logicOperatorValueForDatabase,
+    setLogicOperatorValueForDatabase,
+    logicOperatorValueForActivity,
+    setLogicOperatorValueForActivity,
+    logicOperatorValueForTaxonomy,
+    setLogicOperatorValueForTaxonomy,
+    handleChangeLogicOperatorPfam,
+    logicOperatorValueForPfam,
   } = useValueLogicOperator();
+
+  const { databases } = useGetDatabases();
+  const { activities } = useGetActivities();
+  const { taxonomies } = useGetTaxonomies();
+  const { pfams } = useGetPfam();
 
   return (
     <>
@@ -176,7 +205,7 @@ export default function AdvancedSearchForm() {
                         params={params}
                       />
                     )}
-                    {/*
+
                     {option === "Database" && (
                       <DatabaseField
                         valueDatabase={valueDatabase}
@@ -231,6 +260,7 @@ export default function AdvancedSearchForm() {
                         index={index}
                       />
                     )}
+                    {/*
                     {option === "Gene Ontology" && (
                       <GeneOntologyField
                         valueGeneOntology={valueGeneOntology}

@@ -63,6 +63,10 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForChargeDensity(e.target.value);
   };
 
+  const handleChangeLogicOperatorPfam = (e: SelectChangeEvent<string>) => {
+    setLogicOperatorValueForPfam(e.target.value);
+  };
+
   return {
     logicOperatorValueForLength,
     logicOperatorValueForMolecularWeight,
@@ -74,5 +78,13 @@ export default function useValueLogicOperator() {
     handleChangeLogicOperatorIsoelectricPoint,
     handleChangeLogicOperatorCharge,
     handleChangeLogicOperatorChargeDensity,
+    logicOperatorValueForDatabase,
+    setLogicOperatorValueForDatabase,
+    logicOperatorValueForActivity,
+    setLogicOperatorValueForActivity,
+    logicOperatorValueForTaxonomy,
+    setLogicOperatorValueForTaxonomy,
+    logicOperatorValueForPfam,
+    handleChangeLogicOperatorPfam,
   };
 }
