@@ -1,5 +1,11 @@
-import { Grid, Autocomplete, Checkbox, TextField } from "@mui/material";
-import { SyntheticEvent, useState } from "react";
+import { Grid, Autocomplete, Checkbox, TextField, Button } from "@mui/material";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useState,
+} from "react";
 import FormContainer from "../form/form_container";
 
 // Fields
@@ -25,16 +31,35 @@ import useGetActivities from "../../hooks/useGetActivities";
 import useGetTaxonomies from "../../hooks/useGetTaxonomies";
 import useGetPfam from "../../hooks/useGetPfams";
 import useGetGeneOntologoies from "../../hooks/useGetGeneOntologoies";
+import useInitialParamsAdvancedSearch from "../../hooks/useInitialParamsAdvancedSearch";
+import axios from "axios";
+import toast from "react-hot-toast";
+import BackdropComponent from "../backdrop_component";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function AdvancedSearchForm() {
+interface Props {
+  queries: string[];
+  setQueries: Dispatch<SetStateAction<string[]>>;
+  queriesWithID: string[];
+  setQueriesWithID: Dispatch<SetStateAction<string[]>>;
+  counts: number[];
+  setCounts: Dispatch<SetStateAction<number[]>>;
+}
+
+export default function AdvancedSearchForm({
+  queries,
+  setQueries,
+  queriesWithID,
+  setQueriesWithID,
+  counts,
+  setCounts,
+}: Props) {
   const [queryText, setQueryText] = useState<string>("");
   const [optionsValue, setOptionsValue] = useState<any[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
-
-  const [params, setParams] = useState({});
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   const {
     valueLength,
@@ -59,6 +84,11 @@ export default function AdvancedSearchForm() {
     valueGeneOntology,
     handleChangeValueSequence,
     valueSequence,
+    setValueCharge,
+    setValueChargeDensity,
+    setValueIsoelectricPoint,
+    setValueLength,
+    setValueMolecularWeight,
   } = useValueFieldAdvancedSearch();
 
   const {
@@ -92,8 +122,289 @@ export default function AdvancedSearchForm() {
   const { pfams } = useGetPfam();
   const { geneOntologies } = useGetGeneOntologoies();
 
+  const { params } = useInitialParamsAdvancedSearch({
+    setValueCharge,
+    setValueChargeDensity,
+    setValueIsoelectricPoint,
+    setValueLength,
+    setValueMolecularWeight,
+  });
+
+  const handleChangeQueryText = (e: ChangeEvent<HTMLInputElement>) => {
+    setQueryText(e.target.value);
+  };
+
+  const rangeInput = (
+    field: string,
+    range: any,
+    index: any,
+    selectedOperators: any[]
+  ) => {
+    if (selectedOperators.length === 0) {
+      return `(${range[0]} <= ${field} <= ${range[1]})`;
+    } else {
+      if (index === 0) {
+        return `(${range[0]} <= ${field} <= ${range[1]})`;
+      } else {
+        return ` ${selectedOperators[index - 1]} (${range[0]} <= ${field} <= ${
+          range[1]
+        })`;
+      }
+    }
+  };
+
+  const selectInput = (
+    field: string,
+    value: string,
+    index: number,
+    selectedOperators: any[]
+  ) => {
+    if (selectedOperators.length === 0) {
+      return `(${field} = ${value})`;
+    } else {
+      if (index === 0) {
+        return `(${field} = ${value})`;
+      } else {
+        return ` ${selectedOperators[index - 1]} (${field} = ${value})`;
+      }
+    }
+  };
+
+  const onSearch = async () => {
+    setOpenBackdrop(true);
+    let query = "";
+    let queryWithId = "";
+
+    if (queryText.length > 0) {
+      for (let i = 0; i < queryText.length; i++) {
+        if (queryText[i] === "#") {
+          let position = "";
+          for (let j = i + 1; j < queryText.length; j++) {
+            if (parseInt(queryText[j]) > 0) {
+              position += queryText[j];
+            } else {
+              break;
+            }
+          }
+          if (position.length > 0) {
+            if (parseInt(position) <= queries.length) {
+              query += queries[parseInt(position) - 1];
+              queryWithId += queriesWithID[parseInt(position) - 1];
+            } else {
+              query = queryText;
+              queryWithId += queryText;
+              break;
+            }
+          }
+        } else {
+          if (parseInt(queryText[i]) >= 0) {
+            continue;
+          } else {
+            query += queryText[i];
+            queryWithId += queryText[i];
+          }
+        }
+      }
+    } else {
+      const selectedOperators: any[] = [];
+      selectedOptions.forEach((value, index) => {
+        if (index !== 0) {
+          if (value === "Length")
+            selectedOperators.push(logicOperatorValueForLength);
+          if (value === "Molecular Weight")
+            selectedOperators.push(logicOperatorValueForMolecularWeight);
+          if (value === "Isoelectric Point")
+            selectedOperators.push(logicOperatorValueForIsoelectricPoint);
+          if (value === "Charge")
+            selectedOperators.push(logicOperatorValueForCharge);
+          if (value === "Charge Density")
+            selectedOperators.push(logicOperatorValueForChargeDensity);
+          if (value === "Activity")
+            selectedOperators.push(logicOperatorValueForActivity);
+          if (value === "Taxonomy")
+            selectedOperators.push(logicOperatorValueForTaxonomy);
+          if (value === "Database")
+            selectedOperators.push(logicOperatorValueForDatabase);
+          if (value === "Gene Ontology")
+            selectedOperators.push(logicOperatorValueForGeneOntology);
+          if (value === "Pfam")
+            selectedOperators.push(logicOperatorValueForPfam);
+          if (value === "Sequence")
+            selectedOperators.push(logicOperatorValueForSequence);
+        }
+      });
+      selectedOptions.forEach((value, index) => {
+        if (value === "Length") {
+          query += rangeInput(value, valueLength, index, selectedOperators);
+          queryWithId += rangeInput(
+            value,
+            valueLength,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Molecular Weight") {
+          query += rangeInput(
+            value,
+            valueMolecularWeight,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueMolecularWeight,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Isoelectric Point") {
+          query += rangeInput(
+            value,
+            valueIsoelectricPoint,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueIsoelectricPoint,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Charge") {
+          query += rangeInput(value, valueCharge, index, selectedOperators);
+          queryWithId += rangeInput(
+            value,
+            valueCharge,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Charge Density") {
+          query += rangeInput(
+            value,
+            valueChargeDensity,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueChargeDensity,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Taxonomy") {
+          query += selectInput(
+            value,
+            valueTaxonomy.label,
+            index,
+            selectedOperators
+          );
+          queryWithId += selectInput(
+            value,
+            valueTaxonomy.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Gene Ontology") {
+          query += selectInput(
+            value,
+            valueGeneOntology.label,
+            index,
+            selectedOperators
+          );
+          queryWithId += selectInput(
+            value,
+            valueGeneOntology.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Pfam") {
+          query += selectInput(
+            value,
+            valuePfam.label,
+            index,
+            selectedOperators
+          );
+          queryWithId += selectInput(
+            value,
+            valuePfam.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Sequence") {
+          query += selectInput(value, valueSequence, index, selectedOperators);
+          queryWithId += selectInput(
+            value,
+            valueSequence,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Activity") {
+          query += selectInput(
+            value,
+            valueActivity.label,
+            index,
+            selectedOperators
+          );
+          queryWithId += selectInput(
+            value,
+            valueActivity.value,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Database") {
+          query += selectInput(
+            value,
+            valueDatabase.label,
+            index,
+            selectedOperators
+          );
+          queryWithId += selectInput(
+            value,
+            valueDatabase.value,
+            index,
+            selectedOperators
+          );
+        }
+      });
+      query = `(${query})`;
+      queryWithId = `(${queryWithId})`;
+    }
+
+    try {
+      const post = {
+        query: queryWithId,
+      };
+
+      const { data } = await axios.post(`/api/count`, post);
+
+      if (data.status === "error") {
+        toast.error(data.description);
+        // onReset();
+      } else if (data.status === "success") {
+        setCounts(counts.concat(data.count));
+
+        setQueries(queries.concat(query));
+        setQueriesWithID(queriesWithID.concat(queryWithId));
+        // onReset();
+        setOpenBackdrop(false);
+      }
+    } catch (error) {
+      toast.error("Server error");
+      setOpenBackdrop(false);
+    }
+  };
+
   return (
     <>
+      <BackdropComponent open={openBackdrop} />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={9} lg={6} xl={4}>
           <FormContainer>
@@ -296,6 +607,59 @@ export default function AdvancedSearchForm() {
                   </div>
                 );
               })}
+              <TextField
+                multiline
+                rows={5}
+                label="Query"
+                disabled={selectedOptions.length === 0 ? false : true}
+                value={queryText}
+                onChange={handleChangeQueryText}
+                sx={{ width: "100%", marginTop: 2 }}
+              />
+              <Button
+                variant="contained"
+                size="medium"
+                sx={{
+                  width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "100%" },
+                  backgroundColor: "#2962ff",
+                  ":hover": { backgroundColor: "#2962ff" },
+                  marginTop: 2,
+                }}
+                onClick={onSearch}
+                disabled={
+                  selectedOptions.length === 0
+                    ? queryText.length === 0
+                      ? true
+                      : false
+                    : false ||
+                      (selectedOptions.includes("Taxonomy") &&
+                        valueTaxonomy.value === undefined)
+                    ? true
+                    : false ||
+                      (selectedOptions.includes("Database") &&
+                        valueDatabase.value === undefined)
+                    ? true
+                    : false ||
+                      (selectedOptions.includes("Gene Ontology") &&
+                        valueGeneOntology.value === undefined)
+                    ? true
+                    : false ||
+                      (selectedOptions.includes("Pfam") &&
+                        valuePfam.value === undefined)
+                    ? true
+                    : false ||
+                      (selectedOptions.includes("Sequence") &&
+                        valueSequence === "")
+                    ? true
+                    : false ||
+                      (selectedOptions.includes("Activity") &&
+                        valueActivity.value === undefined)
+                    ? true
+                    : false
+                }
+              >
+                ADD QUERY
+              </Button>
             </form>
           </FormContainer>
         </Grid>

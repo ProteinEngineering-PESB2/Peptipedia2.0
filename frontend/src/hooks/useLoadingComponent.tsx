@@ -4,7 +4,7 @@ import { topbar } from "react-router-loading";
 
 topbar.config({
   autoRun: false,
-  barThickness: 3,
+  barThickness: 5,
   barColors: {
     0: "#2962ff",
     0.3: "#2962ff",

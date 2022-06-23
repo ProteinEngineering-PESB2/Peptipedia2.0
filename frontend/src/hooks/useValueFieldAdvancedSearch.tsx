@@ -1,5 +1,10 @@
 import { ChangeEvent, useState } from "react";
 
+interface IArrayField {
+  label: any;
+  value: any;
+}
+
 export default function useValueFieldAdvancedSearch() {
   const [valueLength, setValueLength] = useState<number | number[]>([20, 100]);
   const [valueMolecularWeight, setValueMolecularWeight] = useState<
@@ -12,11 +17,26 @@ export default function useValueFieldAdvancedSearch() {
   const [valueChargeDensity, setValueChargeDensity] = useState<
     number | number[]
   >([20, 100]);
-  const [valueDatabase, setValueDatabase] = useState({});
-  const [valueActivity, setValueActivity] = useState({});
-  const [valueTaxonomy, setValueTaxonomy] = useState({});
-  const [valuePfam, setValuePfam] = useState({});
-  const [valueGeneOntology, setValueGeneOnotology] = useState({});
+  const [valueDatabase, setValueDatabase] = useState<IArrayField>({
+    label: undefined,
+    value: undefined,
+  });
+  const [valueActivity, setValueActivity] = useState<IArrayField>({
+    label: undefined,
+    value: undefined,
+  });
+  const [valueTaxonomy, setValueTaxonomy] = useState<IArrayField>({
+    label: undefined,
+    value: undefined,
+  });
+  const [valuePfam, setValuePfam] = useState<IArrayField>({
+    label: undefined,
+    value: undefined,
+  });
+  const [valueGeneOntology, setValueGeneOnotology] = useState<IArrayField>({
+    label: undefined,
+    value: undefined,
+  });
   const [valueSequence, setValueSequence] = useState("");
 
   // Handle Change Fields
@@ -76,5 +96,10 @@ export default function useValueFieldAdvancedSearch() {
     setValueGeneOnotology,
     valueSequence,
     handleChangeValueSequence,
+    setValueLength,
+    setValueMolecularWeight,
+    setValueIsoelectricPoint,
+    setValueCharge,
+    setValueChargeDensity,
   };
 }
