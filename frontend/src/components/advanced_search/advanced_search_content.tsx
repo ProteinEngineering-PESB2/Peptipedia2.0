@@ -6,8 +6,11 @@ import MUIDataTable from "mui-datatables";
 
 interface Props {
   queries: string[];
+  setQueries: Dispatch<SetStateAction<string[]>>;
   queriesWithID: string[];
+  setQueriesWithID: Dispatch<SetStateAction<string[]>>;
   counts: number[];
+  setCounts: Dispatch<SetStateAction<number[]>>;
   setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -16,12 +19,18 @@ export default function AdvancedSearchContent({
   queries,
   queriesWithID,
   setOpenBackdrop,
+  setCounts,
+  setQueries,
+  setQueriesWithID,
 }: Props) {
   const { tableQueries, tableResultQueries, options } = useDataTableQueries({
     counts,
     queries,
     queriesWithID,
     setOpenBackdrop,
+    setCounts,
+    setQueries,
+    setQueriesWithID,
   });
 
   return (

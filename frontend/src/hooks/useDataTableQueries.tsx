@@ -10,8 +10,11 @@ import axios from "axios";
 
 interface Props {
   queries: string[];
+  setQueries: Dispatch<SetStateAction<string[]>>;
   queriesWithID: string[];
+  setQueriesWithID: Dispatch<SetStateAction<string[]>>;
   counts: number[];
+  setCounts: Dispatch<SetStateAction<number[]>>;
   setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -26,6 +29,9 @@ export default function useDataTableQueries({
   counts,
   queriesWithID,
   setOpenBackdrop,
+  setCounts,
+  setQueries,
+  setQueriesWithID,
 }: Props) {
   const [tableQueries, setTableQueries] = useState<ITable>(InitialValueTable);
   const [tableResultQueries, setTableResultQueries] =
@@ -50,6 +56,22 @@ export default function useDataTableQueries({
         searchDatabase({ query: "", page: tableState.page, count: 0 });
       }
     },
+  };
+
+  const reset = (position: number) => {
+    const queriesReset = queries.filter((value, index) => index !== position);
+    const queriesWithIDReset = queriesWithID.filter(
+      (value, index) => index !== position
+    );
+    const countsReset = counts.filter((value, index) => index !== position);
+
+    if (queriesReset.length === 0) {
+      setQuerySelected("");
+    }
+
+    setQueries(queriesReset);
+    setQueriesWithID(queriesWithIDReset);
+    setCounts(countsReset);
   };
 
   const searchDatabase = async (values: IValues) => {
@@ -122,9 +144,9 @@ export default function useDataTableQueries({
           >
             <PlayArrowIcon />
           </Button>
-          {/* <Button variant="text" color="error" onClick={() => reset(position)}>
+          <Button variant="text" color="error" onClick={() => reset(position)}>
             <DeleteIcon />
-          </Button> */}
+          </Button>
         </Box>,
       ]);
       cont++;

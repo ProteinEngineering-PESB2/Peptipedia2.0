@@ -38,6 +38,9 @@ export default function AdvancedSearch() {
             queries={queries}
             queriesWithID={queriesWithID}
             setOpenBackdrop={setOpenBackdrop}
+            setCounts={setCounts}
+            setQueries={setQueries}
+            setQueriesWithID={setQueriesWithID}
           />
         )}
       </>
