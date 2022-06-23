@@ -1,10 +1,4 @@
-import {
-  Grid,
-  Autocomplete,
-  Checkbox,
-  TextField,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Grid, Autocomplete, Checkbox, TextField } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import FormContainer from "../form/form_container";
 
@@ -19,6 +13,8 @@ import DatabaseField from "./fields/database";
 import ActivityField from "./fields/activity";
 import TaxonomyField from "./fields/taxonomy";
 import PfamField from "./fields/pfam";
+import GeneOntologyField from "./fields/gene_ontology";
+import SequenceField from "./fields/sequence";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -28,6 +24,7 @@ import useGetDatabases from "../../hooks/useGetDatabases";
 import useGetActivities from "../../hooks/useGetActivities";
 import useGetTaxonomies from "../../hooks/useGetTaxonomies";
 import useGetPfam from "../../hooks/useGetPfams";
+import useGetGeneOntologoies from "../../hooks/useGetGeneOntologoies";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -58,6 +55,10 @@ export default function AdvancedSearchForm() {
     valueTaxonomy,
     setValuePfam,
     valuePfam,
+    setValueGeneOnotology,
+    valueGeneOntology,
+    handleChangeValueSequence,
+    valueSequence,
   } = useValueFieldAdvancedSearch();
 
   const {
@@ -79,12 +80,17 @@ export default function AdvancedSearchForm() {
     setLogicOperatorValueForTaxonomy,
     handleChangeLogicOperatorPfam,
     logicOperatorValueForPfam,
+    logicOperatorValueForGeneOntology,
+    setLogicOperatorValueForGeneOntology,
+    handleChangeLogicOperatorForSequence,
+    logicOperatorValueForSequence,
   } = useValueLogicOperator();
 
   const { databases } = useGetDatabases();
   const { activities } = useGetActivities();
   const { taxonomies } = useGetTaxonomies();
   const { pfams } = useGetPfam();
+  const { geneOntologies } = useGetGeneOntologoies();
 
   return (
     <>
@@ -260,7 +266,6 @@ export default function AdvancedSearchForm() {
                         index={index}
                       />
                     )}
-                    {/*
                     {option === "Gene Ontology" && (
                       <GeneOntologyField
                         valueGeneOntology={valueGeneOntology}
@@ -287,7 +292,7 @@ export default function AdvancedSearchForm() {
                           handleChangeLogicOperatorForSequence
                         }
                       />
-                    )} */}
+                    )}
                   </div>
                 );
               })}

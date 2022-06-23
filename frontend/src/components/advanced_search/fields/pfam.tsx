@@ -27,7 +27,7 @@ const PfamField = ({
 }: Props) => {
   const loadOptions = (inputValue: any, callback: any) => {
     setTimeout(async () => {
-      const { data } = await axios.get(`/api/taxonomy_list/${inputValue}`);
+      const { data } = await axios.get(`/api/pfam_list/${inputValue}`);
       callback(data.result);
     }, 1000);
   };

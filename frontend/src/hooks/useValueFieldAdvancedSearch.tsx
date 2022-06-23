@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export default function useValueFieldAdvancedSearch() {
   const [valueLength, setValueLength] = useState<number | number[]>([20, 100]);
@@ -49,6 +49,10 @@ export default function useValueFieldAdvancedSearch() {
     setValueChargeDensity(newValue);
   };
 
+  const handleChangeValueSequence = (e: ChangeEvent<HTMLInputElement>) => {
+    setValueSequence(e.target.value);
+  };
+
   return {
     valueLength,
     handleChangeValueLength,
@@ -67,6 +71,10 @@ export default function useValueFieldAdvancedSearch() {
     valueTaxonomy,
     setValueTaxonomy,
     valuePfam,
-    setValuePfam
+    setValuePfam,
+    valueGeneOntology,
+    setValueGeneOnotology,
+    valueSequence,
+    handleChangeValueSequence,
   };
 }

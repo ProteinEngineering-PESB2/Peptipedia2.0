@@ -7,12 +7,12 @@ import Select from "@mui/material/Select";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-    valueDatabase: any
-    setValueDatabase: Dispatch<SetStateAction<any>>
-    logicOperatorValueForDatabase: string
-    setLogicOperatorValueForDatabase: Dispatch<SetStateAction<string>>
-    index: number
-    options: any
+  valueDatabase: any;
+  setValueDatabase: Dispatch<SetStateAction<any>>;
+  logicOperatorValueForDatabase: string;
+  setLogicOperatorValueForDatabase: Dispatch<SetStateAction<string>>;
+  index: number;
+  options: any;
 }
 
 const DatabaseField = ({

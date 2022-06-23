@@ -67,6 +67,12 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForPfam(e.target.value);
   };
 
+  const handleChangeLogicOperatorForSequence = (
+    e: SelectChangeEvent<string>
+  ) => {
+    setLogicOperatorValueForSequence(e.target.value);
+  };
+
   return {
     logicOperatorValueForLength,
     logicOperatorValueForMolecularWeight,
@@ -86,5 +92,9 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForTaxonomy,
     logicOperatorValueForPfam,
     handleChangeLogicOperatorPfam,
+    logicOperatorValueForGeneOntology,
+    setLogicOperatorValueForGeneOntology,
+    logicOperatorValueForSequence,
+    handleChangeLogicOperatorForSequence,
   };
 }
