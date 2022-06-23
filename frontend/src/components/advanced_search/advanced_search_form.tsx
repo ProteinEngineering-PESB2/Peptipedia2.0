@@ -46,6 +46,7 @@ interface Props {
   setQueriesWithID: Dispatch<SetStateAction<string[]>>;
   counts: number[];
   setCounts: Dispatch<SetStateAction<number[]>>;
+  setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function AdvancedSearchForm({
@@ -55,11 +56,11 @@ export default function AdvancedSearchForm({
   setQueriesWithID,
   counts,
   setCounts,
+  setOpenBackdrop,
 }: Props) {
   const [queryText, setQueryText] = useState<string>("");
   const [optionsValue, setOptionsValue] = useState<any[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
-  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   const {
     valueLength,
@@ -394,8 +395,8 @@ export default function AdvancedSearchForm({
         setQueries(queries.concat(query));
         setQueriesWithID(queriesWithID.concat(queryWithId));
         // onReset();
-        setOpenBackdrop(false);
       }
+      setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
       setOpenBackdrop(false);
@@ -404,7 +405,6 @@ export default function AdvancedSearchForm({
 
   return (
     <>
-      <BackdropComponent open={openBackdrop} />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={9} lg={6} xl={4}>
           <FormContainer>
@@ -620,7 +620,13 @@ export default function AdvancedSearchForm({
                 variant="contained"
                 size="medium"
                 sx={{
-                  width: { xl: "12rem", lg: "12rem", md: "12rem", sm: "12rem", xs: "100%" },
+                  width: {
+                    xl: "12rem",
+                    lg: "12rem",
+                    md: "12rem",
+                    sm: "12rem",
+                    xs: "100%",
+                  },
                   backgroundColor: "#2962ff",
                   ":hover": { backgroundColor: "#2962ff" },
                   marginTop: 2,

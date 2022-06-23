@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AdvancedSearchContent from "../components/advanced_search/advanced_search_content";
 import AdvancedSearchForm from "../components/advanced_search/advanced_search_form";
+import BackdropComponent from "../components/backdrop_component";
 import Layout from "../components/layout";
 import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
@@ -10,6 +11,7 @@ export default function AdvancedSearch() {
   const [queries, setQueries] = useState<string[]>([]);
   const [queriesWithID, setQueriesWithID] = useState<string[]>([]);
   const [counts, setCounts] = useState<number[]>([]);
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   useHandleSection({ section: "advanced-search" });
   useLoadingComponent();
@@ -17,6 +19,7 @@ export default function AdvancedSearch() {
   return (
     <Layout>
       <>
+        <BackdropComponent open={openBackdrop} />
         <SectionTitle title="Advanced Search" />
 
         <AdvancedSearchForm
@@ -26,6 +29,7 @@ export default function AdvancedSearch() {
           setQueriesWithID={setQueriesWithID}
           counts={counts}
           setCounts={setCounts}
+          setOpenBackdrop={setOpenBackdrop}
         />
 
         {queries.length > 0 && (

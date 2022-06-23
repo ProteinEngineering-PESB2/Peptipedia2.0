@@ -1,4 +1,7 @@
+import { Box } from "@mui/material";
 import { useEffect } from "react";
+import useDataTableQueries from "../../hooks/useDataTableQueries";
+import DataTable from "../datatable";
 
 interface Props {
   queries: string[];
@@ -11,11 +14,17 @@ export default function AdvancedSearchContent({
   queries,
   queriesWithID,
 }: Props) {
-  useEffect(() => {
-    console.log(counts);
-    console.log(queries);
-    console.log(queriesWithID);
-  }, [queries, queriesWithID, counts]);
+  const { tableQueries } = useDataTableQueries({
+    counts,
+    queries,
+    queriesWithID,
+  });
 
-  return <></>;
+  return (
+    <>
+      <Box marginTop={3} boxShadow={4}>
+        <DataTable table={tableQueries} title="Queries Entered" />
+      </Box>
+    </>
+  );
 }
