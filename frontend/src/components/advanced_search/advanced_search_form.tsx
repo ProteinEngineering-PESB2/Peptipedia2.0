@@ -90,6 +90,7 @@ export default function AdvancedSearchForm({
     setValueIsoelectricPoint,
     setValueLength,
     setValueMolecularWeight,
+    setValueSequence
   } = useValueFieldAdvancedSearch();
 
   const {
@@ -115,6 +116,12 @@ export default function AdvancedSearchForm({
     setLogicOperatorValueForGeneOntology,
     handleChangeLogicOperatorForSequence,
     logicOperatorValueForSequence,
+    setLogicOperatorValueForCharge,
+    setLogicOperatorValueForChargeDensity,
+    setLogicOperatorValueForIsoelectricPoint,
+    setLogicOperatorValueForMolecularWeight,
+    setLogicOperatorValueForPfam,
+    setLogicOperatorValueForSequence
   } = useValueLogicOperator();
 
   const { databases } = useGetDatabases();
@@ -169,6 +176,42 @@ export default function AdvancedSearchForm({
         return ` ${selectedOperators[index - 1]} (${field} = ${value})`;
       }
     }
+  };
+
+  const onReset = () => {
+    setSelectedOptions([]);
+    setOptionsValue([]);
+    setValueLength([params.min_length, params.max_length]);
+    setValueMolecularWeight([
+      params.min_molecular_weigth,
+      params.max_molecular_weight,
+    ]);
+    setValueIsoelectricPoint([
+      params.min_isoelectric_point,
+      params.max_isoelectric_point,
+    ]);
+    setValueCharge([params.min_charge, params.max_charge]);
+    setValueChargeDensity([
+      params.min_charge_density,
+      params.max_charge_density,
+    ]);
+    setValueActivity({ label: undefined, value: undefined });
+    setValueTaxonomy({ label: undefined, value: undefined });
+    setValueDatabase({ label: undefined, value: undefined });
+    setValueGeneOnotology({ label: undefined, value: undefined });
+    setValuePfam({ label: undefined, value: undefined });
+    setValueSequence("");
+    setLogicOperatorValueForMolecularWeight("AND");
+    setLogicOperatorValueForIsoelectricPoint("AND");
+    setLogicOperatorValueForCharge("AND");
+    setLogicOperatorValueForChargeDensity("AND");
+    setLogicOperatorValueForActivity("AND");
+    setLogicOperatorValueForTaxonomy("AND");
+    setLogicOperatorValueForDatabase("AND");
+    setLogicOperatorValueForGeneOntology("AND");
+    setLogicOperatorValueForPfam("AND");
+    setLogicOperatorValueForSequence("AND");
+    setQueryText("");
   };
 
   const onSearch = async () => {
@@ -388,13 +431,13 @@ export default function AdvancedSearchForm({
 
       if (data.status === "error") {
         toast.error(data.description);
-        // onReset();
+        onReset();
       } else if (data.status === "success") {
         setCounts(counts.concat(data.count));
 
         setQueries(queries.concat(query));
         setQueriesWithID(queriesWithID.concat(queryWithId));
-        // onReset();
+        onReset();
       }
       setOpenBackdrop(false);
     } catch (error) {

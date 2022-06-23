@@ -19,8 +19,6 @@ export default function useValueLogicOperator() {
     logicOperatorValueForChargeDensity,
     setLogicOperatorValueForChargeDensity,
   ] = useState("AND");
-  const [logicOperatorValueForPatent, setLogicOperatorValueForPatent] =
-    useState("AND");
   const [logicOperatorValueForActivity, setLogicOperatorValueForActivity] =
     useState("AND");
   const [logicOperatorValueForTaxonomy, setLogicOperatorValueForTaxonomy] =
@@ -96,5 +94,11 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForGeneOntology,
     logicOperatorValueForSequence,
     handleChangeLogicOperatorForSequence,
+    setLogicOperatorValueForMolecularWeight,
+    setLogicOperatorValueForIsoelectricPoint,
+    setLogicOperatorValueForCharge,
+    setLogicOperatorValueForChargeDensity,
+    setLogicOperatorValueForPfam,
+    setLogicOperatorValueForSequence
   };
 }

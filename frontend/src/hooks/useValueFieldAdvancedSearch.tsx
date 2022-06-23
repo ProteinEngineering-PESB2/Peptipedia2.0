@@ -101,5 +101,6 @@ export default function useValueFieldAdvancedSearch() {
     setValueIsoelectricPoint,
     setValueCharge,
     setValueChargeDensity,
+    setValueSequence,
   };
 }

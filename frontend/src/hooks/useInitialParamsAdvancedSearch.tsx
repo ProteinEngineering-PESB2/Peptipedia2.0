@@ -10,6 +10,19 @@ interface Props {
   setValueChargeDensity: Dispatch<SetStateAction<number | number[]>>;
 }
 
+interface IParams {
+  min_length: number;
+  max_length: number;
+  min_molecular_weigth: number;
+  max_molecular_weight: number;
+  min_isoelectric_point: number;
+  max_isoelectric_point: number;
+  min_charge: number;
+  max_charge: number;
+  min_charge_density: number;
+  max_charge_density: number;
+}
+
 export default function useInitialParamsAdvancedSearch({
   setValueLength,
   setValueCharge,
@@ -17,7 +30,18 @@ export default function useInitialParamsAdvancedSearch({
   setValueIsoelectricPoint,
   setValueMolecularWeight,
 }: Props) {
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState<IParams>({
+    max_charge: 0,
+    max_charge_density: 0,
+    max_isoelectric_point: 0,
+    max_length: 0,
+    max_molecular_weight: 0,
+    min_charge: 0,
+    min_charge_density: 0,
+    min_isoelectric_point: 0,
+    min_length: 0,
+    min_molecular_weigth: 0,
+  });
 
   const initialParameters = async () => {
     try {
@@ -39,12 +63,23 @@ export default function useInitialParamsAdvancedSearch({
       ]);
     } catch (error) {
       toast.error("Server error");
-      setParams([]);
+      setParams({
+        max_charge: 0,
+        max_charge_density: 0,
+        max_isoelectric_point: 0,
+        max_length: 0,
+        max_molecular_weight: 0,
+        min_charge: 0,
+        min_charge_density: 0,
+        min_isoelectric_point: 0,
+        min_length: 0,
+        min_molecular_weigth: 0,
+      });
     }
   };
 
   useEffect(() => {
-    initialParameters()
+    initialParameters();
   }, []);
 
   return {
