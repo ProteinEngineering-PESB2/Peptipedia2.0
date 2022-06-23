@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import { useDataTablePhysicochemical } from "../../pages/useDataTablePhysicochemical";
+import { useDataTablePhysicochemical } from "../../hooks/useDataTablePhysicochemical";
 import { IDataPhysichochemical } from "../../utils/interfaces";
 import DataTable from "../datatable";
 
