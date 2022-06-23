@@ -15,16 +15,14 @@ export default function Home() {
   useLoadingComponent();
 
   return (
-    <>
-      <Layout>
-        <>
-          <Header />
-          <About />
-          <Services />
-          <PeptipediaTeam />
-          <Resource />
-        </>
-      </Layout>
-    </>
+    <Layout>
+      <>
+        <Header />
+        <About />
+        <Services />
+        <PeptipediaTeam />
+        <Resource />
+      </>
+    </Layout>
   );
 }
