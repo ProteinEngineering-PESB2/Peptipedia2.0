@@ -19,6 +19,7 @@ import Clustering from "./pages/clustering";
 import SupervisedLearning from "./pages/supervised_learning";
 import { Routes, Route } from "react-router-loading";
 import LoadingComponent from "./components/Loading";
+import PeptideDetail from "./pages/peptipe_detail";
 
 export default function App() {
   const theme = createTheme();
@@ -62,6 +63,7 @@ export default function App() {
                 element={<SupervisedLearning />}
                 loading
               />
+              <Route path="/peptide/:peptideId" element={<PeptideDetail/>} loading/>
               <Route path="*" element={<Home />} loading />
             </Routes>
           </BrowserRouter>

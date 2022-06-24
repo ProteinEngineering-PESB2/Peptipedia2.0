@@ -18,7 +18,7 @@ interface Props {
   children: ReactElement;
 }
 
-export default function ResponsiveDrawer(props: Props) {
+export default function Layout(props: Props) {
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 

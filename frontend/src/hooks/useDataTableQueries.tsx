@@ -7,6 +7,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import InfoIcon from "@mui/icons-material/Info";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 interface Props {
   queries: string[];
@@ -33,6 +34,7 @@ export default function useDataTableQueries({
   setQueries,
   setQueriesWithID,
 }: Props) {
+  const navigate = useNavigate();
   const [tableQueries, setTableQueries] = useState<ITable>(InitialValueTable);
   const [tableResultQueries, setTableResultQueries] =
     useState<ITable>(InitialValueTable);
@@ -101,11 +103,15 @@ export default function useDataTableQueries({
         let new_data = [];
         for (let d = 0; d < data.data.length; d++) {
           let parcial_data = data.data[d];
-          //   parcial_data.push(
-          //     <Button variant="text" color="info">
-          //       <InfoIcon onClick={() => setPeptideID(res.data[d][0])} />
-          //     </Button>
-          //   );
+          const path = `/peptide/${data.data[d][0]}`;
+          parcial_data.push(
+            <Link to={path} target="_blank">
+              <Button variant="text" color="info">
+                <InfoIcon />
+                {/* <InfoIcon onClick={() => setPeptideID(res.data[d][0])} /> */}
+              </Button>
+            </Link>
+          );
           new_data.push(parcial_data);
         }
 
