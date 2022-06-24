@@ -6,9 +6,7 @@ import Services from "../components/home/service";
 import PeptipediaTeam from "../components/home/team";
 import Resource from "../components/home/resources";
 import { useHandleSection } from "../hooks/useHandleSection";
-import { Box } from "@mui/material";
 import useLoadingComponent from "../hooks/useLoadingComponent";
-import LoadingComponent from "../components/Loading";
 
 export default function Home() {
   useHandleSection({ section: "home" });

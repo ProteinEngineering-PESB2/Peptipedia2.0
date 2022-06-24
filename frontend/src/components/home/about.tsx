@@ -17,7 +17,7 @@ export default function About() {
           align="justify"
           paragraph={true}
           variant="caption"
-          sx={{ fontSize: 23 }}
+          sx={{ fontSize: { xs: 20, sm: 20, md: 20, lg: 20, xl: 23 } }}
         >
           Peptides have attracted attention during the last decades due to their
           extraordinary therapeutic properties. Different computational tools

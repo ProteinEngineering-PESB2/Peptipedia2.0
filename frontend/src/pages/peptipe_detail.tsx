@@ -6,6 +6,7 @@ import PeptideDetailGO from "../components/peptide_detail/peptide_detail_go";
 import PeptideDetailPfam from "../components/peptide_detail/peptide_detail_pfam";
 import PeptideDetailPhysicochemicalProperties from "../components/peptide_detail/peptide_detail_physicochemical_properties";
 import PeptideDetailSequence from "../components/peptide_detail/peptide_detail_sequence";
+import PeptideDetailStructure from "../components/peptide_detail/peptide_detail_structure";
 import PeptideDetailTaxonomy from "../components/peptide_detail/peptide_detail_taxonomy";
 import SectionTitle from "../components/section_title";
 import useGetInfoPeptideDetail from "../hooks/useGetInfoPeptideDetail";
@@ -24,6 +25,8 @@ export default function PeptideDetail() {
         <SectionTitle title={`Peptide ${peptideId}`} />
 
         <PeptideDetailSequence sequence={dataInfo.sequence} />
+
+        <PeptideDetailStructure peptideId={peptideId}/>
 
         <PeptideDetailPhysicochemicalProperties dataInfo={dataInfo} />
 

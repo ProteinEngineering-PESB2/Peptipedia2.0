@@ -17,12 +17,9 @@ export default function useGetGOPeptideDetail({ peptideId }: Props) {
   const getGOFromPeptide = async () => {
     try {
       const { data } = await axios.get(`/api/get_go_from_peptide/${peptideId}`);
-      console.log(data)
       const new_data = [];
       for (let i = 0; i < data.result.data.length; i++) {
-        const id_go = data.result.data[i][0]
-          ? data.result.data[i][0]
-          : "";
+        const id_go = data.result.data[i][0] ? data.result.data[i][0] : "";
         const new_array = [
           ...data.result.data[i],
           <Button>
