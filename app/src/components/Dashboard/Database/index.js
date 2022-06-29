@@ -198,8 +198,8 @@ const Database = () => {
       link.setAttribute("download", "database_sql.zip");
       document.body.appendChild(link);
       link.click();
-
       setSnackbarSQLSeverity("success");
+
       setSnackbarSQLMessage("Database downloaded (SQL)");
       setOpenSnackbarSQL(true);
       setLoadingSQL(false);
