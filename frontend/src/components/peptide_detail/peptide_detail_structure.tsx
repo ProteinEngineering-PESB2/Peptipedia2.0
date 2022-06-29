@@ -14,21 +14,23 @@ export default function PeptideDetailStructure({ peptideId }: Props) {
       <Box marginTop={3}>
         <div id="content-pdb" style={{ width: "100%" }}></div>
       </Box>
-      <Box
-        marginTop={3}
-        boxShadow={4}
-        sx={{
-          maxWidth: {
-            xs: "20rem",
-            sm: "100%",
-            md: "100%",
-            lg: "100%",
-            xl: "100%",
-          },
-        }}
-      >
-        <ProSeqViewer sequences={sequences} />
-      </Box>
+      {sequences.length > 0 && (
+        <Box
+          marginTop={3}
+          boxShadow={4}
+          sx={{
+            maxWidth: {
+              xs: "20rem",
+              sm: "100%",
+              md: "100%",
+              lg: "100%",
+              xl: "100%",
+            },
+          }}
+        >
+          <ProSeqViewer sequences={sequences} />
+        </Box>
+      )}
     </>
   );
 }

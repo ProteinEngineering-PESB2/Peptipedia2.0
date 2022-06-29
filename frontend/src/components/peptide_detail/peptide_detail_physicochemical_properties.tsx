@@ -6,7 +6,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Paper
+  Paper,
 } from "@mui/material";
 import { IDataInfo } from "../../hooks/useGetInfoPeptideDetail";
 

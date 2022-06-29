@@ -30,7 +30,14 @@ export default function useGetInfoPeptideDetail({ peptideId }: Props) {
       const { data } = await axios.get(
         `/api/get_info_from_peptide/${peptideId}`
       );
-      setDataInfo(data.result[0]);
+      setDataInfo({
+        charge: data.result[0].charge,
+        charge_density: data.result[0].charge_density,
+        isoelectric_point: data.result[0].isoelectric_point,
+        length: data.result[0].length,
+        molecular_weight: data.result[0].molecular_weight,
+        sequence: data.result[0].sequence,
+      });
     } catch (error) {
       toast.error("Server Error");
       setDataInfo({
