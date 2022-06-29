@@ -165,7 +165,7 @@ const Database = () => {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "database.zip");
+      link.setAttribute("download", "database_csv.zip");
       document.body.appendChild(link);
       link.click();
 
@@ -195,7 +195,7 @@ const Database = () => {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "database.sql");
+      link.setAttribute("download", "database_sql.zip");
       document.body.appendChild(link);
       link.click();
 
@@ -225,7 +225,7 @@ const Database = () => {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "database.fasta");
+      link.setAttribute("download", "database_fasta.zip");
       document.body.appendChild(link);
       link.click();
 
