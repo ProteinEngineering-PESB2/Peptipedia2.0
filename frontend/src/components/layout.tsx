@@ -108,7 +108,7 @@ export default function Layout(props: Props) {
             <MenuIcon />
           </IconButton>
         </Toolbar>
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{ marginTop: 2 }}>
           {children}
           <Box marginBottom={8}></Box>
         </Container>

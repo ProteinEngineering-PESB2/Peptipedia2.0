@@ -18,6 +18,8 @@ import BiotechIcon from "@mui/icons-material/Biotech";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import TranslateIcon from "@mui/icons-material/Translate";
+import GroupsIcon from '@mui/icons-material/Groups';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import { useAppContext } from "../hooks/useAppContext";
 
 export default function Sidebar() {
@@ -57,6 +59,80 @@ export default function Sidebar() {
               sx={{ fontWeight: section === "home" ? "bold" : "normal" }}
             >
               Home
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "about_us" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "about_us" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/about-us")}
+        >
+          <GroupsIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight: section === "about_us" ? "bold" : "normal",
+              }}
+            >
+              About Us
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "how_to_cite" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "how_to_cite" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/how-to-cite")}
+        >
+          <FormatQuoteIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight: section === "how_to_cite" ? "bold" : "normal",
+              }}
+            >
+              How to Cite
             </Typography>
           </ListItemText>
         </ListItemButton>
@@ -471,7 +547,8 @@ export default function Sidebar() {
         disablePadding
         sx={{
           p: "2px",
-          backgroundColor: section === "supervised-learning" ? "#2962ff" : "#fff",
+          backgroundColor:
+            section === "supervised-learning" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           marginY: "10px",

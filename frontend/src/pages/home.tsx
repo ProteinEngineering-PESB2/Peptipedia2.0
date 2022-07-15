@@ -18,8 +18,6 @@ export default function Home() {
         <Header />
         <About />
         <Services />
-        <PeptipediaTeam />
-        <Resource />
       </>
     </Layout>
   );

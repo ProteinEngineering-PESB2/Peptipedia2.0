@@ -11,7 +11,7 @@ import CardProfile from "./card_profile";
 export default function PeptipediaTeam() {
   return (
     <>
-      <Box marginTop={8}>
+      <Box>
         <Typography
           variant="h4"
           style={{ fontWeight: "bold", textAlign: "center" }}
