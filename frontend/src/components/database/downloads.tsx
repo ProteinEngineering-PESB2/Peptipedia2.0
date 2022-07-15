@@ -11,7 +11,7 @@ export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
   return (
     <Box marginTop={3}>
       <Grid container spacing={2}>
-        <Grid item xl={2.3} lg={3.2} md={4.8} sm={12} xs={12}>
+        <Grid item xl={2.3} lg={3.2} md={5} sm={12} xs={12}>
           <Button
             variant="contained"
             size="large"
@@ -32,7 +32,7 @@ export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
             Download as CSV
           </Button>
         </Grid>
-        <Grid item xl={2.3} lg={3.2} md={4.8} sm={12} xs={12}>
+        <Grid item xl={2.3} lg={3.2} md={5} sm={12} xs={12}>
           <Button
             variant="contained"
             size="large"
@@ -50,7 +50,7 @@ export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
             Download as SQL
           </Button>
         </Grid>
-        <Grid item xl={2.3} lg={3.2} md={4.8} sm={12} xs={12}>
+        <Grid item xl={2.3} lg={3.2} md={5} sm={12} xs={12}>
           <Button
             variant="contained"
             size="large"
