@@ -68,7 +68,7 @@ export default function Sidebar() {
         disablePadding
         sx={{
           p: "2px",
-          backgroundColor: section === "about_us" ? "#2962ff" : "#fff",
+          backgroundColor: section === "team" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           marginY: "10px",
@@ -81,21 +81,21 @@ export default function Sidebar() {
         <ListItemButton
           disableRipple
           sx={{
-            color: section === "about_us" ? "#fff" : "#000",
+            color: section === "team" ? "#fff" : "#000",
             "&:hover": {
               color: "#fff",
             },
           }}
-          onClick={() => navigate("/about-us")}
+          onClick={() => navigate("/team")}
         >
           <GroupsIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "about_us" ? "bold" : "normal",
+                fontWeight: section === "team" ? "bold" : "normal",
               }}
             >
-              About Us
+              Team
             </Typography>
           </ListItemText>
         </ListItemButton>

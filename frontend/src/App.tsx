@@ -20,7 +20,7 @@ import SupervisedLearning from "./pages/supervised_learning";
 import { Routes, Route } from "react-router-loading";
 import LoadingComponent from "./components/Loading";
 import PeptideDetail from "./pages/peptipe_detail";
-import AboutUs from "./pages/AboutUs"
+import Team from "./pages/Team"
 import HowToCite from "./pages/HowToCite";
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
           <BrowserRouter>
             <Routes loadingScreen={LoadingComponent}>
               <Route path="/" element={<Home />} loading />
-              <Route path="/about-us" element={<AboutUs/>} loading/>
+              <Route path="/team" element={<Team/>} loading/>
               <Route path="/how-to-cite" element={<HowToCite/>} loading/>
               <Route path="/database" element={<Database />} loading />
               <Route

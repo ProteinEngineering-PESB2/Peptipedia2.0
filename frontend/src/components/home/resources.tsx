@@ -14,8 +14,10 @@ import { resources, IResource } from "./resources_list";
 export default function Resource() {
   const [copiedCite, setCopiedCite] = useState<boolean>(false);
   const [showTooltipCite, setShowTooltipCite] = useState<boolean>(false);
+  const [copiedTitle, setCopiedTitle] = useState<string>("");
 
-  const handleCopiedCite = () => {
+  const handleCopiedCite = (title: string) => {
+    setCopiedTitle(title);
     setCopiedCite(true);
     setShowTooltipCite(true);
     setTimeout(() => {
@@ -30,7 +32,7 @@ export default function Resource() {
           variant="h4"
           style={{ fontWeight: "bold", textAlign: "center" }}
         >
-          Resources
+          How to Cite
         </Typography>
       </Box>
       {resources.map((r: IResource) => (
@@ -54,13 +56,25 @@ export default function Resource() {
                     sx={{ display: "flex", alignItems: "end", marginBottom: 1 }}
                   >
                     <Tooltip
-                      title={showTooltipCite ? "Copied cite" : ""}
-                      onClick={handleCopiedCite}
+                      title={
+                        showTooltipCite
+                          ? r.title === copiedTitle
+                            ? "Copied cite"
+                            : ""
+                          : ""
+                      }
+                      onClick={() => handleCopiedCite(r.title)}
                       open={showTooltipCite}
                     >
                       <IconButton edge="end">
                         <ContentCopyIcon
-                          color={copiedCite ? "primary" : "inherit"}
+                          color={
+                            copiedCite
+                              ? copiedTitle === r.title
+                                ? "primary"
+                                : "inherit"
+                              : "inherit"
+                          }
                         />
                       </IconButton>
                     </Tooltip>

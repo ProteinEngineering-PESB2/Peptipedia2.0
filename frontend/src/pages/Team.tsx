@@ -3,8 +3,8 @@ import Layout from "../components/layout";
 import { useHandleSection } from "../hooks/useHandleSection";
 import useLoadingComponent from "../hooks/useLoadingComponent";
 
-export default function AboutUs() {
-  useHandleSection({ section: "about_us" });
+export default function Team() {
+  useHandleSection({ section: "team" });
   useLoadingComponent();
 
   return (
