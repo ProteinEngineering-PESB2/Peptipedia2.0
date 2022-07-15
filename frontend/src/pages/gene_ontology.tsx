@@ -16,7 +16,10 @@ export default function GeneOntology() {
   return (
     <Layout>
       <>
-        <SectionTitle title="Gene Ontology" />
+        <SectionTitle
+          title="Gene Ontology"
+          description="Predict Gene Ontology terms (Biological process, molecular function or cellular component) in a set of entered peptides."
+        />
 
         <GeneOntologyForm setResult={setResult} />
 

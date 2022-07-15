@@ -11,7 +11,10 @@ export default function Encoding() {
   return (
     <Layout>
       <>
-        <SectionTitle title="Encoding Sequences" />
+        <SectionTitle
+          title="Encoding Sequences"
+          description="Numerically encodes the amino acid sequences entered, in order to use Machine Learning models."
+        />
 
         <EncodingForm />
       </>

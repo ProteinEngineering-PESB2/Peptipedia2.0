@@ -83,7 +83,10 @@ export default function SupervisedLearning() {
     <Layout>
       <>
         <BackdropComponent open={openBackdropNewModel} />
-        <SectionTitle title="Supervised Learning" />
+        <SectionTitle
+          title="Supervised Learning"
+          description="It employs supervised learning algorithms on sets of input sequences. Allows training, testing and prediction using new data sets."
+        />
 
         <SupervisedLearningForm
           setResultClassification={setResultClassification}

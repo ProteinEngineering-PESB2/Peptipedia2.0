@@ -65,7 +65,10 @@ export default function FastaConverter() {
       <>
         <BackdropComponent open={openBackdrop} percentage={percentage} />
         <Box>
-          <SectionTitle title="Fasta Converter" />
+          <SectionTitle
+            title="Fasta Converter"
+            description="Convert your input to fasta format."
+          />
         </Box>
         <Box marginTop={3}>
           <Grid container spacing={3}>

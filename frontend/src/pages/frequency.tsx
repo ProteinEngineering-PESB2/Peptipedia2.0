@@ -15,7 +15,10 @@ export default function Frequency() {
   return (
     <Layout>
       <>
-        <SectionTitle title="Frequency Evaluation" />
+        <SectionTitle
+          title="Frequency Evaluation"
+          description="Performs a count of amino acid frequencies in peptide sequences."
+        />
 
         <FrequencyForm setResult={setResult} />
 

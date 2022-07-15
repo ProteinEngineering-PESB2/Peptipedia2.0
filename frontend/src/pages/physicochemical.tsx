@@ -15,7 +15,10 @@ export default function Phisicochemical() {
   return (
     <Layout>
       <>
-        <SectionTitle title="Physichochemical Properties" />
+        <SectionTitle
+          title="Physichochemical Properties"
+          description="Performs an estimation of physicochemical properties (length, molecular weight, charge, charge density and isoelectric point) for a group of sequences."
+        />
 
         <PhysichochemicalForm setResult={setResult} />
 

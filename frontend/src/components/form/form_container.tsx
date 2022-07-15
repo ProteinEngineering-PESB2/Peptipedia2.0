@@ -15,6 +15,7 @@ export default function FormContainer({ children }: Props) {
           flexDirection: "column",
         }}
       >
+        <Box>Icono</Box>
         {children}
       </Paper>
     </Box>

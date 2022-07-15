@@ -18,7 +18,7 @@ export default function MultiAlignmentSequence() {
     <Layout>
       <>
         <Box>
-          <SectionTitle title="Multi Alignment Sequence" />
+          <SectionTitle title="Multi Alignment Sequence" description="Use ClustalW to build an MSA from the specified sequences."/>
         </Box>
 
         <MSAForm setResult={setResult} />

@@ -15,7 +15,10 @@ export default function Clustering() {
   return (
     <Layout>
       <>
-        <SectionTitle title="Clustering" />
+        <SectionTitle
+          title="Clustering"
+          description="It performs sequence clustering, using numerical coding techniques and PCA analysis."
+        />
 
         <ClusteringForm setResult={setResult} />
 

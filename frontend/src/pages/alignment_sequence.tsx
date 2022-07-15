@@ -21,7 +21,10 @@ export default function AlignmentSequence() {
     <Layout>
       <>
         <Box>
-          <SectionTitle title="Alignment Sequence" />
+          <SectionTitle
+            title="Alignment Sequence"
+            description="Use of the BLAST (Basic Local Alignment Search Tool) algorithm against the Peptipedia database."
+          />
         </Box>
 
         <AlignmentSequenceForm

@@ -18,7 +18,10 @@ export default function Pfam() {
     <Layout>
       <>
         <Box>
-          <SectionTitle title="Pfam Prediction" />
+          <SectionTitle
+            title="Pfam Prediction"
+            description="Predict protein families and domains in a set of peptides entered."
+          />
         </Box>
 
         <PfamForm setResult={setResult} />
