@@ -16,8 +16,8 @@ export default function Header() {
       <Box marginTop={1}>
         <Typography
           variant="subtitle1"
-          sx={{ fontStyle: "italic", width: "85%", margin: "auto" }}
-          fontSize={20}
+          sx={{ fontStyle: "normal", width: "85%", margin: "auto" }}
+          fontSize={24}
           textAlign="center"
         >
           Peptipedia, a user-friendly web application tool to support peptide
