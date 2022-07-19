@@ -22,6 +22,7 @@ import LoadingComponent from "./components/Loading";
 import PeptideDetail from "./pages/peptipe_detail";
 import Team from "./pages/Team"
 import HowToCite from "./pages/HowToCite";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   const theme = createTheme();
@@ -68,7 +69,7 @@ export default function App() {
                 loading
               />
               <Route path="/peptide/:peptideId" element={<PeptideDetail/>} loading/>
-              <Route path="*" element={<Home />} loading />
+              <Route path="*" element={<NotFound />} loading />
             </Routes>
           </BrowserRouter>
           <Toaster />
