@@ -12,10 +12,9 @@ services:
     ports:
       - "8001:8001"
   app :
-    build: ./app/
+    build: ./frontend/
     volumes:
-      - ./app/public:/app/public
-      - ./app/src:/app/src
+      - ./frontend:/app
     depends_on:
       - "backend"
     ports:
