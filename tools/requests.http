@@ -1,4 +1,4 @@
-@api = http://190.114.255.125:8001/api
+@api = http://66.94.118.108:8001/api
 
 POST {{api}}/alignment/
 Content-Type: application/json
