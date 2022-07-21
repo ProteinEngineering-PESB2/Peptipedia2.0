@@ -660,7 +660,7 @@ export default function Home() {
         <StatisticsCards />
 
         <Grid container spacing={2} marginTop={2}>
-          <Grid item xl={8}>
+          <Grid item xl={8} lg={12} md={12} sm={12} xs={12}>
             <Paper
               sx={{
                 display: "flex",
@@ -673,7 +673,7 @@ export default function Home() {
               <MyResponsiveBar data={data} />
             </Paper>
           </Grid>
-          <Grid item xl={4}>
+          <Grid item xl={4} lg={12} md={12} sm={12} xs={12}>
             <Paper
               sx={{
                 display: "flex",
@@ -689,7 +689,7 @@ export default function Home() {
         </Grid>
 
         <Grid container spacing={2} marginTop={2}>
-          <Grid item xl={12}>
+          <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
             <Paper
               sx={{
                 display: "flex",
