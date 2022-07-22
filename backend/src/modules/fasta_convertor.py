@@ -13,7 +13,7 @@ class fasta_convertor:
             row = "".join([a for a in row if a in self.alphabet or a.upper() in self.alphabet])
             row = row.upper()
             if len(row) > 0:
-                res = ">sequence " + str(i) + "\n" + "\n".join(
+                res = ">sequence_" + str(i) + "\n" + "\n".join(
                     [row[y - self.limit:y] for y in range(self.limit, len(row) + self.limit, self.limit)]
                     ) + "\n"
                 self.fasta_text += res
