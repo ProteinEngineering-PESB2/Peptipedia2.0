@@ -354,6 +354,6 @@ class database:
                                     con=self.conn).values[0][0]
         not_predicted = all - predicted - labeled
         return {
-            "values": ["Peptides with known activity", "Peptides with activity predicted", "Peptides without activity information"],
-            "labels": [int(labeled), int(predicted), int(not_predicted)]
+            "labels": ["Peptides with known activity", "Peptides with activity predicted", "Peptides without activity information"],
+            "values": [int(labeled), int(predicted), int(not_predicted)]
         }
