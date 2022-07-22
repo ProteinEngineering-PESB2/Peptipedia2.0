@@ -27,7 +27,7 @@ export default function Database() {
       <>
         <BackdropComponent open={openBackdrop} percentage={percentage} />
         <Box>
-          <SectionTitle title="Database" />
+          <SectionTitle title="Database" description="" />
         </Box>
         <Downloads
           setOpenBackdrop={setOpenBackdrop}
@@ -51,17 +51,19 @@ export default function Database() {
                 boxShadow: 4,
               }}
             >
-              <Plot
-                data={dataPie}
-                layout={{
-                  autosize: true,
-                  title: "General Activity Statistic",
-                  height: 500,
-                }}
-                config={{ responsive: true }}
-                useResizeHandler={true}
-                style={{ width: "100%", height: "100%" }}
-              />
+              {dataPie.length > 0 && (
+                <Plot
+                  data={dataPie}
+                  layout={{
+                    autosize: true,
+                    title: "General Activity Statistic",
+                    height: 500,
+                  }}
+                  config={{ responsive: true }}
+                  useResizeHandler={true}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              )}
             </Paper>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>

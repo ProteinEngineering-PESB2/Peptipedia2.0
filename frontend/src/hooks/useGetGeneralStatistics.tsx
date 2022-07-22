@@ -7,6 +7,7 @@ export default function useGetGeneralStatistics() {
 
   const getGeneralStatistics = async () => {
     const res = await axios.get("/api/get_general_act_statistic/");
+
     const data = [
       {
         values: res.data.values,
@@ -14,6 +15,7 @@ export default function useGetGeneralStatistics() {
         type: "pie",
       },
     ];
+
     setDataPie(data);
   };
 
@@ -26,6 +28,6 @@ export default function useGetGeneralStatistics() {
   }, []);
 
   return {
-    dataPie
+    dataPie,
   };
 }

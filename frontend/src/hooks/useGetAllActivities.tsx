@@ -14,7 +14,92 @@ export default function useGetAllActivities() {
   const getSpecificActivity = async (id: string | number, name: string) => {
     try {
       const res = await axios.get(`/api/get_specific_act_statistics/${id}`);
-      setDataBoxplot(res.data.data);
+
+      console.log(res.data);
+
+      const charge = res.data["charge"];
+      const charge_density = res.data["charge_density"];
+      const isoelectric_point = res.data["isoelectric_point"];
+      const length = res.data["length"];
+      const molecular_weight = res.data["molecular_weight"];
+
+      const charge_trace = {
+        type: "box",
+        y: [
+          charge["min"],
+          charge["25%"],
+          charge["mean"],
+          charge["75%"],
+          charge["max"],
+        ],
+        name: "Charge",
+      };
+
+      const charge_density_trace = {
+        type: "box",
+        y: [
+          charge_density["min"],
+          charge_density["25%"],
+          charge_density["mean"],
+          charge_density["75%"],
+          charge_density["max"],
+        ],
+        xaxis: "x2",
+        yaxis: "y2",
+        name: "Charge Density",
+      };
+
+      const isoelectric_point_trace = {
+        type: "box",
+        y: [
+          isoelectric_point["min"],
+          isoelectric_point["25%"],
+          isoelectric_point["mean"],
+          isoelectric_point["75%"],
+          isoelectric_point["max"],
+        ],
+        xaxis: "x3",
+        yaxis: "y3",
+        name: "Isoelectric Point",
+      };
+
+      const length_trace = {
+        type: "box",
+        y: [
+          length["min"],
+          length["25%"],
+          length["mean"],
+          length["75%"],
+          length["max"],
+        ],
+        xaxis: "x4",
+        yaxis: "y4",
+        name: "Length",
+      };
+
+      const molecular_weight_trace = {
+        type: "box",
+        y: [
+          molecular_weight["min"],
+          molecular_weight["25%"],
+          molecular_weight["mean"],
+          molecular_weight["75%"],
+          molecular_weight["max"],
+        ],
+        xaxis: "x5",
+        yaxis: "y5",
+        name: "Molecular Weight",
+      };
+
+      const data = [
+        charge_trace,
+        charge_density_trace,
+        isoelectric_point_trace,
+        length_trace,
+        molecular_weight_trace,
+      ];
+
+      setDataBoxplot(data);
       setNameActivity(name);
     } catch (error) {
       toast.error("Server error");
