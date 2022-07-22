@@ -353,13 +353,7 @@ class database:
                                     where pha.is_predicted = false""",
                                     con=self.conn).values[0][0]
         not_predicted = all - predicted - labeled
-        print(all)
-        print(predicted)
-        print(labeled)
-        print(not_predicted)
         return {
-            "All peptides": int(all),
-            "Peptides with activity": int(labeled),
-            "Peptides with activity predicted": int(predicted),
-            "Peptides without activity information": int(not_predicted)
+            "values": ["Peptides with known activity", "Peptides with activity predicted", "Peptides without activity information"],
+            "labels": [int(labeled), int(predicted), int(not_predicted)]
         }
