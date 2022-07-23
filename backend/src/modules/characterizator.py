@@ -26,7 +26,6 @@ class gene_ontology(config_tool):
     def process(self):
         print(os.listdir("/temp_files/"))
         command = ["metastudent", "-i", self.temp_file_path, "-o", self.output_path, "--ontologies", self.ontologies]
-        print(command)
         subprocess.check_output(command)
         print(os.listdir("/temp_files/"))
         result = self.find_and_load_data()
