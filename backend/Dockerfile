@@ -1,53 +1,74 @@
-FROM python:3.9-buster
+FROM python:3.10-slim as base
 
-#Instalación de programas y librerías necesarias
-RUN apt-get update && \
-apt-get -y install --no-install-recommends libpath-tiny-perl && \
-apt-get -y install --no-install-recommends metastudent && \
-apt-get -y install --no-install-recommends clustalo && \
-apt-get -y install --no-install-recommends zip &&\
-apt-get -y install --no-install-recommends wget &&\
-apt-get -y install --no-install-recommends pp-popularity-contest && \
-rm -rf /var/lib/apt/lists/*
+FROM base as build
 
-WORKDIR /app
-COPY ./install_requisites ./install_requisites
-RUN pip3 install -r ./install_requisites/requirements.txt
+ARG DEBIAN_FRONTEND=noninteractive
 
-#Instalación de Hmmer y Pfamscan
-WORKDIR /app/install_requisites/hmmer-3.3.2
-RUN ls
-RUN chmod +x ./configure
-RUN ./configure
-RUN make
-RUN make install
-WORKDIR /app/install_requisites/hmmer-3.3.2/easel
-RUN make install
+RUN apt-get update && apt-get install -y wget curl build-essential cpio
 
-WORKDIR /app/install_requisites/databases
-RUN ls
+WORKDIR /work
+
+# Instalación de BLAST
+RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.13.0/ncbi-blast-2.13.0+-src.tar.gz
+RUN tar -xzf ncbi-blast-2.13.0+-src.tar.gz
+RUN cd ncbi-blast-2.13.0+-src/c++ && ./configure && make -j4 && make install
+
+# Instalación de Hmmer
+RUN wget http://eddylab.org/software/hmmer/hmmer-3.3.2.tar.gz
+RUN tar -xzf hmmer-3.3.2.tar.gz
+RUN cd hmmer-3.3.2 && ./configure && make -j4 && make install
+RUN make -C hmmer-3.3.2/easel install
+
+# Instalación de PfamScan
+RUN wget -T 10 http://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/PfamScan.tar.gz
+RUN tar -xzf PfamScan.tar.gz
+RUN cp -r PfamScan /usr/local/share
+# Arreglar permisos
+RUN find /usr/localshare/PfamScan -type f -exec chmod 644 {} \;
+RUN find /usr/localshare/PfamScan -type d -exec chmod 755 {} \;
+RUN ln -s /usr/local/share/PfamScan/pfam_scan.pl /usr/local/bin/
+# Dependencias de PfamScan
+RUN cd /usr/local/share/PfamScan && \
+	cpan Moose && \
+	cpan bioperl-1.4 && \
+	cpan IPC:Run
+
+# Instalación de Dependencias de Python
+RUN curl -sSL https://install.python-poetry.org | python3 -
+COPY pyproject.toml poetry.lock /src/
+WORKDIR /src
+RUN /root/.local/bin/poetry export --without-hashes --no-interaction --no-ansi -f requirements.txt -o requirements.txt
+RUN pip install -r requirements.txt
+
+
+FROM base as run
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+# Actualización de paquetes
+RUN apt-get update && apt-get upgrade -y
+
+# Instalación de programas y librerías necesarias
+RUN apt-get install -y --no-install-recommends \
+	zip pp-popularity-contest \
+	libpath-tiny-perl \
+	metastudent clustalo && \
+	rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /usr/local/ /usr/local/
+
+COPY install_requisites/databases /databases
+WORKDIR /databases/pfam
 RUN hmmpress Pfam-A.hmm
 
-#Instalación de Blast+ y Swissprot
-WORKDIR /app/install_requisites/blast
-RUN tar -xvf ncbi-blast-2.13.0+-src.tar.gz
+# Variables de entorno
+ENV BLASTDB="/databases/blastdb"
+ENV PFAM_DB="/databases/pfam"
+ENV PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}"
 
-#Instalación librerías bioperl
-RUN cpan Moose
-RUN cpan bioperl-1.4
-RUN cpan IPC:Run
-
-#Variables de entorno
-ENV PATH="/app/install_requisites/blast/ncbi-blast-2.12.0+/bin:${PATH}"
-ENV BLASTDB="/app/install_requisites/blastdb"
-
-ENV PERL5LIB="/app/install_requisites/PfamScan:${PERL5LIB}"
-ENV PATH="/app/install_requisites/PfamScan:${PATH}"
-
-RUN chmod 777 "/app/install_requisites/PfamScan/pfam_scan.pl"
-
+COPY ./src /app
 WORKDIR /app
-#Ejecución de la api
-COPY ./src /app/src
-WORKDIR /app/src
-CMD ["python3", "main.py"]
+
+# Ejecución de la api
+CMD ["sh","-c", "gunicorn wsgi:app -b 0.0.0.0 -w 4"]
