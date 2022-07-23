@@ -1,8 +1,8 @@
-import { Box, Grid, Paper } from "@mui/material";
+import { Box, Grid, Paper, Skeleton } from "@mui/material";
 import Layout from "../components/layout";
 import Plot from "react-plotly.js";
 import { useHandleSection } from "../hooks/useHandleSection";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Downloads from "../components/database/downloads";
 import BackdropComponent from "../components/backdrop_component";
 import SectionTitle from "../components/section_title";
@@ -19,7 +19,8 @@ export default function Database() {
 
   useHandleSection({ section: "database" });
   const { tableStatistics } = useGetDBStatistics();
-  const { tableActivitiies, nameActivity, dataBoxplot } = useGetAllActivities();
+  const { tableActivitiies, nameActivity, dataBoxplot, showSkeletonBoxplot } =
+    useGetAllActivities();
   const { dataPie } = useGetGeneralStatistics();
 
   return (
@@ -43,15 +44,15 @@ export default function Database() {
             xl={12}
             sx={{ marginTop: 3 }}
           >
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                boxShadow: 4,
-              }}
-            >
-              {dataPie.length > 0 && (
+            {dataPie.length > 0 ? (
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  boxShadow: 4,
+                }}
+              >
                 <Plot
                   data={dataPie}
                   layout={{
@@ -63,20 +64,33 @@ export default function Database() {
                   useResizeHandler={true}
                   style={{ width: "100%", height: "100%" }}
                 />
-              )}
-            </Paper>
+              </Paper>
+            ) : (
+              <Skeleton variant="rectangular" width="100%" height={500} />
+            )}
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>
-            <Box boxShadow={4}>
-              <DataTable table={tableStatistics} title="Database Statistics" />
-            </Box>
+            {tableStatistics.data.length > 0 ? (
+              <Box boxShadow={4}>
+                <DataTable
+                  table={tableStatistics}
+                  title="Database Statistics"
+                />
+              </Box>
+            ) : (
+              <Skeleton variant="rectangular" width="100%" height={700} />
+            )}
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>
-            <Box boxShadow={4}>
-              <DataTable table={tableActivitiies} title="All Activities" />
-            </Box>
+            {tableActivitiies.data.length > 0 ? (
+              <Box boxShadow={4}>
+                <DataTable table={tableActivitiies} title="All Activities" />
+              </Box>
+            ) : (
+              <Skeleton variant="rectangular" width="100%" height={700} />
+            )}
           </Grid>
-          {dataBoxplot.length > 0 && (
+          {dataBoxplot.length > 0 ? (
             <Grid
               item
               xs={12}
@@ -109,6 +123,20 @@ export default function Database() {
                 </Paper>
               </Box>
             </Grid>
+          ) : (
+            showSkeletonBoxplot && (
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={12}
+                sx={{ marginTop: 3 }}
+              >
+                <Skeleton variant="rectangular" width="100%" height={300} />
+              </Grid>
+            )
           )}
         </Grid>
       </>

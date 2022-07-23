@@ -10,12 +10,14 @@ export default function useGetAllActivities() {
     useState<ITable>(InitialValueTable);
   const [dataBoxplot, setDataBoxplot] = useState<any[]>([]);
   const [nameActivity, setNameActivity] = useState<string>("");
+  const [showSkeletonBoxplot, setShowSkeletonBoxplot] =
+    useState<boolean>(false);
 
   const getSpecificActivity = async (id: string | number, name: string) => {
     try {
-      const res = await axios.get(`/api/get_specific_act_statistics/${id}`);
+      setShowSkeletonBoxplot(true);
 
-      console.log(res.data);
+      const res = await axios.get(`/api/get_specific_act_statistics/${id}`);
 
       const charge = res.data["charge"];
       const charge_density = res.data["charge_density"];
@@ -101,6 +103,7 @@ export default function useGetAllActivities() {
 
       setDataBoxplot(data);
       setNameActivity(name);
+      setShowSkeletonBoxplot(false);
     } catch (error) {
       toast.error("Server error");
     }
@@ -141,5 +144,6 @@ export default function useGetAllActivities() {
     tableActivitiies,
     dataBoxplot,
     nameActivity,
+    showSkeletonBoxplot
   };
 }
