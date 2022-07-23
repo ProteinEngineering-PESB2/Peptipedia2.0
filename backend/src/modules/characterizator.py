@@ -1,3 +1,4 @@
+import subprocess
 import pandas as pd
 from random import random
 import os
@@ -24,9 +25,9 @@ class gene_ontology(config_tool):
         
     def process(self):
         print(os.listdir("/temp_files/"))
-        command= "metastudent -i {} -o {} --ontologies={}".format(self.temp_file_path, self.output_path, self.ontologies)
+        command = ["metastudent", "-i", self.temp_file_path, "-o", self.output_path, "--ontologies", self.ontologies]
         print(command)
-        os.system(command)
+        subprocess.check_output(command)
         print(os.listdir("/temp_files/"))
         result = self.find_and_load_data()
         return result

@@ -1,3 +1,4 @@
+import subprocess
 import os
 from random import random
 from modules.utils import config_tool
@@ -9,8 +10,8 @@ class alignment(config_tool):
         self.output_path = "{}/alignments/{}".format(static_folder, self.temp_file_path.replace(".fasta", ".align").split("/")[-1])
 
     def execute_blastp(self):
-        command = "blastp -db peptipedia/peptipedia -query {} -evalue 0.5 -out {}".format(self.temp_file_path, self.output_path)
-        os.system(command)
+        command = ["blastp", "-db", "peptipedia/peptipedia", "-query", self.temp_file_path, "-evalue", "0.5", "-out", self.output_path]
+        subprocess.check_output(command)
         return self.output_path
 
     def parse_response(self):

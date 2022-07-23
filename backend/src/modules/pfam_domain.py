@@ -14,7 +14,8 @@ class pfam(config_tool):
     
     def process(self):
         self.output_file = self.temp_csv_file.replace("fasta", "pfam")
-        os.system("pfam_scan.pl -dir /app/install_requisites/databases/ -fasta {} > {}".format(self.temp_csv_file, self.output_file))
+        command = ["pfam_scan.pl", "-dir", os.getenv("PFAM_DB"), "-fasta", self.temp_csv_file, ">", self.output_file]
+        subprocess.check_output(command)
         f = open(self.output_file, "r")
         text = f.read().split("\n\n")[-1]
         f.close()

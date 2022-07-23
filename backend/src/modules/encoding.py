@@ -1,3 +1,4 @@
+import subprocess
 import pandas as pd
 from random import random
 import os
@@ -49,6 +50,6 @@ class encoding(config_tool):
         return self.results_folder + ".zip"
     
     def compress(self):
-        command = "zip -r {}.zip {}/".format(self.results_folder, self.results_folder)
-        os.system(command)
+        command = ["zip", "-r", self.results_folder + ".zip", self.results_folder]
+        subprocess.check_output(command)
         

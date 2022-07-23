@@ -12,8 +12,8 @@ class multiple_sequence_alignment(config_tool):
         self.output_file = os.path.realpath("{}/{}.out".format(self.output_path, str(round(random()*10**20))))
 
     def execute_clustalo(self):
-        command = "clustalo -i {} -o {} --full".format(self.temp_file_path, self.output_file)
-        os.system(command)
+        command = ["clustalo", "-i", self.temp_file_path, "-o", self.output_file, "--full"]
+        subprocess.check_output(command)
 
         f = open(self.output_file, "r")
         output_text = f.read()
