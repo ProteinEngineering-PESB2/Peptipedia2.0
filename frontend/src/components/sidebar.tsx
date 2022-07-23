@@ -315,7 +315,7 @@ export default function Sidebar() {
                 fontWeight: section === "msa" ? "bold" : "normal",
               }}
             >
-              Multi Alignment Sequence
+              Multiple Sequence Alignment
             </Typography>
           </ListItemText>
         </ListItemButton>

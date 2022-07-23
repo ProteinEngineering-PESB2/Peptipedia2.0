@@ -26,7 +26,11 @@ const markdownText = `
   + **Input**: 
     + One sequence with fasta format.
     + Sequence with maxium length 150.
-  + **Output**: Blast Alignment.
+`;
+
+const placeholder = `
+>sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2
+MPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEPQPYPTLPPGTGRRIHSYRGHLWLFR
 `;
 
 export default function AlignmentSequenceForm({
@@ -103,8 +107,7 @@ export default function AlignmentSequenceForm({
           <TextFieldFasta
             data={data}
             setData={setData}
-            placeholder=">sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2
-MPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEPQPYPTLPPGTGRRIHSYRGHLWLFR"
+            placeholder={placeholder}
           />
           <InputFileFasta data={data} setData={setData} />
           <ButtonRun data={data} />

@@ -13,6 +13,29 @@ import InputFileFasta from "../form/input_file_fasta";
 import InputFileType from "../form/input_file_type";
 import TextFieldFasta from "../form/text_field_fasta";
 
+const markdownText = `
+  + **Input**: 
+    + Two or more sequences with fasta format.
+    + Sequence with maxium length 150.
+`;
+
+const placeholder = `
+>as:U24-ctenitoxin-Pn1a|sp:P84032|10 Toxin from venom of the spider Phoneutria nigriventer with unknown molecular target
+ARPKSDCEKHRESTEKTGTIMKLIPKCKENSDYEELQCYEDSKFCVCYDKKGHAASPISTKVKECGCYLKQKERKDSGRESAIIPQCEEDGKWAKKQLWEFNKSCWCVDEKGEQVGKIHHDCDSLKCE
+>as:delta-ctenitoxin-Asp2e|sp:P84028|16 Toxin from venom of the spider Ancylometes spec. with unknown molecular target
+ATCAGQDKPCKVNCDCCGERGECVCGGPCICRQGNVFIAWSKLMTCK
+>as:U1-ctenitoxin-Asp1a|sp:P84027|15 Toxin from venom of the spider Ancylometes spec. with unknown molecular target
+SDNEFPSGCIEFGKECDLDKGNCQCCRRNGYCSCAVN
+>as:omega-hexatoxin-Ar1a_1|20 Translation omega-hexatoxin-Ar1a insecticidal toxin (XenFW194) from Sydney funnel-web spider Atrax robustus.
+MNTATGFIVLLVLATVLGAIEAEDAVPDFEGGFASHAREDTVGGKIRRSSVCIPSGQPCPYNEHCCSGSCTYKENENGNTVQRCD
+>as:omega-hexatoxin-Ar1a_3|sp:P83580|20 Insecticidal toxin from Sydney funnel-web spider Atrax robustus
+SSVCIPSGQPCPYNEHCCSGSCTYKENENGNTVQRCD
+>as:omega-hexatoxin-Ar1b_1|gb:ABP63654|21 Translation omega-hexatoxin-Ar1b Insecticidal toxin (XenFW208) from Sydney funnel-web spider Atrax robustus.
+MNTATGFIVLLVLATVLGCIEAGESHVREDAMGRARRGACTPTGQPCPYNESCCSGSCQEQLNENGHTVKRCV
+>as:omega-hexatoxin-Ar1c|gb:ABP63655|22 Translation omega-hexatoxin-Ar1c Insecticidal toxin (XenFW137) from Sydney funnel-web spider Atrax robustus.
+MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCSQSCTFKENENANTVKRCD
+`;
+
 export default function EncodingForm() {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
@@ -64,10 +87,14 @@ export default function EncodingForm() {
     <>
       <BackdropComponent open={openBackdrop} />
       <BackdropComponent open={openBackdropFile} percentage={percentage} />
-      <FormContainer>
+      <FormContainer markdownText={markdownText}>
         <form onSubmit={onSubmit}>
           <InputFileType data={data} setData={setData} />
-          <TextFieldFasta data={data} setData={setData} />
+          <TextFieldFasta
+            data={data}
+            setData={setData}
+            placeholder={placeholder}
+          />
           <InputFileFasta data={data} setData={setData} />
           <Checkboxs
             data={data}

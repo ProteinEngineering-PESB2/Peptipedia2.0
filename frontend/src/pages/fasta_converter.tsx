@@ -21,6 +21,16 @@ import BackdropComponent from "../components/backdrop_component";
 import SectionTitle from "../components/section_title";
 import useLoadingComponent from "../hooks/useLoadingComponent";
 
+const placeholder = `
+ARPKSDCEKHRESTEKTGTIMKLIPKCKENSDYEELQCYEDSKFCVCYDKKGHAASPISTKVKECGCYLKQKERKDSGRESAIIPQCEEDGKWAKKQLWEFNKSCWCVDEKGEQVGKIHHDCDSLKCE
+ATCAGQDKPCKVNCDCCGERGECVCGGPCICRQGNVFIAWSKLMTCK
+SDNEFPSGCIEFGKECDLDKGNCQCCRRNGYCSCAVN
+MNTATGFIVLLVLATVLGAIEAEDAVPDFEGGFASHAREDTVGGKIRRSSVCIPSGQPCPYNEHCCSGSCTYKENENGNTVQRCD
+SSVCIPSGQPCPYNEHCCSGSCTYKENENGNTVQRCD
+MNTATGFIVLLVLATVLGCIEAGESHVREDAMGRARRGACTPTGQPCPYNESCCSGSCQEQLNENGHTVKRCV
+MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCSQSCTFKENENANTVKRCD
+`;
+
 export default function FastaConverter() {
   const [sequences, setSequences] = useState<string>("");
   const [newSequences, setNewSequences] = useState<string>("");
@@ -76,6 +86,7 @@ export default function FastaConverter() {
               <TextField
                 fullWidth
                 label="Enter sequences"
+                placeholder={placeholder}
                 multiline
                 rows={28}
                 value={sequences}
