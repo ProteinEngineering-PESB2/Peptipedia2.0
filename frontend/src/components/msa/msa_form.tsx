@@ -34,7 +34,7 @@ MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCSQSCTFKENENANTVKRCD
 
 const markdownText = `
   + **Input**: 
-    + Two or more sequences with fasta format.
+    + Two or more amino acid sequences with fasta format.
     + Sequences with maxium length 150.
 `;
 

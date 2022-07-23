@@ -20,7 +20,7 @@ export default function FormContainer({ children, markdownText }: Props) {
           flexDirection: "column",
         }}
       >
-        <Box marginBottom={0} sx={{ display: "flex", justifyContent: "end" }}>
+        <Box marginBottom={1} sx={{ display: "flex", justifyContent: "end" }}>
           <HelpCenterIcon
             sx={{ fontSize: "2rem" }}
             color="primary"

@@ -34,6 +34,14 @@ interface Props {
   setProperty: Dispatch<SetStateAction<string>>;
 }
 
+const markdownText = `
+  + **Input**: 
+    + CSV File.
+    + **Columns**: id - sequence - target.
+    + 200 or more amino acid sequences.
+    + Sequences with maxium length 150.
+`;
+
 export default function SupervisedLearningForm({
   setResultClassification,
   setResultRegression,
@@ -114,7 +122,7 @@ export default function SupervisedLearningForm({
       <BackdropComponent open={openBackdrop} />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={9} lg={6} xl={4}>
-          <FormContainer>
+          <FormContainer markdownText={markdownText}>
             <form onSubmit={handleSubmit}>
               <InputFileCSV data={data} setData={setData} />
               <Grid container spacing={2} marginTop={1}>

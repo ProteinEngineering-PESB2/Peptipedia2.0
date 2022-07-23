@@ -18,7 +18,7 @@ interface Props {
 
 const markdownText = `
   + **Input**: 
-    + One or more sequences with fasta format.
+    + One or more amino acid sequences with fasta format.
     + Sequence with maxium length 150.
 `;
 

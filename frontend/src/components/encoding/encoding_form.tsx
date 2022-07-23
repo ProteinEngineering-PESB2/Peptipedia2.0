@@ -15,7 +15,7 @@ import TextFieldFasta from "../form/text_field_fasta";
 
 const markdownText = `
   + **Input**: 
-    + Two or more sequences with fasta format.
+    + Two or more amino acid sequences with fasta format.
     + Sequence with maxium length 150.
 `;
 
