@@ -6,9 +6,10 @@ import { PostData } from "../../utils/interfaces";
 interface Props {
   data: PostData;
   setData: Dispatch<SetStateAction<PostData>>;
+  placeholder: string;
 }
 
-export default function TextFieldFasta({ data, setData }: Props) {
+export default function TextFieldFasta({ data, setData, placeholder }: Props) {
   const handleChangeFastaText = (e: ChangeEvent<HTMLInputElement>): void => {
     setData({ ...data, fastaText: e.target.value });
   };
@@ -19,6 +20,7 @@ export default function TextFieldFasta({ data, setData }: Props) {
         label="Enter Amino Acid sequences"
         multiline
         rows={11}
+        placeholder={placeholder}
         sx={{ width: "100%" }}
         value={data.fastaText}
         onChange={handleChangeFastaText}

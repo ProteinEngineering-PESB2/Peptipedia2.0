@@ -22,6 +22,13 @@ interface Props {
   setSequences: Dispatch<SetStateAction<IAlign[]>>;
 }
 
+const markdownText = `
+  + **Input**: 
+    + One sequence with fasta format.
+    + Sequence with maxium length 150.
+  + **Output**: Blast Alignment.
+`;
+
 export default function AlignmentSequenceForm({
   setPath,
   setTable,
@@ -90,10 +97,15 @@ export default function AlignmentSequenceForm({
   return (
     <>
       <BackdropComponent open={openBackdrop} />
-      <FormContainer>
+      <FormContainer markdownText={markdownText}>
         <form onSubmit={onSubmit}>
           <InputFileType data={data} setData={setData} />
-          <TextFieldFasta data={data} setData={setData} />
+          <TextFieldFasta
+            data={data}
+            setData={setData}
+            placeholder=">sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2
+MPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEPQPYPTLPPGTGRRIHSYRGHLWLFR"
+          />
           <InputFileFasta data={data} setData={setData} />
           <ButtonRun data={data} />
         </form>

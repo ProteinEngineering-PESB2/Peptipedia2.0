@@ -20,7 +20,10 @@ export default function AdvancedSearch() {
     <Layout>
       <>
         <BackdropComponent open={openBackdrop} />
-        <SectionTitle title="Advanced Search" />
+        <SectionTitle
+          title="Advanced Search"
+          description="Advanced Search for the Peptipedia Database"
+        />
 
         <AdvancedSearchForm
           queries={queries}
