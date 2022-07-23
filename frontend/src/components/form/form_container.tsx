@@ -20,20 +20,22 @@ export default function FormContainer({ children, markdownText }: Props) {
           flexDirection: "column",
         }}
       >
-        <Box marginBottom={1} sx={{ display: "flex", justifyContent: "end" }}>
-          <HelpCenterIcon
-            sx={{ fontSize: "2rem" }}
-            color="primary"
-            data-tip=""
-            data-for="test"
-          />
-          <ReactTooltip id="test" multiline={true} resizeHide={true}>
-            <ReactMarkdown
-              children={markdownText}
-              remarkPlugins={[remarkGfm]}
+        {markdownText.length > 0 && (
+          <Box marginBottom={1} sx={{ display: "flex", justifyContent: "end" }}>
+            <HelpCenterIcon
+              sx={{ fontSize: "2rem" }}
+              color="primary"
+              data-tip=""
+              data-for="test"
             />
-          </ReactTooltip>
-        </Box>
+            <ReactTooltip id="test" multiline={true} resizeHide={true}>
+              <ReactMarkdown
+                children={markdownText}
+                remarkPlugins={[remarkGfm]}
+              />
+            </ReactTooltip>
+          </Box>
+        )}
         {children}
       </Paper>
     </Box>

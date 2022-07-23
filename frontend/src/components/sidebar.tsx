@@ -95,7 +95,7 @@ export default function Sidebar() {
                 fontWeight: section === "team" ? "bold" : "normal",
               }}
             >
-              Team
+              Peptipedia Team
             </Typography>
           </ListItemText>
         </ListItemButton>
@@ -239,7 +239,7 @@ export default function Sidebar() {
                 fontWeight: section === "fasta-converter" ? "bold" : "normal",
               }}
             >
-              Fasta Converter
+              Convert to Fasta
             </Typography>
           </ListItemText>
         </ListItemButton>

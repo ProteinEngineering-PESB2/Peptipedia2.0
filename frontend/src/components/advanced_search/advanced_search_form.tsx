@@ -1,4 +1,12 @@
-import { Grid, Autocomplete, Checkbox, TextField, Button } from "@mui/material";
+import {
+  Grid,
+  Autocomplete,
+  Checkbox,
+  TextField,
+  Button,
+  Paper,
+  Box,
+} from "@mui/material";
 import {
   ChangeEvent,
   Dispatch,
@@ -7,6 +15,8 @@ import {
   useState,
 } from "react";
 import FormContainer from "../form/form_container";
+import TestGif from "../../assets/test.gif";
+import { Player } from "video-react";
 
 // Fields
 import { fields } from "./fields";
@@ -34,7 +44,6 @@ import useGetGeneOntologoies from "../../hooks/useGetGeneOntologoies";
 import useInitialParamsAdvancedSearch from "../../hooks/useInitialParamsAdvancedSearch";
 import axios from "axios";
 import toast from "react-hot-toast";
-import BackdropComponent from "../backdrop_component";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -90,7 +99,7 @@ export default function AdvancedSearchForm({
     setValueIsoelectricPoint,
     setValueLength,
     setValueMolecularWeight,
-    setValueSequence
+    setValueSequence,
   } = useValueFieldAdvancedSearch();
 
   const {
@@ -121,7 +130,7 @@ export default function AdvancedSearchForm({
     setLogicOperatorValueForIsoelectricPoint,
     setLogicOperatorValueForMolecularWeight,
     setLogicOperatorValueForPfam,
-    setLogicOperatorValueForSequence
+    setLogicOperatorValueForSequence,
   } = useValueLogicOperator();
 
   const { databases } = useGetDatabases();
@@ -450,7 +459,7 @@ export default function AdvancedSearchForm({
     <>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={9} lg={6} xl={4}>
-          <FormContainer>
+          <FormContainer markdownText="">
             <form>
               <Autocomplete
                 multiple
@@ -711,6 +720,18 @@ export default function AdvancedSearchForm({
               </Button>
             </form>
           </FormContainer>
+        </Grid>
+        <Grid item xs={12} sm={12} md={3} lg={6} xl={8}>
+          <Box marginTop={3} boxShadow={4}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              {/* <Player
+              playsInline
+              src={TestGif}
+              autoPlay
+            /> */}
+              {/* <img src={TestGif} alt="Advanced Search Tutorial" width="100%" height="100%" /> */}
+            </Paper>
+          </Box>
         </Grid>
       </Grid>
     </>

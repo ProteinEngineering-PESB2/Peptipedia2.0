@@ -73,7 +73,7 @@ export default function ClusteringContent({ result }: Props) {
                     <TableCell>Davies-Bouldin Index</TableCell>
                   )}
                   {result.performance.siluetas !== null && (
-                    <TableCell>Davies-Bouldin Index</TableCell>
+                    <TableCell>Silhouette Coefficient</TableCell>
                   )}
                 </TableRow>
               </TableHead>

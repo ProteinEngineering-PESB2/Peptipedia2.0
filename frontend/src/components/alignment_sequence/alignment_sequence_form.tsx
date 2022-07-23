@@ -79,7 +79,7 @@ export default function AlignmentSequenceForm({
           );
         }
 
-        table.columns.push("Options");
+        table.columns.push("details");
 
         setPath(path);
         setTable({
