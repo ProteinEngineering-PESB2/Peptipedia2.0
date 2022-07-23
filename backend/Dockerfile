@@ -44,6 +44,8 @@ ENV BLASTDB="/app/install_requisites/blastdb"
 ENV PERL5LIB="/app/install_requisites/PfamScan:${PERL5LIB}"
 ENV PATH="/app/install_requisites/PfamScan:${PATH}"
 
+RUN chmod 777 "/app/install_requisites/PfamScan/pfam_scan.pl"
+
 WORKDIR /app
 #Ejecución de la api
 COPY ./src /app/src
