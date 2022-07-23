@@ -1,29 +1,46 @@
 import os
 from random import random
+
 import pandas as pd
 from Bio import SeqIO
+
 from modules.database import database
-import re
+
 
 class config_tool:
-    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1, is_fasta = True):
+    def __init__(
+        self,
+        data,
+        temp_folder,
+        is_file,
+        is_json,
+        max_sequences,
+        min_number_sequences=1,
+        is_fasta=True,
+    ):
         self.data = data
         self.temp_folder = temp_folder
-        self.temp_file_path = "{}/{}".format(self.temp_folder, str(round(random()*10**20)))
-        if(is_fasta):
-            self.temp_file_path+=".fasta"
+        self.temp_file_path = "{}/{}".format(
+            self.temp_folder, str(round(random() * 10**20))
+        )
+        if is_fasta:
+            self.temp_file_path += ".fasta"
         else:
-            self.temp_file_path+=".csv"
+            self.temp_file_path += ".csv"
 
-        if(is_json):
+        if is_json:
             self.create_file()
-        elif(is_file):
+        elif is_file:
             self.save_file()
-            
-        if(is_fasta):
-            self.check = verify_fasta(self.temp_file_path, max_sequences, min_number_sequences).verify()
+
+        if is_fasta:
+            self.check = verify_fasta(
+                self.temp_file_path, max_sequences, min_number_sequences
+            ).verify()
         else:
-            self.check = verify_csv(self.temp_file_path, max_sequences, min_number_sequences).verify()
+            self.check = verify_csv(
+                self.temp_file_path, max_sequences, min_number_sequences
+            ).verify()
 
     def create_file(self):
         f = open(self.temp_file_path, "w")
@@ -43,10 +60,12 @@ class config_tool:
         f = open(self.temp_file_path, "r")
         data = f.read()
         f.close()
-        self.records = [">"+i for i in data.split(">")[1:]]
+        self.records = [">" + i for i in data.split(">")[1:]]
         self.list_files = []
         self.ids = []
-        self.temp_csv_file = self.temp_folder + "/" + str(round(random()*10**20)) + ".fasta"
+        self.temp_csv_file = (
+            self.temp_folder + "/" + str(round(random() * 10**20)) + ".fasta"
+        )
         f = open(self.temp_csv_file, "w")
         for record in self.records:
             self.list_files.append(self.temp_csv_file)
@@ -55,8 +74,8 @@ class config_tool:
         f.close()
 
     def create_df(self, fasta):
-        #Toma un texto fasta y lo transforma en un dataframe
-        self.records = [">"+i for i in fasta.split(">")[1:]]
+        # Toma un texto fasta y lo transforma en un dataframe
+        self.records = [">" + i for i in fasta.split(">")[1:]]
         data = []
         for i in self.records:
             splitted = i.split("\n")
@@ -66,8 +85,9 @@ class config_tool:
             data.append(row)
         return pd.DataFrame(data)
 
+
 class verify_csv:
-    def __init__(self, path, max_number_sequences, min_number_sequences = 1):
+    def __init__(self, path, max_number_sequences, min_number_sequences=1):
         self.path = path
         self.max_number_sequences = max_number_sequences
         self.min_number_sequences = min_number_sequences
@@ -89,15 +109,31 @@ class verify_csv:
                                     if good_length[0]:
                                         return {"status": "success"}
                                     else:
-                                        return {"status": "error", "description": "Protein length invalid (id={})".format(good_length[1])}
+                                        return {
+                                            "status": "error",
+                                            "description": "Protein length invalid (id={})".format(
+                                                good_length[1]
+                                            ),
+                                        }
                                 else:
-                                    return {"status": "error", "description": "Not proteins (id={})".format(res_is_protein[1])}
+                                    return {
+                                        "status": "error",
+                                        "description": "Not proteins (id={})".format(
+                                            res_is_protein[1]
+                                        ),
+                                    }
                             else:
-                                return {"status": "error", "description": "Too few sequences"}
+                                return {
+                                    "status": "error",
+                                    "description": "Too few sequences",
+                                }
                         else:
-                            return {"status": "error", "description": "Too much sequences"}
+                            return {
+                                "status": "error",
+                                "description": "Too much sequences",
+                            }
                     else:
-                        return {"status": "error", "description": "Duplicate ids"}           
+                        return {"status": "error", "description": "Duplicate ids"}
                 else:
                     return {"status": "error", "description": "Incorrect columns"}
             else:
@@ -105,7 +141,7 @@ class verify_csv:
         else:
             return {"status": "error", "description": "Not a csv file / ASCII error"}
 
-    def unique_ids(self): 
+    def unique_ids(self):
         ids = self.data.id
         unique_ids = self.data.id.unique()
         if len(ids) == len(unique_ids):
@@ -119,7 +155,7 @@ class verify_csv:
 
     def is_csv(self):
         return any(self.data)
-    
+
     def less_than_n(self):
         length = len(self.data)
         if length <= self.max_number_sequences:
@@ -133,10 +169,56 @@ class verify_csv:
         return False
 
     def is_protein(self):
-        alphabet = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y',
-                    'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y',
-                    'X', 'B', 'Z','J',
-                    'x', 'b', 'z' 'j', '*']
+        alphabet = [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "K",
+            "L",
+            "M",
+            "N",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "V",
+            "W",
+            "Y",
+            "a",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "k",
+            "l",
+            "m",
+            "n",
+            "p",
+            "q",
+            "r",
+            "s",
+            "t",
+            "v",
+            "w",
+            "y",
+            "X",
+            "B",
+            "Z",
+            "J",
+            "x",
+            "b",
+            "z" "j",
+            "*",
+        ]
         for index, row in self.data.iterrows():
             sequence = row.sequence
             for letter in sequence:
@@ -158,9 +240,9 @@ class verify_csv:
             return True
         return False
 
-class verify_fasta:
 
-    def __init__(self, path, max_number_sequences, min_number_sequences = 1):
+class verify_fasta:
+    def __init__(self, path, max_number_sequences, min_number_sequences=1):
         self.path = path
         self.max_number_sequences = max_number_sequences
         self.min_number_sequences = min_number_sequences
@@ -181,9 +263,19 @@ class verify_fasta:
                             if good_length[0]:
                                 return {"status": "success"}
                             else:
-                                return {"status": "error", "description": "Protein length invalid (id={})".format(good_length[1])}
+                                return {
+                                    "status": "error",
+                                    "description": "Protein length invalid (id={})".format(
+                                        good_length[1]
+                                    ),
+                                }
                         else:
-                            return {"status": "error", "description": "Not proteins (id={})".format(res_is_protein[1])}
+                            return {
+                                "status": "error",
+                                "description": "Not proteins (id={})".format(
+                                    res_is_protein[1]
+                                ),
+                            }
                     else:
                         return {"status": "error", "description": "Too few sequences"}
                 else:
@@ -193,7 +285,6 @@ class verify_fasta:
         else:
             return {"status": "error", "description": "Not a fasta file / ASCII error"}
 
-
     def unique_ids(self):
         ids = [sequence.id for sequence in self.fasta]
         if len(set(ids)) == len(ids):
@@ -202,7 +293,7 @@ class verify_fasta:
 
     def is_fasta(self):
         return any(self.fasta)
-    
+
     def less_than_n(self):
         length = len(self.fasta)
         if length <= self.max_number_sequences:
@@ -216,10 +307,56 @@ class verify_fasta:
         return False
 
     def is_protein(self):
-        alphabet = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y',
-                    'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'y',
-                    'X', 'B', 'Z','J',
-                    'x', 'b', 'z' 'j', '*']
+        alphabet = [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "K",
+            "L",
+            "M",
+            "N",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "V",
+            "W",
+            "Y",
+            "a",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "k",
+            "l",
+            "m",
+            "n",
+            "p",
+            "q",
+            "r",
+            "s",
+            "t",
+            "v",
+            "w",
+            "y",
+            "X",
+            "B",
+            "Z",
+            "J",
+            "x",
+            "b",
+            "z" "j",
+            "*",
+        ]
         for record in self.fasta:
             for letter in str(record.seq):
                 if letter not in alphabet:
@@ -233,6 +370,7 @@ class verify_fasta:
                 return False, row.id
         return True, None
 
+
 class interface:
     def parse_information_no_options(self, request):
         try:
@@ -245,14 +383,14 @@ class interface:
             post_file = None
         is_json = False
         is_file = False
-        if(post_data != None):
+        if post_data != None:
             data = post_data["data"]
             is_json = True
-        elif(post_file != None):
+        elif post_file != None:
             data = post_file["file"]
             is_file = True
         return data, is_json, is_file
-    
+
     def parse_information_with_options(self, request):
         try:
             post_data = request.json
@@ -263,12 +401,12 @@ class interface:
         except:
             post_file = None
 
-        if(post_data != None):
+        if post_data != None:
             is_json = True
             is_file = False
             data = post_data["data"]
             options = post_data["options"]
-        elif(post_file != None):
+        elif post_file != None:
             is_json = False
             is_file = True
             file = request.files

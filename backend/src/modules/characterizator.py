@@ -1,12 +1,25 @@
-import subprocess
-import pandas as pd
-from random import random
 import os
+import subprocess
+
+import pandas as pd
+
 from modules.utils import config_tool
 
+
 class gene_ontology(config_tool):
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+    def __init__(
+        self,
+        data,
+        options,
+        temp_folder,
+        is_file,
+        is_json,
+        max_sequences,
+        min_number_sequences=1,
+    ):
+        super().__init__(
+            data, temp_folder, is_file, is_json, max_sequences, min_number_sequences
+        )
         self.output_path = self.temp_file_path.replace(".fasta", ".result")
         self.molecular_function = options["molecular_function"]
         self.biological_process = options["biological_process"]
@@ -15,17 +28,25 @@ class gene_ontology(config_tool):
 
     def parse_ontologies(self):
         ontologies = []
-        if(self.molecular_function):
+        if self.molecular_function:
             ontologies.append("MFO")
-        if(self.biological_process):
+        if self.biological_process:
             ontologies.append("BPO")
-        if(self.celular_component):
+        if self.celular_component:
             ontologies.append("CCO")
         return ",".join(ontologies)
-        
+
     def process(self):
         print(os.listdir("/temp_files/"))
-        command = ["metastudent", "-i", self.temp_file_path, "-o", self.output_path, "--ontologies", self.ontologies]
+        command = [
+            "metastudent",
+            "-i",
+            self.temp_file_path,
+            "-o",
+            self.output_path,
+            "--ontologies",
+            self.ontologies,
+        ]
         subprocess.check_output(command)
         print(os.listdir("/temp_files/"))
         result = self.find_and_load_data()
@@ -33,10 +54,13 @@ class gene_ontology(config_tool):
 
     def find_and_load_data(self):
         results = []
-        if(self.molecular_function):
+        if self.molecular_function:
             try:
                 mf = pd.read_csv(self.output_path + ".MFO.txt", header=None, sep="\t")
-                mf.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
+                mf.rename(
+                    columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
+                    inplace=True,
+                )
                 mfs = mf.id_seq.unique()
                 mf_array = []
                 for mfi in mfs:
@@ -47,10 +71,13 @@ class gene_ontology(config_tool):
                 print(e)
                 print("No result for molecular function")
 
-        if(self.biological_process):
+        if self.biological_process:
             try:
                 bp = pd.read_csv(self.output_path + ".BPO.txt", header=None, sep="\t")
-                bp.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
+                bp.rename(
+                    columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
+                    inplace=True,
+                )
                 bps = mf.id_seq.unique()
                 bp_array = []
                 for bpi in bps:
@@ -60,10 +87,13 @@ class gene_ontology(config_tool):
             except Exception as e:
                 print(e)
                 print("No result for biological process")
-        if(self.celular_component):
+        if self.celular_component:
             try:
                 cc = pd.read_csv(self.output_path + ".CCO.txt", header=None, sep="\t")
-                cc.rename(columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"}, inplace=True)
+                cc.rename(
+                    columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
+                    inplace=True,
+                )
                 ccs = cc.id_seq.unique()
                 cc_array = []
                 for cci in ccs:

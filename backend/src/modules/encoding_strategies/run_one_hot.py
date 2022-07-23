@@ -1,10 +1,10 @@
-import pandas as pd
-import multiprocessing as mp
 import numpy as np
+import pandas as pd
+
 from modules.encoding_strategies.encoder import encoder
 
-class run_one_hot(encoder):
 
+class run_one_hot(encoder):
     def __init__(self, dataset):
         super().__init__(dataset)
         self.residues.sort()

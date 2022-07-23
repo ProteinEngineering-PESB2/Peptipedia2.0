@@ -1,17 +1,30 @@
-from modlamp.descriptors import GlobalDescriptor
-from random import random
-from Bio import SeqIO
 import os
+
+from Bio import SeqIO
+from modlamp.descriptors import GlobalDescriptor
+
 from modules.utils import config_tool
 
+
 class modlamp_descriptor(config_tool):
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
+    def __init__(
+        self,
+        data,
+        options,
+        temp_folder,
+        is_file,
+        is_json,
+        max_sequences,
+        min_number_sequences=1,
+    ):
         self.length = options["length"]
         self.molecular_weight = options["molecular_weight"]
         self.isoelectric_point = options["isoelectric_point"]
         self.charge_density = options["charge_density"]
         self.charge = options["charge"]
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+        super().__init__(
+            data, temp_folder, is_file, is_json, max_sequences, min_number_sequences
+        )
 
     def execute_modlamp(self):
         records = SeqIO.parse(self.temp_file_path, "fasta")
@@ -20,19 +33,21 @@ class modlamp_descriptor(config_tool):
             sequence = str(record.seq)
             dict_response = {}
             dict_response["id"] = record.id
-            if(self.length):
+            if self.length:
                 dict_response["length"] = len(sequence)
-            if(self.molecular_weight):
+            if self.molecular_weight:
                 dict_response["molecular_weight"] = self.get_mw(sequence)
-            if(self.isoelectric_point):
-                dict_response["isoelectric_point"] = self.get_isoelectric_point(sequence)
-            if(self.charge_density):
+            if self.isoelectric_point:
+                dict_response["isoelectric_point"] = self.get_isoelectric_point(
+                    sequence
+                )
+            if self.charge_density:
                 dict_response["charge_density"] = self.get_charge_density(sequence)
-            if(self.charge):
+            if self.charge:
                 dict_response["charge"] = self.get_charge(sequence)
             response.append(dict_response)
         return response
-        
+
     def get_mw(self, sequence):
         try:
             desc = GlobalDescriptor([sequence])

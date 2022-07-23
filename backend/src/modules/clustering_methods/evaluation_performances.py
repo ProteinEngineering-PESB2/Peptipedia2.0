@@ -1,12 +1,14 @@
 from sklearn import metrics
 
-class evaluationClustering:
 
+class evaluationClustering:
     def get_metrics(self, dataSet, labelsResponse):
 
         try:
             calinski = metrics.calinski_harabasz_score(dataSet, labelsResponse)
-            siluetas = metrics.silhouette_score(dataSet, labelsResponse, metric='euclidean')
+            siluetas = metrics.silhouette_score(
+                dataSet, labelsResponse, metric="euclidean"
+            )
             davies = metrics.davies_bouldin_score(dataSet, labelsResponse)
             response = [calinski, siluetas, davies]
 
@@ -17,5 +19,5 @@ class evaluationClustering:
             davies = "ERROR"
             response = [calinski, siluetas, davies]
             pass
-            
+
         return response
