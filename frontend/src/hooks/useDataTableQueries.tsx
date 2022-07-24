@@ -52,6 +52,8 @@ export default function useDataTableQueries({
     sort: false,
     search: false,
     filter: false,
+    download: false,
+    print: false,
     viewColumns: false,
     onTableChange: (action: any, tableState: any) => {
       if (action === "changePage") {

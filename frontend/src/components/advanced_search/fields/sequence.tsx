@@ -6,11 +6,11 @@ import MenuItem from "@mui/material/MenuItem";
 import { ChangeEvent } from "react";
 
 interface Props {
-    valueSequence: string
-    handleChangeValueSequence: (e: ChangeEvent<HTMLInputElement>) => void
-    logicOperatorValueForSequence: string
-    handleChangeLogicOperatorForSequence: (e: SelectChangeEvent<string>) => void
-    index: number
+  valueSequence: string;
+  handleChangeValueSequence: (e: ChangeEvent<HTMLInputElement>) => void;
+  logicOperatorValueForSequence: string;
+  handleChangeLogicOperatorForSequence: (e: SelectChangeEvent<string>) => void;
+  index: number;
 }
 
 const SequenceField = ({
@@ -55,6 +55,7 @@ const SequenceField = ({
                   label="Enter Amino Acid sequences"
                   multiline
                   rows={7}
+                  placeholder="MPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEPQPYPTLPPGTGRRIHSYRGHLWLFR"
                   sx={{ width: "100%" }}
                   value={valueSequence}
                   onChange={handleChangeValueSequence}

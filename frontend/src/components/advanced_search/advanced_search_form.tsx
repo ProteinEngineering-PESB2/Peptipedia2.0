@@ -15,8 +15,6 @@ import {
   useState,
 } from "react";
 import FormContainer from "../form/form_container";
-import TestGif from "../../assets/test.gif";
-import { Player } from "video-react";
 
 // Fields
 import { fields } from "./fields";
@@ -57,6 +55,13 @@ interface Props {
   setCounts: Dispatch<SetStateAction<number[]>>;
   setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
 }
+
+const markdownText = `
+  + **Sequence Input**: 
+    + One amino acid sequence without fasta format.
+    + Only the sequence
+    + Sequence with maxium length 150.
+`;
 
 export default function AdvancedSearchForm({
   queries,
@@ -459,7 +464,7 @@ export default function AdvancedSearchForm({
     <>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={9} lg={6} xl={4}>
-          <FormContainer markdownText="">
+          <FormContainer markdownText={markdownText}>
             <form>
               <Autocomplete
                 multiple
@@ -663,6 +668,7 @@ export default function AdvancedSearchForm({
                 multiline
                 rows={5}
                 label="Query"
+                placeholder="Example: (#1 AND #2) AND (#2 OR #3)"
                 disabled={selectedOptions.length === 0 ? false : true}
                 value={queryText}
                 onChange={handleChangeQueryText}
@@ -720,18 +726,6 @@ export default function AdvancedSearchForm({
               </Button>
             </form>
           </FormContainer>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={6} xl={8}>
-          <Box marginTop={3} boxShadow={4}>
-            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-              {/* <Player
-              playsInline
-              src={TestGif}
-              autoPlay
-            /> */}
-              {/* <img src={TestGif} alt="Advanced Search Tutorial" width="100%" height="100%" /> */}
-            </Paper>
-          </Box>
         </Grid>
       </Grid>
     </>
