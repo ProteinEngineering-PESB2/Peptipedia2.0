@@ -4,8 +4,8 @@ import os
 from modules.utils import config_tool
 
 class gene_ontology(config_tool):
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+    def __init__(self, data, options, is_file, is_json, config):
+        super().__init__("gene_ontology", data, config, is_file, is_json)
         self.output_path = self.temp_file_path.replace(".fasta", ".result")
         self.molecular_function = options["molecular_function"]
         self.biological_process = options["biological_process"]

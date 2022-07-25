@@ -5,10 +5,10 @@ import numpy as np
 from modules.utils import config_tool
 
 class frequency_analysis(config_tool):
-    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+    def __init__(self, data, is_file, is_json, config):
+        super().__init__("frequency", data, config, is_file, is_json)
         self.canonical_residues = ['A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V']
-        self.output_path = "{}/frequency/{}".format(self.temp_folder, self.temp_file_path.replace(".fasta", ".json").split("/")[-1]) #deje la carpeta frequency para poder separar los resultados
+        self.output_path = "{}/frequency/{}".format(config["folders"]["temp_folder"], self.temp_file_path.replace(".fasta", ".json").split("/")[-1])
 
     def count_canonical_residues(self, sequence):
         sequence = sequence.upper()

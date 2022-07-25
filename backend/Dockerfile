@@ -48,6 +48,5 @@ RUN chmod 777 "/app/install_requisites/PfamScan/pfam_scan.pl"
 
 WORKDIR /app
 #Ejecución de la api
-COPY ./src /app/src
 WORKDIR /app/src
 CMD ["python3", "main.py"]

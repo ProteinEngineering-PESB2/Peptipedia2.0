@@ -1,15 +1,12 @@
-from random import random
 import os
-import subprocess
-import time
 import pandas as pd
 import re
 import json
 from modules.utils import config_tool
 
 class pfam(config_tool):
-    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+    def __init__(self, data, is_file, is_json, config):
+        super().__init__("pfam", data, config, is_file, is_json)
         self.create_csv_from_fasta()
     
     def process(self):

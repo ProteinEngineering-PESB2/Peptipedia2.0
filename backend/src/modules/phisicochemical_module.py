@@ -5,13 +5,13 @@ import os
 from modules.utils import config_tool
 
 class modlamp_descriptor(config_tool):
-    def __init__(self, data, options, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
+    def __init__(self, data, options, is_file, is_json, config):
         self.length = options["length"]
         self.molecular_weight = options["molecular_weight"]
         self.isoelectric_point = options["isoelectric_point"]
         self.charge_density = options["charge_density"]
         self.charge = options["charge"]
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+        super().__init__("phisicochemical", data, config, is_file, is_json)
 
     def execute_modlamp(self):
         records = SeqIO.parse(self.temp_file_path, "fasta")
