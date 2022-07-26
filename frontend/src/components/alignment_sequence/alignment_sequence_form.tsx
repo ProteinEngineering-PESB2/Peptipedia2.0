@@ -4,7 +4,7 @@ import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { IAlign, IOneAlign, ITable, PostData } from "../../utils/interfaces";
+import { IOneAlign, ITable, PostData } from "../../utils/interfaces";
 import {
   InitialValuePostData,
   InitialValueTable,
@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import BackdropComponent from "../backdrop_component";
 import { Button } from "@mui/material";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import { Link } from "react-router-dom";
 
 interface Props {
   setPath: Dispatch<SetStateAction<string>>;
@@ -66,11 +67,22 @@ export default function AlignmentSequenceForm({
       if (data.status === "error") {
         toast.error(data.description);
       } else {
+        console.log(data);
         const { path, table, aligns } = data;
 
         for (let row in table.data) {
           const id = table.data[row][0];
           const filter_aligns = aligns[id];
+
+          table.data[row][0] = (
+            <Link
+              to={`/peptide/${id}`}
+              target="_blank"
+              style={{ textDecoration: "none" }}
+            >
+              {id}
+            </Link>
+          );
 
           table.data[row].push(
             <Button
