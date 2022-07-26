@@ -110,7 +110,6 @@ export default function useDataTableQueries({
             <Link to={path} target="_blank">
               <Button variant="text" color="info">
                 <InfoIcon />
-                {/* <InfoIcon onClick={() => setPeptideID(res.data[d][0])} /> */}
               </Button>
             </Link>
           );
