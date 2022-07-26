@@ -12,6 +12,8 @@ export default function useGetAllActivities() {
   const [nameActivity, setNameActivity] = useState<string>("");
   const [showSkeletonBoxplot, setShowSkeletonBoxplot] =
     useState<boolean>(false);
+  const [loadingTableActivities, setLoadingTableActivities] =
+    useState<boolean>(true);
 
   const getSpecificActivity = async (id: string | number, name: string) => {
     try {
@@ -130,6 +132,7 @@ export default function useGetAllActivities() {
     }
 
     setTableActivities({ columns: ["activity", "peptides"], data: new_data });
+    setLoadingTableActivities(false);
   };
 
   useEffect(() => {
@@ -137,6 +140,7 @@ export default function useGetAllActivities() {
       getAllActivities();
     } catch (error) {
       toast.error("Server error");
+      setLoadingTableActivities(false);
     }
   }, []);
 
@@ -144,6 +148,7 @@ export default function useGetAllActivities() {
     tableActivitiies,
     dataBoxplot,
     nameActivity,
-    showSkeletonBoxplot
+    showSkeletonBoxplot,
+    loadingTableActivities,
   };
 }
