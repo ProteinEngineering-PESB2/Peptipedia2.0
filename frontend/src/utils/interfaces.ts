@@ -36,6 +36,12 @@ export interface IOneAlign {
 export interface IAlign {
   alignment: IOneAlign[];
   output_file: string;
+  distances_file: string;
+  distance_heatmap: {
+    x: string[];
+    y: string[];
+    z: number[][];
+  };
 }
 
 export interface IFormatDataPfam {
