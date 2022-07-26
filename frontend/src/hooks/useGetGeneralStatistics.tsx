@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 export default function useGetGeneralStatistics() {
   const [dataPie, setDataPie] = useState<any[]>([]);
+  const [loadingDataPie, setLoadingDataPie] = useState<boolean>(true)
 
   const getGeneralStatistics = async () => {
     const res = await axios.get("/api/get_general_act_statistic/");
@@ -17,6 +18,7 @@ export default function useGetGeneralStatistics() {
     ];
 
     setDataPie(data);
+    setLoadingDataPie(false)
   };
 
   useEffect(() => {
@@ -24,10 +26,12 @@ export default function useGetGeneralStatistics() {
       getGeneralStatistics();
     } catch (error) {
       toast.error("Server error");
+      setLoadingDataPie(false)
     }
   }, []);
 
   return {
     dataPie,
+    loadingDataPie
   };
 }

@@ -9,7 +9,10 @@ import useLoadingComponent from "../hooks/useLoadingComponent";
 import { IAlign } from "../utils/interfaces";
 
 export default function MultiAlignmentSequence() {
-  const [result, setResult] = useState<IAlign[]>([]);
+  const [result, setResult] = useState<IAlign>({
+    alignment: [],
+    output_file: "",
+  });
 
   useHandleSection({ section: "msa" });
   useLoadingComponent();
@@ -26,7 +29,7 @@ export default function MultiAlignmentSequence() {
 
         <MSAForm setResult={setResult} />
 
-        {result.length > 0 && <MSAContent result={result} />}
+        {result.alignment.length > 0 && <MSAContent result={result} />}
       </>
     </Layout>
   );

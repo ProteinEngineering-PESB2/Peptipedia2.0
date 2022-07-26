@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { IAlign } from "../utils/interfaces";
+import { IAlign, IOneAlign } from "../utils/interfaces";
 import { ProSeqViewer } from "proseqviewer/dist";
 
 interface Props {
-  sequences: IAlign[];
+  sequences: IOneAlign[];
 }
 
 const options = {

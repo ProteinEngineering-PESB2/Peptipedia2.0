@@ -3,7 +3,7 @@ import Plot from "react-plotly.js";
 interface Props {
   x: any[];
   y: number[];
-  title: string
+  title: string;
 }
 
 export default function BarChart({ x, y, title }: Props) {
@@ -24,11 +24,12 @@ export default function BarChart({ x, y, title }: Props) {
         height: 430,
         title: title,
         font: {
-          size: 15
+          size: 15,
         },
       }}
       config={{
-        displayModeBar: false
+        displayModeBar: false,
+        responsive: true,
       }}
       useResizeHandler
       className="w-full h-full"

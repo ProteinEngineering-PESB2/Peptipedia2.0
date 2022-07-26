@@ -1,9 +1,9 @@
 import { Paper } from "@mui/material";
 import { useProSeqViewer } from "../hooks/useProSeqViewer";
-import { IAlign } from "../utils/interfaces";
+import { IAlign, IOneAlign } from "../utils/interfaces";
 
 interface Props {
-  sequences: IAlign[];
+  sequences: IOneAlign[];
 }
 
 export default function ProSeqViewer({ sequences }: Props) {

@@ -18,10 +18,15 @@ export default function Database() {
   useLoadingComponent();
 
   useHandleSection({ section: "database" });
-  const { tableStatistics } = useGetDBStatistics();
-  const { tableActivitiies, nameActivity, dataBoxplot, showSkeletonBoxplot } =
-    useGetAllActivities();
-  const { dataPie } = useGetGeneralStatistics();
+  const { tableStatistics, loadingTableStatistics } = useGetDBStatistics();
+  const {
+    tableActivitiies,
+    nameActivity,
+    dataBoxplot,
+    showSkeletonBoxplot,
+    loadingTableActivities,
+  } = useGetAllActivities();
+  const { dataPie, loadingDataPie } = useGetGeneralStatistics();
 
   return (
     <Layout>
@@ -44,50 +49,56 @@ export default function Database() {
             xl={12}
             sx={{ marginTop: 3 }}
           >
-            {dataPie.length > 0 ? (
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  boxShadow: 4,
-                }}
-              >
-                <Plot
-                  data={dataPie}
-                  layout={{
-                    autosize: true,
-                    title: "General Activity Statistic",
-                    height: 500,
-                  }}
-                  config={{ responsive: true }}
-                  useResizeHandler={true}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </Paper>
-            ) : (
+            {loadingDataPie ? (
               <Skeleton variant="rectangular" width="100%" height={500} />
+            ) : (
+              dataPie.length > 0 && (
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: 4,
+                  }}
+                >
+                  <Plot
+                    data={dataPie}
+                    layout={{
+                      autosize: true,
+                      title: "General Activity Statistic",
+                      height: 500,
+                    }}
+                    config={{ responsive: true, displayModeBar: false }}
+                    useResizeHandler={true}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </Paper>
+              )
             )}
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>
-            {tableStatistics.data.length > 0 ? (
-              <Box boxShadow={4}>
-                <DataTable
-                  table={tableStatistics}
-                  title="Database Statistics"
-                />
-              </Box>
-            ) : (
+            {loadingTableStatistics ? (
               <Skeleton variant="rectangular" width="100%" height={700} />
+            ) : (
+              tableStatistics.data.length > 0 && (
+                <Box boxShadow={4}>
+                  <DataTable
+                    table={tableStatistics}
+                    title="Database Statistics"
+                  />
+                </Box>
+              )
             )}
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6} xl={6} marginTop={3}>
-            {tableActivitiies.data.length > 0 ? (
-              <Box boxShadow={4}>
-                <DataTable table={tableActivitiies} title="All Activities" />
-              </Box>
-            ) : (
+            {loadingTableActivities ? (
               <Skeleton variant="rectangular" width="100%" height={700} />
+            ) : (
+              tableActivitiies.data.length > 0 && (
+                <Box boxShadow={4}>
+                  <DataTable table={tableActivitiies} title="All Activities" />
+                </Box>
+              )
             )}
           </Grid>
           {dataBoxplot.length > 0 ? (

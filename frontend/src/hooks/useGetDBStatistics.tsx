@@ -8,6 +8,8 @@ import { InitialValueTable } from "../utils/initial_values";
 export default function useGetDBStatistics() {
   const [tableStatistics, setTableStatistics] =
     useState<ITable>(InitialValueTable);
+  const [loadingTableStatistics, setLoadingTableStatistics] =
+    useState<boolean>(true);
 
   const getDbStatistics = async () => {
     const res = await axios.get("/api/get_db_statistics/");
@@ -33,6 +35,7 @@ export default function useGetDBStatistics() {
       columns: [res.data.columns[0], res.data.columns[1]],
       data: new_data,
     });
+    setLoadingTableStatistics(false);
   };
 
   useEffect(() => {
@@ -40,10 +43,12 @@ export default function useGetDBStatistics() {
       getDbStatistics();
     } catch (error) {
       toast.error("Server error");
+      setLoadingTableStatistics(false);
     }
   }, []);
 
   return {
     tableStatistics,
+    loadingTableStatistics
   };
 }

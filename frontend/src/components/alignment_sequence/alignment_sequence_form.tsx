@@ -4,7 +4,7 @@ import InputFileFasta from "../form/input_file_fasta";
 import TextFieldFasta from "../form/text_field_fasta";
 import ButtonRun from "../form/button_run";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { IAlign, ITable, PostData } from "../../utils/interfaces";
+import { IAlign, IOneAlign, ITable, PostData } from "../../utils/interfaces";
 import {
   InitialValuePostData,
   InitialValueTable,
@@ -19,13 +19,16 @@ import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 interface Props {
   setPath: Dispatch<SetStateAction<string>>;
   setTable: Dispatch<SetStateAction<ITable>>;
-  setSequences: Dispatch<SetStateAction<IAlign[]>>;
+  setSequences: Dispatch<SetStateAction<IOneAlign[]>>;
 }
 
 const markdownText = `
   + **Input**: 
     + One amino acid sequence with fasta format.
     + Sequence with maxium length 150.
+  + **Blast Strategy**
+    + Blastp
+    + E-value = 0.5
 `;
 
 const placeholder = `
@@ -41,7 +44,7 @@ export default function AlignmentSequenceForm({
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
-  const handleSequences = (aligns: IAlign[]) => {
+  const handleSequences = (aligns: IOneAlign[]) => {
     setSequences(aligns);
   };
 
