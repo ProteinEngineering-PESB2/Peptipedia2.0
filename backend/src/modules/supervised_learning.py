@@ -1,25 +1,20 @@
 from random import random
 import pandas as pd
-from modules.clustering_methods import clustering_algorithm, evaluation_performances
 from modules.encoding_strategies import run_fft_encoding, run_one_hot, run_physicochemical_properties
 from modules.utils import config_tool
-import json
-from scipy import stats
 from modules.training_supervised_learning.run_algorithm import run_algorithm
 from joblib import dump, load
-from modules.database import database
 
 from modules.utils import config_tool
-from datetime import date
 
 class supervised_algorithms(config_tool):
-    def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences, is_fasta = False)
-        self.dataset_encoded_path = "{}/{}.csv".format(static_folder, str(round(random()*10**20)))
-        self.job_path = "{}/{}.joblib".format(static_folder, str(round(random()*10**20)))
+    def __init__(self, data, options, is_file, is_json, config):
+        super().__init__("supervised_learning", data, config, is_file, is_json, is_fasta = False)
+        self.dataset_encoded_path = "{}/{}.csv".format(config["folders"]["static_folder"], str(round(random()*10**20)))
+        self.job_path = "{}/{}.joblib".format(config["folders"]["static_folder"], str(round(random()*10**20)))
         self.options = options
         self.dataset_encoded = None
-        self.path_config_aaindex_encoder = path_aa_index
+        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
         self.task = self.options["task"]
         self.algorithm = self.options["algorithm"]
         self.validation = self.options["validation"]
@@ -88,10 +83,10 @@ class supervised_algorithms(config_tool):
         dump(self.model, self.job_path)
 
 class use_model(config_tool):
-    def __init__(self, data, options, temp_folder, static_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
-        self.path_config_aaindex_encoder = path_aa_index
-        self.output_path = "{}/results/{}".format(static_folder, self.temp_file_path.replace(".fasta", ".align").split("/")[-1])
+    def __init__(self, data, options, is_file, is_json, config):
+        super().__init__(data, config, is_file, is_json)
+        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
+        self.output_path = "{}/results/{}".format(config["folders"]["static_folder"], self.temp_file_path.replace(".fasta", ".align").split("/")[-1])
         self.options = options
         self.job_path = self.options["job_path"]
         self.model = load(self.job_path)

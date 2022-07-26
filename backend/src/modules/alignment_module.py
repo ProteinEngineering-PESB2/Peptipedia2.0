@@ -4,9 +4,10 @@ from modules.utils import config_tool
 from re import split
 import pandas as pd
 class alignment(config_tool):
-    def __init__(self, data, temp_folder, static_folder, is_file, is_json, max_sequences, min_number_sequences = 1):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
-        self.output_path = "{}/alignments/{}".format(static_folder, self.temp_file_path.replace(".fasta", ".align").split("/")[-1])
+    def __init__(self, data, is_file, is_json, config):
+        super().__init__("blast", data, config, is_file, is_json)
+        self.output_path = "{}/{}".format(config["folders"]["alignments_folder"], self.temp_file_path.replace(".fasta", ".align").split("/")[-1])
+        
 
     def execute_blastp(self):
         command = "blastp -db peptipedia/peptipedia -query {} -evalue 0.5 -out {}".format(self.temp_file_path, self.output_path)
@@ -22,6 +23,8 @@ class alignment(config_tool):
         fin = text.find("\n\n")
         text = text[:fin]
         splitted = [row for row in text.splitlines() if row != ""]
+        if len(splitted) <= 1:
+            return {"status": "error", "description": "No significant results"}
         data = []
         for row in splitted:
             row_splitted = [a for a in split("\s+", row) if a != ""]
@@ -42,7 +45,7 @@ class alignment(config_tool):
             df.loc[index,"similarity"] = row_details[1]
             df.loc[index,"gaps"] = row_details[2]
         self.ids = df.id.tolist()
-        return {"data": df.values.tolist(), "columns": df.columns.tolist()}
+        return {"status": "success", "data": df.values.tolist(), "columns": df.columns.tolist()}
 
     def get_alignments(self):
         f = open(self.output_path, "r")

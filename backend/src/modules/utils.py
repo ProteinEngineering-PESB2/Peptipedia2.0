@@ -2,28 +2,27 @@ import os
 from random import random
 import pandas as pd
 from Bio import SeqIO
-from modules.database import database
-import re
+import configparser
 
 class config_tool:
-    def __init__(self, data, temp_folder, is_file, is_json, max_sequences, min_number_sequences = 1, is_fasta = True):
+    def __init__(self, config_module_name, data, config, is_file, is_json, is_fasta = True):
         self.data = data
-        self.temp_folder = temp_folder
+        self.temp_folder = config["folders"]["temp_folder"]
         self.temp_file_path = "{}/{}".format(self.temp_folder, str(round(random()*10**20)))
         if(is_fasta):
             self.temp_file_path+=".fasta"
         else:
             self.temp_file_path+=".csv"
-
         if(is_json):
             self.create_file()
         elif(is_file):
             self.save_file()
-            
         if(is_fasta):
-            self.check = verify_fasta(self.temp_file_path, max_sequences, min_number_sequences).verify()
+            self.check = verify_fasta(self.temp_file_path, int(config[config_module_name]["max_sequences"]),
+                                int(config[config_module_name]["min_sequences"])).verify()
         else:
-            self.check = verify_csv(self.temp_file_path, max_sequences, min_number_sequences).verify()
+            self.check = verify_csv(self.temp_file_path, int(config[config_module_name]["max_sequences"]), 
+                                int(config[config_module_name]["min_sequences"])).verify()
 
     def create_file(self):
         f = open(self.temp_file_path, "w")
@@ -234,7 +233,7 @@ class verify_fasta:
         return True, None
 
 class interface:
-    def parse_information_no_options(self, request):
+    def parse_information_no_options(request):
         try:
             post_data = request.json
         except:
@@ -253,7 +252,7 @@ class interface:
             is_file = True
         return data, is_json, is_file
     
-    def parse_information_with_options(self, request):
+    def parse_information_with_options(request):
         try:
             post_data = request.json
         except:
@@ -275,3 +274,30 @@ class interface:
             data = file["file"]
             options = eval(file["options"].read().decode("utf-8"))
         return data, options, is_json, is_file
+
+class folders:
+    def __init__(self, config_file):
+        ##Reads config file and asign folder names. 
+        self.config = configparser.ConfigParser()
+        self.config.read(config_file)
+
+    def create_folders(self):
+        ##Create folders
+        try:
+            os.mkdir(self.config["folders"]["temp_folder"])
+        except Exception as e:
+            pass
+        try:
+            os.mkdir(self.config["folders"]["static_folder"])
+        except Exception as e:
+            pass
+        try:
+            os.mkdir(self.config["folders"]["alignments_folder"])
+            os.mkdir(self.config["folders"]["downloads_folder"])
+            os.mkdir(self.config["folders"]["results_folder"])
+        except Exception as e:
+            pass
+        if not os.path.isdir(self.config["folders"]["path_aa_index"]):
+            exit()
+    def get_static_folder(self):
+        return self.config["folders"]["static_folder"]

@@ -3,14 +3,13 @@ services:
   backend:
     build: ./backend/
     volumes:
-      -  ./backend/src/modules:/app/src/modules
-      -  ./backend/src/config.ini:/app/src/config.ini
-      -  ./backend/src/main.py:/app/src/main.py
-      -  ./bd/backup.sql:/files/downloads/backup_sql.zip
-      -  ./bd/dump.fasta:/files/downloads/dump_fasta.zip
+      -  ./backend/src:/app/src
+      -  ./bd/backup_sql.zip:/files/downloads/backup_sql.zip
+      -  ./bd/dump_fasta.zip:/files/downloads/dump_fasta.zip
       -  ./bd/dump_csv.zip:/files/downloads/dump_csv.zip
     ports:
       - "8001:8001"
+    restart: "always"
   app :
     build: ./frontend/
     volumes:

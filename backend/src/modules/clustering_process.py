@@ -7,13 +7,13 @@ import json
 from scipy import stats
 
 class unsupervised_algorithms(config_tool):
-    def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
-        self.dataset_encoded_path = "{}/{}.csv".format(static_folder, str(round(random()*10**20)))
+    def __init__(self, data, options, is_file, is_json, config):
+        super().__init__("clustering", data, config, is_file, is_json)
+        self.dataset_encoded_path = "{}/{}.csv".format(config["folders"]["static_folder"], str(round(random()*10**20)))
         self.options = options
         self.dataset_encoded = None
         self.is_normal = True
-        self.path_config_aaindex_encoder = path_aa_index
+        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
         if(self.check == {"status": "success"}):
             self.check = self.check_options()
 

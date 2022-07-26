@@ -6,10 +6,9 @@ from random import random
 import pandas as pd
 import json
 class multiple_sequence_alignment(config_tool):
-    def __init__(self, data, temp_folder, static_folder,is_file, is_json, max_sequences, min_number_sequences):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
-        self.output_path = static_folder
-        self.output_file = os.path.realpath("{}/{}.out".format(self.output_path, str(round(random()*10**20))))
+    def __init__(self, data, is_file, is_json, config):
+        super().__init__("msa", data, config, is_file, is_json)
+        self.output_file = os.path.realpath("{}/{}.out".format(config["folders"]["static_folder"], str(round(random()*10**20))))
 
     def execute_clustalo(self):
         command = "clustalo -i {} -o {} --full".format(self.temp_file_path, self.output_file)
@@ -23,7 +22,7 @@ class multiple_sequence_alignment(config_tool):
         data = [seq.split("\n") for seq in sequences]
         data = data[1:]
         number_proteins = len(data)
-        id = [sequence[0] for sequence in data]
+        id = [sequence[0].split(" ")[0] for sequence in data]
         protein = ["".join(sequence[1:]) for sequence in data]
         result = []
         for i in range(number_proteins):

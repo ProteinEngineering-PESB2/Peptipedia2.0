@@ -8,10 +8,10 @@ from modules.encoding_strategies.run_physicochemical_properties import run_physi
 from modules.encoding_strategies.run_fft_encoding import run_fft_encoding
 
 class encoding(config_tool):
-    def __init__(self, data, options, static_folder, temp_folder, is_file, is_json, max_sequences, min_number_sequences, path_aa_index):
-        super().__init__(data, temp_folder, is_file, is_json, max_sequences, min_number_sequences)
+    def __init__(self, data, options, is_file, is_json, config):
+        super().__init__("encoding", data, config, is_file, is_json)
         self.rand_name = str(round(random()*10**20))
-        self.results_folder = "{}/{}".format(static_folder, self.rand_name)
+        self.results_folder = "{}/{}".format(config["folders"]["static_folder"], self.rand_name)
         os.mkdir(self.results_folder)
 
         self.one_hot_encoding = options["one_hot_encoding"]
@@ -19,7 +19,7 @@ class encoding(config_tool):
         self.digital_signal_processing = options["digital_signal_processing"]
         self.temp_csv = "{}/{}_codifications.csv".format(self.temp_folder, self.rand_name)
         self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group", "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
-        self.path_config_aaindex_encoder = path_aa_index
+        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
 
     def get_longest(self):
         return self.data.sequence.str.len().max()
