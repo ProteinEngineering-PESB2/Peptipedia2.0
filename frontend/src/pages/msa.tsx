@@ -12,6 +12,12 @@ export default function MultiAlignmentSequence() {
   const [result, setResult] = useState<IAlign>({
     alignment: [],
     output_file: "",
+    distances_file: "",
+    distance_heatmap: {
+      x: [],
+      y: [],
+      z: []
+    }
   });
 
   useHandleSection({ section: "msa" });
