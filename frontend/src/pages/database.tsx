@@ -68,7 +68,7 @@ export default function Database() {
                       title: "General Activity Statistic",
                       height: 500,
                     }}
-                    config={{ responsive: true }}
+                    config={{ responsive: true, displayModeBar: false }}
                     useResizeHandler={true}
                     style={{ width: "100%", height: "100%" }}
                   />

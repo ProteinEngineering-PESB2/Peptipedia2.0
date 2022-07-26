@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import { requestPost } from "../../services/api";
 
 interface Props {
-  setResult: Dispatch<SetStateAction<IAlign[]>>;
+  setResult: Dispatch<SetStateAction<IAlign>>;
 }
 
 const placeholder = `
@@ -44,7 +44,10 @@ export default function MSAForm({ setResult }: Props) {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setResult([]);
+    setResult({
+      alignment: [],
+      output_file: "",
+    });
     setOpenBackdrop(true);
 
     const postData = parserFormDataWithoutOptions(data);
@@ -59,13 +62,19 @@ export default function MSAForm({ setResult }: Props) {
         toast.error(data.description);
       } else {
         const { result } = data;
-        setResult(result);
+        setResult({
+          alignment: result.alignment,
+          output_file: result.output_file,
+        });
       }
 
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
-      setResult([]);
+      setResult({
+        alignment: [],
+        output_file: "",
+      });
       setOpenBackdrop(false);
     }
   };

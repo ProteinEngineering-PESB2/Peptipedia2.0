@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import BlackdropComponent from "../../components/backdrop_component";
-import { IAlign, ITable } from "../../utils/interfaces";
+import { IAlign, IOneAlign, ITable } from "../../utils/interfaces";
 import ButtonDownloadPrimary from "../button_download_primary";
 import DataTable from "../datatable";
 import ProSeqViewer from "../pro_seq_viewer";
@@ -9,7 +9,7 @@ import ProSeqViewer from "../pro_seq_viewer";
 interface Props {
   path: string;
   table: ITable;
-  sequences: IAlign[];
+  sequences: IOneAlign[];
 }
 
 export default function AlignmentSequenceContent({

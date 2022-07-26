@@ -26,6 +26,10 @@ export default function PieChart({ values, labels }: Props) {
           size: 15
         }
       }}
+      config={{
+        displayModeBar: false,
+        responsive: true
+      }}
       useResizeHandler
       className="w-full h-full"
     />

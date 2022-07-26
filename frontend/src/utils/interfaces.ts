@@ -27,10 +27,15 @@ export interface ITable {
   data: Array<Array<any>>;
 }
 
-export interface IAlign {
+export interface IOneAlign {
   id: number;
   label: string;
   sequence: string;
+}
+
+export interface IAlign {
+  alignment: IOneAlign[];
+  output_file: string;
 }
 
 export interface IFormatDataPfam {
