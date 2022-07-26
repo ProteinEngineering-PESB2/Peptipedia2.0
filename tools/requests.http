@@ -349,3 +349,12 @@ GET {{api}}/get_specific_act_statistics/6
 ###
 
 GET {{api}}/get_tree/
+
+###
+GET {{api}}/get_general_counts/
+
+###
+GET {{api}}/get_peptides_by_database/
+
+###
+GET {{api}}/get_peptides_by_activity/
