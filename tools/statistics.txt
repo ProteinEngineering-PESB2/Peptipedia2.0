@@ -1,0 +1,7 @@
+Home Page Statistics
+
+Cards
+    * Databases Amount 
+    * Sequences Amount 
+    * Activities Amount
+    * Last updated of sequences

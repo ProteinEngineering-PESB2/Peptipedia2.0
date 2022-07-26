@@ -25,7 +25,10 @@ export default function BarChart({ x, y, title }: Props) {
         title: title,
         font: {
           size: 15
-        }
+        },
+      }}
+      config={{
+        displayModeBar: false
       }}
       useResizeHandler
       className="w-full h-full"
