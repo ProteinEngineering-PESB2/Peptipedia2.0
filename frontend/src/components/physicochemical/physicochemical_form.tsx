@@ -20,6 +20,8 @@ const markdownText = `
   + **Input**: 
     + One or more amino acid sequences with fasta format.
     + Sequence with maxium length 150.
+  + **Physicochemical Tool**
+    + Modlamp
 `;
 
 const placeholder = `
@@ -54,6 +56,11 @@ export default function PhysichochemicalForm({ setResult }: Props) {
       isoelectric_point: data.checkboxs.isoelectric_point ? 1 : 0,
       charge: data.checkboxs.charge ? 1 : 0,
       charge_density: data.checkboxs.charge_density ? 1 : 0,
+      aliphatic_index: data.checkboxs.aliphatic_index ? 1 : 0,
+      aromaticity: data.checkboxs.aromaticity ? 1 : 0,
+      boman_index: data.checkboxs.boman_index ? 1 : 0,
+      hydrophobic_ratio: data.checkboxs.hydrophobic_ratio ? 1 : 0,
+      instability_index: data.checkboxs.instability_index ? 1 : 0,
     };
 
     const postData = parserFormDataWithOptions(data, options);
@@ -100,6 +107,11 @@ export default function PhysichochemicalForm({ setResult }: Props) {
               "isoelectric_point",
               "charge",
               "charge_density",
+              "instability_index",
+              "aromaticity",
+              "aliphatic_index",
+              "boman_index",
+              "hydrophobic_ratio",
             ]}
           />
           <ButtonRun data={data} />

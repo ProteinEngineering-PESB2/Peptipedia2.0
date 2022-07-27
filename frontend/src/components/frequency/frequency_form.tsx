@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
 import { requestPost } from "../../services/api";
 import { InitialValuePostData } from "../../utils/initial_values";
-import { IDataFrequency, PostData } from "../../utils/interfaces";
+import { IDataFrequency, IDataSummary, PostData } from "../../utils/interfaces";
 import BackdropComponent from "../backdrop_component";
 import ButtonRun from "../form/button_run";
 import FormContainer from "../form/form_container";
@@ -13,6 +13,7 @@ import TextFieldFasta from "../form/text_field_fasta";
 
 interface Props {
   setResult: Dispatch<SetStateAction<IDataFrequency[]>>;
+  setSummary: Dispatch<SetStateAction<IDataSummary>>;
 }
 
 const markdownText = `
@@ -38,7 +39,7 @@ MNTATGFIVLLVLATVLGCIEAGESHVREDAMGRARRGACTPTGQPCPYNESCCSGSCQEQLNENGHTVKRCV
 MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCSQSCTFKENENANTVKRCD
 `;
 
-export default function FrequencyForm({ setResult }: Props) {
+export default function FrequencyForm({ setResult, setSummary }: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
@@ -46,6 +47,11 @@ export default function FrequencyForm({ setResult }: Props) {
     e.preventDefault();
     setOpenBackdrop(true);
     setResult([]);
+    setSummary({
+      x: [],
+      y: [],
+      z: [],
+    });
 
     const postData = parserFormDataWithoutOptions(data);
 
@@ -58,13 +64,26 @@ export default function FrequencyForm({ setResult }: Props) {
       if (data.status === "error") {
         toast.error(data.description);
       } else {
-        const { result } = data;
+        const { result, summary } = data;
         setResult(result);
+
+        if (summary) {
+          setSummary({
+            x: summary.X,
+            y: summary.Y,
+            z: summary.error,
+          });
+        }
       }
 
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
+      setSummary({
+        x: [],
+        y: [],
+        z: [],
+      });
       setOpenBackdrop(false);
       setResult([]);
     }
