@@ -49,6 +49,25 @@ export default function MSAContent({ result }: Props) {
           setPercentage={setPercentage}
         />
       </Box>
+      <Box marginTop={3} boxShadow={4}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            maxHeight: 700,
+            overflowX: "scroll",
+            overflowY: "scroll",
+          }}
+        >
+          <img
+            src={result.image_heatmap}
+            alt="Distances Matrix"
+            width="100%"
+            height="100%"
+          />
+        </Paper>
+      </Box>
     </>
   );
 }

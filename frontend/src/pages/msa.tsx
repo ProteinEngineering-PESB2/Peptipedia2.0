@@ -13,11 +13,7 @@ export default function MultiAlignmentSequence() {
     alignment: [],
     output_file: "",
     distances_file: "",
-    distance_heatmap: {
-      x: [],
-      y: [],
-      z: []
-    }
+    image_heatmap: ""
   });
 
   useHandleSection({ section: "msa" });
