@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import { useProSeqViewer } from "../hooks/useProSeqViewer";
-import { IAlign, IOneAlign } from "../utils/interfaces";
+import { IOneAlign } from "../utils/interfaces";
 
 interface Props {
   sequences: IOneAlign[];

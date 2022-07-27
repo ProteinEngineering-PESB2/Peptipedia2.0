@@ -39,6 +39,26 @@ export const checkbox_list: ICheckbox[] = [
     title: "Charge Density",
   },
   {
+    id: EnumCheckbox.INSTABILITY_INDEX,
+    title: "Instability Index",
+  },
+  {
+    id: EnumCheckbox.AROMATICITY,
+    title: "Aromaticity",
+  },
+  {
+    id: EnumCheckbox.ALIPHATIC_INDEX,
+    title: "Aliphatic index",
+  },
+  {
+    id: EnumCheckbox.BOMAN_INDEX,
+    title: "Boman Index",
+  },
+  {
+    id: EnumCheckbox.HYDROPHOBIC_RATIO,
+    title: "Hydrophobic Ratio",
+  },
+  {
     id: EnumCheckbox.ONE_HOT_ENCODING,
     title: "One Hot Encoding",
   },

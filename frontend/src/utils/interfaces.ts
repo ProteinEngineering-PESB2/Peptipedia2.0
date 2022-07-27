@@ -17,6 +17,11 @@ export interface ICheckboxs {
   isoelectric_point: boolean;
   molecular_weight: boolean;
   length: boolean;
+  instability_index: boolean;
+  aromaticity: boolean;
+  aliphatic_index: boolean;
+  boman_index: boolean;
+  hydrophobic_ratio: boolean;
   one_hot_encoding: boolean;
   physicochemical_properties: boolean;
   digital_signal_processing: boolean;
@@ -76,6 +81,12 @@ export interface IDataFrequency {
   counts: Object;
 }
 
+export interface IDataSummary {
+  x: string[];
+  y: number[];
+  z: number[];
+}
+
 export interface IDataPhysichochemical {
   charge: number;
   charge_density: number;
@@ -83,6 +94,11 @@ export interface IDataPhysichochemical {
   length: number;
   isoelectric_point: number;
   molecular_weight: number;
+  aliphatic_index: number;
+  aromaticity: number;
+  boman_index: number;
+  hydrophobic_ratio: number;
+  instability_index: number;
 }
 
 export interface IItemSelect {

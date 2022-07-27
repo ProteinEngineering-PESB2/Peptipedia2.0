@@ -41,6 +41,31 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
       ) : (
         <QuestionMarkIcon />
       );
+      result[row].aliphatic_index ? (
+        new_row.push(result[row].aliphatic_index)
+      ) : (
+        <QuestionMarkIcon />
+      );
+      result[row].aromaticity ? (
+        new_row.push(result[row].aromaticity)
+      ) : (
+        <QuestionMarkIcon />
+      );
+      result[row].boman_index ? (
+        new_row.push(result[row].boman_index)
+      ) : (
+        <QuestionMarkIcon />
+      );
+      result[row].hydrophobic_ratio ? (
+        new_row.push(result[row].hydrophobic_ratio)
+      ) : (
+        <QuestionMarkIcon />
+      );
+      result[row].instability_index ? (
+        new_row.push(result[row].instability_index)
+      ) : (
+        <QuestionMarkIcon />
+      );
 
       rows.push(new_row);
     }
@@ -54,6 +79,11 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
     keys.includes("isoelectric_point") && columns.push("Isoelectric Point");
     keys.includes("charge") && columns.push("Charge");
     keys.includes("charge_density") && columns.push("Charge Density");
+    keys.includes("aliphatic_index") && columns.push("Aliphatic Index");
+    keys.includes("aromaticity") && columns.push("Aromaticity");
+    keys.includes("boman_index") && columns.push("Boman Index");
+    keys.includes("hydrophobic_ratio") && columns.push("Hydrophobic Ratio");
+    keys.includes("instability_index") && columns.push("Instability Index");
 
     setTable({
       ...table,
