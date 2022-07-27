@@ -13,7 +13,8 @@ export default function MultiAlignmentSequence() {
     alignment: [],
     output_file: "",
     distances_file: "",
-    image_heatmap: ""
+    image_heatmap: "",
+    dendrogram: ""
   });
 
   useHandleSection({ section: "msa" });

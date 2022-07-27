@@ -38,6 +38,7 @@ export interface IAlign {
   output_file: string;
   distances_file: string;
   image_heatmap: string;
+  dendrogram: string;
 }
 
 export interface IFormatDataPfam {
