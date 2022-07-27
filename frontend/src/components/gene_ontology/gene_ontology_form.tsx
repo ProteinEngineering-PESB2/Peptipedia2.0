@@ -20,6 +20,8 @@ const markdownText = `
   + **Input**: 
     + One or more amino acid sequences with fasta format.
     + Sequence with maxium length 150.
+  + **GO Tool**
+    + Metastudent
 `;
 
 const placeholder = `

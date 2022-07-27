@@ -48,11 +48,7 @@ export default function MSAForm({ setResult }: Props) {
       alignment: [],
       output_file: "",
       distances_file: "",
-      distance_heatmap: {
-        x: [],
-        y: [],
-        z: [],
-      },
+      image_heatmap: "",
     });
     setOpenBackdrop(true);
 
@@ -67,19 +63,16 @@ export default function MSAForm({ setResult }: Props) {
       if (data.status === "error") {
         toast.error(data.description);
       } else {
+        console.log(data);
         const { result } = data;
         setResult({
           alignment: result.alignment,
           output_file: result.output_file,
           distances_file: result.distances_file,
-          distance_heatmap: {
-            x: result.distance_heatmap.X,
-            y: result.distance_heatmap.Y,
-            z: result.distance_heatmap.Z,
-          },
+          image_heatmap: result.image_heatmap,
         });
       }
-      
+
       setOpenBackdrop(false);
     } catch (error) {
       toast.error("Server error");
@@ -87,11 +80,7 @@ export default function MSAForm({ setResult }: Props) {
         alignment: [],
         output_file: "",
         distances_file: "",
-        distance_heatmap: {
-          x: [],
-          y: [],
-          z: [],
-        },
+        image_heatmap: "",
       });
       setOpenBackdrop(false);
     }
