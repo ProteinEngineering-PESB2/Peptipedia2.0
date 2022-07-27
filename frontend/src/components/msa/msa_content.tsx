@@ -68,6 +68,25 @@ export default function MSAContent({ result }: Props) {
           />
         </Paper>
       </Box>
+      <Box marginTop={3} boxShadow={4}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            maxHeight: 700,
+            overflowX: "scroll",
+            overflowY: "scroll",
+          }}
+        >
+          <img
+            src={result.dendrogram}
+            alt="Dendrogram"
+            width="100%"
+            height="100%"
+          />
+        </Paper>
+      </Box>
     </>
   );
 }
