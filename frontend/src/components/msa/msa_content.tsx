@@ -74,7 +74,7 @@ export default function MSAContent({ result }: Props) {
             p: 2,
             display: "flex",
             flexDirection: "column",
-            maxHeight: 700,
+            maxHeight: 800,
             overflowX: "scroll",
             overflowY: "scroll",
           }}
