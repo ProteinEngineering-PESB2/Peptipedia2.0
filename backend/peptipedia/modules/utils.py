@@ -62,7 +62,7 @@ class ConfigTool:
             data = f.read()
         with open(self.temp_csv_file, "w") as f:
             for record in parse_fasta(data):
-                f.write(f">{record['id']}\n{record['sequence']}\n")
+                f.write(">{id}\n{sequence}\n".format(**record))
 
     @staticmethod
     def create_df(fasta):
