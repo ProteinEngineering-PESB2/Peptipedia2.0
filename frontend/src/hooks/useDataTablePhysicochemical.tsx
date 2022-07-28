@@ -3,8 +3,6 @@ import { IDataPhysichochemical, ITable } from "../utils/interfaces";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { InitialValueTable } from "../utils/initial_values";
 import { Button, Stack } from "@mui/material";
-import TimelineIcon from "@mui/icons-material/Timeline";
-import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 
 interface Props {
   result: IDataPhysichochemical[];
@@ -78,14 +76,14 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
               color="primary"
               onClick={() => setImagePlot(result[row].profile_path)}
             >
-              <TimelineIcon />
+              Profile
             </Button>
             <Button
               variant="contained"
               color="secondary"
               onClick={() => setImagePlot(result[row].helical_path)}
             >
-              <ScatterPlotIcon />
+              Helical
             </Button>
           </Stack>
         )

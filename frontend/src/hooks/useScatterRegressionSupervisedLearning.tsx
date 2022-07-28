@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const useScatterRegressionSupervisedLearning = ({ data }: Props) => {
-  const [dataScatter, setDataScatter] = useState<any[]>([]);
+  const [dataScatter1, setDataScatter] = useState<any[]>([]);
 
   useEffect(() => {
     let traceX = {
@@ -33,6 +33,6 @@ export const useScatterRegressionSupervisedLearning = ({ data }: Props) => {
   }, []);
 
   return {
-    dataScatter
+    dataScatter1
   };
 };

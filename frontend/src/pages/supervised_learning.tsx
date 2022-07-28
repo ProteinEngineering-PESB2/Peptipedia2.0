@@ -1,13 +1,6 @@
-import { Box, Grid, Typography } from "@mui/material";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import BackdropComponent from "../components/backdrop_component";
-import DataTable from "../components/datatable";
-import ButtonRun from "../components/form/button_run";
-import FormContainer from "../components/form/form_container";
-import InputFileFasta from "../components/form/input_file_fasta";
-import InputFileType from "../components/form/input_file_type";
-import TextFieldFasta from "../components/form/text_field_fasta";
 import Layout from "../components/layout";
 import SectionTitle from "../components/section_title";
 import SupervisedLearningContentClassification from "../components/supervised_learning/supervised_learning_content_classification";
@@ -104,46 +97,6 @@ export default function SupervisedLearning() {
         {resultRegression && (
           <SupervisedLearningContentRegression result={resultRegression} />
         )}
-
-        {/* {taskType !== "" && (
-          <Box marginTop={3}>
-            <Typography
-              variant="h5"
-              style={{ fontWeight: "bold" }}
-              sx={{
-                textAlign: {
-                  xs: "center",
-                  sm: "start",
-                  md: "start",
-                  lg: "start",
-                  xl: "start",
-                },
-              }}
-            >
-              Use Model with New Data
-            </Typography>
-            <FormContainer>
-              <form onSubmit={handleSubmitNewModel}>
-                <InputFileType data={dataNewModel} setData={setDataNewModel} />
-                <TextFieldFasta data={dataNewModel} setData={setDataNewModel} />
-                <InputFileFasta data={dataNewModel} setData={setDataNewModel} />
-                <ButtonRun data={dataNewModel} />
-              </form>
-            </FormContainer>
-            {tableNewModel.data.length > 0 && (
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                  <Box boxShadow={4} marginTop={3}>
-                    <DataTable
-                      table={tableNewModel}
-                      title="Model with New Data"
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            )}
-          </Box>
-        )} */}
       </>
     </Layout>
   );
