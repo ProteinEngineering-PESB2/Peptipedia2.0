@@ -1,0 +1,5 @@
+*
+
+!.gitignore
+!Dockerfile
+!docker-compose.yaml
