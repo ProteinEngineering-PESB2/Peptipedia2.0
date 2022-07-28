@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "peptipedia-backend"
+version = "1.0.0"
+description = ""
+authors = [
+	"Claudio Guevara <claudio.guevara.dev@gmail.com>",
+	"Gabriel Cabas <gabrielcabas123@gmail.com>",
+	"David Medina O. <david.medina@cebib.cl>"
+]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+Flask = "^2.1.3"
+Flask-Cors = "^3.0.10"
+pandas = "^1.4.3"
+modlamp = "^4.3.0"
+biopython = "^1.79"
+scipy = "^1.8.1"
+matplotlib = "^3.5.2"
+SQLAlchemy = "^1.4.39"
+psycopg2-binary = "^2.9.3"
+gunicorn = "^20.1.0"
+
+[tool.poetry.dev-dependencies]
+poethepoet = "^0.16.0"
+black = "^22.6.0"
+isort = "^5.10.1"
+pycln = "^2.1.1"
+
+[tool.poe.tasks]
+start = { cmd = "python peptipedia/main.py", env = { PYTHONPATH = "." } }
+prodstart = "gunicorn peptipedia.main:app -b 0.0.0.0 -w 4"
+shell = "poetry shell"
+_isort = "isort -q peptipedia/"
+_black = "black -q peptipedia/"
+_pycln = "pycln -q peptipedia/"
+format = ["_isort", "_black", "_pycln"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
