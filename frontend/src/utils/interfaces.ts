@@ -99,6 +99,8 @@ export interface IDataPhysichochemical {
   boman_index: number;
   hydrophobic_ratio: number;
   instability_index: number;
+  helical_path: string;
+  profile_path: string;
 }
 
 export interface IItemSelect {
