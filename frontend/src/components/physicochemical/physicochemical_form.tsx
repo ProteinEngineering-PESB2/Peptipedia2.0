@@ -75,11 +75,13 @@ export default function PhysichochemicalForm({ setResult }: Props) {
         toast.error(data.description);
       } else {
         const { result } = data;
+        console.log(result)
         setResult(result);
       }
 
       setOpenBackdrop(false);
     } catch (error) {
+      console.log(error)
       toast.error("Server error");
       setResult([]);
       setOpenBackdrop(false);

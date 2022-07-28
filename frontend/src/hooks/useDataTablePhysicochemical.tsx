@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { IDataPhysichochemical, ITable } from "../utils/interfaces";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { InitialValueTable } from "../utils/initial_values";
+import { Button, Stack } from "@mui/material";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 
 interface Props {
   result: IDataPhysichochemical[];
@@ -9,6 +12,7 @@ interface Props {
 
 export const useDataTablePhysicochemical = ({ result }: Props) => {
   const [table, setTable] = useState<ITable>(InitialValueTable);
+  const [imagePlot, setImagePlot] = useState<string>("");
 
   useEffect(() => {
     const rows: any[] = [];
@@ -66,6 +70,28 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
       ) : (
         <QuestionMarkIcon />
       );
+      result[row].helical_path && result[row].profile_path ? (
+        new_row.push(
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setImagePlot(result[row].profile_path)}
+            >
+              <TimelineIcon />
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setImagePlot(result[row].helical_path)}
+            >
+              <ScatterPlotIcon />
+            </Button>
+          </Stack>
+        )
+      ) : (
+        <QuestionMarkIcon />
+      );
 
       rows.push(new_row);
     }
@@ -84,6 +110,7 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
     keys.includes("boman_index") && columns.push("Boman Index");
     keys.includes("hydrophobic_ratio") && columns.push("Hydrophobic Ratio");
     keys.includes("instability_index") && columns.push("Instability Index");
+    columns.push("Options");
 
     setTable({
       ...table,
@@ -94,5 +121,6 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
 
   return {
     table,
+    imagePlot
   };
 };
