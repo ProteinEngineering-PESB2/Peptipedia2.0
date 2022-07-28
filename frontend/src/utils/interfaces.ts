@@ -130,6 +130,8 @@ export interface IDataClustering {
 export interface IDataClassificationSupervisedLearning {
   job_path: string;
   result: {
+    is_normal: boolean;
+    encoding_path: string;
     analysis: {
       categories: string[];
       sensibility: number[];
@@ -186,6 +188,8 @@ export interface IDataClassificationSupervisedLearning {
 export interface IDataRegressionSupervisedLearning {
   job_path: string;
   result: {
+    is_normal: boolean;
+    encoding_path: string;
     corr: {
       kendall: {
         kendalltau: number;

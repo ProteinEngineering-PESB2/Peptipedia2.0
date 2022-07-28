@@ -28,7 +28,7 @@ export const usePCAClustering = ({
 
     let post;
 
-    if (is_normal) {
+    if (is_normal === true) {
       post = {
         params: {
           path,
