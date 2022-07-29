@@ -46,8 +46,6 @@ ENV PATH="/app/install_requisites/PfamScan:${PATH}"
 
 RUN chmod 755 "/app/install_requisites/PfamScan/pfam_scan.pl"
 
-COPY ./peptipedia /app/peptipedia
-RUN touch /app/config.ini
 WORKDIR /app
 
 ENV PYTHONPATH=.

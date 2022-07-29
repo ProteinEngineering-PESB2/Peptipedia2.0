@@ -2,6 +2,7 @@ version: "3.9"
 services:
   peptipedia-db:
     image: peptipedia-db
+    container_name: peptipedia-db
     build:
       context: .
       args:

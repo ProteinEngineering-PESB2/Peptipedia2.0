@@ -3,7 +3,6 @@ services:
   backend:
     image: peptipedia-backend-dev
     container_name: peptipedia-backend-dev
-    privileged: true
     build:
       context: ./backend/
       dockerfile: Dockerfile.dev
@@ -19,7 +18,11 @@ services:
       - backend
     restart: "always"
   app:
-    build: ./frontend/
+    image: peptipedia-frontend-dev
+    container_name: peptipedia-frontend-dev
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile.dev
     volumes:
       - ./frontend:/app
     depends_on:
