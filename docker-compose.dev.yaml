@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  backend:
+    image: peptipedia-backend-dev
+    container_name: peptipedia-backend-dev
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend/peptipedia:/app/peptipedia
+      - ./backend/config.ini:/app/config.ini
+      - ./bd/backup_sql.zip:/files/downloads/backup_sql.zip
+      - ./bd/dump_fasta.zip:/files/downloads/dump_fasta.zip
+      - ./bd/dump_csv.zip:/files/downloads/dump_csv.zip
+    ports:
+      - "8001:8001"
+    networks:
+      - backend
+    restart: "always"
+  app:
+    image: peptipedia-frontend-dev
+    container_name: peptipedia-frontend-dev
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - "backend"
+    ports:
+      - "3000:3000"
+networks:
+  backend:
+    name: peptipedia-backend

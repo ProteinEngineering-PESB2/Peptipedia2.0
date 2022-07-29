@@ -1,22 +1,22 @@
 {
-  "name": "frontend",
+  "name": "peptipedia-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.8.3",
-    "@mui/material": "^5.8.3",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.9.2",
     "axios": "^0.27.2",
     "bio-pv": "^1.8.1",
     "js-file-download": "^0.4.12",
     "mui-datatables": "^4.2.2",
-    "plotly.js": "^2.12.1",
+    "plotly.js-basic-dist": "^2.13.3",
     "proseqviewer": "^1.1.9",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.1.0",
@@ -30,10 +30,12 @@
     "react-spinners": "^0.12.0",
     "react-tooltip": "^4.2.21",
     "remark-gfm": "^3.0.1",
-    "video-react": "^0.15.0"
+    "video-react": "^0.15.0",
+    "vite-plugin-compression": "^0.5.1"
   },
   "devDependencies": {
     "@types/mui-datatables": "^3.7.9",
+    "@types/plotly.js-basic-dist": "^1.54.0",
     "@types/react": "^18.0.0",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^18.0.0",
@@ -41,6 +43,6 @@
     "@types/video-react": "^0.15.0",
     "@vitejs/plugin-react": "^1.3.0",
     "typescript": "^4.6.3",
-    "vite": "^2.9.9"
+    "vite": "^3.0.3"
   }
 }

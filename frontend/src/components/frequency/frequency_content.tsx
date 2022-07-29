@@ -4,7 +4,10 @@ import { useSequenceAutocompleteFrequency } from "../../hooks/useSequencesAutoco
 import { IDataFrequency, IDataSummary } from "../../utils/interfaces";
 import BarChart from "../charts/bar_chart";
 import AutocompleteComponent from "../form/autocomplete_component";
-import Plot from "react-plotly.js";
+import Plotly from 'plotly.js-basic-dist'
+import createPlotlyComponent from 'react-plotly.js/factory';
+
+const Plot = createPlotlyComponent(Plotly);
 
 interface Props {
   result: IDataFrequency[];

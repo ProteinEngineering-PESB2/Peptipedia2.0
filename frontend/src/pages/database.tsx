@@ -1,6 +1,7 @@
 import { Box, Grid, Paper, Skeleton } from "@mui/material";
 import Layout from "../components/layout";
-import Plot from "react-plotly.js";
+import Plotly from 'plotly.js-basic-dist'
+import createPlotlyComponent from 'react-plotly.js/factory';
 import { useHandleSection } from "../hooks/useHandleSection";
 import { useState } from "react";
 import Downloads from "../components/database/downloads";
@@ -11,6 +12,8 @@ import DataTable from "../components/datatable";
 import useGetAllActivities from "../hooks/useGetAllActivities";
 import useGetGeneralStatistics from "../hooks/useGetGeneralStatistics";
 import useLoadingComponent from "../hooks/useLoadingComponent";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function Database() {
   const [percentage, setPercentage] = useState<number>(0);
