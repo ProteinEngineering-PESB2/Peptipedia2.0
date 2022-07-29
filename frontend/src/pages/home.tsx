@@ -4,7 +4,7 @@ import Header from "../components/home/header";
 import { useHandleSection } from "../hooks/useHandleSection";
 import useLoadingComponent from "../hooks/useLoadingComponent";
 import StatisticsCards from "../components/home/StatisticsCards";
-import { Grid, Paper } from "@mui/material";
+import { Grid, Paper, Skeleton } from "@mui/material";
 import BarChart from "../components/charts/bar_chart";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -16,6 +16,10 @@ export default function Home() {
     useState<any>(null);
   const [dataPeptidesByActivity, setDataPeptidesByActivity] =
     useState<any>(null);
+  const [loadingDataPeptidesByDatabase, setLoadingDataPeptidesByDatabase] =
+    useState<boolean>(true);
+  const [loadingDataPeptidesByActivity, setLoadingDataPeptidesByActivity] =
+    useState<boolean>(true);
 
   const getPeptidesByDatabase = async () => {
     try {
@@ -24,8 +28,10 @@ export default function Home() {
         x: response.data.X,
         y: response.data.Y,
       });
+      setLoadingDataPeptidesByDatabase(false);
     } catch (error) {
       setDataPeptidesByDatabase(null);
+      setLoadingDataPeptidesByDatabase(false);
     }
   };
 
@@ -36,8 +42,10 @@ export default function Home() {
         x: response.data.X,
         y: response.data.Y,
       });
+      setLoadingDataPeptidesByActivity(false);
     } catch (error) {
       setDataPeptidesByActivity(null);
+      setLoadingDataPeptidesByActivity(false);
     }
   };
 
@@ -54,57 +62,52 @@ export default function Home() {
         <StatisticsCards />
 
         <Grid container spacing={2} marginTop={2}>
-          {dataPeptidesByDatabase && (
-            <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  p: 2,
-                  boxShadow: 5,
-                  height: "100%",
-                }}
-              >
-                <BarChart
-                  x={dataPeptidesByDatabase.x}
-                  y={dataPeptidesByDatabase.y}
-                  title="Peptides by Database"
-                />
-              </Paper>
-            </Grid>
+          {loadingDataPeptidesByDatabase ? (
+            <Skeleton variant="rectangular" width="100%" height={500} />
+          ) : (
+            dataPeptidesByDatabase && (
+              <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                <Paper
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    p: 2,
+                    boxShadow: 5,
+                    height: "100%",
+                  }}
+                >
+                  <BarChart
+                    x={dataPeptidesByDatabase.x}
+                    y={dataPeptidesByDatabase.y}
+                    title="Peptides by Database"
+                  />
+                </Paper>
+              </Grid>
+            )
           )}
-          {dataPeptidesByActivity && (
-            <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-              <Paper
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  p: 2,
-                  boxShadow: 5,
-                }}
-              >
-                <BarChart
-                  x={dataPeptidesByActivity.x}
-                  y={dataPeptidesByActivity.y}
-                  title="Peptides by Activity"
-                />
-              </Paper>
-            </Grid>
+          {loadingDataPeptidesByActivity ? (
+            <Skeleton variant="rectangular" width="100%" height={500} sx={{ marginTop: 2 }}/>
+          ) : (
+            dataPeptidesByActivity && (
+              <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                <Paper
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    p: 2,
+                    boxShadow: 5,
+                  }}
+                >
+                  <BarChart
+                    x={dataPeptidesByActivity.x}
+                    y={dataPeptidesByActivity.y}
+                    title="Peptides by Activity"
+                  />
+                </Paper>
+              </Grid>
+            )
           )}
         </Grid>
-
-        {/* <Grid container spacing={2} marginTop={2}>
-          <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Paper
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                p: 2,
-                boxShadow: 5,
-              }}
-            ></Paper>
-          </Grid>
-        </Grid> */}
       </>
     </Layout>
   );

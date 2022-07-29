@@ -56,6 +56,7 @@ export default function SupervisedLearningContentClassification({
   return (
     <>
       <BackdropComponent open={openBackdrop} percentage={percentage} />
+      <BackdropComponent open={openBackdropPCA} />
       <Box marginTop={3}>
         <ButtonDownloadPrimary
           path={result.job_path}
