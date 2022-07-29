@@ -6,6 +6,7 @@ from modules.training_supervised_learning.run_algorithm import run_algorithm
 from joblib import dump, load
 
 from modules.utils import config_tool
+from scipy import stats
 
 class supervised_algorithms(config_tool):
     def __init__(self, data, options, is_file, is_json, config):
@@ -26,6 +27,7 @@ class supervised_algorithms(config_tool):
     def run(self):
         self.process_encoding_stage()
         ids = self.dataset_encoded.id
+        self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
         self.dataset_encoded.drop(["id"], axis = 1, inplace=True)
         run_instance = run_algorithm(self.dataset_encoded, self.target, self.task, self.algorithm, self.validation, self.test_size)
         response_training = run_instance.training_model()
@@ -62,9 +64,25 @@ class supervised_algorithms(config_tool):
                 del response_testing["analysis"]
 
             response_training.update(response_testing)
+        response_training.update({"is_normal": self.verify_normality()})
+        response_training.update({"encoding_path": self.dataset_encoded_path})
         self.model = run_instance.get_model()
         self.dump_joblib()
+        self.dataset_encoded["id"] = ids
+        self.dataset_encoded["sequence"] = self.data.sequence
+        self.dataset_encoded["label"] = self.target
+        self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
         return response_training
+
+    def verify_normality(self):
+        is_normal = True
+        self.dataset_verify = self.dataset_encoded[[col for col in self.dataset_encoded.columns if "P_" in col]]
+        for col in self.dataset_verify.columns:
+            result = stats.shapiro(self.dataset_verify[col])
+            pvalue = result.pvalue
+            if (pvalue > 0.05):
+                is_normal = False
+        return is_normal
 
     def process_encoding_stage(self):
         encoding_option = self.options['encoding']

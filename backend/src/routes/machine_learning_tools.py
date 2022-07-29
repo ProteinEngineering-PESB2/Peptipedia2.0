@@ -2,6 +2,8 @@
 from flask import request, Blueprint
 from modules.encoding import encoding
 from modules.clustering_process import unsupervised_algorithms
+from modules.distance_clustering import distance_clustering
+#from modules.alignment_clustering import alignment_clustering
 from modules.pca_process import pca_process
 from modules.supervised_learning import supervised_algorithms, use_model
 import configparser
@@ -33,7 +35,17 @@ def api_clustering():
         return check
     result = clustering_object.process_by_options()
     return {"result": result}
-
+"""
+@machine_learning_blueprint.route('/alignment_clustering/', methods=["POST"])
+def api_clustering():
+    data, options, is_json, is_file = interface.parse_information_with_options(request)
+    clustering_object = alignment_clustering(data, options, is_file, is_json, config)
+    check = clustering_object.check
+    if(check["status"] == "error"):
+        return check
+    result = clustering_object.process_by_options()
+    return {"result": result}
+"""
 @machine_learning_blueprint.route('/pca/', methods=["POST"])
 def api_pca():
     pca = pca_process(request.json["params"], config["folders"]["static_folder"])

@@ -19,7 +19,11 @@ def apply_frequency():
     if(check["status"] == "error"):
         return check
     result = frequency_object.exec_process()
-    return {"result": result}
+    if len(result) > 1:
+        summary = frequency_object.get_average()
+        return {"result": result, "summary": summary}
+    else:
+        return {"result": result}
 
 @statistic_tools_blueprint.route('/phisicochemical/', methods=['POST'])
 def apply_phisicochemical():

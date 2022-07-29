@@ -42,18 +42,18 @@ POST {{api}}/msa/
 Content-Type: application/json
 
 {
-    "data":">sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEE\n>sp|P40337-2|VHL_HUMAN Isoform 2 of von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPR\nPVLRSVNSREPSQVIFCNRSPRVV"
+    "data":">sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEE\n>sp|P40337-2|VHL_HUMAN Isoform 2 of von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPR\nPVLRSVNSREPSQVIFCNRSPRVV\n>sp|P4032127|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEE\n>sp|P40337-3|VHL_HUMAN Isoform 2 of von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPR\nPVLRSVNSREPSQVIFCNRSPRVV"
 }
 
 ###
-POST {{api}}/msa_file/
+POST {{api}}/msa/
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="file"; filename="file.fasta"
 Content-Type: text/plain
 
-< ./send_data/msa.fasta
+< ./tools/msa.fasta
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
@@ -67,7 +67,12 @@ Content-Type: application/json
         "molecular_weight": 1,
         "isoelectric_point": 1,
         "charge_density": 1,
-        "charge": 1
+        "charge": 1,
+        "instability_index": 1,
+        "aromaticity": 1,
+        "aliphatic_index": 1,
+        "boman_index": 1,
+        "hydrophobic_ratio": 1
     }
 }
 ###

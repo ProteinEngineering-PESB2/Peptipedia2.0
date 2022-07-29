@@ -357,3 +357,38 @@ class database:
             "labels": ["Peptides with known activity", "Peptides with activity predicted", "Peptides without activity information"],
             "values": [int(labeled), int(predicted), int(not_predicted)]
         }
+    def get_general_counts(self):
+        dbs = pd.read_sql("""select COUNT(*) from db""",
+                            con=self.conn).values[0][0]
+        acts = pd.read_sql("""select COUNT(*) from activity""",
+                            con=self.conn).values[0][0]
+        sequences = pd.read_sql("""select COUNT(*) from peptide""",
+                            con=self.conn).values[0][0]
+        last_update = pd.read_sql("""select MAX(act_date) from peptide""",
+                            con=self.conn).values[0][0]
+        return {"databases": int(dbs), "activity": int(acts), "sequences": int(sequences), "last_update": str(last_update).split("T")[0]}
+    
+    def get_peptides_by_database(self):
+        data = pd.read_sql("""select db.name, COUNT(p.idpeptide) as count_peptide from peptide p
+                            join peptide_has_db_has_index phdhi
+                            on p.idpeptide = phdhi.idpeptide
+                            join db
+                            on db.id_db = phdhi.id_db
+                            group by db.name
+                            order by count_peptide desc
+                            limit 15
+                            """,
+                            con=self.conn)
+        return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
+    def get_peptides_by_activity(self):
+        data = pd.read_sql("""select act.name, COUNT(p.idpeptide) as count_peptide from peptide p
+                            join peptide_has_activity pha
+                            on p.idpeptide = pha.idpeptide
+                            join activity act
+                            on act.idactivity = pha.idactivity
+                            group by act.name
+                            order by count_peptide desc
+                            limit 15
+                            """,
+                            con=self.conn)
+        return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}

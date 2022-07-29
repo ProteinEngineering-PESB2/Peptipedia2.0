@@ -19,7 +19,7 @@ export const properties: IItemSelect[] = [
   },
   {
     title: "Hydrophobicity",
-    value: "hydrophobicity_gorup",
+    value: "hydrophobicity_group",
   },
   {
     title: "Index",
@@ -31,6 +31,6 @@ export const properties: IItemSelect[] = [
   },
   {
     title: "Volume",
-    value: "volume",
+    value: "volume_group",
   },
 ];

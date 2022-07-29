@@ -11,6 +11,7 @@ class unsupervised_algorithms(config_tool):
         super().__init__("clustering", data, config, is_file, is_json)
         self.dataset_encoded_path = "{}/{}.csv".format(config["folders"]["static_folder"], str(round(random()*10**20)))
         self.options = options
+        print(self.options)
         self.dataset_encoded = None
         self.is_normal = True
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
@@ -110,6 +111,7 @@ class unsupervised_algorithms(config_tool):
         self.response = {}
         
         if clustering_process.response_apply == 0: #Success
+            self.dataset_encoded["sequence"] = self.data.sequence
             self.dataset_encoded["label"] = list(clustering_process.labels)
             self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
             data_json = json.loads(self.dataset_encoded[["id", "label"]].to_json(orient = "records"))

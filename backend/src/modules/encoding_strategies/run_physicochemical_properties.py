@@ -8,7 +8,10 @@ class run_physicochemical_properties(encoder):
         super().__init__(dataset)
         self.list_clusters = ["alpha-structure_group", "betha-structure_group", "energetic_group", "hydropathy_group", "hydrophobicity_group", "index_group", "secondary_structure_properties_group", "volume_group"]
         self.selected_property = selected_property
-        self.dataset_cluster = pd.read_csv("{}{}/data_component.csv".format(path_input_cluster, self.selected_property))
+        if self.selected_property in self.list_clusters:
+            self.dataset_cluster = pd.read_csv("{}{}/data_component.csv".format(path_input_cluster, self.selected_property))
+        else:
+            print("Property {} not found".format(self.selected_property))
 
     def encoding_data(self, dataset):
         matrix_sequence_encoding = []

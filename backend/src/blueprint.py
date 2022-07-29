@@ -7,6 +7,7 @@ from routes.advanced_search import search_blueprint
 from routes.tools import tools_blueprint
 from routes.profile import profile_blueprint
 from routes.database import database_blueprint
+from routes.home import home_blueprint
 
 
 api_blueprint = Blueprint('api', __name__)
@@ -18,3 +19,4 @@ api_blueprint.register_blueprint(search_blueprint)
 api_blueprint.register_blueprint(tools_blueprint)
 api_blueprint.register_blueprint(profile_blueprint)
 api_blueprint.register_blueprint(database_blueprint)
+api_blueprint.register_blueprint(home_blueprint)

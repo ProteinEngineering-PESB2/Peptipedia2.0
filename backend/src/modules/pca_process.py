@@ -23,6 +23,7 @@ class pca_process:
             pca_result = self.transformer.apply_kernel_pca(self.dataset_to_transform, self.kernel)
         pca = pd.DataFrame(data = pca_result, columns = ["X", "Y"])
         pca["id"] = self.data["id"]
+        pca["sequence"] = self.data["sequence"]
         pca["label"] = self.data["label"]
         pca_path = self.static_folder + "/" + str(round(random()*10**20)) + ".csv"
         pca.to_csv(pca_path, index=False)
