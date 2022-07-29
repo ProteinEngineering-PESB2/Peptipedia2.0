@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 from peptipedia.modules.encoding_strategies.encoder import encoder

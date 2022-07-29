@@ -1,7 +1,6 @@
-
-import numpy as np
 import pandas as pd
 from Bio import SeqIO
+
 from peptipedia.modules.utils import ConfigTool
 
 

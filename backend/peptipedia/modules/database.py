@@ -12,8 +12,9 @@ class database:
         password = config["database"]["password"]
         db = config["database"]["db"]
         host = config["database"]["host"]
+        port = config["database"]["port"]
         engine = create_engine(
-            "postgresql+psycopg2://{}:{}@{}/{}".format(user, password, host, db)
+            f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
         )
         self.conn = engine.connect()
         # Config max items for selects

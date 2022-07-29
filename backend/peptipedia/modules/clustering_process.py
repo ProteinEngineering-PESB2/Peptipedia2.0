@@ -2,14 +2,18 @@ import json
 from random import random
 
 import pandas as pd
-from peptipedia.modules.clustering_methods import clustering_algorithm, evaluation_performances
+from scipy import stats
+
+from peptipedia.modules.clustering_methods import (
+    clustering_algorithm,
+    evaluation_performances,
+)
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_one_hot,
     run_physicochemical_properties,
 )
 from peptipedia.modules.utils import ConfigTool
-from scipy import stats
 
 
 class unsupervised_algorithms(ConfigTool):

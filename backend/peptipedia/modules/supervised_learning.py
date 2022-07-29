@@ -2,6 +2,8 @@ from random import random
 
 import pandas as pd
 from joblib import dump, load
+from scipy import stats
+
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_one_hot,
@@ -9,7 +11,6 @@ from peptipedia.modules.encoding_strategies import (
 )
 from peptipedia.modules.training_supervised_learning.run_algorithm import run_algorithm
 from peptipedia.modules.utils import ConfigTool
-from scipy import stats
 
 
 class supervised_algorithms(ConfigTool):

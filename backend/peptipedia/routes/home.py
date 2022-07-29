@@ -1,6 +1,7 @@
 import configparser
 
 from flask import Blueprint, request
+
 from peptipedia.modules.database import database
 
 ##Reads config file and asign folder names.

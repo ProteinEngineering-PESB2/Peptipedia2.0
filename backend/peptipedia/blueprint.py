@@ -1,5 +1,6 @@
 """Blueprints"""
 from flask import Blueprint
+
 from peptipedia.routes.advanced_search import search_blueprint
 from peptipedia.routes.bioinformatic_tools import bioinfo_tools_blueprint
 from peptipedia.routes.database import database_blueprint

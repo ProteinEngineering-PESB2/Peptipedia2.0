@@ -2,6 +2,7 @@
 import configparser
 
 from flask import Blueprint, request
+
 from peptipedia.modules.frequency_analysis import frequency_analysis
 from peptipedia.modules.phisicochemical_module import modlamp_descriptor
 from peptipedia.modules.utils import interface

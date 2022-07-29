@@ -2,6 +2,7 @@
 import configparser
 
 from flask import Blueprint, request
+
 from peptipedia.modules.clustering_process import unsupervised_algorithms
 from peptipedia.modules.distance_clustering import distance_clustering
 from peptipedia.modules.encoding import encoding

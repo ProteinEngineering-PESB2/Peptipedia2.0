@@ -2,12 +2,12 @@ import os
 from random import random
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
-from peptipedia.modules.utils import ConfigTool
 from scipy.cluster.hierarchy import dendrogram, linkage
 from scipy.spatial.distance import squareform
+
+from peptipedia.modules.utils import ConfigTool
 
 
 class multiple_sequence_alignment(ConfigTool):
