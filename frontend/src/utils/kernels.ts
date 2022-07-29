@@ -18,7 +18,7 @@ export const kernels: IItemSelect[] = [
     value: "sigmoid",
   },
   {
-    title: "Cosinie",
-    value: "cosinie",
+    title: "Cosine",
+    value: "cosine",
   },
 ];
