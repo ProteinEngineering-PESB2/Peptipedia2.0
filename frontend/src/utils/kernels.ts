@@ -2,6 +2,10 @@ import { IItemSelect } from "./interfaces";
 
 export const kernels: IItemSelect[] = [
   {
+    title: "No Apply",
+    value: "no_apply",
+  },
+  {
     title: "Linear",
     value: "linear",
   },

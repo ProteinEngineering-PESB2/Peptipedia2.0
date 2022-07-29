@@ -4,7 +4,9 @@ import toast from "react-hot-toast";
 import { parserFormDataWithOptionsForCSV } from "../../helpers/parserFormData";
 import { useSelectAlgorithmSupervisedLearning } from "../../hooks/useSelectAlgorithmSupervisedLearning";
 import { useSelectEncoding } from "../../hooks/useSelectEncoding";
+import { useSelectLinearClustering } from "../../hooks/useSelectLinearClustering";
 import { useSelectProperty } from "../../hooks/useSelectProperty";
+import { useStandarization } from "../../hooks/useStandarization";
 import { useTaskType } from "../../hooks/useTaskType";
 import { useTestSize } from "../../hooks/useTestSize";
 import { useTextFieldKValue } from "../../hooks/useTextFieldKValue";
@@ -61,6 +63,13 @@ export default function SupervisedLearningForm({
     useTaskType();
   const { selectedTestSize, handleChangeSelectedTestSize, test_size } =
     useTestSize();
+  const { kernels, handleChangeSelectedKernel, selectedKernel } =
+    useSelectLinearClustering();
+  const {
+    handleChangeSelectedStandarization,
+    selectedStandarization,
+    standarizations,
+  } = useStandarization();
   const {
     selectedAlgorithm,
     algorithms_classification_supervised_learning,
@@ -95,7 +104,6 @@ export default function SupervisedLearningForm({
         toast.error(data.description);
       } else {
         const { job_path, result } = data;
-        console.log(data)
 
         if (selectedTaskType === "classification") {
           setTaskType("classification");
@@ -178,6 +186,22 @@ export default function SupervisedLearningForm({
                     items={test_size}
                     handleChange={handleChangeSelectedTestSize}
                     value={selectedTestSize}
+                  />
+                </Grid>
+                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                  <SelectComponent
+                    title="Apply PCA"
+                    items={kernels}
+                    handleChange={handleChangeSelectedKernel}
+                    value={selectedKernel}
+                  />
+                </Grid>
+                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                  <SelectComponent
+                    title="standardization"
+                    items={standarizations}
+                    handleChange={handleChangeSelectedStandarization}
+                    value={selectedStandarization}
                   />
                 </Grid>
               </Grid>
