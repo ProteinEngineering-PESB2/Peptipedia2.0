@@ -1,10 +1,10 @@
 import { SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
-import { kernels } from "../utils/kernels";
+import { kernelsSupervisedLearning, kernels } from "../utils/kernels";
 
 export const useSelectLinearClustering = () => {
   const [selectedKernel, setSelectedKernel] = useState<string>(
-    kernels[0].value
+    "linear"
   );
 
   const handleChangeSelectedKernel = (e: SelectChangeEvent): void => {
@@ -14,6 +14,7 @@ export const useSelectLinearClustering = () => {
   return {
     selectedKernel,
     handleChangeSelectedKernel,
-    kernels
+    kernels,
+    kernelsSupervisedLearning,
   };
 };

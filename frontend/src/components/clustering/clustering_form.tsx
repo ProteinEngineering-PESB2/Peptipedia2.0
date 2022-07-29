@@ -99,6 +99,7 @@ export default function ClusteringForm({ setResult }: Props) {
         toast.error(data.description);
       } else {
         const { result } = data;
+        console.log(data)
         setResult(result);
       }
 

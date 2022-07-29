@@ -63,8 +63,11 @@ export default function SupervisedLearningForm({
     useTaskType();
   const { selectedTestSize, handleChangeSelectedTestSize, test_size } =
     useTestSize();
-  const { kernels, handleChangeSelectedKernel, selectedKernel } =
-    useSelectLinearClustering();
+  const {
+    kernelsSupervisedLearning,
+    handleChangeSelectedKernel,
+    selectedKernel,
+  } = useSelectLinearClustering();
   const {
     handleChangeSelectedStandarization,
     selectedStandarization,
@@ -90,6 +93,8 @@ export default function SupervisedLearningForm({
       algorithm: selectedAlgorithm,
       validation: parseInt(kvalue),
       test_size: parseFloat(selectedTestSize),
+      kernel: selectedKernel,
+      standardization: selectedStandarization,
     };
 
     const postData = parserFormDataWithOptionsForCSV(data, options);
@@ -191,7 +196,7 @@ export default function SupervisedLearningForm({
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <SelectComponent
                     title="Apply PCA"
-                    items={kernels}
+                    items={kernelsSupervisedLearning}
                     handleChange={handleChangeSelectedKernel}
                     value={selectedKernel}
                   />

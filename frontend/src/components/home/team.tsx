@@ -9,6 +9,7 @@ import Anita from "../../assets/anita.jpg";
 import Alvaro from "../../assets/aolivera.jpg";
 import Benjamin from "../../assets/benjamin.jpg";
 import Marcelo from "../../assets/marcelo.jpg";
+import Roberto from "../../assets/roberto.jpg";
 
 import CardProfile from "./card_profile";
 
@@ -36,29 +37,11 @@ export default function PeptipediaTeam() {
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
-              name="Francisca Rodríguez"
-              rol="Researcher"
-              image={Fran}
-              github="https://github.com/franroca15"
-              linkedin="https://www.linkedin.com/in/fran-ro-ca/"
-            />
-          </Grid>
-          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
-            <CardProfile
               name="Gabriel Cabas"
               rol="Backend Developer & Data engineer"
               image={Gabriel}
               github="https://github.com/GabrielCabas"
               linkedin="https://www.linkedin.com/in/gabriel-cabas-1834601b4/"
-            />
-          </Grid>
-          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
-            <CardProfile
-              name="David Medina"
-              rol="Researcher"
-              image={David}
-              github="https://github.com/dMedinaO"
-              linkedin="https://www.linkedin.com/in/david-medina-924308224/"
             />
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
@@ -72,16 +55,19 @@ export default function PeptipediaTeam() {
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
-              name="Anamaria Sánchez"
+              name="Francisca Rodríguez"
               rol="Researcher"
-              image={Anita}
+              image={Fran}
+              github="https://github.com/franroca15"
+              linkedin="https://www.linkedin.com/in/fran-ro-ca/"
             />
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
-              name="Alvaro Olivera"
+              name="Anamaria Sánchez"
               rol="Researcher"
-              image={Alvaro}
+              image={Anita}
+              linkedin="https://www.linkedin.com/in/anamar%C3%ADa-s%C3%A1nchez-daza-597b3246/"
             />
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
@@ -89,13 +75,40 @@ export default function PeptipediaTeam() {
               name="Benjamín Armijo"
               rol="Researcher"
               image={Benjamin}
+              linkedin="https://www.researchgate.net/scientific-contributions/Benjamin-Armijo-Galdames-2189146592"
             />
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
-              name="Marceloo Navarrete"
+              name="Alvaro Olivera"
+              rol="Researcher"
+              image={Alvaro}
+              linkedin="https://www.linkedin.com/in/alvaro-olivera-nappa-5bb5212/"
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="Marcelo Navarrete"
               rol="Researcher"
               image={Marcelo}
+              linkedin="https://www.linkedin.com/in/marcelo-navarrete-signorile-30179576/?originalSubdomain=cl"
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="David Uribe Paredes"
+              rol="Researcher"
+              image={Roberto}
+              linkedin="https://www.linkedin.com/in/roberto-uribe-paredes-5868b84/?originalSubdomain=es"
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="David Medina"
+              rol="Researcher"
+              image={David}
+              github="https://github.com/dMedinaO"
+              linkedin="https://www.linkedin.com/in/david-medina-924308224/"
             />
           </Grid>
         </Grid>
