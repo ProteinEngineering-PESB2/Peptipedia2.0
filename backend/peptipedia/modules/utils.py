@@ -50,7 +50,7 @@ class ConfigTool:
 
     def delete_file(self):
         try:
-            os.remove(self.temp_file_path)
+            Path(self.temp_file_path).unlink()
         except Exception as e:
             print(e)
 
