@@ -1,9 +1,10 @@
 import numpy as np
 import pandas as pd
-from modules.encoding_strategies.run_physicochemical_properties import (
+from scipy.fft import fft
+
+from peptipedia.modules.encoding_strategies.run_physicochemical_properties import (
     run_physicochemical_properties,
 )
-from scipy.fft import fft
 
 
 class run_fft_encoding(run_physicochemical_properties):

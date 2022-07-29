@@ -1,4 +1,3 @@
-from modules.training_supervised_learning import supervised_algorithm
 from sklearn.ensemble import (
     AdaBoostClassifier,
     AdaBoostRegressor,
@@ -13,6 +12,8 @@ from sklearn.naive_bayes import BernoulliNB, GaussianNB
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.svm import SVC, SVR, NuSVC, NuSVR
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+
+from peptipedia.modules.training_supervised_learning import supervised_algorithm
 
 
 class run_algorithm:

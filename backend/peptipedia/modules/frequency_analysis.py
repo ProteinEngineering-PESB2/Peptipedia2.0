@@ -1,6 +1,7 @@
-import numpy as np
-from Bio import SeqIO
 
+import numpy as np
+import pandas as pd
+from Bio import SeqIO
 from peptipedia.modules.utils import ConfigTool
 
 
@@ -43,15 +44,29 @@ class frequency_analysis(ConfigTool):
 
     def exec_process(self):
         records = list(SeqIO.parse(self.temp_file_path, "fasta"))
-        dict_counts_seq = []
+        self.dict_counts_seq = []
         for record in records:
             sequence = str(record.seq)
             id_sequence = record.id
-            dict_counts_seq.append(
+            self.dict_counts_seq.append(
                 {
                     "id_seq": id_sequence,
                     "counts": self.count_canonical_residues(sequence),
                 }
             )
         self.delete_file()
-        return dict_counts_seq
+        return self.dict_counts_seq
+
+    def get_average(self):
+
+        df = pd.json_normalize(self.dict_counts_seq, max_level=1)
+        df.drop(["id_seq"], inplace=True, axis=1)
+        df.rename(
+            columns={a: a.replace("counts.", "") for a in df.columns}, inplace=True
+        )
+        description = df.describe().round(2)
+        X = description.columns.tolist()
+        Y = description.loc["mean"].to_list()
+        error = description.loc["std"] / 2
+        error = error.to_list()
+        return {"X": X, "Y": Y, "error": error}

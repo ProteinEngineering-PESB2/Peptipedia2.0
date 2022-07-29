@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from modules.encoding_strategies.encoder import encoder
+
+from peptipedia.modules.encoding_strategies.encoder import encoder
 
 
 class run_one_hot(encoder):

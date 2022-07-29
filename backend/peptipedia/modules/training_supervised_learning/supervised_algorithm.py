@@ -1,5 +1,6 @@
-from modules.training_supervised_learning import response_training
 from sklearn.model_selection import train_test_split
+
+from peptipedia.modules.training_supervised_learning import response_training
 
 
 class model_algorithm:

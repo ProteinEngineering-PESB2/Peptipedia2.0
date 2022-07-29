@@ -2,10 +2,11 @@ import os
 import subprocess
 
 import pandas as pd
-from modules.utils import config_tool
+
+from peptipedia.modules.utils import ConfigTool
 
 
-class gene_ontology(config_tool):
+class gene_ontology(ConfigTool):
     def __init__(
         self,
         data,

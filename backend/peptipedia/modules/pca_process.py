@@ -2,7 +2,8 @@ import json
 from random import random
 
 import pandas as pd
-from modules.clustering_methods.transformation_data import transformer
+
+from peptipedia.modules.clustering_methods.transformation_data import transformer
 
 
 class pca_process:

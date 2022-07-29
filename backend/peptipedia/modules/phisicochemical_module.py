@@ -1,11 +1,14 @@
-from modlamp.descriptors import GlobalDescriptor
-from modlamp.plot import plot_profile, helical_wheel
-from random import random
-from Bio import SeqIO
 import os
-from modules.utils import config_tool
+from random import random
 
-class modlamp_descriptor(config_tool):
+from Bio import SeqIO
+from modlamp.descriptors import GlobalDescriptor
+from modlamp.plot import helical_wheel, plot_profile
+
+from peptipedia.modules.utils import ConfigTool
+
+
+class modlamp_descriptor(ConfigTool):
     def __init__(self, data, options, is_file, is_json, config):
         self.length = options["length"]
         self.molecular_weight = options["molecular_weight"]
@@ -26,36 +29,44 @@ class modlamp_descriptor(config_tool):
             sequence = str(record.seq)
             dict_response = {}
             dict_response["id"] = record.id
-            if(self.length):
+            if self.length:
                 dict_response["length"] = len(sequence)
-            if(self.molecular_weight):
+            if self.molecular_weight:
                 dict_response["molecular_weight"] = self.get_mw(sequence)
-            if(self.isoelectric_point):
-                dict_response["isoelectric_point"] = self.get_isoelectric_point(sequence)
-            if(self.charge_density):
+            if self.isoelectric_point:
+                dict_response["isoelectric_point"] = self.get_isoelectric_point(
+                    sequence
+                )
+            if self.charge_density:
                 dict_response["charge_density"] = self.get_charge_density(sequence)
-            if(self.charge):
+            if self.charge:
                 dict_response["charge"] = self.get_charge(sequence)
-            if(self.instability_index):
-                dict_response["instability_index"] = self.get_instability_index(sequence)
-            if(self.aromaticity):
+            if self.instability_index:
+                dict_response["instability_index"] = self.get_instability_index(
+                    sequence
+                )
+            if self.aromaticity:
                 dict_response["aromaticity"] = self.get_aromaticity(sequence)
-            if(self.aliphatic_index):
+            if self.aliphatic_index:
                 dict_response["aliphatic_index"] = self.get_aliphatic_index(sequence)
-            if(self.boman_index):
+            if self.boman_index:
                 dict_response["boman_index"] = self.get_boman_index(sequence)
-            if(self.hydrophobic_ratio):
-                dict_response["hydrophobic_ratio"] = self.get_hydrophobic_ratio(sequence)
-            
-            profile_path = "{}/{}_profile.png".format("/files", str(round(random()*10**20)))
+            if self.hydrophobic_ratio:
+                dict_response["hydrophobic_ratio"] = self.get_hydrophobic_ratio(
+                    sequence
+                )
+
+            profile_path = "{}/{}_profile.png".format(
+                "/files", str(round(random() * 10**20))
+            )
             helical_path = profile_path.replace("profile", "helical")
-            plot_profile(sequence, scalename='eisenberg', filename = profile_path )
-            helical_wheel(sequence, filename = helical_path )
+            plot_profile(sequence, scalename="eisenberg", filename=profile_path)
+            helical_wheel(sequence, filename=helical_path)
             dict_response["profile_path"] = profile_path
             dict_response["helical_path"] = helical_path
             response.append(dict_response)
         return response
-        
+
     def get_mw(self, sequence):
         try:
             desc = GlobalDescriptor([sequence])
@@ -87,7 +98,7 @@ class modlamp_descriptor(config_tool):
             return round(desc.descriptor[0][0], 4)
         except Exception as e:
             return None
-    
+
     def get_instability_index(self, sequence):
         try:
             desc = GlobalDescriptor([sequence])
@@ -103,7 +114,7 @@ class modlamp_descriptor(config_tool):
             return round(desc.descriptor[0][0], 4)
         except Exception as e:
             return None
-    
+
     def get_aliphatic_index(self, sequence):
         try:
             desc = GlobalDescriptor([sequence])
@@ -112,7 +123,6 @@ class modlamp_descriptor(config_tool):
         except Exception as e:
             return None
 
-    
     def get_boman_index(self, sequence):
         try:
             desc = GlobalDescriptor([sequence])
@@ -120,7 +130,7 @@ class modlamp_descriptor(config_tool):
             return round(desc.descriptor[0][0], 4)
         except Exception as e:
             return None
-    
+
     def get_hydrophobic_ratio(self, sequence):
         try:
             desc = GlobalDescriptor([sequence])

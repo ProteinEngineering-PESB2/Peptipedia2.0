@@ -2,18 +2,14 @@ import json
 from random import random
 
 import pandas as pd
-from scipy import stats
-
-from peptipedia.modules.clustering_methods import (
-    clustering_algorithm,
-    evaluation_performances,
-)
+from peptipedia.modules.clustering_methods import clustering_algorithm, evaluation_performances
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_one_hot,
     run_physicochemical_properties,
 )
 from peptipedia.modules.utils import ConfigTool
+from scipy import stats
 
 
 class unsupervised_algorithms(ConfigTool):
@@ -23,6 +19,7 @@ class unsupervised_algorithms(ConfigTool):
             config["folders"]["static_folder"], str(round(random() * 10**20))
         )
         self.options = options
+        print(self.options)
         self.dataset_encoded = None
         self.is_normal = True
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
@@ -81,7 +78,7 @@ class unsupervised_algorithms(ConfigTool):
                             "description": "Parameter xi not valid",
                         }
                     if (
-                        self.options["params"]["xi"] < 0
+                        self.options["params"]["xi"] < 2
                         or self.options["params"]["xi"] > 1
                     ):
                         return {
@@ -188,6 +185,7 @@ class unsupervised_algorithms(ConfigTool):
         self.response = {}
 
         if clustering_process.response_apply == 0:  # Success
+            self.dataset_encoded["sequence"] = self.data.sequence
             self.dataset_encoded["label"] = list(clustering_process.labels)
             self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
             data_json = json.loads(
