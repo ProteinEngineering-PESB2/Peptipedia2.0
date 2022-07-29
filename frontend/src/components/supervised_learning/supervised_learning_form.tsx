@@ -203,7 +203,7 @@ export default function SupervisedLearningForm({
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <SelectComponent
-                    title="standardization"
+                    title="Standardization"
                     items={standarizations}
                     handleChange={handleChangeSelectedStandarization}
                     value={selectedStandarization}
