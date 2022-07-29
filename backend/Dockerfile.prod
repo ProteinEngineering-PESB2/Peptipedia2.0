@@ -73,8 +73,8 @@ ENV BLASTDB="/databases/blastdb" \
 	PFAM_DB="/databases/pfam" \
 	PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}"
 
-COPY ./src /app
+COPY ./peptipedia /app/peptipedia
 WORKDIR /app
 
 # Ejecución de la api
-CMD ["sh","-c", "gunicorn wsgi:app -b 0.0.0.0 -w 4"]
+CMD ["sh","-c", "gunicorn peptipedia.wsgi:app -b 0.0.0.0 -w 4"]
