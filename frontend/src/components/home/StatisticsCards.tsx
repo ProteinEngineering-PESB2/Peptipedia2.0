@@ -1,4 +1,11 @@
-import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import StorageIcon from "@mui/icons-material/Storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -7,27 +14,32 @@ import BiotechIcon from "@mui/icons-material/Biotech";
 import UpdateIcon from "@mui/icons-material/Update";
 
 export default function StatisticsCards() {
+  const [loadingCards, setLoadingCards] = useState<boolean>(true);
   const [dataCards, setDataCards] = useState<any>(null);
 
   const getDataCards = async () => {
     try {
       const response = await axios.get("/api/get_general_counts/");
-      console.log(response.data);
       setDataCards(response.data);
+      setLoadingCards(false);
     } catch (error) {
       setDataCards(null);
+      setLoadingCards(false);
     }
   };
 
   useEffect(() => {
+    setLoadingCards(true);
     getDataCards();
   }, []);
 
   return (
     <>
-      {dataCards && (
-        <Grid container spacing={2} sx={{ marginTop: 5 }}>
-          <Grid item xl={3}>
+      <Grid container spacing={2} sx={{ marginTop: 5 }}>
+        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+          {loadingCards === true ? (
+            <Skeleton variant="rectangular" width="100%" height={118} />
+          ) : (
             <Card variant="outlined" sx={{ boxShadow: 3, p: 1 }}>
               <CardContent>
                 <Box
@@ -57,8 +69,12 @@ export default function StatisticsCards() {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xl={3}>
+          )}
+        </Grid>
+        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+          {loadingCards === true ? (
+            <Skeleton variant="rectangular" width="100%" height={118} />
+          ) : (
             <Card variant="outlined" sx={{ boxShadow: 3, p: 1 }}>
               <CardContent>
                 <Box
@@ -88,8 +104,12 @@ export default function StatisticsCards() {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xl={3}>
+          )}
+        </Grid>
+        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+          {loadingCards ? (
+            <Skeleton variant="rectangular" width="100%" height={118} />
+          ) : (
             <Card variant="outlined" sx={{ boxShadow: 3, p: 1 }}>
               <CardContent>
                 <Box
@@ -119,8 +139,12 @@ export default function StatisticsCards() {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xl={3}>
+          )}
+        </Grid>
+        <Grid item xl={3} lg={3} md={6} sm={12} xs={12}>
+          {loadingCards ? (
+            <Skeleton variant="rectangular" width="100%" height={118} />
+          ) : (
             <Card variant="outlined" sx={{ boxShadow: 3, p: 1 }}>
               <CardContent>
                 <Box
@@ -139,7 +163,7 @@ export default function StatisticsCards() {
                       justifyContent: "end",
                     }}
                   >
-                    <Typography fontWeight="bold" variant="h5">
+                    <Typography fontWeight="bold" variant="h6">
                       {dataCards.last_update}
                     </Typography>
                     <Typography fontWeight="400" variant="h6">
@@ -150,9 +174,9 @@ export default function StatisticsCards() {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
+          )}
         </Grid>
-      )}
+      </Grid>
     </>
   );
 }

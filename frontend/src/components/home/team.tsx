@@ -5,6 +5,10 @@ import Fran from "../../assets/fran.jpeg";
 import David from "../../assets/david.jpeg";
 import Sanzana from "../../assets/sanzana.jpeg";
 import Gabriel from "../../assets/gabriel.jpeg";
+import Anita from "../../assets/anita.jpg";
+import Alvaro from "../../assets/aolivera.jpg";
+import Benjamin from "../../assets/benjamin.jpg";
+import Marcelo from "../../assets/marcelo.jpg";
 
 import CardProfile from "./card_profile";
 
@@ -64,6 +68,34 @@ export default function PeptipediaTeam() {
               image={Sanzana}
               github="https://github.com/baaass2"
               linkedin="https://www.linkedin.com/in/benjamin-sanzana-silva-239199228/"
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="Anamaria Sánchez"
+              rol="Researcher"
+              image={Anita}
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="Alvaro Olivera"
+              rol="Researcher"
+              image={Alvaro}
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="Benjamín Armijo"
+              rol="Researcher"
+              image={Benjamin}
+            />
+          </Grid>
+          <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
+            <CardProfile
+              name="Marceloo Navarrete"
+              rol="Researcher"
+              image={Marcelo}
             />
           </Grid>
         </Grid>
