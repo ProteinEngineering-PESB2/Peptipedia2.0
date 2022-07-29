@@ -9,13 +9,16 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import Plot from "react-plotly.js";
+import Plotly from 'plotly.js-basic-dist'
+import createPlotlyComponent from 'react-plotly.js/factory';
 import { useState } from "react";
 import { IDataRegressionSupervisedLearning } from "../../utils/interfaces";
 import BackdropComponent from "../backdrop_component";
 import ButtonDownloadPrimary from "../button_download_primary";
 import { useScatterRegressionSupervisedLearning } from "../../hooks/useScatterRegressionSupervisedLearning";
 import { useBoxPlotRegressionSupervisedLearning } from "../../hooks/useBoxPlotRegressionSupervisedLearning";
+
+const Plot = createPlotlyComponent(Plotly);
 
 interface Props {
   result: IDataRegressionSupervisedLearning;

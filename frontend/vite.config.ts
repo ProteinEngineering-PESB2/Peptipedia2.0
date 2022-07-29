@@ -1,13 +1,18 @@
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import viteCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  build: {
+    chunkSizeWarningLimit: 1000,
+  },
+  plugins: [
+    react(),
+    viteCompression({ algorithm: 'gzip', ext: '.gz' }),
+    splitVendorChunkPlugin()
+  ],
   server: {
-    proxy: {
-      "/api": "http://66.94.118.108:8001",
-      "/files": "http://66.94.118.108:8001"
-    }
+    port: 3000,
   }
 })

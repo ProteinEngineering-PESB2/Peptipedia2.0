@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 
 interface Props {
   title: string;
-  description: string
+  description?: string
 }
 
 export default function SectionTitle({ title, description }: Props) {

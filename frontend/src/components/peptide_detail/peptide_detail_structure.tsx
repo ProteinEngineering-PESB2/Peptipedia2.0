@@ -28,6 +28,7 @@ export default function PeptideDetailStructure({ peptideId }: Props) {
             },
           }}
         >
+          {/* @ts-ignore */}
           <ProSeqViewer sequences={sequences} />
         </Box>
       )}

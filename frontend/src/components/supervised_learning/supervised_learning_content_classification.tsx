@@ -9,7 +9,8 @@ import {
   TableHead,
   TableBody,
 } from "@mui/material";
-import Plot from "react-plotly.js";
+import Plotly from 'plotly.js-basic-dist'
+import createPlotlyComponent from 'react-plotly.js/factory';
 import { useState } from "react";
 import { useHeatmapSupervisedLearning } from "../../hooks/useHeatmapSupervisedLearning";
 import { IDataClassificationSupervisedLearning } from "../../utils/interfaces";
@@ -17,6 +18,8 @@ import BackdropComponent from "../backdrop_component";
 import ButtonDownloadPrimary from "../button_download_primary";
 import { useLearningCurveSupervisedLearning } from "../../hooks/useLearningCurveSupervisedLearning";
 import { useGroupedBarSupervisedLearning } from "../../hooks/useGroupedBarSupervisedLearning";
+
+const Plot = createPlotlyComponent(Plotly);
 
 interface Props {
   result: IDataClassificationSupervisedLearning;
