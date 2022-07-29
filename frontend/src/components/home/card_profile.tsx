@@ -12,8 +12,8 @@ interface Props {
   name: string;
   rol: string;
   image: string;
-  github: string;
-  linkedin: string;
+  github?: string;
+  linkedin?: string;
 }
 
 export default function CardProfile({
