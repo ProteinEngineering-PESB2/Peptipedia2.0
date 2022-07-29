@@ -23,6 +23,7 @@ psycopg2-binary = "^2.9.3"
 gunicorn = "^20.1.0"
 networkx = "^2.8.5"
 python-louvain = "^0.16"
+seaborn = "^0.11.2"
 
 [tool.poetry.dev-dependencies]
 poethepoet = "^0.16.0"

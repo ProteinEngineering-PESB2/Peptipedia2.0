@@ -5,7 +5,7 @@ from flask import Blueprint, request
 
 from peptipedia.modules.frequency_analysis import frequency_analysis
 from peptipedia.modules.phisicochemical_module import modlamp_descriptor
-from peptipedia.modules.utils import interface
+from peptipedia.modules.utils import Interface
 
 ##Reads config file and asign folder names.
 config = configparser.ConfigParser()
