@@ -269,7 +269,7 @@ def _error_message(message):
 
 
 def parse_fasta(text):
-    fasta_regex = re.compile(r">(\w+)\n([^>]+)")
+    fasta_regex = re.compile(r">([^\n]+)\n([^>]+)")
     return [
         {"id": seq_id, "sequence": seq.replace("\n", "").upper()}
         for seq_id, seq in fasta_regex.findall(text)
