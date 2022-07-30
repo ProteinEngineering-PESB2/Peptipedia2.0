@@ -1,4 +1,5 @@
 import os
+import subprocess
 from random import random
 
 import matplotlib.pyplot as plt
@@ -21,14 +22,20 @@ class multiple_sequence_alignment(ConfigTool):
         self.distances_file = self.output_file.replace("aln", "mat")
 
     def execute_clustalo(self):
-        command = "clustalo -i {} -o {} --distmat-out={} --full --force".format(
-            self.temp_file_path, self.output_file, self.distances_file
-        )
-        os.system(command)
+        command = [
+            "clustalo",
+            "-i",
+            self.temp_file_path,
+            "-o",
+            self.output_file,
+            f"--distmat-out={self.distances_file}",
+            "--full",
+            "--force",
+        ]
+        subprocess.check_output(command)
 
-        f = open(self.output_file, "r")
-        output_text = f.read()
-        f.close()
+        with open(self.output_file, "r") as f:
+            output_text = f.read()
 
         distance_table = pd.read_csv(
             self.distances_file, header=None, delimiter=r"\s+", skiprows=1

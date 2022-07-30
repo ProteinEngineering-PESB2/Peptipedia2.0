@@ -14,23 +14,17 @@ class pfam(ConfigTool):
         self.create_csv_from_fasta()
 
     def process(self):
-        self.output_file = self.temp_csv_file.replace("fasta", "pfam")
         command = [
             "pfam_scan.pl",
             "-dir",
             os.getenv("PFAM_DB"),
             "-fasta",
             self.temp_csv_file,
-            ">",
-            self.output_file,
         ]
-        subprocess.check_output(command)
-        f = open(self.output_file, "r")
-        text = f.read().split("\n\n")[-1]
-        f.close()
+        text = subprocess.check_output(command).decode()
         data = []
         for i in text.splitlines():
-            result = re.sub("\s+", "\t", i).strip()
+            result = re.sub(r"\s+", "\t", i).strip()
             data.append(result.split("\t"))
         dataset = pd.DataFrame(
             data,
@@ -70,14 +64,12 @@ class pfam(ConfigTool):
         json_dataset = json.loads(dataset.to_json(orient="records"))
         response = []
         for id in dataset.seq_id.unique():
-            response_dict = {}
-            response_dict["id"] = id
-            response_dict["data"] = []
+            response_dict = {"id": id, "data": []}
             for j in json_dataset:
                 if j["seq_id"] == id:
-                    dict_copy = j.copy()
-                    dict_copy.pop("seq_id")
+                    dict_copy = j.copy().pop("seq_id")
                     response_dict["data"].append(dict_copy)
             response.append(response_dict)
         self.delete_file()
+
         return response
