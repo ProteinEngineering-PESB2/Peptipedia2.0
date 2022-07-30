@@ -45,7 +45,7 @@ export default function useInitialParamsAdvancedSearch({
 
   const initialParameters = async () => {
     try {
-      const { data } = await axios.get("/api/min_max_parameters");
+      const { data } = await axios.get("/api/min_max_parameters/");
       setParams(data.result);
       setValueLength([data.result.min_length, data.result.max_length]);
       setValueMolecularWeight([
