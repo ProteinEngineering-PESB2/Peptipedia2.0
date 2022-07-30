@@ -6,7 +6,7 @@ from flask import Blueprint, request
 from peptipedia.modules.alignment_module import alignment
 from peptipedia.modules.gene_ontology import gene_ontology
 from peptipedia.modules.msa_module import multiple_sequence_alignment
-from peptipedia.modules.pfam_domain import pfam
+from peptipedia.modules.pfam_domain import Pfam
 from peptipedia.modules.utils import Interface
 
 ##Reads config file and asign folder names.
@@ -60,7 +60,7 @@ def apply_gene_ontology():
 @bioinfo_tools_blueprint.route("/pfam/", methods=["POST"])
 def apply_pfam():
     data, is_json, is_file = Interface(request).parse_without_options()
-    pf = pfam(data, is_file, is_json, config)
+    pf = Pfam(data, is_file, is_json, config)
     check = pf.check
     if check["status"] == "error":
         return check
