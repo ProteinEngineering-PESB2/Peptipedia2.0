@@ -16,7 +16,7 @@ statistic_tools_blueprint = Blueprint("statistic_tools_blueprint", __name__)
 
 @statistic_tools_blueprint.route("/frequency/", methods=["POST"])
 def apply_frequency():
-    data, is_json, is_file = Interface.parse_information_no_options(request)
+    data, is_json, is_file = Interface(request).parse_without_options()
     frequency_object = frequency_analysis(data, is_file, is_json, config)
     check = frequency_object.check
     if check["status"] == "error":
@@ -31,7 +31,7 @@ def apply_frequency():
 
 @statistic_tools_blueprint.route("/phisicochemical/", methods=["POST"])
 def apply_phisicochemical():
-    data, options, is_json, is_file = Interface.parse_information_with_options(request)
+    data, options, is_json, is_file = Interface(request).parse_without_options()
     modlamp = modlamp_descriptor(data, options, is_file, is_json, config)
     check = modlamp.check
     if check["status"] == "error":
