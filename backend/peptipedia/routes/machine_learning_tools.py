@@ -45,7 +45,7 @@ def api_clustering():
 """
 @machine_learning_blueprint.route('/alignment_clustering/', methods=["POST"])
 def api_clustering():
-    data, options, is_json, is_file = interface.parse_information_with_options(request)
+    data, options, is_json, is_file = Interface(request).parse_with_options()
     clustering_object = alignment_clustering(data, options, is_file, is_json, config)
     check = clustering_object.check
     if(check["status"] == "error"):
