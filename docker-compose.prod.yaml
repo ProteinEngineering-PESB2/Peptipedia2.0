@@ -32,8 +32,6 @@ services:
       - traefik.http.services.peptipedia.loadbalancer.server.port=80
       - traefik.http.routers.peptipedia.tls=true
       - traefik.http.routers.peptipedia.tls.certresolver=letsencrypt
-      - traefik.http.routers.peptipedia.middlewares=compress
-      - traefik.http.middlewares.compress.compress=true
     build:
       context: ./frontend/
       dockerfile: Dockerfile.prod
