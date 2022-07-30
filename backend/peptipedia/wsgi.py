@@ -13,7 +13,7 @@ app = Flask(__name__, static_folder=os.path.realpath(f.get_static_folder()))
 # Cors
 CORS(app)
 
-app.register_blueprint(api_blueprint, url_prefix="/")
+app.register_blueprint(api_blueprint, url_prefix="/api")
 
 if __name__ == "__main__":
     app.run()
