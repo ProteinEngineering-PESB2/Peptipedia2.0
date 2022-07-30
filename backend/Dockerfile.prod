@@ -1,32 +1,60 @@
 FROM python:3.10-slim as base
 
-FROM base as build
-
 ARG DEBIAN_FRONTEND=noninteractive
 ARG BLAST_VERSION=2.13.0
 ARG HMMER_VERSION=3.3.2
-ARG CORES=4
+ARG CPUS=4
+
+
+FROM base as compile
+
+ARG DEBIAN_FRONTEND
+ARG BLAST_VERSION
+ARG HMMER_VERSION
+ARG CPUS
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends -y \
-	wget curl build-essential cpio procps
+	wget build-essential procps
 
 WORKDIR /work
 
-# Instalación de BLAST
+# Descarga y compilación de BLAST
 RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${BLAST_VERSION}/ncbi-blast-${BLAST_VERSION}+-src.tar.gz
 RUN tar -xzf ncbi-blast-${BLAST_VERSION}+-src.tar.gz
-RUN cd ncbi-blast-${BLAST_VERSION}+-src/c++ && ./configure && make -j ${CORES} && make install
+RUN cd ncbi-blast-${BLAST_VERSION}+-src/c++ && ./configure && make -j ${CPUS}
 
-# Instalación de Hmmer
+# Descarga y compilación de HMMER
 RUN wget http://eddylab.org/software/hmmer/hmmer-${HMMER_VERSION}.tar.gz
 RUN tar -xzf hmmer-${HMMER_VERSION}.tar.gz
-RUN cd hmmer-${HMMER_VERSION} && ./configure && make -j ${CORES} && make install
+RUN cd hmmer-${HMMER_VERSION} && ./configure && make -j ${CPUS}
+
+# Descarga y descompresión de PfamScan
+RUN wget -T 10 http://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/PfamScan.tar.gz
+RUN tar -xzf PfamScan.tar.gz
+
+
+FROM base as build
+
+ARG DEBIAN_FRONTEND
+ARG BLAST_VERSION
+ARG HMMER_VERSION
+
+RUN apt-get update && \
+	apt-get install --no-install-recommends -y \
+    curl build-essential cpio
+
+COPY --from=compile /work /work
+WORKDIR /work
+
+# Instalación de BLAST
+RUN make -C ncbi-blast-${BLAST_VERSION}+-src/c++ install
+
+# Instalación de Hmmer
+RUN make -C hmmer-${HMMER_VERSION} install
 RUN make -C hmmer-${HMMER_VERSION}/easel install
 
 # Instalación de PfamScan
-RUN wget -T 10 http://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/PfamScan.tar.gz
-RUN tar -xzf PfamScan.tar.gz
 RUN cp -r PfamScan /usr/local/share
 # Seteo de permisos y creación de enlace simbólico a /usr/local/
 RUN PFAMSCAN_DIR=/usr/local/share/PfamScan && \
@@ -49,7 +77,7 @@ RUN pip install -r requirements.txt
 
 FROM base as run
 
-ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND
 ENV PYTHONUNBUFFERED=1
 
 # Actualización de paquetes

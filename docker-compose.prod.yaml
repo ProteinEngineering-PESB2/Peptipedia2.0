@@ -12,6 +12,8 @@ services:
     build:
       context: ./backend/
       dockerfile: Dockerfile.prod
+      args:
+        CPUS: ${CPUS:-4}
     volumes:
       - ./backend/config.ini:/app/config.ini
       - ./bd/backup_sql.zip:/files/downloads/backup_sql.zip
