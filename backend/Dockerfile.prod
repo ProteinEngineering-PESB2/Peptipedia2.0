@@ -32,6 +32,7 @@ RUN cp -r PfamScan /usr/local/share
 RUN PFAMSCAN_DIR=/usr/local/share/PfamScan && \
 	find ${PFAMSCAN_DIR} -type f -exec chmod 644 {} + && \
 	find ${PFAMSCAN_DIR} -type d -exec chmod 755 {} + && \
+    chmod +x ${PFAMSCAN_DIR}/pfam_scan.pl && \
 	ln -s ${PFAMSCAN_DIR}/pfam_scan.pl /usr/local/bin/
 # Instalación de dependencias de Perl
 RUN cpan Moose && \
