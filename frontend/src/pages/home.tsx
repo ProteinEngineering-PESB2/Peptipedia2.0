@@ -23,7 +23,7 @@ export default function Home() {
 
   const getPeptidesByDatabase = async () => {
     try {
-      const response = await axios.get("/api/get_peptides_by_database");
+      const response = await axios.get("/api/get_peptides_by_database/");
       setDataPeptidesByDatabase({
         x: response.data.X,
         y: response.data.Y,

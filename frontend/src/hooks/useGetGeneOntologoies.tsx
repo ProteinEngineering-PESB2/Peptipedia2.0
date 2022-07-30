@@ -7,7 +7,7 @@ export default function useGetGeneOntologoies() {
 
   const initialGeneOntology = async () => {
     try {
-      const { data } = await axios.get("/api/gene_ontology_list");
+      const { data } = await axios.get("/api/gene_ontology_list/");
       setGeneOntologies(data.result);
     } catch (error) {
       toast.error("Server error");

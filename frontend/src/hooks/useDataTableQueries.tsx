@@ -97,7 +97,7 @@ export default function useDataTableQueries({
     };
 
     try {
-      const { data } = await axios.post("/api/search", post);
+      const { data } = await axios.post("/api/search/", post);
 
       if (data.status === "error") {
         toast.error(data.description);

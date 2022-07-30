@@ -7,7 +7,7 @@ export default function useGetDatabases() {
 
   const initialDatabases = async () => {
     try {
-      const { data } = await axios.get("/api/database_list");
+      const { data } = await axios.get("/api/database_list/");
       setDatabases(data.result);
     } catch (error) {
       toast.error("Server Error");

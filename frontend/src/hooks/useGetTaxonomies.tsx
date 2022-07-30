@@ -7,7 +7,7 @@ export default function useGetTaxonomies() {
 
   const initialTaxonomies = async () => {
     try {
-      const { data } = await axios.get(`/api/taxonomy_list`);
+      const { data } = await axios.get(`/api/taxonomy_list/`);
       setTaxonomies(data.result);
     } catch (error) {
       toast.error("Server error");

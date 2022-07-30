@@ -7,7 +7,7 @@ export default function useGetPfam() {
 
   const initialPfams = async () => {
     try {
-      const { data } = await axios.get("/api/pfam_list");
+      const { data } = await axios.get("/api/pfam_list/");
       setPfams(data.result);
     } catch (error) {
       toast.error("Server error");
