@@ -86,7 +86,12 @@ export default function Home() {
             )
           )}
           {loadingDataPeptidesByActivity ? (
-            <Skeleton variant="rectangular" width="100%" height={500} sx={{ marginTop: 2 }}/>
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={500}
+              sx={{ marginTop: 2 }}
+            />
           ) : (
             dataPeptidesByActivity && (
               <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
