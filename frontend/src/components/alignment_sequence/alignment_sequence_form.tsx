@@ -60,7 +60,7 @@ export default function AlignmentSequenceForm({
 
     try {
       const { data } = await requestPost({
-        url: "/api/alignment",
+        url: "/api/alignment/",
         postData: postData,
       });
 

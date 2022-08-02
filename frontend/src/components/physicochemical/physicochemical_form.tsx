@@ -67,7 +67,7 @@ export default function PhysichochemicalForm({ setResult }: Props) {
 
     try {
       const { data } = await requestPost({
-        url: "/api/phisicochemical",
+        url: "/api/phisicochemical/",
         postData,
       });
 

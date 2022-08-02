@@ -102,7 +102,7 @@ export default function SupervisedLearningForm({
     try {
       const { data } = await requestPost({
         postData,
-        url: "/api/supervised_learning",
+        url: "/api/supervised_learning/",
       });
 
       if (data.status === "error") {

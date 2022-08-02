@@ -57,7 +57,7 @@ export default function FrequencyForm({ setResult, setSummary }: Props) {
 
     try {
       const { data } = await requestPost({
-        url: "/api/frequency",
+        url: "/api/frequency/",
         postData,
       });
 

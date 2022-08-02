@@ -57,7 +57,7 @@ export default function MSAForm({ setResult }: Props) {
 
     try {
       const { data } = await requestPost({
-        url: "/api/msa",
+        url: "/api/msa/",
         postData,
       });
 

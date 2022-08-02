@@ -93,7 +93,7 @@ export default function ClusteringForm({ setResult }: Props) {
     const postData = parserFormDataWithOptions(data, options);
 
     try {
-      const { data } = await requestPost({ url: "/api/clustering", postData });
+      const { data } = await requestPost({ url: "/api/clustering/", postData });
 
       if (data.status === "error") {
         toast.error(data.description);

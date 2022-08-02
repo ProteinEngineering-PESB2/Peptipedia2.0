@@ -61,7 +61,7 @@ export default function EncodingForm() {
     try {
       const { data } = await requestPost({
         postData,
-        url: "/api/encoding",
+        url: "/api/encoding/",
       });
 
       if (data.status === "error") {

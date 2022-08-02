@@ -60,7 +60,7 @@ export default function GeneOntologyForm({ setResult }: Props) {
 
     try {
       const { data } = await requestPost({
-        url: "/api/gene_ontology",
+        url: "/api/gene_ontology/",
         postData,
       });
 
