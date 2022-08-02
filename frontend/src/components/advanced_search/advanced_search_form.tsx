@@ -441,7 +441,7 @@ export default function AdvancedSearchForm({
         query: queryWithId,
       };
 
-      const { data } = await axios.post(`/api/count`, post);
+      const { data } = await axios.post(`/api/count/`, post);
 
       if (data.status === "error") {
         toast.error(data.description);

@@ -3,9 +3,17 @@ services:
   backend:
     image: peptipedia-backend
     container_name: peptipedia-backend
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.peptipedia-api.rule=Host(`api.peptipedia.cl`)
+      - traefik.http.services.peptipedia-api.loadbalancer.server.port=8000
+      - traefik.http.routers.peptipedia-api.tls=true
+      - traefik.http.routers.peptipedia-api.tls.certresolver=letsencrypt
     build:
       context: ./backend/
       dockerfile: Dockerfile.prod
+      args:
+        BUILD_CPUS: ${BUILD_CPUS:-4}
     volumes:
       - ./backend/config.ini:/app/config.ini
       - ./bd/backup_sql.zip:/files/downloads/backup_sql.zip
@@ -20,15 +28,22 @@ services:
   app:
     image: peptipedia-frontend
     container_name: peptipedia-frontend
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.peptipedia.rule=Host(`peptipedia.cl`)
+      - traefik.http.services.peptipedia.loadbalancer.server.port=80
+      - traefik.http.routers.peptipedia.tls=true
+      - traefik.http.routers.peptipedia.tls.certresolver=letsencrypt
     build:
       context: ./frontend/
       dockerfile: Dockerfile.prod
       args:
-        - BACKEND_BASEURL=${BACKEND_BASEURL}
+        - BACKEND_BASE_URL=${BACKEND_BASEURL}
     ports:
       - "80"
     networks:
       - peptipedia
+    restart: "always"
 networks:
   backend:
     name: peptipedia-backend
