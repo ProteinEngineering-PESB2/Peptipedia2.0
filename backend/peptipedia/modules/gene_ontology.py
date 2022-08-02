@@ -7,18 +7,9 @@ from peptipedia.modules.utils import ConfigTool
 
 
 class gene_ontology(ConfigTool):
-    def __init__(
-        self,
-        data,
-        options,
-        temp_folder,
-        is_file,
-        is_json,
-        max_sequences,
-        min_number_sequences=1,
-    ):
+    def __init__(self, data, options, is_file, is_json, config):
         super().__init__(
-            data, temp_folder, is_file, is_json, max_sequences, min_number_sequences
+            "gene_ontology", data, config, is_file, is_json
         )
         self.output_path = self.temp_file_path.replace(".fasta", ".result")
         self.molecular_function = options["molecular_function"]

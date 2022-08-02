@@ -31,7 +31,7 @@ def apply_frequency():
 
 @statistic_tools_blueprint.route("/phisicochemical/", methods=["POST"])
 def apply_phisicochemical():
-    data, options, is_json, is_file = Interface(request).parse_without_options()
+    data, options, is_json, is_file = Interface(request).parse_with_options()
     modlamp = modlamp_descriptor(data, options, is_file, is_json, config)
     check = modlamp.check
     if check["status"] == "error":
