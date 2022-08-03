@@ -76,18 +76,34 @@ export default function ClusteringForm({ setResult }: Props) {
     setOpenBackdrop(true);
     setResult(null);
 
+    let params = {};
+    if (selectedAlgorithm === "kmeans" || selectedAlgorithm === "birch") {
+      params = {
+        k_value: parseFloat(kvalue),
+      };
+    }
+
+    if (selectedAlgorithm === "agglomerative") {
+      params = {
+        k_value: parseFloat(kvalue),
+        linkage: selectedLinkage,
+        affinity: selectedAffinity,
+      };
+    }
+
+    if (selectedAlgorithm === "optics") {
+      params = {
+        min_samples: parseFloat(minSamples),
+        xi: parseFloat(xi),
+        min_cluster_size: parseFloat(minClusterSize),
+      };
+    }
+
     const options = {
       encoding: selectedEncoding,
       selected_property: selectedProperty,
       algorithm: selectedAlgorithm,
-      params: {
-        k_value: parseFloat(kvalue),
-        min_samples: parseFloat(minSamples),
-        xi: parseFloat(xi),
-        min_cluster_size: parseFloat(minClusterSize),
-        linkage: selectedLinkage,
-        affinity: selectedAffinity,
-      },
+      params: params,
     };
 
     const postData = parserFormDataWithOptions(data, options);
@@ -99,8 +115,12 @@ export default function ClusteringForm({ setResult }: Props) {
         toast.error(data.description);
       } else {
         const { result } = data;
-        console.log(data)
-        setResult(result);
+        if (result.description) {
+          toast.error(result.description);
+          setResult(null);
+        } else {
+          setResult(result);
+        }
       }
 
       setOpenBackdrop(false);

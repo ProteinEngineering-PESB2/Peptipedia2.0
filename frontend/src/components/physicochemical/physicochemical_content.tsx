@@ -24,12 +24,17 @@ export default function PhysichochemicalContent({ result }: Props) {
               p: 2,
               display: "flex",
               flexDirection: "column",
-              maxHeight: 700,
+              maxHeight: 1000,
               overflowX: "scroll",
               overflowY: "scroll",
             }}
           >
-            <img src={imagePlot} alt="plot" width="100%" height="100%" />
+            <img
+              src={`http://45.7.231.127:8001${imagePlot}`}
+              alt="plot"
+              width="100%"
+              height="100%"
+            />
           </Paper>
         </Box>
       )}

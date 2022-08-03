@@ -61,13 +61,14 @@ export default function MSAContent({ result }: Props) {
           }}
         >
           <img
-            src={result.image_heatmap}
+            src={`http://45.7.231.127:8001${result.image_heatmap}`}
             alt="Distances Matrix"
             width="100%"
             height="100%"
           />
         </Paper>
       </Box>
+      <h1>{result.dendrogram}</h1>
       <Box marginTop={3} boxShadow={4}>
         <Paper
           sx={{
@@ -80,7 +81,7 @@ export default function MSAContent({ result }: Props) {
           }}
         >
           <img
-            src={result.dendrogram}
+            src={`http://45.7.231.127:8001${result.dendrogram}`}
             alt="Dendrogram"
             width="100%"
             height="100%"

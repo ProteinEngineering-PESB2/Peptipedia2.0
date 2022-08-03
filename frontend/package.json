@@ -16,7 +16,7 @@
     "bio-pv": "^1.8.1",
     "js-file-download": "^0.4.12",
     "mui-datatables": "^4.2.2",
-    "plotly.js-basic-dist": "^2.13.3",
+    "plotly.js": "^2.13.3",
     "proseqviewer": "^1.1.9",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.1.0",
@@ -30,12 +30,12 @@
     "react-spinners": "^0.12.0",
     "react-tooltip": "^4.2.21",
     "remark-gfm": "^3.0.1",
+    "uninstall": "^0.0.0",
     "video-react": "^0.15.0",
     "vite-plugin-compression": "^0.5.1"
   },
   "devDependencies": {
     "@types/mui-datatables": "^3.7.9",
-    "@types/plotly.js-basic-dist": "^1.54.0",
     "@types/react": "^18.0.0",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^18.0.0",

@@ -7,7 +7,7 @@ export const algorithms: IItemSelect[] = [
   },
   {
     title: "DBScan",
-    value: "dbsaacn",
+    value: "dbscan",
   },
   {
     title: "Meanshift",

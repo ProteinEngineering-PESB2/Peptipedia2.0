@@ -67,7 +67,6 @@ export default function AlignmentSequenceForm({
       if (data.status === "error") {
         toast.error(data.description);
       } else {
-        console.log(data);
         const { path, table, aligns } = data;
 
         for (let row in table.data) {

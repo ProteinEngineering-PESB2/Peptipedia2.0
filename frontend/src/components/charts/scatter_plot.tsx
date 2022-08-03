@@ -1,7 +1,4 @@
-import Plotly from 'plotly.js-basic-dist'
-import createPlotlyComponent from 'react-plotly.js/factory';
-
-const Plot = createPlotlyComponent(Plotly);
+import Plot from "react-plotly.js"
 
 interface Props {
   title: string;
