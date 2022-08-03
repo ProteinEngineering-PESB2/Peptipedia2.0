@@ -94,16 +94,15 @@ class CsvFile:
         if not self.more_than_n():
             return _error_message("Too few sequences")
         if len(invalid_protein_ids := self.invalid_proteins()) > 0:
-            return _error_message(f"Not protein (ids={','.join(invalid_protein_ids)})")
+            return _error_message(f"Not proteins:{new_line}{new_line.join(invalid_protein_ids)}")
         if len(invalid_length_ids := self.invalid_lengths()) > 0:
             return _error_message(
-                f"Invalid length (ids={','.join(invalid_length_ids)})"
+                f"Invalid Lengths:{new_line}{new_line.join(invalid_length_ids)}"
             )
-
         return {"status": "success"}
 
     def unique_ids(self):
-        return self.data.duplicates("id").sum() > 0
+        return self.data.duplicated("id").sum() == 0
 
     def correct_columns(self):
         return list(self.data.columns) == ["id", "sequence", "target"]
@@ -112,12 +111,13 @@ class CsvFile:
         return self.data is not None
 
     def less_than_n(self):
-        return len(self.data) <= self.max_number_sequences
+        return self.data.shape[0] <= self.max_number_sequences
 
     def more_than_n(self):
-        return len(self.data) >= self.min_number_sequences
+        return self.data.shape[0] >= self.min_number_sequences
 
     def invalid_proteins(self):
+        print(self.data)
         invalid_ids = []
         aa_regex = re.compile(f"[{AMINOACID_ALPHABET}]+")
         for row in self.data.itertuples():
@@ -134,7 +134,7 @@ class CsvFile:
         return invalid_ids
 
     def null_values(self):
-        return self.data.isnull().any(axis=1).sum() > 0
+        return self.data.isnull().any(axis=1).sum() == 0
 
 
 class FastaFile:
@@ -149,6 +149,7 @@ class FastaFile:
             self.fasta = None
 
     def verify(self):
+        new_line = "\n"
         if not self.is_fasta():
             return _error_message("Not a fasta file / ASCII error")
         if not self.unique_ids():
@@ -158,12 +159,11 @@ class FastaFile:
         if not self.more_than_n():
             return _error_message("Too few sequences")
         if len(invalid_protein_ids := self.invalid_proteins()) > 0:
-            return _error_message(f"Not protein (ids={','.join(invalid_protein_ids)})")
+            return _error_message(f"Not proteins:{new_line}{new_line.join(invalid_protein_ids)}")
         if len(invalid_length_ids := self.invalid_lengths()) > 0:
             return _error_message(
-                f"Invalid length (ids={','.join(invalid_length_ids)})"
+                f"Invalid Lengths:{new_line}{new_line.join(invalid_length_ids)}"
             )
-
         return {"status": "success"}
 
     def unique_ids(self):

@@ -28,7 +28,6 @@ class gene_ontology(ConfigTool):
         return ",".join(ontologies)
 
     def process(self):
-        print(os.listdir("/temp_files/"))
         command = [
             "metastudent",
             "-i",
@@ -39,7 +38,6 @@ class gene_ontology(ConfigTool):
             self.ontologies,
         ]
         subprocess.check_output(command)
-        print(os.listdir("/temp_files/"))
         result = self.find_and_load_data()
         return result
 

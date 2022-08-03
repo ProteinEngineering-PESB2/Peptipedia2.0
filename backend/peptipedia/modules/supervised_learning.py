@@ -3,6 +3,7 @@ from random import random
 import pandas as pd
 from joblib import dump, load
 from scipy import stats
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
@@ -12,6 +13,7 @@ from peptipedia.modules.encoding_strategies import (
 from peptipedia.modules.training_supervised_learning.run_algorithm import run_algorithm
 from peptipedia.modules.utils import ConfigTool
 
+from peptipedia.modules.clustering_methods.transformation_data import transformer
 
 class supervised_algorithms(ConfigTool):
     def __init__(self, data, options, is_file, is_json, config):
@@ -27,17 +29,29 @@ class supervised_algorithms(ConfigTool):
         self.options = options
         self.dataset_encoded = None
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
+        
         self.task = self.options["task"]
         self.algorithm = self.options["algorithm"]
         self.validation = self.options["validation"]
         self.test_size = self.options["test_size"]
+        self.kernel = self.options["kernel"]
+        self.preprocessing = self.options["preprocessing"]
+        self.transformer = transformer()
         self.data = pd.read_csv(self.temp_file_path)
         self.target = self.data.target
         self.data.drop("target", inplace=True, axis=1)
 
     def run(self):
         self.process_encoding_stage()
-        ids = self.dataset_encoded.id
+        ids = self.dataset_encoded.id.values
+        self.dataset_encoded.drop(["id"], axis=1, inplace=True)
+
+        if self.preprocessing != "":
+            self.preprocess()
+
+        if self.kernel != "":
+            self.pca()
+        self.dataset_encoded["id"] = ids
         self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
         self.dataset_encoded.drop(["id"], axis=1, inplace=True)
         run_instance = run_algorithm(
@@ -129,6 +143,19 @@ class supervised_algorithms(ConfigTool):
     def dump_joblib(self):
         dump(self.model, self.job_path)
 
+    def pca(self):
+        pca_result = self.transformer.apply_kernel_pca(
+                self.dataset_encoded, self.kernel
+            )
+        self.dataset_encoded = pd.DataFrame(data=pca_result, columns=["P_0", "P_1"])
+
+    def preprocess(self):
+        if self.preprocessing == "minmaxscaler":
+            scaler = MinMaxScaler()
+        elif self.preprocessing == "standardscaler":
+            scaler = StandardScaler()
+        scaler.fit(self.dataset_encoded)
+        self.dataset_encoded = scaler.transform(self.dataset_encoded)
 
 class use_model(ConfigTool):
     def __init__(self, data, options, is_file, is_json, config):

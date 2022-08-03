@@ -14,9 +14,9 @@ class evaluationClustering:
 
         except Exception as e:
             print(e)
-            calinski = "ERROR"
-            siluetas = "ERROR"
-            davies = "ERROR"
+            calinski = None
+            siluetas = None
+            davies = None
             response = [calinski, siluetas, davies]
             pass
 

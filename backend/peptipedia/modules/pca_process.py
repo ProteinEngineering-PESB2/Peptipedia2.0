@@ -9,7 +9,6 @@ from peptipedia.modules.clustering_methods.transformation_data import transforme
 class pca_process:
     def __init__(self, params, static_folder, temp_folder):
         self.static_folder = static_folder
-        print(params)
         self.path = params["path"]
         if "kernel" in params.keys():
             self.kernel = params["kernel"]

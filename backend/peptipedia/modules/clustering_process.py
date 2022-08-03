@@ -82,8 +82,8 @@ class unsupervised_algorithms(ConfigTool):
                             "description": "Parameter xi not valid",
                         }
                     if (
-                        self.options["params"]["xi"] < 2
-                        or self.options["params"]["xi"] > 1
+                        self.options["params"]["xi"] > 1
+                        or self.options["params"]["xi"] < 0
                     ):
                         return {
                             "status": "error",
@@ -209,11 +209,18 @@ class unsupervised_algorithms(ConfigTool):
             performances = evaluation_process.get_metrics(
                 self.dataset_to_cluster, clustering_process.labels
             )
-            performances_dict = {
-                "calinski": performances[0].round(3),
-                "siluetas": performances[1].round(3),
-                "dalvies": performances[2].round(3),
-            }
+            if performances[0] != None:
+                performances_dict = {
+                    "calinski": performances[0].round(3),
+                    "siluetas": performances[1].round(3),
+                    "dalvies": performances[2].round(3),
+                }
+            else:
+                performances_dict = {
+                    "calinski": performances[0],
+                    "siluetas": performances[1],
+                    "dalvies": performances[2],
+                }
             self.response.update({"performance": performances_dict})
             self.response.update({"resume": counts})
             self.response.update({"encoding_path": self.dataset_encoded_path})
