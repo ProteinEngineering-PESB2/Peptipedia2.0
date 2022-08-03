@@ -1,8 +1,0 @@
-{
-  "short_name": "Peptipedia",
-  "name": "Peptipedia, a user-friendly web application tool to support peptide research using bioinformatics and machine learning strategies",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
