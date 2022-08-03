@@ -96,7 +96,7 @@ export default function PeptipediaTeam() {
           </Grid>
           <Grid item xl={3} lg={4} md={6} sm={12} xs={12}>
             <CardProfile
-              name="David Uribe Paredes"
+              name="Roberto Uribe-Paredes"
               rol="Researcher"
               image={Roberto}
               linkedin="https://www.linkedin.com/in/roberto-uribe-paredes-5868b84/?originalSubdomain=es"

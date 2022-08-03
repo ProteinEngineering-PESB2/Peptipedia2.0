@@ -1,7 +1,4 @@
-import Plotly from 'plotly.js-basic-dist'
-import createPlotlyComponent from 'react-plotly.js/factory';
-
-const Plot = createPlotlyComponent(Plotly);
+import Plot from "react-plotly.js";
 
 interface Props {
   values: number[];
@@ -26,12 +23,12 @@ export default function PieChart({ values, labels }: Props) {
         margin: { t: 0, b: 0, l: 0, r: 0 },
         height: 430,
         font: {
-          size: 15
-        }
+          size: 15,
+        },
       }}
       config={{
         displayModeBar: false,
-        responsive: true
+        responsive: true,
       }}
       useResizeHandler
       className="w-full h-full"

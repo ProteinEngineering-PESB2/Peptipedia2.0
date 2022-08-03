@@ -14,7 +14,6 @@ export default function useGetStructurePeptideDetail({ peptideId }: Props) {
   const getStructureFromPeptide = async () => {
     try {
       const { data } = await axios.get(`/api/get_structure/${peptideId}`);
-      console.log(data)
       if (data.status === "error") {
         toast.error(data.Description);
       } else {
@@ -51,7 +50,7 @@ export default function useGetStructurePeptideDetail({ peptideId }: Props) {
         viewer.centerOn(structure);
       }
     } catch (error) {
-      toast.error("Server Error");
+      
     }
   };
 

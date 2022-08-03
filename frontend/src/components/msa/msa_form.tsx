@@ -49,7 +49,7 @@ export default function MSAForm({ setResult }: Props) {
       output_file: "",
       distances_file: "",
       image_heatmap: "",
-      dendrogram: ""
+      dendrogram: "",
     });
     setOpenBackdrop(true);
 
@@ -70,7 +70,7 @@ export default function MSAForm({ setResult }: Props) {
           output_file: result.output_file,
           distances_file: result.distances_file,
           image_heatmap: result.image_heatmap,
-          dendrogram: result.dendrogram
+          dendrogram: result.dendrogram,
         });
       }
 
@@ -82,7 +82,7 @@ export default function MSAForm({ setResult }: Props) {
         output_file: "",
         distances_file: "",
         image_heatmap: "",
-        dendrogram: ""
+        dendrogram: "",
       });
       setOpenBackdrop(false);
     }

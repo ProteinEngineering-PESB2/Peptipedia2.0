@@ -1,7 +1,5 @@
-import Plotly from 'plotly.js-basic-dist'
+import Plot from "react-plotly.js"
 import createPlotlyComponent from 'react-plotly.js/factory';
-
-const Plot = createPlotlyComponent(Plotly);
 
 interface Props {
   x: any[];
