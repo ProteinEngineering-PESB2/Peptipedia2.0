@@ -21,4 +21,8 @@ export const standarizations: IItemSelect[] = [
     title: "Quantile",
     value: "quantile",
   },
+  {
+    title: "Don't Apply",
+    value: "",
+  },
 ];

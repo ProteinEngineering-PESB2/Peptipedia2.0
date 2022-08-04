@@ -94,7 +94,7 @@ export default function SupervisedLearningForm({
       validation: parseInt(kvalue),
       test_size: parseFloat(selectedTestSize),
       kernel: selectedKernel,
-      standardization: selectedStandarization,
+      preprocessing: selectedStandarization,
     };
 
     const postData = parserFormDataWithOptionsForCSV(data, options);
@@ -195,7 +195,7 @@ export default function SupervisedLearningForm({
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <SelectComponent
-                    title="Apply PCA"
+                    title="PCA Kernel"
                     items={kernelsSupervisedLearning}
                     handleChange={handleChangeSelectedKernel}
                     value={selectedKernel}
@@ -203,7 +203,7 @@ export default function SupervisedLearningForm({
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                   <SelectComponent
-                    title="Standardization"
+                    title="Preprocessing"
                     items={standarizations}
                     handleChange={handleChangeSelectedStandarization}
                     value={selectedStandarization}

@@ -44,7 +44,7 @@ export const usePCAClustering = ({
     }
 
     try {
-      const { data } = await requestPost({ url: "/api/pca", postData: post });
+      const { data } = await requestPost({ url: "/api/pca/", postData: post });
 
       const { path, result } = data;
 

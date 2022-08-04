@@ -45,7 +45,7 @@ export const kernelsSupervisedLearning: IItemSelect[] = [
     value: "cosine",
   },
   {
-    title: "No Apply",
-    value: "no_apply",
+    title: "Don't Apply",
+    value: "",
   },
 ];
