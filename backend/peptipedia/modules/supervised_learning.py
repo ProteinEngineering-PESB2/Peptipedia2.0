@@ -3,7 +3,7 @@ from random import random
 import pandas as pd
 from joblib import dump, load
 from scipy import stats
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer
 
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
@@ -150,10 +150,16 @@ class supervised_algorithms(ConfigTool):
         self.dataset_encoded = pd.DataFrame(data=pca_result, columns=["P_0", "P_1"])
 
     def preprocess(self):
-        if self.preprocessing == "minmaxscaler":
+        if self.preprocessing == "min_max":
             scaler = MinMaxScaler()
-        elif self.preprocessing == "standardscaler":
+        elif self.preprocessing == "standard":
             scaler = StandardScaler()
+        elif self.preprocessing == "max_absolute":
+            scaler = MaxAbsScaler()
+        elif self.preprocessing == "robust":
+            scaler = RobustScaler()
+        elif self.preprocessing == "quantile":
+            scaler = QuantileTransformer()
         scaler.fit(self.dataset_encoded)
         self.dataset_encoded = scaler.transform(self.dataset_encoded)
 
