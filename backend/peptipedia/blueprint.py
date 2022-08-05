@@ -1,4 +1,4 @@
-"""Blueprints"""
+"""Api Blueprints"""
 from flask import Blueprint
 
 from peptipedia.routes.advanced_search import search_blueprint

@@ -1,3 +1,4 @@
+"""Pfam module"""
 import os
 import re
 import subprocess
@@ -8,11 +9,13 @@ from peptipedia.modules.utils import ConfigTool
 
 
 class Pfam(ConfigTool):
-    def __init__(self, data, is_file, is_json, config):
-        super().__init__("pfam", data, config, is_file, is_json)
+    """Pfam class"""
+    def __init__(self, data, is_file, config):
+        super().__init__("pfam", data, config, is_file)
         self.create_csv_from_fasta()
 
     def process(self):
+        """Use pfam_scan and parse results"""
         command = [
             "pfam_scan.pl",
             "-dir",
@@ -74,5 +77,4 @@ class Pfam(ConfigTool):
             response.append({"id": seq_id, "data": data})
 
         self.delete_file()
-
         return response

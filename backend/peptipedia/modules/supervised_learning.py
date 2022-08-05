@@ -1,9 +1,15 @@
+"""Supervised learning module"""
 from random import random
 
 import pandas as pd
-from joblib import dump, load
-from scipy import stats
-from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler, QuantileTransformer
+from joblib import dump
+from sklearn.preprocessing import (
+    MinMaxScaler,
+    StandardScaler,
+    MaxAbsScaler,
+    RobustScaler,
+    QuantileTransformer
+)
 
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
@@ -15,21 +21,19 @@ from peptipedia.modules.utils import ConfigTool
 
 from peptipedia.modules.clustering_methods.transformation_data import transformer
 
-class supervised_algorithms(ConfigTool):
-    def __init__(self, data, options, is_file, is_json, config):
+class SupervisedLearning(ConfigTool):
+    """Supervised Learning class"""
+    def __init__(self, data, options, is_file, config):
         super().__init__(
-            "supervised_learning", data, config, is_file, is_json, is_fasta=False
+            "supervised_learning", data, config, is_file, is_fasta=False
         )
-        self.dataset_encoded_path = "{}/{}.csv".format(
-            config["folders"]["static_folder"], str(round(random() * 10**20))
-        )
-        self.job_path = "{}/{}.joblib".format(
-            config["folders"]["static_folder"], str(round(random() * 10**20))
-        )
+        static_folder = config["folders"]["static_folder"]
+        rand_number = str(round(random() * 10**20))
+        self.dataset_encoded_path = f"{static_folder}/{rand_number}.csv"
+        self.job_path = self.dataset_encoded_path.replace(".csv", ".joblib")
         self.options = options
         self.dataset_encoded = None
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
-        
         self.task = self.options["task"]
         self.algorithm = self.options["algorithm"]
         self.validation = self.options["validation"]
@@ -40,8 +44,10 @@ class supervised_algorithms(ConfigTool):
         self.data = pd.read_csv(self.temp_file_path)
         self.target = self.data.target
         self.data.drop("target", inplace=True, axis=1)
+        self.model = None
 
     def run(self):
+        """Runs encoding, preprocessing and build ML model"""
         self.process_encoding_stage()
         ids = self.dataset_encoded.id.values
         self.dataset_encoded.drop(["id"], axis=1, inplace=True)
@@ -96,7 +102,6 @@ class supervised_algorithms(ConfigTool):
                 del response_testing["analysis"]
 
             response_training.update(response_testing)
-        response_training.update({"is_normal": self.verify_normality()})
         response_training.update({"encoding_path": self.dataset_encoded_path})
         self.model = run_instance.get_model()
         self.dump_joblib()
@@ -106,19 +111,8 @@ class supervised_algorithms(ConfigTool):
         self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
         return response_training
 
-    def verify_normality(self):
-        is_normal = True
-        self.dataset_verify = self.dataset_encoded[
-            [col for col in self.dataset_encoded.columns if "P_" in col]
-        ]
-        for col in self.dataset_verify.columns:
-            result = stats.shapiro(self.dataset_verify[col])
-            pvalue = result.pvalue
-            if pvalue > 0.05:
-                is_normal = False
-        return is_normal
-
     def process_encoding_stage(self):
+        """Encoding process"""
         encoding_option = self.options["encoding"]
         if encoding_option == "one_hot_encoding":
             one_hot_encoding = run_one_hot.run_one_hot(self.data)
@@ -141,15 +135,18 @@ class supervised_algorithms(ConfigTool):
             self.dataset_encoded = fft_encoding.appy_fft()
 
     def dump_joblib(self):
+        """Save model"""
         dump(self.model, self.job_path)
 
     def pca(self):
+        """Apply pca"""
         pca_result = self.transformer.apply_kernel_pca(
                 self.dataset_encoded, self.kernel
             )
         self.dataset_encoded = pd.DataFrame(data=pca_result, columns=["P_0", "P_1"])
 
     def preprocess(self):
+        """Apply preprocessing scaler"""
         if self.preprocessing == "min_max":
             scaler = MinMaxScaler()
         elif self.preprocessing == "standard":
@@ -162,62 +159,3 @@ class supervised_algorithms(ConfigTool):
             scaler = QuantileTransformer()
         scaler.fit(self.dataset_encoded)
         self.dataset_encoded = scaler.transform(self.dataset_encoded)
-
-class use_model(ConfigTool):
-    def __init__(self, data, options, is_file, is_json, config):
-        super().__init__(data, config, is_file, is_json)
-        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
-        self.output_path = "{}/results/{}".format(
-            config["folders"]["static_folder"],
-            self.temp_file_path.replace(".fasta", ".align").split("/")[-1],
-        )
-        self.options = options
-        self.job_path = self.options["job_path"]
-        self.model = load(self.job_path)
-
-    def get_prediction(self):
-        f = open(self.temp_file_path, "r")
-        self.data = self.create_df(f.read())
-        f.close()
-        self.process_encoding_stage()
-        self.dataset_encoded.drop(["id"], axis=1, inplace=True)
-        pending_columns = list(
-            set(self.model.feature_names_in_) - set(self.dataset_encoded.columns)
-        )
-        for column in pending_columns:
-            self.dataset_encoded[column] = 0
-        extra_columns = list(
-            set(self.dataset_encoded.columns) - set(self.model.feature_names_in_)
-        )
-        self.dataset_encoded.drop(extra_columns, axis=1, inplace=True)
-
-        prediction = self.model.predict(self.dataset_encoded)
-        self.data["prediction"] = prediction
-        self.data = self.data[["id", "prediction", "sequence"]]
-        return {
-            "status": "success",
-            "data": self.data.values.tolist(),
-            "columns": [i.capitalize() for i in self.data.columns.tolist()],
-        }
-
-    def process_encoding_stage(self):
-        encoding_option = self.options["encoding"]
-        if encoding_option == "one_hot_encoding":
-            one_hot_encoding = run_one_hot.run_one_hot(self.data)
-            self.dataset_encoded = one_hot_encoding.run_parallel_encoding()
-        elif encoding_option == "phisicochemical_properties":
-            physicochemical_encoding = (
-                run_physicochemical_properties.run_physicochemical_properties(
-                    self.data,
-                    self.options["selected_property"],
-                    self.path_config_aaindex_encoder,
-                )
-            )
-            self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
-        elif encoding_option == "digital_signal_processing":
-            selected_property = self.options["selected_property"]
-            fft_encoding = run_fft_encoding.run_fft_encoding(
-                self.data, selected_property, self.path_config_aaindex_encoder
-            )
-            fft_encoding.run_parallel_encoding()
-            self.dataset_encoded = fft_encoding.appy_fft()

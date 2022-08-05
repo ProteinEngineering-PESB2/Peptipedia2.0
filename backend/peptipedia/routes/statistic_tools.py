@@ -1,10 +1,10 @@
-"""Phisicochemical functions"""
+"""Statistic tools routes"""
 import configparser
 
 from flask import Blueprint, request
 
-from peptipedia.modules.frequency_analysis import frequency_analysis
-from peptipedia.modules.phisicochemical_module import modlamp_descriptor
+from peptipedia.modules.frequency_analysis import FrequencyAnalysis
+from peptipedia.modules.phisicochemical_module import PhysicochemicalProperties
 from peptipedia.modules.utils import Interface
 
 ##Reads config file and asign folder names.
@@ -13,11 +13,11 @@ config.read("config.ini")
 
 statistic_tools_blueprint = Blueprint("statistic_tools_blueprint", __name__)
 
-
 @statistic_tools_blueprint.route("/frequency/", methods=["POST"])
 def apply_frequency():
-    data, is_json, is_file = Interface(request).parse_without_options()
-    frequency_object = frequency_analysis(data, is_file, is_json, config)
+    """Frequency module api"""
+    data, is_file = Interface(request).parse_without_options()
+    frequency_object = FrequencyAnalysis(data, is_file, config)
     check = frequency_object.check
     if check["status"] == "error":
         return check
@@ -25,14 +25,14 @@ def apply_frequency():
     if len(result) > 1:
         summary = frequency_object.get_average()
         return {"result": result, "summary": summary}
-    else:
-        return {"result": result}
+    return {"result": result}
 
 
 @statistic_tools_blueprint.route("/phisicochemical/", methods=["POST"])
-def apply_phisicochemical():
-    data, options, is_json, is_file = Interface(request).parse_with_options()
-    modlamp = modlamp_descriptor(data, options, is_file, is_json, config)
+def apply_physicochemical():
+    """Physicochemical characterization module api"""
+    data, options, is_file = Interface(request).parse_with_options()
+    modlamp = PhysicochemicalProperties(data, options, is_file, config)
     check = modlamp.check
     if check["status"] == "error":
         return check

@@ -1,11 +1,11 @@
-"""Blast alignment functions"""
+"""Bioinformatic tools routes"""
 import configparser
 
 from flask import Blueprint, request
 
-from peptipedia.modules.alignment_module import alignment
-from peptipedia.modules.gene_ontology import gene_ontology
-from peptipedia.modules.msa_module import multiple_sequence_alignment
+from peptipedia.modules.alignment_module import BlastAlignment
+from peptipedia.modules.gene_ontology import GeneOntology
+from peptipedia.modules.msa_module import MultipleSequenceAlignment
 from peptipedia.modules.pfam_domain import Pfam
 from peptipedia.modules.utils import Interface
 
@@ -18,8 +18,9 @@ bioinfo_tools_blueprint = Blueprint("bioinfo_tools_blueprint", __name__)
 
 @bioinfo_tools_blueprint.route("/alignment/", methods=["POST"])
 def apply_alignment():
-    data, is_json, is_file = Interface(request).parse_without_options()
-    align = alignment(data, is_file, is_json, config)
+    """Blast alignment route"""
+    data, is_file = Interface(request).parse_without_options()
+    align = BlastAlignment(data, is_file, config)
     if align.check["status"] == "error":
         return align.check
     result = align.execute_blastp()
@@ -32,8 +33,9 @@ def apply_alignment():
 
 @bioinfo_tools_blueprint.route("/msa/", methods=["POST"])
 def apply_msa():
-    data, is_json, is_file = Interface(request).parse_without_options()
-    msa = multiple_sequence_alignment(data, is_file, is_json, config)
+    """Multiple sequence alignment route"""
+    data, is_file = Interface(request).parse_without_options()
+    msa = MultipleSequenceAlignment(data, is_file, config)
     check = msa.check
     if check["status"] == "error":
         return check
@@ -43,12 +45,13 @@ def apply_msa():
 
 @bioinfo_tools_blueprint.route("/gene_ontology/", methods=["POST"])
 def apply_gene_ontology():
-    data, options, is_json, is_file = Interface(request).parse_with_options()
-    go = gene_ontology(data, options, is_file, is_json, config)
-    check = go.check
+    """Gene ontology route"""
+    data, options, is_file = Interface(request).parse_with_options()
+    go_obj = GeneOntology(data, options, is_file, config)
+    check = go_obj.check
     if check["status"] == "error":
         return check
-    result = go.process()
+    result = go_obj.process()
     if len(result) == 0:
         return {
             "status": "error",
@@ -59,12 +62,13 @@ def apply_gene_ontology():
 
 @bioinfo_tools_blueprint.route("/pfam/", methods=["POST"])
 def apply_pfam():
-    data, is_json, is_file = Interface(request).parse_without_options()
-    pf = Pfam(data, is_file, is_json, config)
-    check = pf.check
+    """Pfam route"""
+    data, is_file = Interface(request).parse_without_options()
+    pf_obj = Pfam(data, is_file, config)
+    check = pf_obj.check
     if check["status"] == "error":
         return check
-    result = pf.process()
+    result = pf_obj.process()
     if len(result) == 0:
         return {
             "status": "error",

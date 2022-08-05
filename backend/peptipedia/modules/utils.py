@@ -1,3 +1,4 @@
+"""Config utilities"""
 import ast
 import configparser
 import re
@@ -9,96 +10,97 @@ from Bio import SeqIO
 
 AMINOACID_ALPHABET = "ARNDCEQGHILKMFPSTWYVX*"
 
-
 class ConfigTool:
-    def __init__(
-        self, config_module_name, data, config, is_file, is_json, is_fasta=True
-    ):
+    """Config tool class"""
+    def __init__(self, config_module_name, data, config, is_file, is_fasta=True):
         self.data = data
         self.temp_folder = config["folders"]["temp_folder"]
-        self.temp_file_path = "{}/{}".format(
-            self.temp_folder, str(round(random() * 10**20))
-        )
+        self.temp_file_path = f"{self.temp_folder}/{str(round(random() * 10**20))}"
         self.temp_csv_file = None
         if is_fasta:
             self.temp_file_path += ".fasta"
         else:
             self.temp_file_path += ".csv"
-        if is_json:
+        if not is_file:
             self.create_file()
         elif is_file:
             self.save_file()
         if is_fasta:
             self.check = FastaFile(
                 self.temp_file_path,
-                int(config[config_module_name]["max_sequences"]),
-                int(config[config_module_name]["min_sequences"]),
+                config[config_module_name]
             ).verify()
         else:
             self.check = CsvFile(
                 self.temp_file_path,
-                int(config[config_module_name]["max_sequences"]),
-                int(config[config_module_name]["min_sequences"]),
+                config[config_module_name]
             ).verify()
 
     def create_file(self):
-        with open(self.temp_file_path, "w") as f:
-            f.write(self.data)
+        """create file using data in specific path"""
+        with open(self.temp_file_path, "w", encoding = "utf-8") as file:
+            file.write(self.data)
 
     def save_file(self):
+        """save file in specific path"""
         self.data.save(self.temp_file_path)
 
     def delete_file(self):
+        """Delete file from path"""
         try:
             Path(self.temp_file_path).unlink()
-        except Exception as e:
-            print(e)
+        except:
+            pass
 
     def create_csv_from_fasta(self):
+        """Transform fasta format to csv file"""
         self.temp_csv_file = (
             self.temp_folder + "/" + str(round(random() * 10**20)) + ".fasta"
         )
-        with open(self.temp_file_path, "r") as f:
-            data = f.read()
-        with open(self.temp_csv_file, "w") as f:
+        with open(self.temp_file_path, "r", encoding = "utf-8") as file:
+            data = file.read()
+        with open(self.temp_csv_file, "w", encoding = "utf-8") as file:
             for record in parse_fasta(data):
-                f.write(">{id}\n{sequence}\n".format(**record))
+                file.write(">{id}\n{sequence}\n".format(**record))
 
     @staticmethod
     def create_df(fasta):
-        # Create a dataframe from fasta text
+        """Create a dataframe from fasta text"""
         return pd.DataFrame(parse_fasta(fasta))
 
 
 class CsvFile:
-    def __init__(self, path, max_number_sequences, min_number_sequences=1):
+    def __init__(self, path, config_module):
         self.path = path
-        self.max_number_sequences = max_number_sequences
-        self.min_number_sequences = min_number_sequences
+        self.max_number_sequences = int(config_module["max_sequences"])
+        self.min_number_sequences = int(config_module["min_sequences"])
+        self.max_length = int(config_module["max_length"])
         try:
             self.data = pd.read_csv(self.path)
         except:
             self.data = None
 
     def verify(self):
+        new_line = "\n"
+        message = ""
         if not self.is_csv():
-            return _error_message("Not a csv file / ASCII error")
+            message = "Not a csv file / ASCII error"
         if not self.null_values():
-            return _error_message("Data has null values")
+            message = "Data has null values"
         if not self.correct_columns():
-            return _error_message("Incorrect columns")
+            message = "Incorrect columns"
         if not self.unique_ids():
-            return _error_message("Duplicated ids")
+            message = "Duplicated ids"
         if not self.less_than_n():
-            return _error_message("Too many sequences")
+            message = "Too many sequences"
         if not self.more_than_n():
-            return _error_message("Too few sequences")
+            message = "Too few sequences"
         if len(invalid_protein_ids := self.invalid_proteins()) > 0:
-            return _error_message(f"Not proteins:{new_line}{new_line.join(invalid_protein_ids)}")
+            message = f"Not proteins:{new_line}{new_line.join(invalid_protein_ids)}"
         if len(invalid_length_ids := self.invalid_lengths()) > 0:
-            return _error_message(
-                f"Invalid Lengths:{new_line}{new_line.join(invalid_length_ids)}"
-            )
+            message = f"Invalid Lengths:{new_line}{new_line.join(invalid_length_ids)}"
+        if message != "":
+            return _error_message(message)
         return {"status": "success"}
 
     def unique_ids(self):
@@ -129,7 +131,7 @@ class CsvFile:
         invalid_ids = []
         for row in self.data.itertuples():
             sequence = row.sequence
-            if len(sequence) > 150 or len(sequence) < 2:
+            if len(sequence) > self.max_length or len(sequence) < 2:
                 invalid_ids.append(row.id)
         return invalid_ids
 
@@ -138,10 +140,11 @@ class CsvFile:
 
 
 class FastaFile:
-    def __init__(self, path, max_number_sequences, min_number_sequences=1):
+    def __init__(self, path, config_module):
         self.path = path
-        self.max_number_sequences = max_number_sequences
-        self.min_number_sequences = min_number_sequences
+        self.max_number_sequences = int(config_module["max_sequences"])
+        self.min_number_sequences = int(config_module["min_sequences"])
+        self.max_length = int(config_module["max_length"])
         try:
             self.fasta = list(SeqIO.parse(self.path, "fasta"))
             SeqIO.write(self.fasta, self.path, "fasta")
@@ -150,20 +153,21 @@ class FastaFile:
 
     def verify(self):
         new_line = "\n"
+        message = ""
         if not self.is_fasta():
-            return _error_message("Not a fasta file / ASCII error")
+            message = "Not a fasta file / ASCII error"
         if not self.unique_ids():
-            return _error_message("Duplicated ids")
+            message = "Duplicated ids"
         if not self.less_than_n():
-            return _error_message("Too many sequences")
+            message = "Too many sequences"
         if not self.more_than_n():
-            return _error_message("Too few sequences")
+            message = "Too few sequences"
         if len(invalid_protein_ids := self.invalid_proteins()) > 0:
-            return _error_message(f"Not proteins:{new_line}{new_line.join(invalid_protein_ids)}")
+            message = f"Not proteins:{new_line}{new_line.join(invalid_protein_ids)}"
         if len(invalid_length_ids := self.invalid_lengths()) > 0:
-            return _error_message(
-                f"Invalid Lengths:{new_line}{new_line.join(invalid_length_ids)}"
-            )
+            message = f"Invalid Lengths:{new_line}{new_line.join(invalid_length_ids)}"
+        if message != "":
+            return _error_message(message)
         return {"status": "success"}
 
     def unique_ids(self):
@@ -191,7 +195,7 @@ class FastaFile:
         invalid_ids = []
         for row in self.fasta:
             sequence = row.seq
-            if len(sequence) > 150 or len(sequence) < 2:
+            if len(sequence) > self.max_length or len(sequence) < 2:
                 invalid_ids.append(row.id)
         return invalid_ids
 
@@ -233,11 +237,11 @@ class Interface:
     def parse_with_options(self):
         self.parse_json_and_file()
         self.parse_options()
-        return self.data, self.options, self.is_json, self.is_file
+        return self.data, self.options, self.is_file
 
     def parse_without_options(self):
         self.parse_json_and_file()
-        return self.data, self.is_json, self.is_file
+        return self.data, self.is_file
 
 
 class Folders:

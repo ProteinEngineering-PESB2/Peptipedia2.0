@@ -1,7 +1,8 @@
+"""Search module"""
 import re
 
-
 class search:
+    """Search class"""
     def __init__(self, query):
         self.query = query
 
@@ -14,77 +15,64 @@ class search:
         }
 
     def parse_terms(self, term):
+        """Parse query terms"""
         if "<=" in term:
             broken_term = term.split("<=")
             min_value = broken_term[0].strip()
             max_value = broken_term[2].strip()
             ff = broken_term[1].strip()
-            phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density, 
-                        p.isoelectric_point, p.charge from peptide p
-                        where {} BETWEEN {} and {}""".format(
-                self.transform_terms[ff], min_value, max_value
-            )
+            phrase = f"""select p.idpeptide, p.length,
+            p.molecular_weight, p.charge_density, 
+            p.isoelectric_point, p.charge from peptide p
+            where {self.transform_terms[ff]} BETWEEN {min_value} and {max_value}"""
         elif "=" in term:
             value = term.split("=")[1].strip().replace("{", "").replace("}", "")
             ff = term.split("=")[0].strip()
             if "Pfam" in ff:
-                phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density, 
-                        p.isoelectric_point, p.charge from peptide p
-                        join peptide_has_pfam php
-                        on php.idpeptide = p.idpeptide and php.id_pfam = {}""".format(
-                    value
-                )
+                phrase = f"""select p.idpeptide, p.length,
+                p.molecular_weight, p.charge_density, 
+                p.isoelectric_point, p.charge from peptide p
+                join peptide_has_pfam php
+                on php.idpeptide = p.idpeptide and php.id_pfam = {value}"""
 
             if "Taxonomy" in ff:
-                phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density, 
-                        p.isoelectric_point, p.charge from peptide p
-                        join peptide_has_taxonomy pht
-                        on pht.idpeptide = p.idpeptide and pht.idtaxonomy = {}""".format(
-                    value
-                )
+                phrase = f"""select p.idpeptide, p.length,
+                p.molecular_weight, p.charge_density, 
+                p.isoelectric_point, p.charge from peptide p
+                join peptide_has_taxonomy pht
+                on pht.idpeptide = p.idpeptide and pht.idtaxonomy = {value}"""
 
             if "Gene Ontology" in ff:
-                phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density, 
-                        p.isoelectric_point, p.charge from peptide p
-                        join peptide_has_go phg
-                        on phg.idpeptide = p.idpeptide and phg.id_go = {}""".format(
-                    value
-                )
+                phrase = f"""select p.idpeptide, p.length,
+                p.molecular_weight, p.charge_density, 
+                p.isoelectric_point, p.charge from peptide p
+                join peptide_has_go phg
+                on phg.idpeptide = p.idpeptide and phg.id_go = {value}"""
 
             if "Database" in ff:
                 phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density, 
-                        p.isoelectric_point, p.charge from peptide p
-                        join peptide_has_db_has_index phdhi
-                        on phdhi.idpeptide = p.idpeptide and phdhi.id_db = {}""".format(
-                    value
-                )
-
+                p.molecular_weight, p.charge_density, 
+                p.isoelectric_point, p.charge from peptide p
+                join peptide_has_db_has_index phdhi
+                on phdhi.idpeptide = p.idpeptide and phdhi.id_db = {value}"""
             if "Activity" in ff:
-                phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density,
-                        p.isoelectric_point, p.charge from peptide p
-                        join peptide_has_activity pha
-                        on pha.idpeptide = p.idpeptide and pha.idactivity = {}""".format(
-                    value
-                )
+                phrase = f"""select p.idpeptide, p.length,
+                p.molecular_weight, p.charge_density,
+                p.isoelectric_point, p.charge from peptide p
+                join peptide_has_activity pha
+                on pha.idpeptide = p.idpeptide and pha.idactivity = {value}"""
 
             if "Sequence" in ff:
-                phrase = """select p.idpeptide, p.length,
-                        p.molecular_weight, p.charge_density, 
-                        p.isoelectric_point, p.charge from peptide p
-                        where p.sequence like '%{}%'""".format(
-                    value
-                )
+                phrase = f"""select p.idpeptide, p.length,
+                p.molecular_weight, p.charge_density, 
+                p.isoelectric_point, p.charge from peptide p
+                where p.sequence like '%{value}%'"""
         else:
             phrase = ""
         return phrase
 
     def parse_search(self):
+        """Parse full query"""
         logic = "(" + self.query["query"] + ")"
         try:
             limit = self.query["limit"]
@@ -103,12 +91,12 @@ class search:
             return " True ", limit, offset
         broken = [
             term.strip()
-            for term in re.split("({})".format("[\(\)]"), logic)
+            for term in re.split("({})".format(r"[\(\)]"), logic)
             if term != ""
         ]
         join_list = []
         for index, j in enumerate(broken):
-            if j != "(" and j != ")" and j != "AND" and j != "OR":
+            if j not in ("(", ")", "AND", "OR"):
                 broken[index] = self.parse_terms(j)
         join_list = list(set(join_list))
         parsed_where = " ".join(broken)
@@ -116,22 +104,20 @@ class search:
         return parsed_where, limit, offset
 
     def verify_query(self):
+        """Verify valid queries"""
         logic = self.query["query"]
         broken = [
             term.strip()
-            for term in re.split("([\(\) ])", logic)
-            if term != "" and term != " "
+            for term in re.split(r"([\(\) ])", logic)
+            if term not in ("", " ")
         ]
         if len(broken) <= 3:
             return {"status": "error", "description": "Query invalid"}
-        if "Sequence" in broken:
-            has_sequence = True
-        else:
-            has_sequence = False
+        has_sequence = bool("Sequence" in broken)
         if broken[0] != "(" or broken[-1] != ")":
             return {"status": "error", "description": "Query invalid"}
         for i, value in enumerate(broken):
-            if value == "(" or value == ")":
+            if value in ("(", ")"):
                 broken[i] = ""
             elif value in [
                 "Molecular",
@@ -153,9 +139,9 @@ class search:
                 "Activity",
             ]:
                 broken[i] = ""
-            elif value == "<=" or value == "=":
+            elif value in ("<=", "="):
                 broken[i] = ""
-            elif value == "OR" or value == "AND":
+            elif value in ("OR", "AND"):
                 broken[i] = ""
             else:
                 try:
@@ -164,8 +150,8 @@ class search:
                 except:
                     pass
         broken = [val for val in broken if val != ""]
-        if has_sequence == False and len(broken) != 0:
+        if not has_sequence and len(broken) != 0:
             return {"status": "error", "description": "Query invalid"}
-        if has_sequence == True and len(broken) != 1:
+        if has_sequence and len(broken) != 1:
             return {"status": "error", "description": "Query invalid"}
         return {"status": "success"}

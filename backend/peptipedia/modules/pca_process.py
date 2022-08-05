@@ -1,3 +1,4 @@
+"""PCA module"""
 import json
 from random import random
 
@@ -5,8 +6,8 @@ import pandas as pd
 
 from peptipedia.modules.clustering_methods.transformation_data import transformer
 
-
-class pca_process:
+class PCA:
+    """PCA class"""
     def __init__(self, params, static_folder):
         self.static_folder = static_folder
         self.path = params["path"]
@@ -21,7 +22,8 @@ class pca_process:
         self.transformer = transformer()
 
     def apply_pca(self):
-        if self.kernel == None:
+        """Apply PCA or kernel PCA"""
+        if self.kernel is None:
             pca_result = self.transformer.apply_pca_data(self.dataset_to_transform)
         else:
             pca_result = self.transformer.apply_kernel_pca(

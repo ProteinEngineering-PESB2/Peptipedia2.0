@@ -1,7 +1,7 @@
+"""Clustering module"""
 import json
 from random import random
 
-import pandas as pd
 from scipy import stats
 
 from peptipedia.modules.clustering_methods import (
@@ -16,112 +16,67 @@ from peptipedia.modules.encoding_strategies import (
 from peptipedia.modules.utils import ConfigTool
 
 
-class unsupervised_algorithms(ConfigTool):
-    def __init__(self, data, options, is_file, is_json, config):
-        super().__init__("clustering", data, config, is_file, is_json)
-        self.dataset_encoded_path = "{}/{}.csv".format(
-            config["folders"]["static_folder"], str(round(random() * 10**20))
-        )
+class Clustering(ConfigTool):
+    """Clustering process class"""
+    def __init__(self, data, options, is_file, config):
+        super().__init__("clustering", data, config, is_file)
+        static_folder = config["folders"]["static_folder"]
+        rand_number = str(round(random() * 10**20))
+        self.dataset_encoded_path = f"{static_folder}/{rand_number}.csv"
         self.options = options
-        print(self.options)
         self.dataset_encoded = None
-        self.is_normal = True
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
         if self.check == {"status": "success"}:
             self.check = self.check_options()
 
     def check_options(self):
-        # Function for apply restriction for numeric parameters.
-        if "params" in list(self.options.keys()):
-            for key in list(self.options["params"].keys()):
-                if key == "k_value":
-                    if type(self.options["params"]["k_value"]) != int:
-                        return {
-                            "status": "error",
-                            "description": "Parameter k_value not valid",
-                        }
-                    if self.options["params"]["k_value"] < 2:
-                        return {
-                            "status": "error",
-                            "description": "Parameter k_value not valid",
-                        }
+        """Function for apply restriction for numeric parameters."""
+        wrong_param = []
+        for key in list(self.options["params"].keys()):
+            if key == "k_value":
+                if (not isinstance(self.options["params"]["k_value"], int) or
+                (self.options["params"]["k_value"] < 2)):
+                    wrong_param.append("k_value")
+            if key == "min_samples":
+                if (
+                    isinstance(self.options["params"]["min_samples"], int)
+                    and self.options["params"]["min_samples"] < 1
+                ):
+                    wrong_param.append("min_samples")
+                if isinstance(self.options["params"]["min_samples"], float) and (
+                    self.options["params"]["min_samples"] > 1
+                    or self.options["params"]["optics"] < 0
+                ):
+                    wrong_param.append("min_samples")
+            if key == "xi":
+                if (
+                    self.options["params"]["xi"] > 1
+                    or self.options["params"]["xi"] < 0
+                ):
+                    wrong_param.append("xi")
+            if key == "min_cluster_size":
+                if (
+                    isinstance(self.options["params"]["min_cluster_size"], int)
+                    and self.options["params"]["min_cluster_size"] < 1
+                ):
+                    wrong_param.append("min_cluster_size")
 
-                if key == "min_samples":
-                    if (
-                        type(self.options["params"]["min_samples"]) != int
-                        and type(self.options["params"]["min_samples"]) != float
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter min_samples not valid",
-                        }
-                    if (
-                        type(self.options["params"]["min_samples"]) == int
-                        and self.options["params"]["min_samples"] < 1
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter min_samples not valid",
-                        }
-                    if type(self.options["params"]["min_samples"]) == float and (
-                        self.options["params"]["min_samples"] > 1
-                        or self.options["params"]["optics"] < 0
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter min_samples not valid",
-                        }
-
-                if key == "xi":
-                    if (
-                        type(self.options["params"]["xi"]) != float
-                        and type(self.options["params"]["xi"]) != int
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter xi not valid",
-                        }
-                    if (
-                        self.options["params"]["xi"] > 1
-                        or self.options["params"]["xi"] < 0
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter xi not valid",
-                        }
-
-                if key == "min_cluster_size":
-                    if (
-                        type(self.options["params"]["min_cluster_size"]) != int
-                        and type(self.options["params"]["min_cluster_size"]) != float
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter min_cluster_size not valid",
-                        }
-                    if (
-                        type(self.options["params"]["min_cluster_size"]) == int
-                        and self.options["params"]["min_cluster_size"] < 1
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter min_cluster_size not valid",
-                        }
-                    if type(self.options["params"]["min_cluster_size"]) == float and (
-                        self.options["params"]["min_cluster_size"] > 1
-                        or self.options["params"]["min_cluster_size"] < 0
-                    ):
-                        return {
-                            "status": "error",
-                            "description": "Parameter min_cluster_size not valid",
-                        }
-
-        return {"status": "success"}
+                if isinstance(self.options["params"]["min_cluster_size"], float) and (
+                    self.options["params"]["min_cluster_size"] > 1
+                    or self.options["params"]["min_cluster_size"] < 0
+                ):
+                    wrong_param.append("min_cluster_size")
+        if not wrong_param:
+            return {"status": "success"}
+        return {
+                "status": "error",
+                "description": f"Parameter {', '.join(wrong_param)} not valid",
+            }
 
     def process_encoding_stage(self):
-        f = open(self.temp_file_path, "r")
-        self.data = self.create_df(f.read())
-        f.close()
+        """Encode sequences using selected method"""
+        with open(self.temp_file_path, "r", encoding = "utf-8") as file:
+            self.data = self.create_df(file.read())
         encoding_option = self.options["encoding"]
 
         if encoding_option == "one_hot_encoding":
@@ -147,18 +102,18 @@ class unsupervised_algorithms(ConfigTool):
             self.dataset_encoded = fft_encoding.appy_fft()
 
     def process_by_options(self):
+        """Apply clustering process"""
         self.process_encoding_stage()
-        self.dataset_to_cluster = self.dataset_encoded.copy()
-        self.dataset_to_cluster.drop(["id"], inplace=True, axis=1)
+        dataset_to_cluster = self.dataset_encoded.copy()
+        dataset_to_cluster.drop(["id"], inplace=True, axis=1)
         clustering_process = clustering_algorithm.aplicateClustering(
-            self.dataset_to_cluster
+            dataset_to_cluster
         )
         evaluation_process = evaluation_performances.evaluationClustering()
 
         algorithm = self.options["algorithm"]
         if algorithm == "kmeans":
-            knn_value = self.options["params"]["k_value"]
-            clustering_process.aplicateKMeans(knn_value)
+            clustering_process.aplicateKMeans(self.options["params"]["k_value"])
 
         elif algorithm == "dbscan":
             clustering_process.aplicateDBSCAN()
@@ -167,26 +122,24 @@ class unsupervised_algorithms(ConfigTool):
             clustering_process.aplicateMeanShift()
 
         elif algorithm == "birch":
-            knn_value = self.options["params"]["k_value"]
-            clustering_process.aplicateBirch(knn_value)
+            clustering_process.aplicateBirch(self.options["params"]["k_value"])
 
         elif algorithm == "agglomerative":
-            linkage = self.options["params"]["linkage"]
-            affinity = self.options["params"]["affinity"]
-            knn_value = self.options["params"]["k_value"]
             clustering_process.aplicateAlgomerativeClustering(
-                linkage, affinity, knn_value
+                self.options["params"]["linkage"],
+                self.options["params"]["affinity"],
+                self.options["params"]["k_value"]
             )
 
         elif algorithm == "affinity":
             clustering_process.aplicateAffinityPropagation()
 
         elif algorithm == "optics":
-            min_samples = self.options["params"]["min_samples"]
-            xi = self.options["params"]["xi"]
-            min_cluster_size = self.options["params"]["min_cluster_size"]
-            clustering_process.applicateOptics(min_samples, xi, min_cluster_size)
-        self.response = {}
+            clustering_process.applicateOptics(
+                self.options["params"]["min_samples"],
+                self.options["params"]["xi"],
+                self.options["params"]["min_cluster_size"])
+        response = {}
 
         if clustering_process.response_apply == 0:  # Success
             self.dataset_encoded["sequence"] = self.data.sequence
@@ -195,7 +148,7 @@ class unsupervised_algorithms(ConfigTool):
             data_json = json.loads(
                 self.dataset_encoded[["id", "label"]].to_json(orient="records")
             )
-            self.response.update({"status": "success"})
+            response.update({"status": "success"})
             counts = self.dataset_encoded.label.value_counts()
             counts = [
                 {
@@ -205,11 +158,11 @@ class unsupervised_algorithms(ConfigTool):
                 }
                 for count in list(counts.index)
             ]
-            self.response.update({"data": data_json})
+            response.update({"data": data_json})
             performances = evaluation_process.get_metrics(
-                self.dataset_to_cluster, clustering_process.labels
+                dataset_to_cluster, clustering_process.labels
             )
-            if performances[0] != None:
+            if performances[0] is not None:
                 performances_dict = {
                     "calinski": performances[0].round(3),
                     "siluetas": performances[1].round(3),
@@ -221,27 +174,29 @@ class unsupervised_algorithms(ConfigTool):
                     "siluetas": performances[1],
                     "dalvies": performances[2],
                 }
-            self.response.update({"performance": performances_dict})
-            self.response.update({"resume": counts})
-            self.response.update({"encoding_path": self.dataset_encoded_path})
-            self.response.update({"is_normal": self.verify_normality()})
+            response.update({"performance": performances_dict})
+            response.update({"resume": counts})
+            response.update({"encoding_path": self.dataset_encoded_path})
+            response.update({"is_normal": self.verify_normality()})
 
         else:  # Error
-            self.response.update(
+            response.update(
                 {
                     "status": "error",
                     "description": "Not results, try a different algorithm or parameters",
                 }
             )
-        return self.response
+        return response
 
     def verify_normality(self):
+        """This function only confirms if data follows a
+        normal distribution using a shapiro test"""
         is_normal = True
-        self.dataset_verify = self.dataset_encoded[
+        dataset_verify = self.dataset_encoded[
             [col for col in self.dataset_encoded.columns if "P_" in col]
         ]
-        for col in self.dataset_verify.columns:
-            result = stats.shapiro(self.dataset_verify[col])
+        for col in dataset_verify.columns:
+            result = stats.shapiro(dataset_verify[col])
             pvalue = result.pvalue
             if pvalue > 0.05:
                 is_normal = False

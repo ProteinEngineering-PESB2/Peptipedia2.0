@@ -1,15 +1,15 @@
-import os
+"""Gene ontology module"""
 import subprocess
 
 import pandas as pd
 
 from peptipedia.modules.utils import ConfigTool
 
-
-class gene_ontology(ConfigTool):
-    def __init__(self, data, options, is_file, is_json, config):
+class GeneOntology(ConfigTool):
+    """Gene ontology class"""
+    def __init__(self, data, options, is_file, config):
         super().__init__(
-            "gene_ontology", data, config, is_file, is_json
+            "gene_ontology", data, config, is_file, not is_file
         )
         self.output_path = self.temp_file_path.replace(".fasta", ".result")
         self.molecular_function = options["molecular_function"]
@@ -18,6 +18,7 @@ class gene_ontology(ConfigTool):
         self.ontologies = self.parse_ontologies()
 
     def parse_ontologies(self):
+        """Returns a string with options for metastudent"""
         ontologies = []
         if self.molecular_function:
             ontologies.append("MFO")
@@ -28,6 +29,7 @@ class gene_ontology(ConfigTool):
         return ",".join(ontologies)
 
     def process(self):
+        """Execute metastudent and return results"""
         command = [
             "metastudent",
             "-i",
@@ -42,54 +44,25 @@ class gene_ontology(ConfigTool):
         return result
 
     def find_and_load_data(self):
+        """Parse metastudent results and returns json"""
         results = []
-        if self.molecular_function:
-            try:
-                mf = pd.read_csv(self.output_path + ".MFO.txt", header=None, sep="\t")
-                mf.rename(
-                    columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
-                    inplace=True,
-                )
-                mfs = mf.id_seq.unique()
-                mf_array = []
-                for mfi in mfs:
-                    temp = mf[mf.id_seq == mfi][["id_go", "probability", "term"]]
-                    mf_array.append({"id_seq": mfi, "results": temp.to_dict("records")})
-                results.append({"type": "molecular_function", "prediction": mf_array})
-            except Exception as e:
-                print(e)
-                print("No result for molecular function")
-
-        if self.biological_process:
-            try:
-                bp = pd.read_csv(self.output_path + ".BPO.txt", header=None, sep="\t")
-                bp.rename(
-                    columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
-                    inplace=True,
-                )
-                bps = mf.id_seq.unique()
-                bp_array = []
-                for bpi in bps:
-                    temp = bp[bp.id_seq == bpi][["id_go", "probability", "term"]]
-                    bp_array.append({"id_seq": bpi, "results": temp.to_dict("records")})
-                results.append({"type": "biological_process", "prediction": bp_array})
-            except Exception as e:
-                print(e)
-                print("No result for biological process")
-        if self.celular_component:
-            try:
-                cc = pd.read_csv(self.output_path + ".CCO.txt", header=None, sep="\t")
-                cc.rename(
-                    columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
-                    inplace=True,
-                )
-                ccs = cc.id_seq.unique()
-                cc_array = []
-                for cci in ccs:
-                    temp = cc[cc.id_seq == cci][["id_go", "probability", "term"]]
-                    cc_array.append({"id_seq": cci, "results": temp.to_dict("records")})
-                results.append({"type": "celular_component", "prediction": cc_array})
-            except Exception as e:
-                print(e)
-                print("No result for biological process")
+        params = [(self.molecular_function, ".MFO.txt", "molecular_function"),
+        (self.biological_process, ".BPO.txt", "biological_process"),
+        (self.celular_component, ".CCO.txt", "celular_component")]
+        for param_tuple in params:
+            if param_tuple[0]:
+                try:
+                    df_go = pd.read_csv(self.output_path + param_tuple[1], header=None, sep="\t")
+                    df_go.rename(
+                        columns={0: "id_seq", 1: "id_go", 2: "probability", 3: "term"},
+                        inplace=True,
+                    )
+                    unique_go = df_go.id_seq.unique()
+                    go_array = []
+                    for single_go in unique_go:
+                        temp = df_go[df_go.id_seq == single_go][["id_go", "probability", "term"]]
+                        go_array.append({"id_seq": single_go, "results": temp.to_dict("records")})
+                    results.append({"type": param_tuple[2], "prediction": go_array})
+                except:
+                    print("No result for molecular function")
         return results

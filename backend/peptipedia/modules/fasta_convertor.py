@@ -1,7 +1,8 @@
+"""Fasta convertor module"""
 from random import random
 
-
-class fasta_convertor:
+class FastaConvertor:
+    """Fasta convertor class"""
     def __init__(self, static, text, limit):
         self.text = text
         self.limit = limit
@@ -28,9 +29,10 @@ class fasta_convertor:
             "Y",
             "V",
         ]
+        self.fasta_text = ""
 
     def convert(self):
-        self.fasta_text = ""
+        """Transform text into fasta format"""
         splitted = [a.strip() for a in self.text.split("\n") if a.strip() != ""]
         for i, row in enumerate(splitted):
             row = "".join(
@@ -56,7 +58,7 @@ class fasta_convertor:
         return self.fasta_text
 
     def save_file(self):
-        f = open(self.fasta_path, "w")
-        f.write(self.fasta_text)
-        f.close()
+        """Save file in specified path"""
+        with open(self.fasta_path, "w", encoding = "utf-8") as file:
+            file.write(self.fasta_text)
         return self.fasta_path

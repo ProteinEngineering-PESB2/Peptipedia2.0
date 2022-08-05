@@ -1,3 +1,4 @@
+"""Physicochemical module"""
 import os
 from random import random
 
@@ -8,8 +9,10 @@ from modlamp.plot import helical_wheel, plot_profile
 from peptipedia.modules.utils import ConfigTool
 
 
-class modlamp_descriptor(ConfigTool):
-    def __init__(self, data, options, is_file, is_json, config):
+class PhysicochemicalProperties(ConfigTool):
+    """Physicochemical Class"""
+    def __init__(self, data, options, is_file, config):
+        self.static_folder = config["folders"]["static_folder"]
         self.length = options["length"]
         self.molecular_weight = options["molecular_weight"]
         self.isoelectric_point = options["isoelectric_point"]
@@ -20,9 +23,10 @@ class modlamp_descriptor(ConfigTool):
         self.aliphatic_index = options["aliphatic_index"]
         self.boman_index = options["boman_index"]
         self.hydrophobic_ratio = options["hydrophobic_ratio"]
-        super().__init__("phisicochemical", data, config, is_file, is_json)
+        super().__init__("phisicochemical", data, config, is_file)
 
     def execute_modlamp(self):
+        """Execute all selected properties"""
         records = SeqIO.parse(self.temp_file_path, "fasta")
         response = []
         for record in records:
@@ -56,9 +60,7 @@ class modlamp_descriptor(ConfigTool):
                     sequence
                 )
 
-            profile_path = "{}/{}_profile.png".format(
-                "/files", str(round(random() * 10**20))
-            )
+            profile_path = f"{self.static_folder}/{str(round(random() * 10**20))}_profile.png"
             helical_path = profile_path.replace("profile", "helical")
             plot_profile(sequence, scalename="eisenberg", filename=profile_path)
             helical_wheel(sequence, filename=helical_path)
@@ -68,6 +70,7 @@ class modlamp_descriptor(ConfigTool):
         return response
 
     def get_mw(self, sequence):
+        """Molecular Weight"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.calculate_MW(amide=True)
@@ -76,6 +79,7 @@ class modlamp_descriptor(ConfigTool):
             return None
 
     def get_isoelectric_point(self, sequence):
+        """Isoelectric point"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.isoelectric_point(amide=True)
@@ -84,6 +88,7 @@ class modlamp_descriptor(ConfigTool):
             return None
 
     def get_charge_density(self, sequence):
+        """Charge density"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.charge_density(ph=7, amide=True)
@@ -92,55 +97,62 @@ class modlamp_descriptor(ConfigTool):
             return None
 
     def get_charge(self, sequence):
+        """Charge"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.calculate_charge(ph=7, amide=True)
             return round(desc.descriptor[0][0], 4)
-        except Exception as e:
+        except:
             return None
 
     def get_instability_index(self, sequence):
+        """Instability index"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.instability_index()
             return round(desc.descriptor[0][0], 4)
-        except Exception as e:
+        except:
             return None
 
     def get_aromaticity(self, sequence):
+        """Aromaticity"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.aromaticity()
             return round(desc.descriptor[0][0], 4)
-        except Exception as e:
+        except:
             return None
 
     def get_aliphatic_index(self, sequence):
+        """Aliphatic index"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.aliphatic_index()
             return round(desc.descriptor[0][0], 4)
-        except Exception as e:
+        except:
             return None
 
     def get_boman_index(self, sequence):
+        """Boman index"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.boman_index()
             return round(desc.descriptor[0][0], 4)
-        except Exception as e:
+        except:
             return None
 
     def get_hydrophobic_ratio(self, sequence):
+        """Hydrophobic ratio"""
         try:
             desc = GlobalDescriptor([sequence])
             desc.hydrophobic_ratio()
             return round(desc.descriptor[0][0], 4)
-        except Exception as e:
+        except:
             return None
 
     def delete_file(self):
+        """Delete temp file"""
         try:
             os.remove(self.temp_file_path)
-        except Exception as e:
-            print(e)
+        except:
+            pass
