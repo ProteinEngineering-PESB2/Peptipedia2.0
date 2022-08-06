@@ -5,6 +5,10 @@ import BackdropComponent from "../backdrop_component";
 import ButtonDownloadPrimary from "../button_download_primary";
 import ProSeqViewer from "../pro_seq_viewer";
 
+const env = import.meta.env
+// const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://localhost:8001";
+const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://45.7.231.127:8001";
+
 interface Props {
   result: IAlign;
 }
@@ -61,14 +65,13 @@ export default function MSAContent({ result }: Props) {
           }}
         >
           <img
-            src={`http://45.7.231.127:8001${result.image_heatmap}`}
+            src={`${backendURL}${result.image_heatmap}`}
             alt="Distances Matrix"
             width="100%"
             height="100%"
           />
         </Paper>
       </Box>
-      <h1>{result.dendrogram}</h1>
       <Box marginTop={3} boxShadow={4}>
         <Paper
           sx={{
@@ -81,7 +84,7 @@ export default function MSAContent({ result }: Props) {
           }}
         >
           <img
-            src={`http://45.7.231.127:8001${result.dendrogram}`}
+            src={`${backendURL}${result.dendrogram}`}
             alt="Dendrogram"
             width="100%"
             height="100%"
