@@ -1,8 +1,13 @@
 import { Box, Paper } from "@mui/material";
-import { useState } from "react";
 import { useDataTablePhysicochemical } from "../../hooks/useDataTablePhysicochemical";
 import { IDataPhysichochemical } from "../../utils/interfaces";
 import DataTable from "../datatable";
+
+const env = import.meta.env;
+// const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://localhost:8001";
+const backendURL = env.PROD
+  ? env.VITE_BACKEND_BASEURL
+  : "http://45.7.231.127:8001";
 
 interface Props {
   result: IDataPhysichochemical[];
@@ -30,7 +35,7 @@ export default function PhysichochemicalContent({ result }: Props) {
             }}
           >
             <img
-              src={`http://45.7.231.127:8001${imagePlot}`}
+              src={`${backendURL}${imagePlot}`}
               alt="plot"
               width="100%"
               height="100%"
