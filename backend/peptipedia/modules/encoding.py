@@ -61,7 +61,7 @@ class Encoding(ConfigTool):
                 fft_encoding.run_parallel_encoding()
                 result = fft_encoding.appy_fft()
                 result.to_csv(
-                    "{self.results_folder}/digital_signal_processing/{selected_property}.csv"
+                    f"{self.results_folder}/digital_signal_processing/{selected_property}.csv"
                 )
         self.compress()
         return self.results_folder + ".zip"
