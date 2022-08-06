@@ -109,9 +109,9 @@ Content-Type: application/json
 {
     "data": ">sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2\nMPRRAENWDEAEVGAEEAGVEEYGPEED",
     "options": {
-        "one_hot_encoding": 1,
+        "one_hot_encoding": 0,
         "phisicochemical_properties": 1,
-        "digital_signal_processing": 1
+        "digital_signal_processing": 0
     }
 }
 ###
