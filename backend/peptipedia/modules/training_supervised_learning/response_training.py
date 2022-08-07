@@ -1,26 +1,28 @@
+"""Response training module"""
 import math
 
 import numpy as np
 from scipy.stats import kendalltau, pearsonr, spearmanr
-from sklearn import metrics
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import (
-    ShuffleSplit,
-    StratifiedKFold,
     cross_validate,
-    learning_curve,
-    train_test_split,
+    learning_curve
 )
 
 
-class response_training_model:
+class ResponseTrainingModel:
+    """Response training class"""
     def __init__(self, dataset, target, model, validation):
         self.dataset = dataset
         self.target = target
         self.model = model
         self.validation = validation
+        self.predict_values = None
+        self.labels = None
+        self.cf_matrix = None
 
     def estimate_performance(self, metrics_list):
+        """Estimate performance method"""
         response_data = cross_validate(
             self.model,
             self.dataset,
@@ -29,12 +31,13 @@ class response_training_model:
             scoring=metrics_list,
         )
         performance = {
-            metric: np.mean(response_data["test_{}".format(metric)]).round(3)
+            metric: np.mean(response_data[f"test_{metric}"]).round(3)
             for metric in metrics_list
         }
         return {"performance": performance}
 
     def confussion_matrix(self):
+        """Confussion matrix method"""
         self.predict_values = self.model.predict(self.dataset)
         labels = self.target.unique().tolist()
         confusion_matrix_response = confusion_matrix(
@@ -52,20 +55,21 @@ class response_training_model:
         }
 
     def analysis(self):
+        """Analysis method"""
         sensibility_array = []
-        for i in range(len(self.cf_matrix)):
-            sumRow = sum(self.cf_matrix[i])
-            if sumRow != 0:
-                value = self.cf_matrix[i][i] / sumRow
+        for index, value_cf in enumerate(self.cf_matrix):
+            sum_row = sum(value_cf)
+            if sum_row != 0:
+                value = value_cf[index] / sum_row
             else:
                 value = 0.0
             sensibility_array.append(value)
-        self.transpose_cf_matrix = np.array(self.cf_matrix).transpose()
+        transpose_cf_matrix = np.array(self.cf_matrix).transpose()
         sensitivity_array = []
-        for i in range(len(self.transpose_cf_matrix)):
-            sumRow = sum(self.transpose_cf_matrix[i])
-            if sumRow != 0:
-                value = self.transpose_cf_matrix[i][i] / sumRow
+        for index, matrix_value in enumerate(transpose_cf_matrix):
+            sum_row = sum(matrix_value)
+            if sum_row != 0:
+                value = matrix_value[index] / sum_row
             else:
                 value = 0.0
             sensitivity_array.append(value)
@@ -78,6 +82,7 @@ class response_training_model:
         }
 
     def get_labels(self):
+        """Get labels method"""
         return {
             "labels": {
                 "target": self.target.tolist(),
@@ -86,6 +91,7 @@ class response_training_model:
         }
 
     def learning_curve(self):
+        """Create learning curve"""
         train_sizes, train_scores, test_scores = learning_curve(
             self.model,
             self.dataset,
@@ -141,10 +147,11 @@ class response_training_model:
         return response
 
     def correlations(self):
+        """Calculate correlations"""
         self.predict_values = self.model.predict(self.dataset)
-        kendall_value = self.__calculatekendalltau(self.target, self.predict_values)
-        pearson_value = self.__calculatedPearson(self.target, self.predict_values)
-        spearman_value = self.__calculatedSpearman(self.target, self.predict_values)
+        kendall_value = self.__calculate_kendall_tau(self.target, self.predict_values)
+        pearson_value = self.__calculated_pearson(self.target, self.predict_values)
+        spearman_value = self.__calculated_spearman(self.target, self.predict_values)
         return {
             "corr": {
                 "kendall": kendall_value,
@@ -154,49 +161,51 @@ class response_training_model:
         }
 
     def scatter_plot(self):
+        """Return scatter_plot format"""
         return {
             "scatter": {"x": self.target.to_list(), "y": self.predict_values.tolist()}
         }
 
     def error_bars(self):
+        """Return Error bars format"""
         error = self.target - self.predict_values
         return {"error_values": error.round(3).tolist()}
 
-    def __calculatedPearson(self, real_values, predict_values):
+    def __calculated_pearson(self, real_values, predict_values):
+        """Pearson correlation"""
         response = pearsonr(real_values, predict_values)
         if math.isnan(response[0]):
-            r1 = "ERROR"
+            r_1 = "ERROR"
         else:
-            r1 = response[0]
+            r_1 = response[0]
         if math.isnan(response[1]):
-            r2 = "ERROR"
+            r_2 = "ERROR"
         else:
-            r2 = response[1]
-        dictResponse = {"pearsonr": round(r1, 3), "pvalue": round(r2, 3)}
-        return dictResponse
+            r_2 = response[1]
+        return {"pearsonr": round(r_1, 3), "pvalue": round(r_2, 3)}
 
-    def __calculatedSpearman(self, real_values, predict_values):
+    def __calculated_spearman(self, real_values, predict_values):
+        """Spearman correlation"""
         response = spearmanr(real_values, predict_values)
         if math.isnan(response[0]):
-            r1 = "ERROR"
+            r_1 = "ERROR"
         else:
-            r1 = response[0]
+            r_1 = response[0]
         if math.isnan(response[1]):
-            r2 = "ERROR"
+            r_2 = "ERROR"
         else:
-            r2 = response[1]
-        dictResponse = {"spearmanr": round(r1, 3), "pvalue": round(r2, 3)}
-        return dictResponse
-
-    def __calculatekendalltau(self, real_values, predict_values):
+            r_2 = response[1]
+        return {"spearmanr": round(r_1, 3), "pvalue": round(r_2, 3)}
+        
+    def __calculate_kendall_tau(self, real_values, predict_values):
+        """Kendall tau correlation"""
         response = kendalltau(real_values, predict_values)
         if math.isnan(response[0]):
-            r1 = "ERROR"
+            r_1 = "ERROR"
         else:
-            r1 = response[0]
+            r_1 = response[0]
         if math.isnan(response[1]):
-            r2 = "ERROR"
+            r_2 = "ERROR"
         else:
-            r2 = response[1]
-        dictResponse = {"kendalltau": round(r1, 3), "pvalue": round(r2, 3)}
-        return dictResponse
+            r_2 = response[1]
+        return {"kendalltau": round(r_1, 3), "pvalue": round(r_2, 3)}

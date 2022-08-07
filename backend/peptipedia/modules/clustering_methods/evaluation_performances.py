@@ -1,23 +1,20 @@
+"""Evaluation performance clustering module"""
 from sklearn import metrics
-
-
-class evaluationClustering:
-    def get_metrics(self, dataSet, labelsResponse):
-
+class EvaluationClustering:
+    """Evaluation clustering class"""
+    def get_metrics(self, dataset, labels_response):
+        """Return clustering metrics"""
         try:
-            calinski = metrics.calinski_harabasz_score(dataSet, labelsResponse)
+            calinski = metrics.calinski_harabasz_score(dataset, labels_response)
             siluetas = metrics.silhouette_score(
-                dataSet, labelsResponse, metric="euclidean"
+                dataset, labels_response, metric="euclidean"
             )
-            davies = metrics.davies_bouldin_score(dataSet, labelsResponse)
+            davies = metrics.davies_bouldin_score(dataset, labels_response)
             response = [calinski, siluetas, davies]
 
-        except Exception as e:
-            print(e)
+        except:
             calinski = None
             siluetas = None
             davies = None
             response = [calinski, siluetas, davies]
-            pass
-
         return response

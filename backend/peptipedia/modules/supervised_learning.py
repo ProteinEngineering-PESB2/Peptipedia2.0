@@ -16,10 +16,10 @@ from peptipedia.modules.encoding_strategies import (
     run_one_hot,
     run_physicochemical_properties,
 )
-from peptipedia.modules.training_supervised_learning.run_algorithm import run_algorithm
+from peptipedia.modules.training_supervised_learning.run_algorithm import RunAlgorithm
 from peptipedia.modules.utils import ConfigTool
 
-from peptipedia.modules.clustering_methods.transformation_data import transformer
+from peptipedia.modules.clustering_methods.transformation_data import Transformer
 
 class SupervisedLearning(ConfigTool):
     """Supervised Learning class"""
@@ -40,7 +40,7 @@ class SupervisedLearning(ConfigTool):
         self.test_size = self.options["test_size"]
         self.kernel = self.options["kernel"]
         self.preprocessing = self.options["preprocessing"]
-        self.transformer = transformer()
+        self.transformer = Transformer()
         self.data = pd.read_csv(self.temp_file_path)
         self.target = self.data.target
         self.data.drop("target", inplace=True, axis=1)
@@ -60,7 +60,7 @@ class SupervisedLearning(ConfigTool):
         self.dataset_encoded["id"] = ids
         self.dataset_encoded.to_csv(self.dataset_encoded_path, index=False)
         self.dataset_encoded.drop(["id"], axis=1, inplace=True)
-        run_instance = run_algorithm(
+        run_instance = RunAlgorithm(
             self.dataset_encoded,
             self.target,
             self.task,
@@ -115,11 +115,11 @@ class SupervisedLearning(ConfigTool):
         """Encoding process"""
         encoding_option = self.options["encoding"]
         if encoding_option == "one_hot_encoding":
-            one_hot_encoding = run_one_hot.run_one_hot(self.data)
+            one_hot_encoding = run_one_hot.RunOneHotEncoding(self.data)
             self.dataset_encoded = one_hot_encoding.run_parallel_encoding()
         elif encoding_option == "phisicochemical_properties":
             physicochemical_encoding = (
-                run_physicochemical_properties.run_physicochemical_properties(
+                run_physicochemical_properties.RunPhysicochemicalProperties(
                     self.data,
                     self.options["selected_property"],
                     self.path_config_aaindex_encoder,
@@ -128,7 +128,7 @@ class SupervisedLearning(ConfigTool):
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
         elif encoding_option == "digital_signal_processing":
             selected_property = self.options["selected_property"]
-            fft_encoding = run_fft_encoding.run_fft_encoding(
+            fft_encoding = run_fft_encoding.RunFftEncoding(
                 self.data, selected_property, self.path_config_aaindex_encoder
             )
             fft_encoding.run_parallel_encoding()

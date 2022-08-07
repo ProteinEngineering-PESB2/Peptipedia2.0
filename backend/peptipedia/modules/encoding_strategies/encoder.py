@@ -1,10 +1,11 @@
+"""Encoder module"""
 import multiprocessing as mp
 
 import numpy as np
 import pandas as pd
 
-
-class encoder:
+class Encoder:
+    """Encoder class"""
     def __init__(self, dataset):
         self.residues = [
             "A",
@@ -29,8 +30,12 @@ class encoder:
             "V",
         ]
         self.dataset = dataset
+        self.df_encoding = None
+    def encoding_data(self, dataset):
+        """Polimorfism function"""
 
     def run_parallel_encoding(self):
+        """Encode data using self.encoding_data diferenciated function"""
         cpu_number = mp.cpu_count()
         df_split = np.array_split(self.dataset, cpu_number)
         with mp.Pool(cpu_number) as pool:
@@ -39,7 +44,7 @@ class encoder:
             columns=dict(
                 (col, "P_" + str(col))
                 for col in self.df_encoding.columns
-                if type(col) == int
+                if isinstance(col, int)
             ),
             inplace=True,
         )

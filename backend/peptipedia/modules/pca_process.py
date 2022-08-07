@@ -4,7 +4,7 @@ from random import random
 
 import pandas as pd
 
-from peptipedia.modules.clustering_methods.transformation_data import transformer
+from peptipedia.modules.clustering_methods.transformation_data import Transformer
 
 class PCA:
     """PCA class"""
@@ -19,7 +19,7 @@ class PCA:
         self.dataset_to_transform = self.data[
             [col for col in self.data.columns if "P_" in col]
         ]
-        self.transformer = transformer()
+        self.transformer = Transformer()
 
     def apply_pca(self):
         """Apply PCA or kernel PCA"""

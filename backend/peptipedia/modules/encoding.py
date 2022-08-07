@@ -4,10 +4,10 @@ import subprocess
 from random import random
 
 
-from peptipedia.modules.encoding_strategies.run_fft_encoding import run_fft_encoding
-from peptipedia.modules.encoding_strategies.run_one_hot import run_one_hot
+from peptipedia.modules.encoding_strategies.run_fft_encoding import RunFftEncoding
+from peptipedia.modules.encoding_strategies.run_one_hot import RunOneHotEncoding
 from peptipedia.modules.encoding_strategies.run_physicochemical_properties import (
-    run_physicochemical_properties,
+    RunPhysicochemicalProperties,
 )
 from peptipedia.modules.utils import ConfigTool
 
@@ -39,13 +39,13 @@ class Encoding(ConfigTool):
         with open(self.temp_file_path, "r", encoding = "utf-8") as file:
             self.data = self.create_df(file.read())
         if self.options["one_hot_encoding"]:
-            one_hot = run_one_hot(self.data)
+            one_hot = RunOneHotEncoding(self.data)
             result = one_hot.run_parallel_encoding()
             result.to_csv(f"{self.results_folder}/one_hot_encoding.csv")
         if self.options["phisicochemical_properties"]:
             os.mkdir(f"{self.results_folder}/physicochemical_properties")
             for selected_property in self.list_clusters:
-                physicochemical_encoding = run_physicochemical_properties(
+                physicochemical_encoding = RunPhysicochemicalProperties(
                     self.data, selected_property, self.path_config_aaindex_encoder
                 )
                 result = physicochemical_encoding.run_parallel_encoding()
@@ -55,7 +55,7 @@ class Encoding(ConfigTool):
         if self.options["digital_signal_processing"]:
             os.mkdir(f"{self.results_folder}/digital_signal_processing")
             for selected_property in self.list_clusters:
-                fft_encoding = run_fft_encoding(
+                fft_encoding = RunFftEncoding(
                     self.data, selected_property, self.path_config_aaindex_encoder
                 )
                 fft_encoding.run_parallel_encoding()

@@ -1,28 +1,32 @@
+"""One Hot Encoding module"""
 import pandas as pd
+from peptipedia.modules.encoding_strategies.encoder import Encoder
 
-from peptipedia.modules.encoding_strategies.encoder import encoder
-
-
-class run_one_hot(encoder):
+class RunOneHotEncoding(Encoder):
+    """One Hot Encoding class"""
     def __init__(self, dataset):
         super().__init__(dataset)
         self.residues.sort()
         self.prepare_data()
 
     def create_vector(self, residue, dict_residues):
+        """Create aminoacids vector"""
         vector_encoding = [0 for x in range(20)]
         vector_encoding[dict_residues[residue]] = 1
         return vector_encoding
 
     def prepare_data(self):
+        """Prepare data"""
         self.dict_residues = {}
-        for i in range(len(self.residues)):
-            self.dict_residues.update({self.residues[i]: i})
-
+        for index, value in enumerate(self.residues):
+            self.dict_residues.update({value: index})
+        
     def encoding_data(self, dataset):
+        """Encode data"""
         id_sequences = []
         matrix_encoding = []
-        for index, row in dataset.iterrows():
+        for row in dataset.iterrows():
+            row = row[1]
             sequence = row.sequence
             id_sequences.append(row.id)
             for residue in sequence:

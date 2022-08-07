@@ -1,3 +1,4 @@
+"""Run algorithm module"""
 from sklearn.ensemble import (
     AdaBoostClassifier,
     AdaBoostRegressor,
@@ -16,7 +17,8 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from peptipedia.modules.training_supervised_learning import supervised_algorithm
 
 
-class run_algorithm:
+class RunAlgorithm:
+    """Run algorithm class"""
     def __init__(self, dataset, response, task, algorithm, validation, test_size):
         self.dataset = dataset
         self.response = response
@@ -25,8 +27,10 @@ class run_algorithm:
         self.validation = validation
         self.test_size = test_size
         self.model = None
+        self.training_object = None
 
     def __instance_classification_model(self):
+        """Classification instances"""
         if self.algorithm == "adaboost":  # Adaboost
             self.model = AdaBoostClassifier()
 
@@ -58,6 +62,7 @@ class run_algorithm:
             self.model = KNeighborsClassifier()
 
     def __instance_regression_model(self):
+        """Regression instances"""
         if self.algorithm == "adaboost":  # Adaboost
             self.model = AdaBoostRegressor()
 
@@ -83,13 +88,14 @@ class run_algorithm:
             self.model = KNeighborsRegressor()
 
     def training_model(self):
+        """Train model"""
         # start model
         if self.task == "classification":  # class
             self.__instance_classification_model()
         elif self.task == "regression":
             self.__instance_regression_model()
         # instance training object
-        self.training_object = supervised_algorithm.model_algorithm(
+        self.training_object = supervised_algorithm.ModelAlgorithm(
             self.dataset,
             self.response,
             self.task,
@@ -98,10 +104,12 @@ class run_algorithm:
             self.model,
             self.test_size,
         )
-        return self.training_object.trainingMethod()
+        return self.training_object.training_method()
 
     def testing_model(self):
-        return self.training_object.testingMethod()
+        """Test model"""
+        return self.training_object.testing_method()
 
     def get_model(self):
+        """Return model"""
         return self.model

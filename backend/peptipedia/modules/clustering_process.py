@@ -80,12 +80,12 @@ class Clustering(ConfigTool):
         encoding_option = self.options["encoding"]
 
         if encoding_option == "one_hot_encoding":
-            one_hot_encoding = run_one_hot.run_one_hot(self.data)
+            one_hot_encoding = run_one_hot.RunOneHotEncoding(self.data)
             self.dataset_encoded = one_hot_encoding.run_parallel_encoding()
 
         elif encoding_option == "phisicochemical_properties":
             physicochemical_encoding = (
-                run_physicochemical_properties.run_physicochemical_properties(
+                run_physicochemical_properties.RunPhysicochemicalProperties(
                     self.data,
                     self.options["selected_property"],
                     self.path_config_aaindex_encoder,
@@ -95,7 +95,7 @@ class Clustering(ConfigTool):
 
         elif encoding_option == "digital_signal_processing":
             selected_property = self.options["selected_property"]
-            fft_encoding = run_fft_encoding.run_fft_encoding(
+            fft_encoding = run_fft_encoding.RunFftEncoding(
                 self.data, selected_property, self.path_config_aaindex_encoder
             )
             fft_encoding.run_parallel_encoding()
@@ -106,36 +106,36 @@ class Clustering(ConfigTool):
         self.process_encoding_stage()
         dataset_to_cluster = self.dataset_encoded.copy()
         dataset_to_cluster.drop(["id"], inplace=True, axis=1)
-        clustering_process = clustering_algorithm.aplicateClustering(
+        clustering_process = clustering_algorithm.ApplyClustering(
             dataset_to_cluster
         )
-        evaluation_process = evaluation_performances.evaluationClustering()
+        evaluation_process = evaluation_performances.EvaluationClustering()
 
         algorithm = self.options["algorithm"]
         if algorithm == "kmeans":
-            clustering_process.aplicateKMeans(self.options["params"]["k_value"])
+            clustering_process.aplicate_k_means(self.options["params"]["k_value"])
 
         elif algorithm == "dbscan":
-            clustering_process.aplicateDBSCAN()
+            clustering_process.aplicate_dbscan()
 
         elif algorithm == "meanshift":
-            clustering_process.aplicateMeanShift()
+            clustering_process.aplicate_mean_shift()
 
         elif algorithm == "birch":
-            clustering_process.aplicateBirch(self.options["params"]["k_value"])
+            clustering_process.aplicate_birch(self.options["params"]["k_value"])
 
         elif algorithm == "agglomerative":
-            clustering_process.aplicateAlgomerativeClustering(
+            clustering_process.aplicate_algomerative_clustering(
                 self.options["params"]["linkage"],
                 self.options["params"]["affinity"],
                 self.options["params"]["k_value"]
             )
 
         elif algorithm == "affinity":
-            clustering_process.aplicateAffinityPropagation()
+            clustering_process.aplicate_affinity_propagation()
 
         elif algorithm == "optics":
-            clustering_process.applicateOptics(
+            clustering_process.applicate_optics(
                 self.options["params"]["min_samples"],
                 self.options["params"]["xi"],
                 self.options["params"]["min_cluster_size"])
