@@ -6,8 +6,7 @@ import ButtonDownloadPrimary from "../button_download_primary";
 import ProSeqViewer from "../pro_seq_viewer";
 
 const env = import.meta.env
-// const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://localhost:8001";
-const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://45.7.231.127:8001";
+const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://localhost:8001";
 
 interface Props {
   result: IAlign;
