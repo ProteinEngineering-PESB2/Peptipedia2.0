@@ -103,6 +103,7 @@ ENV BLASTDB="/databases/blastdb" \
 	PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}"
 
 COPY ./peptipedia /app/peptipedia
+COPY ./conf/gunicorn.conf.py /app/
 WORKDIR /app
 
 # Ejecución de la api
