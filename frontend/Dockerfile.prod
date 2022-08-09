@@ -1,4 +1,4 @@
-FROM node:current as build
+FROM node:lts as build
 
 ARG BACKEND_BASE_URL=http://localhost:8001
 
@@ -7,6 +7,7 @@ ENV VITE_BACKEND_BASEURL=${BACKEND_BASE_URL}
 
 WORKDIR /app
 COPY ./ .
+RUN rm -fr node_modules
 RUN yarn install --production=false
 RUN yarn build
 
