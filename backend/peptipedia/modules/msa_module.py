@@ -11,15 +11,15 @@ from scipy.spatial.distance import squareform
 
 from peptipedia.modules.utils import ConfigTool
 
+
 class MultipleSequenceAlignment(ConfigTool):
     """MSA Class"""
+
     def __init__(self, data, is_file, config):
         super().__init__("msa", data, config, is_file)
         static_folder = config["folders"]["static_folder"]
         random_number = str(round(random() * 10**20))
-        self.output_file = os.path.realpath(
-            f"{static_folder}/{random_number}.aln"
-        )
+        self.output_file = os.path.realpath(f"{static_folder}/{random_number}.aln")
         self.distances_file = self.output_file.replace("aln", "mat")
         self.heatmap_path = self.output_file.replace(".aln", "_heatmap.png")
         self.dendrogram_path = self.output_file.replace(".aln", "_dendrogram.png")
@@ -38,7 +38,7 @@ class MultipleSequenceAlignment(ConfigTool):
         ]
         subprocess.check_output(command)
 
-        with open(self.output_file, "r", encoding = "utf-8") as file:
+        with open(self.output_file, "r", encoding="utf-8") as file:
             output_text = file.read()
 
         distance_table = pd.read_csv(

@@ -10,8 +10,10 @@ from Bio import SeqIO
 
 AMINOACID_ALPHABET = "ARNDCEQGHILKMFPSTWYVX*"
 
+
 class ConfigTool:
     """Config tool class"""
+
     def __init__(self, config_module_name, data, config, is_file, is_fasta=True):
         self.data = data
         self.temp_folder = config["folders"]["temp_folder"]
@@ -27,18 +29,16 @@ class ConfigTool:
             self.save_file()
         if is_fasta:
             self.check = FastaFile(
-                self.temp_file_path,
-                config[config_module_name]
+                self.temp_file_path, config[config_module_name]
             ).verify()
         else:
             self.check = CsvFile(
-                self.temp_file_path,
-                config[config_module_name]
+                self.temp_file_path, config[config_module_name]
             ).verify()
 
     def create_file(self):
         """create file using data in specific path"""
-        with open(self.temp_file_path, "w", encoding = "utf-8") as file:
+        with open(self.temp_file_path, "w", encoding="utf-8") as file:
             file.write(self.data)
 
     def save_file(self):
@@ -57,9 +57,9 @@ class ConfigTool:
         self.temp_csv_file = (
             self.temp_folder + "/" + str(round(random() * 10**20)) + ".fasta"
         )
-        with open(self.temp_file_path, "r", encoding = "utf-8") as file:
+        with open(self.temp_file_path, "r", encoding="utf-8") as file:
             data = file.read()
-        with open(self.temp_csv_file, "w", encoding = "utf-8") as file:
+        with open(self.temp_csv_file, "w", encoding="utf-8") as file:
             for record in parse_fasta(data):
                 file.write(">{id}\n{sequence}\n".format(**record))
 

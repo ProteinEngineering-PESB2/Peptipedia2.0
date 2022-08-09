@@ -3,7 +3,6 @@ import os
 import subprocess
 from random import random
 
-
 from peptipedia.modules.encoding_strategies.run_fft_encoding import run_fft_encoding
 from peptipedia.modules.encoding_strategies.run_one_hot import run_one_hot
 from peptipedia.modules.encoding_strategies.run_physicochemical_properties import (
@@ -14,6 +13,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class Encoding(ConfigTool):
     """Encoding class"""
+
     def __init__(self, data, options, is_file, config):
         super().__init__("encoding", data, config, is_file)
         self.rand_name = str(round(random() * 10**20))
@@ -36,7 +36,7 @@ class Encoding(ConfigTool):
 
     def process(self):
         """Encoding process"""
-        with open(self.temp_file_path, "r", encoding = "utf-8") as file:
+        with open(self.temp_file_path, "r", encoding="utf-8") as file:
             self.data = self.create_df(file.read())
         if self.options["one_hot_encoding"]:
             one_hot = run_one_hot(self.data)

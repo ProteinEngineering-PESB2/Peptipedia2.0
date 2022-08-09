@@ -6,8 +6,10 @@ import pandas as pd
 
 from peptipedia.modules.clustering_methods.transformation_data import transformer
 
+
 class PCA:
     """PCA class"""
+
     def __init__(self, params, static_folder):
         self.static_folder = static_folder
         self.path = params["path"]

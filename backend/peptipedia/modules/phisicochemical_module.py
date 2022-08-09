@@ -11,6 +11,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class PhysicochemicalProperties(ConfigTool):
     """Physicochemical Class"""
+
     def __init__(self, data, options, is_file, config):
         self.static_folder = config["folders"]["static_folder"]
         self.length = options["length"]
@@ -60,7 +61,9 @@ class PhysicochemicalProperties(ConfigTool):
                     sequence
                 )
 
-            profile_path = f"{self.static_folder}/{str(round(random() * 10**20))}_profile.png"
+            profile_path = (
+                f"{self.static_folder}/{str(round(random() * 10**20))}_profile.png"
+            )
             helical_path = profile_path.replace("profile", "helical")
             plot_profile(sequence, scalename="eisenberg", filename=profile_path)
             helical_wheel(sequence, filename=helical_path)

@@ -18,6 +18,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class Clustering(ConfigTool):
     """Clustering process class"""
+
     def __init__(self, data, options, is_file, config):
         super().__init__("clustering", data, config, is_file)
         static_folder = config["folders"]["static_folder"]
@@ -34,8 +35,9 @@ class Clustering(ConfigTool):
         wrong_param = []
         for key in list(self.options["params"].keys()):
             if key == "k_value":
-                if (not isinstance(self.options["params"]["k_value"], int) or
-                (self.options["params"]["k_value"] < 2)):
+                if not isinstance(self.options["params"]["k_value"], int) or (
+                    self.options["params"]["k_value"] < 2
+                ):
                     wrong_param.append("k_value")
             if key == "min_samples":
                 if (
@@ -49,10 +51,7 @@ class Clustering(ConfigTool):
                 ):
                     wrong_param.append("min_samples")
             if key == "xi":
-                if (
-                    self.options["params"]["xi"] > 1
-                    or self.options["params"]["xi"] < 0
-                ):
+                if self.options["params"]["xi"] > 1 or self.options["params"]["xi"] < 0:
                     wrong_param.append("xi")
             if key == "min_cluster_size":
                 if (
@@ -69,13 +68,13 @@ class Clustering(ConfigTool):
         if not wrong_param:
             return {"status": "success"}
         return {
-                "status": "error",
-                "description": f"Parameter {', '.join(wrong_param)} not valid",
-            }
+            "status": "error",
+            "description": f"Parameter {', '.join(wrong_param)} not valid",
+        }
 
     def process_encoding_stage(self):
         """Encode sequences using selected method"""
-        with open(self.temp_file_path, "r", encoding = "utf-8") as file:
+        with open(self.temp_file_path, "r", encoding="utf-8") as file:
             self.data = self.create_df(file.read())
         encoding_option = self.options["encoding"]
 
@@ -106,9 +105,7 @@ class Clustering(ConfigTool):
         self.process_encoding_stage()
         dataset_to_cluster = self.dataset_encoded.copy()
         dataset_to_cluster.drop(["id"], inplace=True, axis=1)
-        clustering_process = clustering_algorithm.aplicateClustering(
-            dataset_to_cluster
-        )
+        clustering_process = clustering_algorithm.aplicateClustering(dataset_to_cluster)
         evaluation_process = evaluation_performances.evaluationClustering()
 
         algorithm = self.options["algorithm"]
@@ -128,7 +125,7 @@ class Clustering(ConfigTool):
             clustering_process.aplicateAlgomerativeClustering(
                 self.options["params"]["linkage"],
                 self.options["params"]["affinity"],
-                self.options["params"]["k_value"]
+                self.options["params"]["k_value"],
             )
 
         elif algorithm == "affinity":
@@ -138,7 +135,8 @@ class Clustering(ConfigTool):
             clustering_process.applicateOptics(
                 self.options["params"]["min_samples"],
                 self.options["params"]["xi"],
-                self.options["params"]["min_cluster_size"])
+                self.options["params"]["min_cluster_size"],
+            )
         response = {}
 
         if clustering_process.response_apply == 0:  # Success

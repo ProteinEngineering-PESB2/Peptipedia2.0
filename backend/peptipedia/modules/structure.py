@@ -1,10 +1,14 @@
 """Structure module"""
 from random import random
+
 import requests
+
 from peptipedia.modules.msa_module import MultipleSequenceAlignment
+
 
 class Structure:
     """Structure class"""
+
     def __init__(self, static_folder):
         self.static_folder = static_folder
         self.output_pdb_path = (
@@ -22,7 +26,7 @@ class Structure:
                 f"https://alphafold.ebi.ac.uk/files/AF-{uniprot_id}-F1-model_v2.pdb"
             )
 
-            with open(self.output_pdb_path, "w", encoding = "utf-8") as file:
+            with open(self.output_pdb_path, "w", encoding="utf-8") as file:
                 file.write(response.text)
             return {"status": "success", "path": self.output_pdb_path}
         except:
@@ -35,7 +39,7 @@ class Structure:
             response = requests.get(
                 f"https://www.uniprot.org/uniprot/{uniprot_id}.fasta"
             )
-            with open(self.output_fasta_path, "w", encoding = "utf-8") as file:
+            with open(self.output_fasta_path, "w", encoding="utf-8") as file:
                 file.write(response.text)
             return {"status": "success", "path": self.output_fasta_path}
         except:
@@ -47,7 +51,10 @@ class Structure:
         if uniprot:
             res_structure = self.get_alphafold(uniprot)
             res_sequence = self.get_sequence(uniprot)
-            if res_structure["status"] == "success" and res_sequence["status"] == "success":
+            if (
+                res_structure["status"] == "success"
+                and res_sequence["status"] == "success"
+            ):
                 path_sequence = res_sequence["path"]
                 with open(path_sequence, "r", encoding="utf-8") as fasta_file:
                     fasta_text = fasta_file.read()

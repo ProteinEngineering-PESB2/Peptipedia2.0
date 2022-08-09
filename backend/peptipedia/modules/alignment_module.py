@@ -1,11 +1,15 @@
 """Blast alignment module"""
 import subprocess
 from re import split
+
 import pandas as pd
+
 from peptipedia.modules.utils import ConfigTool
+
 
 class BlastAlignment(ConfigTool):
     """Alignment class, it performs a blast+ function for to align against Peptipedia Database"""
+
     def __init__(self, data, is_file, config):
         super().__init__("blast", data, config, is_file)
         alignment_folder = config["folders"]["alignments_folder"]
@@ -31,18 +35,18 @@ class BlastAlignment(ConfigTool):
 
     def parse_response(self):
         """Transforms blast+ output to data table"""
-        with open(self.output_path, "r", encoding = "utf-8") as output_file:
+        with open(self.output_path, "r", encoding="utf-8") as output_file:
             res = output_file.read()
-        #Specific zones in text.
+        # Specific zones in text.
         inicio = res.find("Value") + 7
         text = res[inicio:]
         fin = text.find("\n\n")
         text = text[:fin]
-        #Splits text by lines.
+        # Splits text by lines.
         splitted = [row for row in text.splitlines() if row != ""]
         if len(splitted) <= 1:
             return {"status": "error", "description": "No significant results"}
-        #Store alignment values in a list.
+        # Store alignment values in a list.
         data = []
         for row in splitted:
             row_splitted = [a for a in split(r"\s+", row) if a != ""]
@@ -52,10 +56,10 @@ class BlastAlignment(ConfigTool):
         new_text = [
             row.strip() for row in res[inicio + fin :].split("\n>") if row.strip() != ""
         ]
-        #Store values in a dataframe
+        # Store values in a dataframe
         blast_dataframe = pd.DataFrame(data, columns=["id", "score", "e_value"])
         for index, row in enumerate(new_text):
-            details_text = row[row.find("Identities ="):row.find("\n\nQuery")]
+            details_text = row[row.find("Identities =") : row.find("\n\nQuery")]
             row_details = []
             for detail in details_text.split(","):
                 percentaje = detail[detail.find("(") + 1 : -1]
@@ -72,7 +76,7 @@ class BlastAlignment(ConfigTool):
 
     def get_alignments(self):
         """Function parses all the alignments and returns as json"""
-        with open(self.output_path, "r", encoding = "utf-8") as file:
+        with open(self.output_path, "r", encoding="utf-8") as file:
             res = file.read()
         id_query = res.split("Query= ")[1].split(" ")[0]
         splitted = res.split(">")

@@ -8,6 +8,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class FrequencyAnalysis(ConfigTool):
     """Frequency Analysis class"""
+
     def __init__(self, data, is_file, config):
         super().__init__("frequency", data, config, is_file, not is_file)
         self.canonical_residues = [
@@ -65,12 +66,12 @@ class FrequencyAnalysis(ConfigTool):
         df_counts.drop(["id_seq"], inplace=True, axis=1)
         df_counts.rename(
             columns={a: a.replace("counts.", "") for a in df_counts.columns},
-            inplace=True
+            inplace=True,
         )
         description = df_counts.describe().round(2)
         error = description.loc["std"] / 2
         return {
             "X": description.columns.tolist(),
             "Y": description.loc["mean"].to_list(),
-            "error": error.to_list()
+            "error": error.to_list(),
         }

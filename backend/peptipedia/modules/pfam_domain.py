@@ -10,6 +10,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class Pfam(ConfigTool):
     """Pfam class"""
+
     def __init__(self, data, is_file, config):
         super().__init__("pfam", data, config, is_file)
         self.create_csv_from_fasta()

@@ -41,12 +41,14 @@ def api_clustering():
     result = clustering_object.process_by_options()
     return {"result": result}
 
+
 @machine_learning_blueprint.route("/pca/", methods=["POST"])
 def api_pca():
     """It performs a PCA from a stored dataframe"""
     pca = PCA(request.json["params"], config["folders"]["static_folder"])
     result, path = pca.apply_pca()
     return {"result": result, "path": path}
+
 
 @machine_learning_blueprint.route("/supervised_learning/", methods=["POST"])
 def api_supervised_learning():

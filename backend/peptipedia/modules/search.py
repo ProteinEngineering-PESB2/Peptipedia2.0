@@ -1,8 +1,10 @@
 """Search module"""
 import re
 
+
 class search:
     """Search class"""
+
     def __init__(self, query):
         self.query = query
 

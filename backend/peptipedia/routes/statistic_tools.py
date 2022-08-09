@@ -13,6 +13,7 @@ config.read("config.ini")
 
 statistic_tools_blueprint = Blueprint("statistic_tools_blueprint", __name__)
 
+
 @statistic_tools_blueprint.route("/frequency/", methods=["POST"])
 def apply_frequency():
     """Frequency module api"""
