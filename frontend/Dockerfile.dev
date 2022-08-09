@@ -1,9 +1,11 @@
 FROM node
 
+ENV NODE_ENV=development
+
 WORKDIR /app
 
-COPY package.json .
-COPY package-lock.json .
+COPY ./ .
+RUN rm -fr node_modules
 
 RUN npm install --legacy-peer-deps
 
