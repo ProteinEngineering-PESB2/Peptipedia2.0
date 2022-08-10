@@ -43,7 +43,8 @@ export default function ScatterPlot({
       }}
       config={{
         responsive: true,
-        displayModeBar: false
+        displayModeBar: true,
+        autosizable: true
       }}
       useResizeHandler
       className="w-full h-full"

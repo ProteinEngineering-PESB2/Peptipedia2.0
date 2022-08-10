@@ -99,15 +99,15 @@ export const useDataTablePhysicochemical = ({ result }: Props) => {
 
     keys.includes("id") && columns.push("ID");
     keys.includes("length") && columns.push("Length");
-    keys.includes("molecular_weight (PM/MW) ") &&
-      columns.push("Molecular Weight");
-    keys.includes("isoelectric_point (pH)") &&
-      columns.push("Isoelectric Point");
-    keys.includes("charge (pH)") && columns.push("Charge");
-    keys.includes("charge_density (pH)") && columns.push("Charge Density");
-    keys.includes("aliphatic_index (v)") && columns.push("Aliphatic Index");
+    keys.includes("molecular_weight") &&
+      columns.push("Molecular Weight (PM/MW)");
+    keys.includes("isoelectric_point") &&
+      columns.push("Isoelectric Point (pH)");
+    keys.includes("charge") && columns.push("Charge (pH)");
+    keys.includes("charge_density") && columns.push("Charge Density (pH)");
+    keys.includes("aliphatic_index") && columns.push("Aliphatic Index (v)");
     keys.includes("aromaticity") && columns.push("Aromaticity");
-    keys.includes("boman_index (Kcal/mol)") && columns.push("Boman Index");
+    keys.includes("boman_index") && columns.push("Boman Index (Kcal/mol)");
     keys.includes("hydrophobic_ratio") && columns.push("Hydrophobic Ratio");
     keys.includes("instability_index") && columns.push("Instability Index");
     columns.push("Options");
