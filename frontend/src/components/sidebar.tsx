@@ -18,8 +18,8 @@ import BiotechIcon from "@mui/icons-material/Biotech";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import TranslateIcon from "@mui/icons-material/Translate";
-import GroupsIcon from '@mui/icons-material/Groups';
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import GroupsIcon from "@mui/icons-material/Groups";
+import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import { useAppContext } from "../hooks/useAppContext";
 
 export default function Sidebar() {
@@ -390,6 +390,45 @@ export default function Sidebar() {
               }}
             >
               GO Searching
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor:
+            section === "structural_prediction" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "structural_prediction" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/structural-prediction")}
+        >
+          <BiotechIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight:
+                  section === "structural_prediction" ? "bold" : "normal",
+              }}
+            >
+              Structural Prediction
             </Typography>
           </ListItemText>
         </ListItemButton>

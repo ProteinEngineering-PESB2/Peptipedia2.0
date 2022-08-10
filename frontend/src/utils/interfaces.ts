@@ -25,6 +25,12 @@ export interface ICheckboxs {
   one_hot_encoding: boolean;
   physicochemical_properties: boolean;
   digital_signal_processing: boolean;
+  ss3: boolean;
+  ss8: boolean;
+  acc: boolean;
+  tm2: boolean;
+  tm8: boolean;
+  diso: boolean;
 }
 
 export interface ITable {

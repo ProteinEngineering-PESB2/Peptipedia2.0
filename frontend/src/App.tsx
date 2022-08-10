@@ -23,6 +23,7 @@ import PeptideDetail from "./pages/peptipe_detail";
 import Team from "./pages/Team"
 import HowToCite from "./pages/HowToCite";
 import NotFound from "./pages/NotFound";
+import StructuralPrediction from "./pages/StructuralPrediction";
 
 export default function App() {
   const theme = createTheme();
@@ -56,6 +57,7 @@ export default function App() {
               <Route path="/pfam" element={<Pfam />} loading />
               <Route path="/gene-ontology" element={<GeneOntology />} loading />
               <Route path="/frequency" element={<Frequency />} loading />
+              <Route path="/structural-prediction" element={<StructuralPrediction/>} loading/>
               <Route
                 path="/physicochemical"
                 element={<Physicochemical />}
