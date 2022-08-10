@@ -70,4 +70,28 @@ export const checkbox_list: ICheckbox[] = [
     id: EnumCheckbox.DIGITAL_SIGNAL_PROCESSING,
     title: "Digital Signal Processing",
   },
+  {
+    id: EnumCheckbox.SS3,
+    title: "SS3",
+  },
+  {
+    id: EnumCheckbox.SS8,
+    title: "SS8"
+  },
+  {
+    id: EnumCheckbox.ACC,
+    title: "ACC"
+  },
+  {
+    id: EnumCheckbox.TM2,
+    title: "TM2"
+  },
+  {
+    id: EnumCheckbox.TM8,
+    title: "TMI"
+  },
+  {
+    id: EnumCheckbox.DISO,
+    title: "DISO"
+  }
 ];

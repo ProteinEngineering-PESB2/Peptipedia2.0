@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link } from "@mui/material";
 import { ITable } from "../utils/interfaces";
 import { InitialValueTable } from "../utils/initial_values";
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export default function useGetAllActivities() {
   const [tableActivitiies, setTableActivities] =
@@ -117,21 +118,22 @@ export default function useGetAllActivities() {
     for (let i = 0; i < res.data.data.length; i++) {
       if (res.data.data[i].length === 3) {
         const parcial_data = [
+          res.data.data[i][1],
+          res.data.data[i][2],
           <Link
             onClick={() =>
               getSpecificActivity(res.data.data[i][0], res.data.data[i][1])
             }
             sx={{ textDecoration: "none", cursor: "pointer" }}
           >
-            {res.data.data[i][1]}
+            <EqualizerIcon />
           </Link>,
-          res.data.data[i][2],
         ];
         new_data.push(parcial_data);
       }
     }
 
-    setTableActivities({ columns: ["activity", "peptides"], data: new_data });
+    setTableActivities({ columns: ["activity", "peptides", "Options"], data: new_data });
     setLoadingTableActivities(false);
   };
 

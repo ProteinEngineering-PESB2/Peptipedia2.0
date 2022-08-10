@@ -71,7 +71,11 @@ export default function Database() {
                         size: 15,
                       },
                     }}
-                    config={{ responsive: true, displayModeBar: false }}
+                    config={{
+                      responsive: true,
+                      displayModeBar: true,
+                      autosizable: true,
+                    }}
                     useResizeHandler={true}
                     style={{ width: "100%", height: "100%" }}
                   />

@@ -20,4 +20,10 @@ export enum EnumCheckbox {
   ONE_HOT_ENCODING = "one_hot_encoding",
   PHYSICOCHEMICAL_PROPERTIES = "physicochemical_properties",
   DIGITAL_SIGNAL_PROCESSING = "digital_signal_processing",
+  SS3 = "ss3",
+  SS8 = "ss8",
+  ACC = "acc",
+  TM2 = "tm2",
+  TM8 = "tm8",
+  DISO = "diso",
 }

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material";
-import { encodings } from "../utils/encodings";
+import { encodings, encodingsForDistances } from "../utils/encodings";
 
-export const useSelectEncoding= () => {
+export const useSelectEncoding = () => {
   const [selectedEncoding, setSelectedEncoding] = useState<string>(
     encodings[0].value
   );
@@ -15,5 +15,7 @@ export const useSelectEncoding= () => {
     selectedEncoding,
     handleChangeSelectedEncoding,
     encodings,
+    encodingsForDistances,
+    setSelectedEncoding
   };
 };

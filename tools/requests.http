@@ -61,9 +61,9 @@ POST {{api}}/phisicochemical/
 Content-Type: application/json
 
 {
-    "data": ">sp|P40337|VHL_HUMAN von Hippel-Lindau disease tumor suppressor OS=Homo sapiens OX=9606 GN=VHL PE=1 SV=2\nMPRRAENWDEAE",
+    "data": ">sequence_0\nADFTGTGGT",
     "options": {
-        "length": 0,
+        "length": 1,
         "molecular_weight": 1,
         "isoelectric_point": 1,
         "charge_density": 1,

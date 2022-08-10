@@ -14,3 +14,14 @@ export const encodings: IItemSelect[] = [
     value: "digital_signal_processing",
   },
 ];
+
+export const encodingsForDistances: IItemSelect[] = [
+  {
+    title: "Physicochemical Properties",
+    value: "phisicochemical_properties",
+  },
+  {
+    title: "Digital Signal Processing",
+    value: "digital_signal_processing",
+  },
+];

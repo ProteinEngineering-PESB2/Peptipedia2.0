@@ -8,7 +8,7 @@ import useLoadingComponent from "../hooks/useLoadingComponent";
 import { IDataClustering } from "../utils/interfaces";
 
 export default function Clustering() {
-  const [result, setResult] = useState<IDataClustering | null>(null);
+  const [result, setResult] = useState<any>(null);
   useHandleSection({ section: "clustering" });
   useLoadingComponent();
 

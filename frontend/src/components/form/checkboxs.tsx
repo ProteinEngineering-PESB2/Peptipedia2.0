@@ -47,6 +47,12 @@ export default function Checkboxs({ data, setData, selectedCheckboxs }: Props) {
       return data.checkboxs.physicochemical_properties;
     if (id === EnumCheckbox.DIGITAL_SIGNAL_PROCESSING)
       return data.checkboxs.digital_signal_processing;
+    if (id === EnumCheckbox.SS3) return data.checkboxs.ss3;
+    if (id === EnumCheckbox.SS8) return data.checkboxs.ss8;
+    if (id === EnumCheckbox.ACC) return data.checkboxs.acc;
+    if (id === EnumCheckbox.TM2) return data.checkboxs.tm2;
+    if (id === EnumCheckbox.TM8) return data.checkboxs.tm8;
+    if (id === EnumCheckbox.DISO) return data.checkboxs.diso;
   };
 
   return (

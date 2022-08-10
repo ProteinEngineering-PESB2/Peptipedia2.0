@@ -1,9 +1,21 @@
 import { Grid } from "@mui/material";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import toast from "react-hot-toast";
-import { parserFormDataWithOptions } from "../../helpers/parserFormData";
+import {
+  parserFormDataWithOptions,
+  parserFormDataWithoutOptions,
+} from "../../helpers/parserFormData";
 import { useSelectAffinityClustering } from "../../hooks/useSelectAffinityClustering";
 import { useSelectAlgorithmClustering } from "../../hooks/useSelectAlgorithmClustering";
+import useSelectClusteringDistance from "../../hooks/useSelectClusteringDistance";
+import useSelectClusteringType from "../../hooks/useSelectClusteringType";
+import useSelectedFilterTypeClustering from "../../hooks/useSelectedFilterTypeClustering";
 import { useSelectEncoding } from "../../hooks/useSelectEncoding";
 import { useSelectLinkageClustering } from "../../hooks/useSelectLinkageClustering";
 import { useSelectProperty } from "../../hooks/useSelectProperty";
@@ -55,8 +67,28 @@ export default function ClusteringForm({ setResult }: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
-  const { encodings, selectedEncoding, handleChangeSelectedEncoding } =
-    useSelectEncoding();
+  const {
+    clustering_types,
+    handleChangeSelectClusteringType,
+    selectedClusteringType,
+  } = useSelectClusteringType();
+  const {
+    clustering_distances,
+    handleChangeSelectClusteringDistance,
+    selectedClusteringDistance,
+  } = useSelectClusteringDistance();
+  const {
+    filter_types_clustering,
+    handleChangeSelectFilterTypeClustering,
+    selectedFilterTypeClustering,
+  } = useSelectedFilterTypeClustering();
+  const {
+    encodings,
+    encodingsForDistances,
+    selectedEncoding,
+    handleChangeSelectedEncoding,
+    setSelectedEncoding,
+  } = useSelectEncoding();
   const { algorithms, selectedAlgorithm, handleChangeSelectedAlgorithm } =
     useSelectAlgorithmClustering();
   const { properties, selectedProperty, handleChangeSelectedProperty } =
@@ -71,45 +103,75 @@ export default function ClusteringForm({ setResult }: Props) {
   const { minClusterSize, handleChangeMinClusterSize } =
     useTextFieldMinClusterSize();
 
+  useEffect(() => {
+    if (selectedClusteringType === "graph_clustering_distances")
+      setSelectedEncoding(encodingsForDistances[0].value);
+  }, [selectedClusteringType]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setOpenBackdrop(true);
     setResult(null);
 
-    let params = {};
-    if (selectedAlgorithm === "kmeans" || selectedAlgorithm === "birch") {
-      params = {
-        k_value: parseFloat(kvalue),
+    let postData = null;
+    let url = "";
+
+    if (selectedClusteringType === "unsupervised_learning") {
+      url = "/api/clustering/";
+
+      let params = {};
+      if (selectedAlgorithm === "kmeans" || selectedAlgorithm === "birch") {
+        params = {
+          k_value: parseFloat(kvalue),
+        };
+      }
+
+      if (selectedAlgorithm === "agglomerative") {
+        params = {
+          k_value: parseFloat(kvalue),
+          linkage: selectedLinkage,
+          affinity: selectedAffinity,
+        };
+      }
+
+      if (selectedAlgorithm === "optics") {
+        params = {
+          min_samples: parseFloat(minSamples),
+          xi: parseFloat(xi),
+          min_cluster_size: parseFloat(minClusterSize),
+        };
+      }
+
+      const options = {
+        encoding: selectedEncoding,
+        selected_property: selectedProperty,
+        algorithm: selectedAlgorithm,
+        params: params,
       };
+
+      postData = parserFormDataWithOptions(data, options);
     }
 
-    if (selectedAlgorithm === "agglomerative") {
-      params = {
-        k_value: parseFloat(kvalue),
-        linkage: selectedLinkage,
-        affinity: selectedAffinity,
-      };
+    if (selectedClusteringType === "graph_clustering_alignments") {
+      url = "/api/alignment_clustering/";
+      postData = parserFormDataWithoutOptions(data);
     }
 
-    if (selectedAlgorithm === "optics") {
-      params = {
-        min_samples: parseFloat(minSamples),
-        xi: parseFloat(xi),
-        min_cluster_size: parseFloat(minClusterSize),
+    if (selectedClusteringType === "graph_clustering_distances") {
+      url = "/api/distance_clustering/";
+
+      const options = {
+        encoding: selectedEncoding,
+        selected_property: selectedProperty,
+        distance: selectedClusteringDistance,
+        filter_type: selectedFilterTypeClustering,
       };
+
+      postData = parserFormDataWithOptions(data, options);
     }
-
-    const options = {
-      encoding: selectedEncoding,
-      selected_property: selectedProperty,
-      algorithm: selectedAlgorithm,
-      params: params,
-    };
-
-    const postData = parserFormDataWithOptions(data, options);
 
     try {
-      const { data } = await requestPost({ url: "/api/clustering/", postData });
+      const { data } = await requestPost({ url: url, postData });
 
       if (data.status === "error") {
         toast.error(data.description);
@@ -119,7 +181,7 @@ export default function ClusteringForm({ setResult }: Props) {
           toast.error(result.description);
           setResult(null);
         } else {
-          setResult(result);
+          setResult({ ...result, clustering_type: selectedClusteringType });
         }
       }
 
@@ -146,87 +208,128 @@ export default function ClusteringForm({ setResult }: Props) {
           <Grid container spacing={2} marginTop={0}>
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
               <SelectComponent
-                items={encodings}
-                title="Encoding Type"
-                value={selectedEncoding}
-                handleChange={handleChangeSelectedEncoding}
+                items={clustering_types}
+                title="Clustering Type"
+                value={selectedClusteringType}
+                handleChange={handleChangeSelectClusteringType}
               />
             </Grid>
-            {selectedEncoding !== "one_hot_encoding" && (
+            {selectedClusteringType !== "graph_clustering_alignments" && (
               <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
                 <SelectComponent
-                  items={properties}
-                  title="Property"
-                  value={selectedProperty}
-                  handleChange={handleChangeSelectedProperty}
-                />
-              </Grid>
-            )}
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-              <SelectComponent
-                items={algorithms}
-                title="Algorithm"
-                value={selectedAlgorithm}
-                handleChange={handleChangeSelectedAlgorithm}
-              />
-            </Grid>
-            {(selectedAlgorithm === "kmeans" ||
-              selectedAlgorithm === "birch" ||
-              selectedAlgorithm === "agglomerative") && (
-              <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                <TextFieldComponent
-                  title="K-Value"
-                  value={kvalue}
-                  handleChange={handleChangeKValue}
-                />
-              </Grid>
-            )}
-            {selectedAlgorithm === "agglomerative" && (
-              <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                <SelectComponent
-                  items={linkages}
-                  title="Linkage"
-                  value={selectedLinkage}
-                  handleChange={handleChangeSelectedLinkage}
-                />
-              </Grid>
-            )}
-            {selectedAlgorithm === "agglomerative" && (
-              <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                <SelectComponent
-                  items={affinities}
-                  title="Affinity"
-                  value={
-                    selectedLinkage === "ward" ? "euclidean" : selectedAffinity
+                  items={
+                    selectedClusteringType === "graph_clustering_distances"
+                      ? encodingsForDistances
+                      : encodings
                   }
-                  handleChange={handleChangeSelectedAffinity}
-                  disabled={selectedLinkage === "ward" ? true : false}
+                  title="Encoding Type"
+                  value={selectedEncoding}
+                  handleChange={handleChangeSelectedEncoding}
                 />
               </Grid>
             )}
-            {selectedAlgorithm === "optics" && (
+            {selectedEncoding !== "one_hot_encoding" &&
+              selectedClusteringType !== "graph_clustering_alignments" && (
+                <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                  <SelectComponent
+                    items={properties}
+                    title="Property"
+                    value={selectedProperty}
+                    handleChange={handleChangeSelectedProperty}
+                  />
+                </Grid>
+              )}
+            {selectedClusteringType === "graph_clustering_distances" && (
               <>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <TextFieldComponent
-                    title="Xi"
-                    value={xi}
-                    handleChange={handleChangeXi}
+                  <SelectComponent
+                    items={clustering_distances}
+                    title="Distance Type"
+                    value={selectedClusteringDistance}
+                    handleChange={handleChangeSelectClusteringDistance}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <TextFieldComponent
-                    title="Min Samples"
-                    value={minSamples}
-                    handleChange={handleChangeMinSamples}
+                  <SelectComponent
+                    items={filter_types_clustering}
+                    title="Filter Type"
+                    value={selectedFilterTypeClustering}
+                    handleChange={handleChangeSelectFilterTypeClustering}
                   />
                 </Grid>
+              </>
+            )}
+            {selectedClusteringType === "unsupervised_learning" && (
+              <>
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <TextFieldComponent
-                    title="Min Cluster Size"
-                    value={minClusterSize}
-                    handleChange={handleChangeMinClusterSize}
+                  <SelectComponent
+                    items={algorithms}
+                    title="Algorithm"
+                    value={selectedAlgorithm}
+                    handleChange={handleChangeSelectedAlgorithm}
                   />
                 </Grid>
+                {(selectedAlgorithm === "kmeans" ||
+                  selectedAlgorithm === "birch" ||
+                  selectedAlgorithm === "agglomerative") && (
+                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                    <TextFieldComponent
+                      title="K-Value"
+                      value={kvalue}
+                      handleChange={handleChangeKValue}
+                    />
+                  </Grid>
+                )}
+                {selectedAlgorithm === "agglomerative" && (
+                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                    <SelectComponent
+                      items={linkages}
+                      title="Linkage"
+                      value={selectedLinkage}
+                      handleChange={handleChangeSelectedLinkage}
+                    />
+                  </Grid>
+                )}
+                {selectedAlgorithm === "agglomerative" && (
+                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                    <SelectComponent
+                      items={affinities}
+                      title="Affinity"
+                      value={
+                        selectedLinkage === "ward"
+                          ? "euclidean"
+                          : selectedAffinity
+                      }
+                      handleChange={handleChangeSelectedAffinity}
+                      disabled={selectedLinkage === "ward" ? true : false}
+                    />
+                  </Grid>
+                )}
+                {selectedAlgorithm === "optics" && (
+                  <>
+                    <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                      <TextFieldComponent
+                        title="Xi"
+                        value={xi}
+                        handleChange={handleChangeXi}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                      <TextFieldComponent
+                        title="Min Samples"
+                        value={minSamples}
+                        handleChange={handleChangeMinSamples}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                      <TextFieldComponent
+                        title="Min Cluster Size"
+                        value={minClusterSize}
+                        handleChange={handleChangeMinClusterSize}
+                      />
+                    </Grid>
+                  </>
+                )}
               </>
             )}
           </Grid>

@@ -4,7 +4,7 @@ import { useSequenceAutocompleteFrequency } from "../../hooks/useSequencesAutoco
 import { IDataFrequency, IDataSummary } from "../../utils/interfaces";
 import BarChart from "../charts/bar_chart";
 import AutocompleteComponent from "../form/autocomplete_component";
-import Plot from "react-plotly.js"
+import Plot from "react-plotly.js";
 
 interface Props {
   result: IDataFrequency[];
@@ -74,8 +74,9 @@ export default function FrequencyContent({ result, summary }: Props) {
                 barmode: "group",
               }}
               config={{
-                displayModeBar: false,
+                displayModeBar: true,
                 responsive: true,
+                autosizable: true,
               }}
               useResizeHandler
               className="w-full h-full"

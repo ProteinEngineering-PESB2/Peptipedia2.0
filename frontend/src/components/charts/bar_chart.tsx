@@ -29,8 +29,9 @@ export default function BarChart({ x, y, title }: Props) {
         },
       }}
       config={{
-        displayModeBar: false,
+        displayModeBar: true,
         responsive: true,
+        autosizable: true
       }}
       useResizeHandler
       className="w-full h-full"
