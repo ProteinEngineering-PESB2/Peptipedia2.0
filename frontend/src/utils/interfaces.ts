@@ -109,6 +109,7 @@ export interface IItemSelect {
 }
 
 export interface IDataClustering {
+  clustering_type: string;
   encoding_path: string;
   is_normal: boolean;
   performance: {

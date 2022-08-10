@@ -1,5 +1,5 @@
 import { EnumFileType } from "../utils/enums";
-import { PostData, ICheckboxs } from "../utils/interfaces";
+import { PostData } from "../utils/interfaces";
 
 export const parserFormDataWithoutOptions = (data: PostData): any => {
   if (data.fileType === EnumFileType.TEXT) {
