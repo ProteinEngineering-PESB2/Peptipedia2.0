@@ -1,32 +1,28 @@
 """Distance clustering module"""
 import json
 from random import random
+import multiprocessing as mp
 import numpy as np
 from scipy.spatial import distance
 from joblib import Parallel, delayed
 import pandas as pd
-import community as community_louvain
-import networkx as nx
-import multiprocessing as mp
-
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_physicochemical_properties,
 )
-from peptipedia.modules.utils import ConfigTool
 
-class DistanceClustering(ConfigTool):
+from peptipedia.modules.clustering_methods.graph_clustering import GraphClustering
+
+class DistanceClustering(GraphClustering):
+    """Distance Clustering class"""
     def __init__(self, data, options, is_file, config):
-        super().__init__("clustering", data, config, is_file)
-        self.is_file = is_file
-        self.config = config
+        super().__init__(data, is_file, config)
         static_folder = config["folders"]["static_folder"]
         rand_number = str(round(random() * 10**20))
         self.dataset_encoded_path = f"{static_folder}/{rand_number}.csv"
         self.options = options
         self.dataset_encoded = None
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
-        self.graph_data = nx.Graph()
         self.cores = mp.cpu_count()
 
     def __process_encoding_stage(self):
@@ -52,14 +48,15 @@ class DistanceClustering(ConfigTool):
             )
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()
-            
         self.dataset_encoded.reset_index(drop=True, inplace=True)
 
     def __get_vector(self, index, dataset, column_ignore):
+        """Ignore a column"""
         row = [dataset[value][index] for value in dataset.columns if value != column_ignore]
         return np.array(row)
 
     def __estimated_distance(self, vector1, vector2, type_distance):
+        """Estimate one vs one distance"""
         distance_value = None
         if type_distance == "euclidean":
             distance_value = np.linalg.norm(vector1 - vector2)
@@ -82,14 +79,15 @@ class DistanceClustering(ConfigTool):
         return distance_value
 
     def __estimated_distance_one_vs_rest(self, index, dataset, column_ignore, type_distance):
+        """Estimate one vs all distances"""
         vector_target = self.__get_vector(index, dataset, column_ignore)
         distance_to_vector = []
-        index_value = dataset[column_ignore][index]
+        index_value = dataset[column_ignore][index].split(" ")[0]
 
         for j in range(len(dataset)):
             if index != j:
                 vector2 = self.__get_vector(j, dataset, column_ignore)
-                id_value2 = dataset[column_ignore][j]
+                id_value2 = dataset[column_ignore][j].split(" ")[0]
                 distance_value = self.__estimated_distance(vector_target, vector2, type_distance)
                 distance_to_vector.append([index_value, id_value2, distance_value])
 
@@ -109,74 +107,14 @@ class DistanceClustering(ConfigTool):
 
         self.df_data_distance = pd.DataFrame(data_values, columns=['id_1', 'id_2', 'distance'])
 
-    def __filter(self, filter_type):
-        """obtener cuartiles para filtro y filtramos"""
-        q_filter = None
-        if filter_type == "nearest":
-            q_filter = np.quantile(self.df_data_distance['distance'], .25)
-            filter_data = self.df_data_distance.loc[self.df_data_distance['distance'] <= q_filter]
-        elif filter_type == "farthest":
-            q_filter = np.quantile(self.df_data_distance['distance'], .75)
-            filter_data = self.df_data_distance.loc[self.df_data_distance['distance'] >= q_filter]
-
-        #filtrar
-        self.filter_data = filter_data.reset_index(drop=True)
-
-    def __create_graph(self):
-        #generar grafo
-        id_list1 = self.filter_data['id_1'].to_list()
-        id_list2 = self.filter_data['id_2'].to_list()
-
-        #cargar nodos
-        id_nodes = list(set(id_list1 + id_list2))
-        for node in id_nodes:
-            self.graph_data.add_node(node)
-
-        #cargar aristas
-        for i in range(len(self.filter_data)):
-            self.graph_data.add_edge(self.filter_data['id_1'][i],
-                self.filter_data['id_2'][i],
-                weigth=self.filter_data['distance'][i]
-            )
-
-    def __louvain_modularity(self): 
-        """Apply louvain and get modularity"""
-        self.partition = community_louvain.best_partition(self.graph_data)
-        self.modularity_value = community_louvain.modularity(self.partition, self.graph_data)
-
-    def __get_groups(self):
-        """Get groups"""
-        matrix_group = []
-        for element in self.partition:
-            row = [element, self.partition[element]]
-            matrix_group.append(row)
-
-        self.results = pd.DataFrame(matrix_group, columns=['id', 'label'])
-
-    def __parse_response(self):
-        response = {}
-        response.update({"status": "success"})
-        counts = self.results.label.value_counts()
-        counts = [
-            {
-                "category": int(count),
-                "value": int(counts[count]),
-                "percentage": (int(counts[count]) * 100 / counts.sum()).round(3),
-            }
-            for count in list(counts.index)
-        ]
-        response.update({"data": json.loads(self.results.to_json(orient="records"))})
-        response.update({"resume": counts})
-        response.update({"performance": {
-            "Modularity": self.modularity_value
-        }})
-        return response
 
     def run_process(self):
+        """Run all distance clustering process"""
         self.__process_encoding_stage()
         self.__calculate_distance()
-        self.__filter(self.options["filter_type"])
-        self.__create_graph()
-        self.__louvain_modularity()
-        self.__get_groups()
-        return self.__parse_response()
+        self.filter(self.options["filter_type"])
+        self.create_graph()
+        self.louvain_modularity()
+        self.get_groups()
+        response = self.parse_response()
+        return response

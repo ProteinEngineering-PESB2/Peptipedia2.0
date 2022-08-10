@@ -39,7 +39,7 @@ def apply_msa():
     check = msa.check
     if check["status"] == "error":
         return check
-    result = msa.execute_clustalo()
+    result = msa.run_process()
     return {"result": result}
 
 

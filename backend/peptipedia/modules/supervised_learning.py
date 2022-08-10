@@ -11,7 +11,6 @@ from sklearn.preprocessing import (
     StandardScaler,
 )
 
-from peptipedia.modules.clustering_methods.transformation_data import transformer
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_one_hot,

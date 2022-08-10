@@ -43,7 +43,6 @@ def api_clustering():
     result = clustering_object.process_by_options()
     return {"result": result}
 
-<<<<<<< HEAD
 @machine_learning_blueprint.route("/alignment_clustering/", methods=["POST"])
 def api_alignment_clustering():
     """It performs clustering from a fasta file or text"""
@@ -65,9 +64,6 @@ def api_distance_clustering():
         return check
     result = clustering_object.run_process()
     return {"result": result}
-=======
->>>>>>> a43bbbc838e246c507c7ace34738ba1dff447d45
-
 @machine_learning_blueprint.route("/pca/", methods=["POST"])
 def api_pca():
     """It performs a PCA from a stored dataframe"""
