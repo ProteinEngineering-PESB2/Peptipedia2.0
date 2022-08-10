@@ -7,9 +7,10 @@ from joblib import Parallel, delayed
 import pandas as pd
 import community as community_louvain
 import networkx as nx
+import multiprocessing as mp
+
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
-    run_one_hot,
     run_physicochemical_properties,
 )
 from peptipedia.modules.utils import ConfigTool
@@ -26,6 +27,7 @@ class DistanceClustering(ConfigTool):
         self.dataset_encoded = None
         self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
         self.graph_data = nx.Graph()
+        self.cores = mp.cpu_count()
 
     def __process_encoding_stage(self):
         """Encode sequences using selected method"""
@@ -33,16 +35,12 @@ class DistanceClustering(ConfigTool):
             self.data = self.create_df(file.read())
         encoding_option = self.options["encoding"]
 
-        if encoding_option == "one_hot_encoding":
-            one_hot_encoding = run_one_hot.RunOneHotEncoding(self.data)
-            self.dataset_encoded = one_hot_encoding.run_parallel_encoding()
-
-        elif encoding_option == "phisicochemical_properties":
+        if encoding_option == "phisicochemical_properties":
             physicochemical_encoding = (
                 run_physicochemical_properties.RunPhysicochemicalProperties(
                     self.data,
                     self.options["selected_property"],
-                    self.path_config_aaindex_encoder,
+                    self.path_config_aaindex_encoder
                 )
             )
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
@@ -54,14 +52,14 @@ class DistanceClustering(ConfigTool):
             )
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()
+            
+        self.dataset_encoded.reset_index(drop=True, inplace=True)
 
     def __get_vector(self, index, dataset, column_ignore):
         row = [dataset[value][index] for value in dataset.columns if value != column_ignore]
-        return row
+        return np.array(row)
 
     def __estimated_distance(self, vector1, vector2, type_distance):
-        vector1 = np.array(vector1)
-        vector2 = np.array(vector2)
         distance_value = None
         if type_distance == "euclidean":
             distance_value = np.linalg.norm(vector1 - vector2)
@@ -85,7 +83,6 @@ class DistanceClustering(ConfigTool):
 
     def __estimated_distance_one_vs_rest(self, index, dataset, column_ignore, type_distance):
         vector_target = self.__get_vector(index, dataset, column_ignore)
-
         distance_to_vector = []
         index_value = dataset[column_ignore][index]
 
@@ -100,7 +97,7 @@ class DistanceClustering(ConfigTool):
     
     def __calculate_distance(self):
         """calculo de distancia entre todas las secuencias"""
-        cores = 12#definir...
+        cores = self.cores
         data_distance = Parallel(n_jobs=cores, require='sharedmem')(
             delayed(self.__estimated_distance_one_vs_rest)(i,
                 self.dataset_encoded , 'id',
@@ -123,12 +120,12 @@ class DistanceClustering(ConfigTool):
             filter_data = self.df_data_distance.loc[self.df_data_distance['distance'] >= q_filter]
 
         #filtrar
-        self.filter_data = filter_data.reset_index()
-        
+        self.filter_data = filter_data.reset_index(drop=True)
+
     def __create_graph(self):
         #generar grafo
-        id_list1 = self.filter_data['id_1']
-        id_list2 = self.filter_data['id_2']
+        id_list1 = self.filter_data['id_1'].to_list()
+        id_list2 = self.filter_data['id_2'].to_list()
 
         #cargar nodos
         id_nodes = list(set(id_list1 + id_list2))
