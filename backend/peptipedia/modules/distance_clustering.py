@@ -1,5 +1,4 @@
 """Distance clustering module"""
-import json
 from random import random
 import multiprocessing as mp
 import numpy as np
@@ -92,7 +91,7 @@ class DistanceClustering(GraphClustering):
                 distance_to_vector.append([index_value, id_value2, distance_value])
 
         return distance_to_vector
-    
+
     def __calculate_distance(self):
         """calculo de distancia entre todas las secuencias"""
         cores = self.cores

@@ -82,6 +82,22 @@ Content-Type: application/json
 {
     "data": ">NP_000542.1 von Hippel-Lindau disease tumor suppressor isoform 1 [Homo sapiens\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEP"
 }
+
+###
+POST {{api}}/structural_analysis/
+Content-Type: application/json
+
+{
+    "data": ">NP_000542.1 von Hippel-Lindau disease tumor suppressor isoform 1 [Homo sapiens\nMPRRAENWDEAEVGAEEAGVEEYGPEEDGGEESGAEESGPEESGPEELGAEEEMEAGRPRPVLRSVNSREPSQVIFCNRSPRVVLPVWLNFDGEP",
+    "options": {
+        "ss3": 1,
+        "ss8": 1,
+        "acc": 0,
+        "tm2": 1,
+        "tm8": 1,
+        "diso": 1
+    }
+}
 ###
 POST {{api}}/frequency/
 Content-Type: application/json

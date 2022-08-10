@@ -9,7 +9,6 @@ from peptipedia.modules.utils import ConfigTool
 
 class BlastAlignment(ConfigTool):
     """Alignment class, it performs a blast+ function for to align against Peptipedia Database"""
-
     def __init__(self, data, is_file, config):
         super().__init__("blast", data, config, is_file)
         alignment_folder = config["folders"]["alignments_folder"]

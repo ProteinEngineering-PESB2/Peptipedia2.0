@@ -6,6 +6,7 @@ from flask import Blueprint, request
 from peptipedia.modules.alignment_module import BlastAlignment
 from peptipedia.modules.gene_ontology import GeneOntology
 from peptipedia.modules.msa_module import MultipleSequenceAlignment
+from peptipedia.modules.structural_characterization import StructuralCharacterization
 from peptipedia.modules.pfam_domain import Pfam
 from peptipedia.modules.utils import Interface
 
@@ -40,6 +41,17 @@ def apply_msa():
     if check["status"] == "error":
         return check
     result = msa.run_process()
+    return {"result": result}
+
+@bioinfo_tools_blueprint.route("/structural_analysis/", methods=["POST"])
+def apply_structural_analysis():
+    """Structural analysis route"""
+    data, options, is_file = Interface(request).parse_with_options()
+    structural = StructuralCharacterization(data, options, is_file, config)
+    check = structural.check
+    if check["status"] == "error":
+        return check
+    result = structural.run_process()
     return {"result": result}
 
 
