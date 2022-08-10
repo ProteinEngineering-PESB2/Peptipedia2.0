@@ -1,0 +1,25 @@
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          permanent: true
+  websecure:
+    address: :443
+    http2:
+      maxConcurrentStreams: 100
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedbydefault: false
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email:
+      dnsChallenge:
+        provider: cloudflare
+      storage: /letsencrypt/acme.json

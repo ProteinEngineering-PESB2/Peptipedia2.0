@@ -4,13 +4,14 @@ from random import random
 import pandas as pd
 from joblib import dump
 from sklearn.preprocessing import (
-    MinMaxScaler,
-    StandardScaler,
     MaxAbsScaler,
+    MinMaxScaler,
+    QuantileTransformer,
     RobustScaler,
-    QuantileTransformer
+    StandardScaler,
 )
 
+from peptipedia.modules.clustering_methods.transformation_data import transformer
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_one_hot,
@@ -23,10 +24,9 @@ from peptipedia.modules.clustering_methods.transformation_data import Transforme
 
 class SupervisedLearning(ConfigTool):
     """Supervised Learning class"""
+
     def __init__(self, data, options, is_file, config):
-        super().__init__(
-            "supervised_learning", data, config, is_file, is_fasta=False
-        )
+        super().__init__("supervised_learning", data, config, is_file, is_fasta=False)
         static_folder = config["folders"]["static_folder"]
         rand_number = str(round(random() * 10**20))
         self.dataset_encoded_path = f"{static_folder}/{rand_number}.csv"
@@ -141,8 +141,8 @@ class SupervisedLearning(ConfigTool):
     def pca(self):
         """Apply pca"""
         pca_result = self.transformer.apply_kernel_pca(
-                self.dataset_encoded, self.kernel
-            )
+            self.dataset_encoded, self.kernel
+        )
         self.dataset_encoded = pd.DataFrame(data=pca_result, columns=["P_0", "P_1"])
 
     def preprocess(self):

@@ -4,10 +4,7 @@ import { IDataPhysichochemical } from "../../utils/interfaces";
 import DataTable from "../datatable";
 
 const env = import.meta.env;
-// const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://localhost:8001";
-const backendURL = env.PROD
-  ? env.VITE_BACKEND_BASEURL
-  : "http://45.7.231.127:8001";
+const backendURL = env.PROD ? env.VITE_BACKEND_BASEURL : "http://localhost:8001";
 
 interface Props {
   result: IDataPhysichochemical[];

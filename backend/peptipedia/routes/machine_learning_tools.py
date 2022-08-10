@@ -43,6 +43,7 @@ def api_clustering():
     result = clustering_object.process_by_options()
     return {"result": result}
 
+<<<<<<< HEAD
 @machine_learning_blueprint.route("/alignment_clustering/", methods=["POST"])
 def api_alignment_clustering():
     """It performs clustering from a fasta file or text"""
@@ -64,6 +65,8 @@ def api_distance_clustering():
         return check
     result = clustering_object.run_process()
     return {"result": result}
+=======
+>>>>>>> a43bbbc838e246c507c7ace34738ba1dff447d45
 
 @machine_learning_blueprint.route("/pca/", methods=["POST"])
 def api_pca():
@@ -71,6 +74,7 @@ def api_pca():
     pca = PCA(request.json["params"], config["folders"]["static_folder"])
     result, path = pca.apply_pca()
     return {"result": result, "path": path}
+
 
 @machine_learning_blueprint.route("/supervised_learning/", methods=["POST"])
 def api_supervised_learning():

@@ -42,7 +42,7 @@ ARG HMMER_VERSION
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends -y \
-    curl build-essential cpio
+	curl build-essential cpio
 
 COPY --from=compile /work /work
 WORKDIR /work
@@ -60,7 +60,7 @@ RUN cp -r PfamScan /usr/local/share
 RUN PFAMSCAN_DIR=/usr/local/share/PfamScan && \
 	find ${PFAMSCAN_DIR} -type f -exec chmod 644 {} + && \
 	find ${PFAMSCAN_DIR} -type d -exec chmod 755 {} + && \
-    chmod +x ${PFAMSCAN_DIR}/pfam_scan.pl && \
+	chmod +x ${PFAMSCAN_DIR}/pfam_scan.pl && \
 	ln -s ${PFAMSCAN_DIR}/pfam_scan.pl /usr/local/bin/
 # Instalación de dependencias de Perl
 RUN cpan Moose && \
@@ -103,7 +103,8 @@ ENV BLASTDB="/databases/blastdb" \
 	PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}"
 
 COPY ./peptipedia /app/peptipedia
+COPY ./conf/gunicorn.conf.py /app/
 WORKDIR /app
 
 # Ejecución de la api
-CMD ["sh","-c", "gunicorn peptipedia.wsgi:app -b 0.0.0.0 -w 4"]
+CMD ["sh","-c", "gunicorn peptipedia.wsgi:app -c gunicorn.conf.py"]

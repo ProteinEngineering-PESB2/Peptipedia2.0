@@ -1,8 +1,9 @@
 FROM node
 
-ENV NODE_ENV="development"
+ENV NODE_ENV=development
 
 WORKDIR /app
+
 COPY ./ .
 RUN rm -fr node_modules
 

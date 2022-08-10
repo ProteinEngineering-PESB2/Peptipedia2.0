@@ -1,8 +1,10 @@
 """Fasta convertor module"""
 from random import random
 
+
 class FastaConvertor:
     """Fasta convertor class"""
+
     def __init__(self, static, text, limit):
         self.text = text
         self.limit = limit
@@ -59,6 +61,6 @@ class FastaConvertor:
 
     def save_file(self):
         """Save file in specified path"""
-        with open(self.fasta_path, "w", encoding = "utf-8") as file:
+        with open(self.fasta_path, "w", encoding="utf-8") as file:
             file.write(self.fasta_text)
         return self.fasta_path

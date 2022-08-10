@@ -5,8 +5,10 @@ from collections import defaultdict
 import pandas as pd
 from sqlalchemy import create_engine, text
 
+
 class Database:
     """Database class"""
+
     def __init__(self, config):
         # Config connection
         user = config["database"]["user"]
@@ -198,7 +200,7 @@ class Database:
             f"""select sequence
             from peptide
             where idpeptide = {idpeptide}""",
-            con=self.conn
+            con=self.conn,
         )
         return json.loads(data.to_json(orient="records"))[0]["sequence"]
 
@@ -209,7 +211,7 @@ class Database:
             from peptide_has_activity pha
             join activity act on pha.idactivity = act.idactivity
             and pha.idpeptide = {idpeptide}""",
-            con=self.conn
+            con=self.conn,
         )
         return {
             "status": "success",
@@ -223,7 +225,7 @@ class Database:
             f"""select patent
             from patent
             where patent.idpeptide = {idpeptide}""",
-            con=self.conn
+            con=self.conn,
         )
         return {
             "status": "success",
@@ -253,7 +255,7 @@ class Database:
             f"""select structure as uniprot
             from peptide
             where idpeptide = {idpeptide};""",
-            con=self.conn
+            con=self.conn,
         )
         try:
             return str(data.values[0][0])
@@ -269,7 +271,7 @@ class Database:
             join db on db.id_db = phdhi.id_db
             group by db.name, db.app_url
             order by peptides desc""",
-            con=self.conn
+            con=self.conn,
         )
         return {
             "status": "success",
@@ -285,7 +287,7 @@ class Database:
             join activity act on act.idactivity = pha.idactivity
             group by act."name", act.idactivity
             order by Peptides desc;""",
-            con=self.conn
+            con=self.conn,
         )
         return {
             "status": "success",
