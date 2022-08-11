@@ -1,32 +1,15 @@
-import Plot from "react-plotly.js"
+import Plot from "react-plotly.js";
 
 interface Props {
   title: string;
-  x_min: number;
-  x_max: number;
-  y_min: number;
-  y_max: number;
   data: any[];
 }
 
-export default function ScatterPlot({
-  title,
-  x_min,
-  x_max,
-  y_min,
-  y_max,
-  data,
-}: Props) {
+export default function ScatterPlot({ title, data }: Props) {
   return (
     <Plot
       data={data}
       layout={{
-        xaxis: {
-          range: [x_min, x_max],
-        },
-        yaxis: {
-          range: [y_min, y_max],
-        },
         title: title,
         autosize: true,
         height: 600,
@@ -38,13 +21,13 @@ export default function ScatterPlot({
           pad: 4,
         },
         font: {
-          size: 15
-        }
+          size: 15,
+        },
       }}
       config={{
         responsive: true,
         displayModeBar: true,
-        autosizable: true
+        autosizable: true,
       }}
       useResizeHandler
       className="w-full h-full"

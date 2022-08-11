@@ -181,6 +181,7 @@ export default function ClusteringForm({ setResult }: Props) {
           toast.error(result.description);
           setResult(null);
         } else {
+          console.log(result)
           setResult({ ...result, clustering_type: selectedClusteringType });
         }
       }

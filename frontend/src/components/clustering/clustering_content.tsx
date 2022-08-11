@@ -44,13 +44,12 @@ export default function ClusteringContent({ result }: Props) {
   const { table } = useDataTableClustering({ result });
   const { selectedKernel, handleChangeSelectedKernel, kernels } =
     useSelectLinearClustering();
-  const { handlePCA, pathPCA, dataScatter, xmin, xmax, ymin, ymax } =
-    usePCAClustering({
-      is_normal: result.is_normal,
-      kernel: selectedKernel,
-      path: result.encoding_path,
-      setOpenBackdropPCA,
-    });
+  const { handlePCA, pathPCA, dataScatter } = usePCAClustering({
+    is_normal: result.is_normal,
+    kernel: selectedKernel,
+    path: result.encoding_path,
+    setOpenBackdropPCA,
+  });
   const [widthGraph, setWithGraph] = useState(1050);
   const [heightGraph, setHeighGraph] = useState(700);
   const [nodeSize, setNodeSize] = useState(500);
@@ -188,7 +187,7 @@ export default function ClusteringContent({ result }: Props) {
         <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <PieChart
             labels={result.resume.labels}
-            values={result.resume.value}
+            values={result.resume.values}
             markers={result.resume.marker}
           />
         </Paper>
@@ -278,14 +277,7 @@ export default function ClusteringContent({ result }: Props) {
                   marginTop={3}
                   sx={{ display: "flex", flexDirection: "column" }}
                 >
-                  <ScatterPlot
-                    title="Clustering with PCA"
-                    data={dataScatter}
-                    x_min={xmin}
-                    x_max={xmax}
-                    y_min={ymin}
-                    y_max={ymax}
-                  />
+                  <ScatterPlot title="Clustering with PCA" data={dataScatter} />
                 </Box>
                 <Box marginTop={3}>
                   <ButtonDownloadPrimary
