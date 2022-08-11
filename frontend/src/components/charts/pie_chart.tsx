@@ -1,11 +1,14 @@
+import { useEffect } from "react";
 import Plot from "react-plotly.js";
 
 interface Props {
   values: number[];
   labels: string[];
+  markers?: Object
 }
 
-export default function PieChart({ values, labels }: Props) {
+export default function PieChart({ values, labels, markers }: Props) {
+
   return (
     <Plot
       data={[
@@ -16,6 +19,7 @@ export default function PieChart({ values, labels }: Props) {
           textinfo: "label+percent",
           textposition: "outside",
           automargin: true,
+          marker: markers
         },
       ]}
       layout={{

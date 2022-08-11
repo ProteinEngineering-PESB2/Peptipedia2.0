@@ -9,11 +9,11 @@ import {
   TableBody,
   Button,
   Grid,
+  TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useDataTableClustering } from "../../hooks/useDataTableClustering";
 import { usePCAClustering } from "../../hooks/usePCAClustering";
-import { usePieChartClustering } from "../../hooks/usePieChartClustering";
 import { useSelectLinearClustering } from "../../hooks/useSelectLinearClustering";
 import BackdropComponent from "../backdrop_component";
 import ButtonDownloadPrimary from "../button_download_primary";
@@ -28,24 +28,6 @@ interface Props {
 }
 
 // the graph configuration, just override the ones you need
-const myConfig = {
-  node: {
-    size: 500,
-    highlightStrokeColor: "blue",
-    fontSize: 10
-  },
-  link: {
-    highlightColor: "lightblue",
-  },
-  d3: {
-    linkLength: 200,
-    gravity: -200,
-    linkStrength: 2
-  },
-  height: 1000,
-  width: 1050,
-};
-
 const onClickNode = function (nodeId: any) {
   window.alert(`Clicked node ${nodeId}`);
 };
@@ -60,7 +42,6 @@ export default function ClusteringContent({ result }: Props) {
   const [percentage, setPercentage] = useState<number>(0);
 
   const { table } = useDataTableClustering({ result });
-  const { values, labels } = usePieChartClustering({ result });
   const { selectedKernel, handleChangeSelectedKernel, kernels } =
     useSelectLinearClustering();
   const { handlePCA, pathPCA, dataScatter, xmin, xmax, ymin, ymax } =
@@ -70,6 +51,27 @@ export default function ClusteringContent({ result }: Props) {
       path: result.encoding_path,
       setOpenBackdropPCA,
     });
+  const [widthGraph, setWithGraph] = useState(1050);
+  const [heightGraph, setHeighGraph] = useState(700);
+  const [nodeSize, setNodeSize] = useState(500);
+
+  const myConfig = {
+    node: {
+      size: nodeSize ? nodeSize : 50,
+      highlightStrokeColor: "blue",
+      fontSize: 10,
+    },
+    link: {
+      highlightColor: "lightblue",
+    },
+    d3: {
+      linkLength: 200,
+      gravity: -200,
+      linkStrength: 2,
+    },
+    height: heightGraph ? heightGraph : 700,
+    width: widthGraph ? widthGraph : 1050,
+  };
 
   return (
     <>
@@ -184,7 +186,11 @@ export default function ClusteringContent({ result }: Props) {
       )}
       <Box marginTop={3} boxShadow={4}>
         <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-          <PieChart labels={labels} values={values} />
+          <PieChart
+            labels={result.resume.labels}
+            values={result.resume.value}
+            markers={result.resume.marker}
+          />
         </Paper>
       </Box>
       {result.clustering_type !== "unsupervised_learning" && (
@@ -196,6 +202,38 @@ export default function ClusteringContent({ result }: Props) {
               flexDirection: "column",
             }}
           >
+            <Grid container spacing={2} marginBottom={3}>
+              <Grid item xl={2} lg={2} md={3} sm={4} xs={12}>
+                <TextField
+                  label="Width"
+                  type="number"
+                  value={widthGraph}
+                  onChange={(e) => setWithGraph(parseInt(e.target.value))}
+                />
+              </Grid>
+              <Grid item xl={2} lg={2} md={3} sm={4} xs={12}>
+                <TextField
+                  label="Height"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={heightGraph}
+                  onChange={(e) => setHeighGraph(parseInt(e.target.value))}
+                />
+              </Grid>
+              <Grid item xl={2} lg={2} md={3} sm={4} xs={12}>
+                <TextField
+                  label="Node Size"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={nodeSize}
+                  onChange={(e) => setNodeSize(parseInt(e.target.value))}
+                />
+              </Grid>
+            </Grid>
             <Graph
               id="graph-id" // id is mandatory
               data={result.graph}
