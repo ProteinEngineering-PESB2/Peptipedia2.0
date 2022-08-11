@@ -4,10 +4,11 @@ import { IOneAlign } from "../utils/interfaces";
 
 interface Props {
   sequences: IOneAlign[];
+  color?: boolean
 }
 
-export default function ProSeqViewer({ sequences }: Props) {
-  useProSeqViewer({ sequences });
+export default function ProSeqViewer({ sequences, color }: Props) {
+  useProSeqViewer({ sequences, color });
 
   return (
     <>

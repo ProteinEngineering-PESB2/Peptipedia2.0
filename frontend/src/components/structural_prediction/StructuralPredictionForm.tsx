@@ -1,13 +1,21 @@
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
 import { parserFormDataWithOptions } from "../../helpers/parserFormData";
+import { requestPost } from "../../services/api";
 import { InitialValuePostData } from "../../utils/initial_values";
 import { PostData } from "../../utils/interfaces";
+import BackdropComponent from "../backdrop_component";
 import ButtonRun from "../form/button_run";
 import Checkboxs from "../form/checkboxs";
 import FormContainer from "../form/form_container";
 import InputFileFasta from "../form/input_file_fasta";
 import InputFileType from "../form/input_file_type";
 import TextFieldFasta from "../form/text_field_fasta";
+
+interface Props {
+  setResult: Dispatch<SetStateAction<any>>;
+  setSequenceValue: Dispatch<SetStateAction<string>>
+}
 
 const placeholder = `
 >as:U24-ctenitoxin-Pn1a|sp:P84032|10 Toxin from venom of the spider Phoneutria nigriventer with unknown molecular target
@@ -26,11 +34,14 @@ MNTATGFIVLLVLATVLGCIEAGESHVREDAMGRARRGACTPTGQPCPYNESCCSGSCQEQLNENGHTVKRCV
 MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCSQSCTFKENENANTVKRCD
 `;
 
-function StructuralPredictionForm() {
+function StructuralPredictionForm({ setResult, setSequenceValue }: Props) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setResult([]);
+    setOpenBackdrop(true);
 
     const options = {
       ss3: data.checkboxs.ss3 ? 1 : 0,
@@ -43,11 +54,31 @@ function StructuralPredictionForm() {
 
     const postData = parserFormDataWithOptions(data, options);
 
-    console.log(postData);
+    try {
+      const { data } = await requestPost({
+        url: "/api/structural_analysis/",
+        postData,
+      });
+
+      if (data.status === "error") {
+        toast.error(data.description);
+      } else {
+        const { result } = data;
+        setResult(result);
+        setSequenceValue(result[0].id)
+      }
+
+      setOpenBackdrop(false);
+    } catch (error) {
+      toast.error("Server error");
+      setResult([]);
+      setOpenBackdrop(false);
+    }
   };
 
   return (
     <>
+      <BackdropComponent open={openBackdrop} />
       <FormContainer markdownText="">
         <form onSubmit={handleSubmit}>
           <InputFileType data={data} setData={setData} />

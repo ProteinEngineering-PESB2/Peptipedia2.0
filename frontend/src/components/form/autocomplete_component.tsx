@@ -1,5 +1,5 @@
 import { FormControl, Autocomplete, TextField } from "@mui/material";
-import { Dispatch, SetStateAction, SyntheticEvent } from "react";
+import { SyntheticEvent } from "react";
 
 interface Props {
   options: string[];

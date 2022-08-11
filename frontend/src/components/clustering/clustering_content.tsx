@@ -21,10 +21,38 @@ import PieChart from "../charts/pie_chart";
 import ScatterPlot from "../charts/scatter_plot";
 import DataTable from "../datatable";
 import SelectComponent from "../form/select_component";
+import { Graph } from "react-d3-graph";
 
 interface Props {
   result: any;
 }
+
+// the graph configuration, just override the ones you need
+const myConfig = {
+  node: {
+    size: 500,
+    highlightStrokeColor: "blue",
+    fontSize: 10
+  },
+  link: {
+    highlightColor: "lightblue",
+  },
+  d3: {
+    linkLength: 200,
+    gravity: -200,
+    linkStrength: 2
+  },
+  height: 1000,
+  width: 1050,
+};
+
+const onClickNode = function (nodeId: any) {
+  window.alert(`Clicked node ${nodeId}`);
+};
+
+const onClickLink = function (source: any, target: any) {
+  window.alert(`Clicked link between ${source} and ${target}`);
+};
 
 export default function ClusteringContent({ result }: Props) {
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
@@ -159,6 +187,25 @@ export default function ClusteringContent({ result }: Props) {
           <PieChart labels={labels} values={values} />
         </Paper>
       </Box>
+      {result.clustering_type !== "unsupervised_learning" && (
+        <Box marginTop={3} boxShadow={4}>
+          <Paper
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Graph
+              id="graph-id" // id is mandatory
+              data={result.graph}
+              config={myConfig}
+              onClickNode={onClickNode}
+              onClickLink={onClickLink}
+            />
+          </Paper>
+        </Box>
+      )}
       {result.clustering_type === "unsupervised_learning" && (
         <Box marginTop={3} boxShadow={4}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>

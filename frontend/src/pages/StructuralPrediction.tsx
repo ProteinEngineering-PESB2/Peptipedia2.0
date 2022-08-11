@@ -1,41 +1,20 @@
+import { SelectChangeEvent } from "@mui/material";
+import { useState } from "react";
 import Layout from "../components/layout";
 import SectionTitle from "../components/section_title";
+import StructuralPredictionContent from "../components/structural_prediction/StructuralPredictionContent";
 import StructuralPredictionForm from "../components/structural_prediction/StructuralPredictionForm";
 import { useHandleSection } from "../hooks/useHandleSection";
 import useLoadingComponent from "../hooks/useLoadingComponent";
-import { Graph } from "react-d3-graph";
-import { Box } from "@mui/material";
-
-const data = {
-  nodes: [{ id: "Harry" }, { id: "Sally" }, { id: "Alice" }],
-  links: [
-    { source: "Harry", target: "Sally" },
-    { source: "Harry", target: "Alice" },
-  ],
-};
-
-// the graph configuration, just override the ones you need
-const myConfig = {
-  nodeHighlightBehavior: true,
-  node: {
-    color: "lightgreen",
-    size: 500,
-    highlightStrokeColor: "blue",
-  },
-  link: {
-    highlightColor: "lightblue",
-  },
-};
-
-const onClickNode = function (nodeId: any) {
-  window.alert(`Clicked node ${nodeId}`);
-};
-
-const onClickLink = function (source: any, target: any) {
-  window.alert(`Clicked link between ${source} and ${target}`);
-};
 
 function StructuralPrediction() {
+  const [result, setResult] = useState<any>([]);
+  const [sequenceValue, setSequenceValue] = useState("");
+
+  const handleChangeSequenceValue = (e: SelectChangeEvent) => {
+    setSequenceValue(e.target.value as string);
+  };
+
   useLoadingComponent();
   useHandleSection({ section: "structural_prediction" });
 
@@ -47,17 +26,18 @@ function StructuralPrediction() {
           description="Falta una descripción"
         />
 
-        <StructuralPredictionForm />
-
-        <Box>
-        <Graph
-          id="graph-id" // id is mandatory
-          data={data}
-          config={myConfig}
-          onClickNode={onClickNode}
-          onClickLink={onClickLink}
+        <StructuralPredictionForm
+          setResult={setResult}
+          setSequenceValue={setSequenceValue}
         />
-        </Box>
+
+        {result && result.length > 0 && sequenceValue !== "" && (
+          <StructuralPredictionContent
+            result={result}
+            handleChangeSequenceValue={handleChangeSequenceValue}
+            sequenceValue={sequenceValue}
+          />
+        )}
       </>
     </Layout>
   );
