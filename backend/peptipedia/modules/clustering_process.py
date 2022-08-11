@@ -3,7 +3,9 @@ import json
 from random import random
 
 from scipy import stats
-
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import to_hex
 from peptipedia.modules.clustering_methods import (
     clustering_algorithm,
     evaluation_performances,
@@ -18,7 +20,6 @@ from peptipedia.modules.utils import ConfigTool
 
 class Clustering(ConfigTool):
     """Clustering process class"""
-
     def __init__(self, data, options, is_file, config):
         super().__init__("clustering", data, config, is_file)
         static_folder = config["folders"]["static_folder"]
@@ -149,15 +150,21 @@ class Clustering(ConfigTool):
                 self.dataset_encoded[["id", "label"]].to_json(orient="records")
             )
             response.update({"status": "success"})
-            counts = self.dataset_encoded.label.value_counts()
-            counts = [
-                {
-                    "category": int(count),
-                    "value": int(counts[count]),
-                    "percentage": (int(counts[count]) * 100 / counts.sum()).round(3),
+            self.__generate_colors()
+            grouped_df = self.dataset_encoded.groupby(by = ["label", "color"],
+                as_index = False).count()
+            print(grouped_df)
+            grouped_df.label = grouped_df.label.astype(str)
+            grouped_df["prefix"] = "Cluster "
+            grouped_df.label = grouped_df.prefix + grouped_df.label
+            response.update({"resume": {
+                "labels": [str(a) for a in grouped_df.label.tolist()],
+                "values": grouped_df.id.tolist(),
+                "marker": {
+                    "colors": grouped_df.color.tolist()
+                    }
                 }
-                for count in list(counts.index)
-            ]
+            })
             response.update({"data": data_json})
             performances = evaluation_process.get_metrics(
                 dataset_to_cluster, clustering_process.labels
@@ -175,7 +182,6 @@ class Clustering(ConfigTool):
                     "dalvies": performances[2],
                 }
             response.update({"performance": performances_dict})
-            response.update({"resume": counts})
             response.update({"encoding_path": self.dataset_encoded_path})
             response.update({"is_normal": self.verify_normality()})
 
@@ -201,3 +207,14 @@ class Clustering(ConfigTool):
             if pvalue > 0.05:
                 is_normal = False
         return is_normal
+
+    def __generate_colors(self):
+        """Generate colors using matplotlib"""
+        all_clusters = self.dataset_encoded.label.unique()
+        all_clusters.sort()
+        linspace = np.linspace(0.1, 0.9, len(all_clusters))
+        hsv = plt.get_cmap('hsv')
+        rgba_colors = hsv(linspace)
+        for cluster, color in zip(all_clusters, rgba_colors):
+            hex_value = to_hex([color[0], color[1], color[2], color[3]], keep_alpha=True)
+            self.dataset_encoded.loc[self.dataset_encoded.label == cluster, "color"] = hex_value

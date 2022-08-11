@@ -5,6 +5,8 @@ import networkx as nx
 import pandas as pd
 import numpy as np
 from peptipedia.modules.utils import ConfigTool
+import matplotlib.pyplot as plt
+from matplotlib.colors import to_hex
 
 class GraphClustering(ConfigTool):
     """Graph clustering class"""
@@ -63,26 +65,46 @@ class GraphClustering(ConfigTool):
 
     def parse_response(self):
         """Create response json"""
+        self.__generate_colors()
         response = {}
         response.update({"status": "success"})
-        counts = self.results.label.value_counts()
-        counts = [
-            {
-                "category": int(count),
-                "value": int(counts[count]),
-                "percentage": (int(counts[count]) * 100 / counts.sum()).round(3),
-            }
-            for count in list(counts.index)
-        ]
         response.update({"data": json.loads(self.results.to_json(orient="records"))})
-        response.update({"resume": counts})
         response.update({"performance": {
             "Modularity": self.modularity_value
         }})
+        self.filter_data.rename(columns = {
+            "id_1": "source",
+            "id_2": "target"
+        }, inplace=True)
+        self.filter_data.drop(["distance"], axis = 1, inplace=True)
+        grouped_df = self.results.groupby(by = ["label", "color"],
+            as_index = False).count()
+        grouped_df.label = grouped_df.label.astype(str)
+        grouped_df["prefix"] = "Cluster "
+        grouped_df.label = grouped_df.prefix + grouped_df.label
+        response.update({"resume": {
+            "labels": [str(a) for a in grouped_df.label.tolist()],
+            "values": grouped_df.id.tolist(),
+            "marker": {
+                "colors": grouped_df.color.tolist()
+                }
+            }
+        })
         response.update({
             "graph":{
                 "nodes": json.loads(self.results.to_json(orient="records")),
-                "links": json.loads(self.df_data_distance.to_json(orient="records"))
+                "links": json.loads(self.filter_data.to_json(orient="records"))
             }
         })
         return response
+
+    def __generate_colors(self):
+        """Generate colors using matplotlib"""
+        all_clusters = self.results.label.unique()
+        all_clusters.sort()
+        linspace = np.linspace(0.1, 0.9, len(all_clusters))
+        hsv = plt.get_cmap('hsv')
+        rgba_colors = hsv(linspace)
+        for cluster, color in zip(all_clusters, rgba_colors):
+            hex_value = to_hex([color[0], color[1], color[2], color[3]], keep_alpha=True)
+            self.results.loc[self.results.label == cluster, "color"] = hex_value

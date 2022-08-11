@@ -47,11 +47,14 @@ def apply_msa():
 def apply_structural_analysis():
     """Structural analysis route"""
     data, options, is_file = Interface(request).parse_with_options()
-    structural = StructuralCharacterization(data, options, is_file, config)
-    check = structural.check
-    if check["status"] == "error":
-        return check
-    result = structural.run_process()
+    data_array = [">"+a for a in data.split(">")[1:]]
+    result = []
+    for data in data_array:
+        structural = StructuralCharacterization(data, options, is_file, config)
+        check = structural.check
+        if check["status"] == "error":
+            return check
+        result.append(structural.run_process())
     return {"result": result}
 
 
