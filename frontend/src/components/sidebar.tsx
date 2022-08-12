@@ -20,6 +20,7 @@ import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import TranslateIcon from "@mui/icons-material/Translate";
 import GroupsIcon from "@mui/icons-material/Groups";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
+import BuildIcon from "@mui/icons-material/Build";
 import { useAppContext } from "../hooks/useAppContext";
 
 export default function Sidebar() {
@@ -240,6 +241,43 @@ export default function Sidebar() {
               }}
             >
               Convert to Fasta
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
+      <List
+        sx={{
+          p: "2px",
+          backgroundColor:
+            section === "sequence-generator" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+          marginTop: 1
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "sequence-generator" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/sequence-generator")}
+        >
+          <BuildIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight:
+                  section === "sequence-generator" ? "bold" : "normal",
+              }}
+            >
+              Sequence Generator
             </Typography>
           </ListItemText>
         </ListItemButton>

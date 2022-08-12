@@ -20,10 +20,11 @@ import SupervisedLearning from "./pages/supervised_learning";
 import { Routes, Route } from "react-router-loading";
 import LoadingComponent from "./components/Loading";
 import PeptideDetail from "./pages/peptipe_detail";
-import Team from "./pages/Team"
+import Team from "./pages/Team";
 import HowToCite from "./pages/HowToCite";
 import NotFound from "./pages/NotFound";
 import StructuralPrediction from "./pages/StructuralPrediction";
+import SequencesGenerator from "./pages/SequencesGenerator";
 
 export default function App() {
   const theme = createTheme();
@@ -35,8 +36,8 @@ export default function App() {
           <BrowserRouter>
             <Routes loadingScreen={LoadingComponent}>
               <Route path="/" element={<Home />} loading />
-              <Route path="/team" element={<Team/>} loading/>
-              <Route path="/how-to-cite" element={<HowToCite/>} loading/>
+              <Route path="/team" element={<Team />} loading />
+              <Route path="/how-to-cite" element={<HowToCite />} loading />
               <Route path="/database" element={<Database />} loading />
               <Route
                 path="/advanced-search"
@@ -49,6 +50,11 @@ export default function App() {
                 loading
               />
               <Route
+                path="/sequence-generator"
+                element={<SequencesGenerator />}
+                loading
+              />
+              <Route
                 path="/alignment-sequence"
                 element={<AlignmentSequence />}
                 loading
@@ -57,7 +63,11 @@ export default function App() {
               <Route path="/pfam" element={<Pfam />} loading />
               <Route path="/gene-ontology" element={<GeneOntology />} loading />
               <Route path="/frequency" element={<Frequency />} loading />
-              <Route path="/structural-prediction" element={<StructuralPrediction/>} loading/>
+              <Route
+                path="/structural-prediction"
+                element={<StructuralPrediction />}
+                loading
+              />
               <Route
                 path="/physicochemical"
                 element={<Physicochemical />}
@@ -70,7 +80,11 @@ export default function App() {
                 element={<SupervisedLearning />}
                 loading
               />
-              <Route path="/peptide/:peptideId" element={<PeptideDetail/>} loading/>
+              <Route
+                path="/peptide/:peptideId"
+                element={<PeptideDetail />}
+                loading
+              />
               <Route path="*" element={<NotFound />} loading />
             </Routes>
           </BrowserRouter>
