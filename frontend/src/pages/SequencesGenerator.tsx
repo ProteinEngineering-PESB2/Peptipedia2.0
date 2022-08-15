@@ -9,153 +9,68 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import BackdropComponent from "../components/backdrop_component";
+import { useEffect, useState } from "react";
 import Layout from "../components/layout";
 import SectionTitle from "../components/section_title";
 import { useHandleSection } from "../hooks/useHandleSection";
 import useLoadingComponent from "../hooks/useLoadingComponent";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-
-const aminoacids = [
-  "A",
-  "R",
-  "N",
-  "D",
-  "C",
-  "Q",
-  "E",
-  "G",
-  "H",
-  "I",
-  "L",
-  "K",
-  "M",
-  "F",
-  "P",
-  "S",
-  "T",
-  "W",
-  "Y",
-  "V",
-];
+import { sequences_model } from "./sequences_model";
+import toast from "react-hot-toast";
 
 function SequencesGenerator() {
-  useHandleSection({ section: "sequence-generator" });
+  console.log(sequences_model.length);
+  useHandleSection({ section: "test-sequences" });
   useLoadingComponent();
 
-  const [sequencesAmount, setSequencesAmount] = useState<string>("100");
-  const [sequencesLength, setSequencesLength] = useState<string>("50");
+  const [sequencesAmount, setSequencesAmount] = useState("20");
   const [sequences, setSequences] = useState<string>("");
-  const [loading, setLoading] = useState(false);
   const [colorIcon, setColorIcon] = useState(false);
 
-  const generateSequences = () => {
-    setLoading(true);
-
-    const amount = parseInt(sequencesAmount);
-    const length = parseInt(sequencesLength);
-
-    if (!amount || !length) {
-      toast.error("Enter valid values", {
-        duration: 5000,
-      });
-
-      setSequencesAmount("100");
-      setSequencesLength("50");
-      setLoading(false);
-      setSequences("");
-
+  const generate_sequences = () => {
+    if (parseInt(sequencesAmount) < 1 || parseInt(sequencesAmount) > 20) {
+      toast.error("Quantity admitted between 1 and 20.");
+      setSequencesAmount("20");
       return;
     }
 
-    if (amount < 1) {
-      toast.error(
-        "The number of sequences must be greater than or equal to 1.",
-        {
-          duration: 5000,
-        }
-      );
-
-      setSequencesAmount("100");
-      setSequencesLength("50");
-      setLoading(false);
-      setSequences("");
-
-      return;
+    let new_sequence = "";
+    for (let i = 0; i < parseInt(sequencesAmount); i++) {
+      new_sequence += sequences_model[i] + "\n";
     }
-
-    if (length > 50 || length < 1) {
-      toast.error("The length should be between 1 and 50.", {
-        duration: 5000,
-      });
-
-      setSequencesAmount("100");
-      setSequencesLength("50");
-      setLoading(false);
-      setSequences("");
-
-      return;
-    }
-
-    let new_sequences = "";
-    for (let i = 0; i < amount; i++) {
-      let generated_sequence = "";
-
-      for (let j = 0; j < length; j++) {
-        const random = Math.floor(Math.random() * aminoacids.length);
-        const random_aminoacid = aminoacids[random];
-        generated_sequence += random_aminoacid;
-      }
-
-      new_sequences += `>sequence_${i + 1}\n${generated_sequence}\n`;
-    }
-
-    setSequences(new_sequences);
-
-    setLoading(false);
+    setSequences(new_sequence);
   };
+
+  useEffect(() => {
+    generate_sequences();
+  }, []);
 
   return (
     <Layout>
       <div>
-        <BackdropComponent open={loading} />
+        <SectionTitle title="Test Sequences" description="" />
 
-        <SectionTitle title="Sequence Generator" description="" />
-
-        <Box marginTop={3}>
-          <Grid container spacing={2}>
-            <Grid item xl={2}>
-              <TextField
-                label="Sequences Amount"
-                value={sequencesAmount}
-                onChange={(e) => setSequencesAmount(e.target.value)}
-              />
-            </Grid>
-            <Grid item xl={2}>
-              <TextField
-                label="Sequences Lenght"
-                value={sequencesLength}
-                onChange={(e) => setSequencesLength(e.target.value)}
-              />
-            </Grid>
-            <Grid item xl={2}>
-              <Button
-                variant="outlined"
-                color="success"
-                sx={{ height: "100%" }}
-                disabled={
-                  sequencesAmount === "" || (sequencesLength === "" && true)
-                }
-                onClick={generateSequences}
-              >
-                Generate
-              </Button>
-            </Grid>
+        <Grid container spacing={2}>
+          <Grid item xl={2}>
+            <TextField
+              title="Sequences Amount"
+              value={sequencesAmount}
+              onChange={(e) => setSequencesAmount(e.target.value)}
+            />
           </Grid>
-        </Box>
+          <Grid item xl={2}>
+            <Button
+              variant="outlined"
+              sx={{ height: "100%" }}
+              color="success"
+              disabled={sequencesAmount === "" ? true : false}
+              onClick={generate_sequences}
+            >
+              Generate
+            </Button>
+          </Grid>
+        </Grid>
 
         <Box marginTop={3}>
           <FilledInput

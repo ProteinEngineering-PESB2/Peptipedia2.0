@@ -249,7 +249,7 @@ export default function Sidebar() {
         sx={{
           p: "2px",
           backgroundColor:
-            section === "sequence-generator" ? "#2962ff" : "#fff",
+            section === "test-sequences" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           "&:hover": {
@@ -262,22 +262,22 @@ export default function Sidebar() {
         <ListItemButton
           disableRipple
           sx={{
-            color: section === "sequence-generator" ? "#fff" : "#000",
+            color: section === "test-sequences" ? "#fff" : "#000",
             "&:hover": {
               color: "#fff",
             },
           }}
-          onClick={() => navigate("/sequence-generator")}
+          onClick={() => navigate("/test-sequences")}
         >
           <BuildIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
                 fontWeight:
-                  section === "sequence-generator" ? "bold" : "normal",
+                  section === "test-sequences" ? "bold" : "normal",
               }}
             >
-              Sequence Generator
+              Test Sequences
             </Typography>
           </ListItemText>
         </ListItemButton>

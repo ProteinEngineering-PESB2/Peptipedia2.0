@@ -50,7 +50,7 @@ export default function App() {
                 loading
               />
               <Route
-                path="/sequence-generator"
+                path="/test-sequences"
                 element={<SequencesGenerator />}
                 loading
               />
