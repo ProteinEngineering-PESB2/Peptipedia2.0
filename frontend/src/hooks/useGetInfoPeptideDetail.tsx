@@ -13,11 +13,11 @@ export interface IDataInfo {
   charge: number;
   charge_density: number;
   sequence: string;
-  aliphatic_index: number
-  aromaticity: number
-  boman_index: number
-  instability_index: number
-  hydrophobic_ratio: number
+  aliphatic_index: number;
+  aromaticity: number;
+  boman_index: number;
+  instability_index: number;
+  hydrophobic_ratio: number;
 }
 
 export default function useGetInfoPeptideDetail({ peptideId }: Props) {
@@ -32,7 +32,7 @@ export default function useGetInfoPeptideDetail({ peptideId }: Props) {
     aromaticity: 0,
     boman_index: 0,
     hydrophobic_ratio: 0,
-    instability_index: 0
+    instability_index: 0,
   });
 
   const getInfoFromPeptide = async () => {
@@ -40,7 +40,7 @@ export default function useGetInfoPeptideDetail({ peptideId }: Props) {
       const { data } = await axios.get(
         `/api/get_info_from_peptide/${peptideId}`
       );
-      console.log(data.result[0])
+      console.log(data.result[0]);
       setDataInfo({
         charge: data.result[0].charge,
         charge_density: data.result[0].charge_density,
@@ -52,7 +52,7 @@ export default function useGetInfoPeptideDetail({ peptideId }: Props) {
         aromaticity: data.result[0].aromaticity,
         boman_index: data.result[0].boman_index,
         hydrophobic_ratio: data.result[0].hydrophobic_ratio,
-        instability_index: data.result[0].instability_index
+        instability_index: data.result[0].instability_index,
       });
     } catch (error) {
       toast.error("Server Error");
@@ -67,7 +67,7 @@ export default function useGetInfoPeptideDetail({ peptideId }: Props) {
         aromaticity: 0,
         boman_index: 0,
         hydrophobic_ratio: 0,
-        instability_index: 0
+        instability_index: 0,
       });
     }
   };
