@@ -158,5 +158,10 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForChargeDensity,
     setLogicOperatorValueForPfam,
     setLogicOperatorValueForSequence,
+    setLogicOperatorValueForAliphaticIndex,
+    setLogicOperatorValueForBomanIndex,
+    setLogicOperatorValueForAromaticity,
+    setLogicOperatorValueForHydrophobicRatio,
+    setLogicOperatorValueForInstabilityIndex,
   };
 }

@@ -20,7 +20,6 @@ import { sequences_model } from "./sequences_model";
 import toast from "react-hot-toast";
 
 function SequencesGenerator() {
-  console.log(sequences_model.length);
   useHandleSection({ section: "test-sequences" });
   useLoadingComponent();
 

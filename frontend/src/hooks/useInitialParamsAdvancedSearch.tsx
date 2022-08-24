@@ -77,7 +77,6 @@ export default function useInitialParamsAdvancedSearch({
     try {
       const { data } = await axios.get("/api/min_max_parameters/");
       setParams(data.result);
-      console.log(data.result);
       setValueLength([data.result.min_length, data.result.max_length]);
       setValueMolecularWeight([
         data.result.min_molecular_weigth,

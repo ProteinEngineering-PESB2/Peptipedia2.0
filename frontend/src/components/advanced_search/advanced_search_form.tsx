@@ -166,6 +166,11 @@ export default function AdvancedSearchForm({
     logicOperatorValueForAromaticity,
     logicOperatorValueForBomanIndex,
     logicOperatorValueForHydrophobicRatio,
+    setLogicOperatorValueForAliphaticIndex,
+    setLogicOperatorValueForAromaticity,
+    setLogicOperatorValueForBomanIndex,
+    setLogicOperatorValueForHydrophobicRatio,
+    setLogicOperatorValueForInstabilityIndex,
   } = useValueLogicOperator();
 
   const { databases } = useGetDatabases();
@@ -244,6 +249,20 @@ export default function AdvancedSearchForm({
       params.min_charge_density,
       params.max_charge_density,
     ]);
+    setValueInstabilityIndex([
+      params.min_instability_index,
+      params.max_instability_index,
+    ]);
+    setValueAromaticity([params.min_aromaticity, params.max_aromaticity]);
+    setValueAliphaticIndex([
+      params.min_aliphatic_index,
+      params.max_aliphatic_index,
+    ]);
+    setValueBomanIndex([params.min_boman_index, params.max_boman_index]);
+    setValueHydrophobicRatio([
+      params.min_hydrophobic_ratio,
+      params.max_hydrophobic_ratio,
+    ]);
     setValueActivity({ label: undefined, value: undefined });
     setValueTaxonomy({ label: undefined, value: undefined });
     setValueDatabase({ label: undefined, value: undefined });
@@ -260,6 +279,11 @@ export default function AdvancedSearchForm({
     setLogicOperatorValueForGeneOntology("AND");
     setLogicOperatorValueForPfam("AND");
     setLogicOperatorValueForSequence("AND");
+    setLogicOperatorValueForInstabilityIndex("AND");
+    setLogicOperatorValueForBomanIndex("AND");
+    setLogicOperatorValueForAromaticity("AND");
+    setLogicOperatorValueForAliphaticIndex("AND");
+    setLogicOperatorValueForHydrophobicRatio("AND");
     setQueryText("");
   };
 
@@ -312,6 +336,16 @@ export default function AdvancedSearchForm({
             selectedOperators.push(logicOperatorValueForCharge);
           if (value === "Charge Density")
             selectedOperators.push(logicOperatorValueForChargeDensity);
+          if (value === "Instability Index")
+            selectedOperators.push(logicOperatorValueForInstabilityIndex);
+          if (value === "Aromaticity")
+            selectedOperators.push(logicOperatorValueForAromaticity);
+          if (value === "Aliphatic Index")
+            selectedOperators.push(logicOperatorValueForAliphaticIndex);
+          if (value === "Boman Index")
+            selectedOperators.push(logicOperatorValueForBomanIndex);
+          if (value === "Hydrophobic Ratio")
+            selectedOperators.push(logicOperatorValueForHydrophobicRatio);
           if (value === "Activity")
             selectedOperators.push(logicOperatorValueForActivity);
           if (value === "Taxonomy")
@@ -383,6 +417,71 @@ export default function AdvancedSearchForm({
           queryWithId += rangeInput(
             value,
             valueChargeDensity,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Instability Index") {
+          query += rangeInput(
+            value,
+            valueInstabilityIndex,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueInstabilityIndex,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Aromaticity") {
+          query += rangeInput(
+            value,
+            valueAromaticity,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueAromaticity,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Aliphatic Index") {
+          query += rangeInput(
+            value,
+            valueAliphaticIndex,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueAliphaticIndex,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Boman Index") {
+          query += rangeInput(value, valueBomanIndex, index, selectedOperators);
+          queryWithId += rangeInput(
+            value,
+            valueAliphaticIndex,
+            index,
+            selectedOperators
+          );
+        }
+        if (value === "Hydrophobic Ratio") {
+          query += rangeInput(
+            value,
+            valueHydrophobicRatio,
+            index,
+            selectedOperators
+          );
+          queryWithId += rangeInput(
+            value,
+            valueHydrophobicRatio,
             index,
             selectedOperators
           );
@@ -800,7 +899,6 @@ export default function AdvancedSearchForm({
                     xs: "100%",
                   },
                   backgroundColor: "#2962ff",
-                  ":hover": { backgroundColor: "#2962ff" },
                   marginTop: 2,
                 }}
                 onClick={onSearch}
