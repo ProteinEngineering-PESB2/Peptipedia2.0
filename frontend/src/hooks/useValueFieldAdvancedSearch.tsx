@@ -17,6 +17,21 @@ export default function useValueFieldAdvancedSearch() {
   const [valueChargeDensity, setValueChargeDensity] = useState<
     number | number[]
   >([20, 100]);
+  const [valueInstabilityIndex, setValueInstabilityIndex] = useState<
+    number | number[]
+  >([20, 100]);
+  const [valueAromaticity, setValueAromaticity] = useState<number | number[]>([
+    20, 100,
+  ]);
+  const [valueAliphaticIndex, setValueAliphaticIndex] = useState<
+    number | number[]
+  >([20, 100]);
+  const [valueBomanIndex, setValueBomanIndex] = useState<number | number[]>([
+    20, 100,
+  ]);
+  const [valueHydrophobicRatio, setValueHydrophobicRatio] = useState<
+    number | number[]
+  >([20, 100]);
   const [valueDatabase, setValueDatabase] = useState<IArrayField>({
     label: undefined,
     value: undefined,
@@ -69,6 +84,41 @@ export default function useValueFieldAdvancedSearch() {
     setValueChargeDensity(newValue);
   };
 
+  const handleChangeValueInstabilityIndex = (
+    e: Event,
+    newValue: number | number[]
+  ) => {
+    setValueInstabilityIndex(newValue);
+  };
+
+  const handleChangeValueAromaticity = (
+    e: Event,
+    newValue: number | number[]
+  ) => {
+    setValueAromaticity(newValue);
+  };
+
+  const handleChangeValueAliphaticIndex = (
+    e: Event,
+    newValue: number | number[]
+  ) => {
+    setValueAliphaticIndex(newValue);
+  };
+
+  const handleChangeValueBomanIndex = (
+    e: Event,
+    newValue: number | number[]
+  ) => {
+    setValueBomanIndex(newValue);
+  };
+
+  const handleChangeValueHydrophobicRatio = (
+    e: Event,
+    newValue: number | number[]
+  ) => {
+    setValueHydrophobicRatio(newValue);
+  };
+
   const handleChangeValueSequence = (e: ChangeEvent<HTMLInputElement>) => {
     setValueSequence(e.target.value);
   };
@@ -102,5 +152,20 @@ export default function useValueFieldAdvancedSearch() {
     setValueCharge,
     setValueChargeDensity,
     setValueSequence,
+    valueInstabilityIndex,
+    handleChangeValueInstabilityIndex,
+    setValueInstabilityIndex,
+    valueAromaticity,
+    handleChangeValueAromaticity,
+    valueAliphaticIndex,
+    handleChangeValueAliphaticIndex,
+    valueBomanIndex,
+    handleChangeValueBomanIndex,
+    valueHydrophobicRatio,
+    handleChangeValueHydrophobicRatio,
+    setValueAromaticity,
+    setValueAliphaticIndex,
+    setValueBomanIndex,
+    setValueHydrophobicRatio,
   };
 }

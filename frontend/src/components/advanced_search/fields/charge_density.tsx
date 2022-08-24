@@ -47,7 +47,7 @@ const ChargeDensityField = ({
           </Grid>
           <Grid item lg={9} xs={8}>
             <FormControl variant="standard" sx={{ width: "100%" }}>
-              <FormLabel id="label-charge-density">ChargeDensity</FormLabel>
+              <FormLabel id="label-charge-density">Charge Density</FormLabel>
               <Slider
                 value={valueChargeDensity}
                 onChange={handleChangeValueChargeDensity}

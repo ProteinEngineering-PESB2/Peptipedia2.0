@@ -42,6 +42,11 @@ import useGetGeneOntologoies from "../../hooks/useGetGeneOntologoies";
 import useInitialParamsAdvancedSearch from "../../hooks/useInitialParamsAdvancedSearch";
 import axios from "axios";
 import toast from "react-hot-toast";
+import InstabilityIndexField from "./fields/InstabilityIndexField";
+import AromaticityField from "./fields/AromaticityField";
+import AliphaticIndexField from "./fields/AliphaticIndexField";
+import BomanIndexField from "./fields/BomanIndexField";
+import HydrophobicRatioField from "./fields/HydrophobicRatioField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -105,6 +110,21 @@ export default function AdvancedSearchForm({
     setValueLength,
     setValueMolecularWeight,
     setValueSequence,
+    handleChangeValueInstabilityIndex,
+    valueInstabilityIndex,
+    setValueInstabilityIndex,
+    handleChangeValueAliphaticIndex,
+    handleChangeValueAromaticity,
+    handleChangeValueBomanIndex,
+    handleChangeValueHydrophobicRatio,
+    valueAliphaticIndex,
+    valueAromaticity,
+    valueBomanIndex,
+    valueHydrophobicRatio,
+    setValueAliphaticIndex,
+    setValueAromaticity,
+    setValueBomanIndex,
+    setValueHydrophobicRatio,
   } = useValueFieldAdvancedSearch();
 
   const {
@@ -136,6 +156,16 @@ export default function AdvancedSearchForm({
     setLogicOperatorValueForMolecularWeight,
     setLogicOperatorValueForPfam,
     setLogicOperatorValueForSequence,
+    handleChangeLogicOperatorInstabilityIndex,
+    logicOperatorValueForInstabilityIndex,
+    handleChangeLogicOperatorAliphaticIndex,
+    handleChangeLogicOperatorAromaticity,
+    handleChangeLogicOperatorBomanIndex,
+    handleChangeLogicOperatorHydrophobicRatio,
+    logicOperatorValueForAliphaticIndex,
+    logicOperatorValueForAromaticity,
+    logicOperatorValueForBomanIndex,
+    logicOperatorValueForHydrophobicRatio,
   } = useValueLogicOperator();
 
   const { databases } = useGetDatabases();
@@ -150,6 +180,11 @@ export default function AdvancedSearchForm({
     setValueIsoelectricPoint,
     setValueLength,
     setValueMolecularWeight,
+    setValueInstabilityIndex,
+    setValueAliphaticIndex,
+    setValueAromaticity,
+    setValueBomanIndex,
+    setValueHydrophobicRatio,
   });
 
   const handleChangeQueryText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -579,7 +614,86 @@ export default function AdvancedSearchForm({
                         params={params}
                       />
                     )}
-
+                    {option === "Instability Index" && (
+                      <InstabilityIndexField
+                        index={index}
+                        params={params}
+                        handleChangeLogicOperatorInstabilityIndex={
+                          handleChangeLogicOperatorInstabilityIndex
+                        }
+                        handleChangeValueInstabilityIndex={
+                          handleChangeValueInstabilityIndex
+                        }
+                        logicOperatorValueForInstabilityIndex={
+                          logicOperatorValueForInstabilityIndex
+                        }
+                        valueInstabilityIndex={valueInstabilityIndex}
+                      />
+                    )}
+                    {option === "Aromaticity" && (
+                      <AromaticityField
+                        handleChangeLogicOperatorAromaticity={
+                          handleChangeLogicOperatorAromaticity
+                        }
+                        handleChangeValueAromaticity={
+                          handleChangeValueAromaticity
+                        }
+                        index={index}
+                        logicOperatorValueForAromaticity={
+                          logicOperatorValueForAromaticity
+                        }
+                        params={params}
+                        valueAromaticity={valueAromaticity}
+                      />
+                    )}
+                    {option === "Aliphatic Index" && (
+                      <AliphaticIndexField
+                        handleChangeLogicOperatorAliphaticIndex={
+                          handleChangeLogicOperatorAliphaticIndex
+                        }
+                        handleChangeValueAliphaticIndex={
+                          handleChangeValueAliphaticIndex
+                        }
+                        index={index}
+                        logicOperatorValueForAliphaticIndex={
+                          logicOperatorValueForAliphaticIndex
+                        }
+                        params={params}
+                        valueAliphaticIndex={valueAliphaticIndex}
+                      />
+                    )}
+                    {option === "Boman Index" && (
+                      <BomanIndexField
+                        handleChangeLogicOperatorBomanIndex={
+                          handleChangeLogicOperatorBomanIndex
+                        }
+                        handleChangeValueBomanIndex={
+                          handleChangeValueBomanIndex
+                        }
+                        index={index}
+                        logicOperatorValueForBomanIndex={
+                          logicOperatorValueForBomanIndex
+                        }
+                        params={params}
+                        valueBomanIndex={valueBomanIndex}
+                      />
+                    )}
+                    {option === "Hydrophobic Ratio" && (
+                      <HydrophobicRatioField
+                        handleChangeLogicOperatorHydrophobicRatio={
+                          handleChangeLogicOperatorHydrophobicRatio
+                        }
+                        handleChangeValueHydrophobicRatio={
+                          handleChangeValueHydrophobicRatio
+                        }
+                        index={index}
+                        logicOperatorValueForHydrophobicRatio={
+                          logicOperatorValueForHydrophobicRatio
+                        }
+                        params={params}
+                        valueHydrophobicRatio={valueHydrophobicRatio}
+                      />
+                    )}
                     {option === "Database" && (
                       <DatabaseField
                         valueDatabase={valueDatabase}

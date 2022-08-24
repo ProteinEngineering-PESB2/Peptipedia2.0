@@ -19,6 +19,24 @@ export default function useValueLogicOperator() {
     logicOperatorValueForChargeDensity,
     setLogicOperatorValueForChargeDensity,
   ] = useState("AND");
+  const [
+    logicOperatorValueForInstabilityIndex,
+    setLogicOperatorValueForInstabilityIndex,
+  ] = useState("AND");
+  const [
+    logicOperatorValueForAromaticity,
+    setLogicOperatorValueForAromaticity,
+  ] = useState("AND");
+  const [
+    logicOperatorValueForAliphaticIndex,
+    setLogicOperatorValueForAliphaticIndex,
+  ] = useState("AND");
+  const [logicOperatorValueForBomanIndex, setLogicOperatorValueForBomanIndex] =
+    useState("AND");
+  const [
+    logicOperatorValueForHydrophobicRatio,
+    setLogicOperatorValueForHydrophobicRatio,
+  ] = useState("AND");
   const [logicOperatorValueForActivity, setLogicOperatorValueForActivity] =
     useState("AND");
   const [logicOperatorValueForTaxonomy, setLogicOperatorValueForTaxonomy] =
@@ -61,6 +79,36 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForChargeDensity(e.target.value);
   };
 
+  const handleChangeLogicOperatorInstabilityIndex = (
+    e: SelectChangeEvent<string>
+  ) => {
+    setLogicOperatorValueForInstabilityIndex(e.target.value);
+  };
+
+  const handleChangeLogicOperatorAromaticity = (
+    e: SelectChangeEvent<string>
+  ) => {
+    setLogicOperatorValueForAromaticity(e.target.value);
+  };
+
+  const handleChangeLogicOperatorAliphaticIndex = (
+    e: SelectChangeEvent<string>
+  ) => {
+    setLogicOperatorValueForAliphaticIndex(e.target.value);
+  };
+
+  const handleChangeLogicOperatorBomanIndex = (
+    e: SelectChangeEvent<string>
+  ) => {
+    setLogicOperatorValueForBomanIndex(e.target.value);
+  };
+
+  const handleChangeLogicOperatorHydrophobicRatio = (
+    e: SelectChangeEvent<string>
+  ) => {
+    setLogicOperatorValueForHydrophobicRatio(e.target.value);
+  };
+
   const handleChangeLogicOperatorPfam = (e: SelectChangeEvent<string>) => {
     setLogicOperatorValueForPfam(e.target.value);
   };
@@ -82,6 +130,16 @@ export default function useValueLogicOperator() {
     handleChangeLogicOperatorIsoelectricPoint,
     handleChangeLogicOperatorCharge,
     handleChangeLogicOperatorChargeDensity,
+    logicOperatorValueForInstabilityIndex,
+    handleChangeLogicOperatorInstabilityIndex,
+    logicOperatorValueForAromaticity,
+    handleChangeLogicOperatorAromaticity,
+    logicOperatorValueForAliphaticIndex,
+    handleChangeLogicOperatorAliphaticIndex,
+    logicOperatorValueForBomanIndex,
+    handleChangeLogicOperatorBomanIndex,
+    logicOperatorValueForHydrophobicRatio,
+    handleChangeLogicOperatorHydrophobicRatio,
     logicOperatorValueForDatabase,
     setLogicOperatorValueForDatabase,
     logicOperatorValueForActivity,
@@ -99,6 +157,6 @@ export default function useValueLogicOperator() {
     setLogicOperatorValueForCharge,
     setLogicOperatorValueForChargeDensity,
     setLogicOperatorValueForPfam,
-    setLogicOperatorValueForSequence
+    setLogicOperatorValueForSequence,
   };
 }
