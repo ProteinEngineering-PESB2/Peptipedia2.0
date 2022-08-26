@@ -25,6 +25,7 @@ import HowToCite from "./pages/HowToCite";
 import NotFound from "./pages/NotFound";
 import StructuralPrediction from "./pages/StructuralPrediction";
 import SequencesGenerator from "./pages/SequencesGenerator";
+import Actividades from "./pages/Actividades";
 
 export default function App() {
   const theme = createTheme();
@@ -85,6 +86,7 @@ export default function App() {
                 element={<PeptideDetail />}
                 loading
               />
+              <Route path="/actividades" element={<Actividades/>} loading/>
               <Route path="*" element={<NotFound />} loading />
             </Routes>
           </BrowserRouter>

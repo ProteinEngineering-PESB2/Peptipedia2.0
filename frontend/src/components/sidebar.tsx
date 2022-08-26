@@ -210,6 +210,43 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "actividades" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "actividades" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/actividades")}
+        >
+          <StorageIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight: section === "actividades" ? "bold" : "normal",
+              }}
+            >
+              Actividades
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
       <ListSubheader>Tools</ListSubheader>
       <List
         sx={{
@@ -248,15 +285,14 @@ export default function Sidebar() {
       <List
         sx={{
           p: "2px",
-          backgroundColor:
-            section === "test-sequences" ? "#2962ff" : "#fff",
+          backgroundColor: section === "test-sequences" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           "&:hover": {
             background: "#2962ff",
             color: "#fff",
           },
-          marginTop: 1
+          marginTop: 1,
         }}
       >
         <ListItemButton
@@ -273,8 +309,7 @@ export default function Sidebar() {
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight:
-                  section === "test-sequences" ? "bold" : "normal",
+                fontWeight: section === "test-sequences" ? "bold" : "normal",
               }}
             >
               Test Sequences
