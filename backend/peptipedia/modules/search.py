@@ -14,61 +14,58 @@ class search:
             "Molecular Weight": "p.molecular_weight",
             "Charge": "p.charge",
             "Isoelectric Point": "p.isoelectric_point",
+            "Instability Index": "p.instability_index",
+            "Aromaticity": "p.aromaticity",
+            "Aliphatic Index": "p.aliphatic_index",
+            "Boman Index": "p.boman_index",
+            "Hydrophobic Ratio": "p.hydrophobic_ratio"
         }
 
     def parse_terms(self, term):
         """Parse query terms"""
+        select = """select p.idpeptide, p.length,
+            p.molecular_weight, p.charge_density, 
+            p.isoelectric_point, p.charge,
+            p.instability_index, p.aromaticity,
+            p.aliphatic_index, p.boman_index,
+            p.hydrophobic_ratio
+            from peptide p"""
+
         if "<=" in term:
             broken_term = term.split("<=")
             min_value = broken_term[0].strip()
             max_value = broken_term[2].strip()
             ff = broken_term[1].strip()
-            phrase = f"""select p.idpeptide, p.length,
-            p.molecular_weight, p.charge_density, 
-            p.isoelectric_point, p.charge from peptide p
-            where {self.transform_terms[ff]} BETWEEN {min_value} and {max_value}"""
+            phrase = f"""{select} where {self.transform_terms[ff]} BETWEEN {min_value} and {max_value}"""
         elif "=" in term:
             value = term.split("=")[1].strip().replace("{", "").replace("}", "")
             ff = term.split("=")[0].strip()
             if "Pfam" in ff:
-                phrase = f"""select p.idpeptide, p.length,
-                p.molecular_weight, p.charge_density, 
-                p.isoelectric_point, p.charge from peptide p
+                phrase = f"""{select}
                 join peptide_has_pfam php
                 on php.idpeptide = p.idpeptide and php.id_pfam = {value}"""
 
             if "Taxonomy" in ff:
-                phrase = f"""select p.idpeptide, p.length,
-                p.molecular_weight, p.charge_density, 
-                p.isoelectric_point, p.charge from peptide p
+                phrase = f"""{select}
                 join peptide_has_taxonomy pht
                 on pht.idpeptide = p.idpeptide and pht.idtaxonomy = {value}"""
 
             if "Gene Ontology" in ff:
-                phrase = f"""select p.idpeptide, p.length,
-                p.molecular_weight, p.charge_density, 
-                p.isoelectric_point, p.charge from peptide p
+                phrase = f"""{select}
                 join peptide_has_go phg
                 on phg.idpeptide = p.idpeptide and phg.id_go = {value}"""
 
             if "Database" in ff:
-                phrase = """select p.idpeptide, p.length,
-                p.molecular_weight, p.charge_density, 
-                p.isoelectric_point, p.charge from peptide p
+                phrase = f"""{select}
                 join peptide_has_db_has_index phdhi
                 on phdhi.idpeptide = p.idpeptide and phdhi.id_db = {value}"""
             if "Activity" in ff:
-                phrase = f"""select p.idpeptide, p.length,
-                p.molecular_weight, p.charge_density,
-                p.isoelectric_point, p.charge from peptide p
+                phrase = f"""{select}
                 join peptide_has_activity pha
                 on pha.idpeptide = p.idpeptide and pha.idactivity = {value}"""
 
             if "Sequence" in ff:
-                phrase = f"""select p.idpeptide, p.length,
-                p.molecular_weight, p.charge_density, 
-                p.isoelectric_point, p.charge from peptide p
-                where p.sequence like '%{value}%'"""
+                phrase = f"""{select} where p.sequence like '%{value}%'"""
         else:
             phrase = ""
         return phrase
@@ -129,6 +126,13 @@ class search:
                 "Density",
                 "Isoelectric",
                 "Point",
+                "Instability",
+                "Index",
+                "Boman",
+                "Aromaticity",
+                "Aliphatic",
+                "Hydrophobic",
+                "Ratio"
             ]:
                 broken[i] = ""
             elif value in [

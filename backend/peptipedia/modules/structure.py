@@ -65,8 +65,8 @@ class Structure:
                 sequence = info[0]["sequence"]
                 data = fasta_text + ">" + idpeptide + "\n" + sequence
                 is_file = False
-                msa = MultipleSequenceAlignment(data, is_file, config)
-                alignment = msa.execute_clustalo()
+                msa = MultipleSequenceAlignment(data, is_file, config, matrix = False)
+                alignment = msa.run_process()["alignment"]
                 equal_res = []
                 similar_res = []
                 different_res = []

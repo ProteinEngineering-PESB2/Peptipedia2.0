@@ -14,15 +14,16 @@ from peptipedia.modules.clustering_methods.graph_clustering import GraphClusteri
 
 class DistanceClustering(GraphClustering):
     """Distance Clustering class"""
-    def __init__(self, data, options, is_file, config):
+    def __init__(self, data, options, is_file, config, db):
         super().__init__(data, is_file, config)
         static_folder = config["folders"]["static_folder"]
         rand_number = str(round(random() * 10**20))
         self.dataset_encoded_path = f"{static_folder}/{rand_number}.csv"
         self.options = options
         self.dataset_encoded = None
-        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
+        #self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
         self.cores = mp.cpu_count()
+        self.df_encoder = db.get_encoder()
 
     def __process_encoding_stage(self):
         """Encode sequences using selected method"""
@@ -35,7 +36,7 @@ class DistanceClustering(GraphClustering):
                 run_physicochemical_properties.RunPhysicochemicalProperties(
                     self.data,
                     self.options["selected_property"],
-                    self.path_config_aaindex_encoder
+                    self.df_encoder
                 )
             )
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
@@ -43,7 +44,7 @@ class DistanceClustering(GraphClustering):
         elif encoding_option == "digital_signal_processing":
             selected_property = self.options["selected_property"]
             fft_encoding = run_fft_encoding.RunFftEncoding(
-                self.data, selected_property, self.path_config_aaindex_encoder
+                self.data, selected_property, self.df_encoder
             )
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()

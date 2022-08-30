@@ -3,6 +3,7 @@ import configparser
 
 from flask import Blueprint, request
 
+from peptipedia.modules.database import Database
 from peptipedia.modules.clustering_process import Clustering
 from peptipedia.modules.alignment_clustering import AlignmentClustering
 from peptipedia.modules.distance_clustering import DistanceClustering
@@ -17,6 +18,8 @@ from peptipedia.modules.utils import Interface
 config = configparser.ConfigParser()
 config.read("config.ini")
 
+db = Database(config)
+
 machine_learning_blueprint = Blueprint("machine_learning_blueprint", __name__)
 
 
@@ -24,7 +27,7 @@ machine_learning_blueprint = Blueprint("machine_learning_blueprint", __name__)
 def apply_encoding():
     """Encode a fasta file or text"""
     data, options, is_file = Interface(request).parse_with_options()
-    code = Encoding(data, options, is_file, config)
+    code = Encoding(data, options, is_file, config, db)
     check = code.check
     if check["status"] == "error":
         return check
@@ -36,7 +39,7 @@ def apply_encoding():
 def api_clustering():
     """It performs clustering from a fasta file or text"""
     data, options, is_file = Interface(request).parse_with_options()
-    clustering_object = Clustering(data, options, is_file, config)
+    clustering_object = Clustering(data, options, is_file, config, db)
     check = clustering_object.check
     if check["status"] == "error":
         return check
@@ -58,7 +61,7 @@ def api_alignment_clustering():
 def api_distance_clustering():
     """It performs clustering from a fasta file or text"""
     data, options, is_file = Interface(request).parse_with_options()
-    clustering_object = DistanceClustering(data, options, is_file, config)
+    clustering_object = DistanceClustering(data, options, is_file, config, db)
     check = clustering_object.check
     if check["status"] == "error":
         return check
@@ -76,7 +79,7 @@ def api_pca():
 def api_supervised_learning():
     """It performs a Supervised learning from a csv file"""
     data, options, is_file = Interface(request).parse_with_options()
-    sl_obj = SupervisedLearning(data, options, is_file, config)
+    sl_obj = SupervisedLearning(data, options, is_file, config, db)
     check = sl_obj.check
     if check["status"] == "error":
         return check

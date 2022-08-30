@@ -14,10 +14,11 @@ from peptipedia.modules.utils import ConfigTool
 
 class MultipleSequenceAlignment(ConfigTool):
     """MSA Class"""
-    def __init__(self, data, is_file, config, config_module = "msa"):
+    def __init__(self, data, is_file, config, config_module = "msa", matrix = True):
         super().__init__(config_module, data, config, is_file)
         static_folder = config["folders"]["static_folder"]
         random_number = str(round(random() * 10**20))
+        self.matrix = matrix
         self.output_aln_file = os.path.realpath(f"{static_folder}/{random_number}.aln")
         self.output_dist_file = self.output_aln_file.replace("aln", "mat")
         self.heatmap_path = self.output_aln_file.replace(".aln", "_heatmap.png")
@@ -25,16 +26,27 @@ class MultipleSequenceAlignment(ConfigTool):
 
     def execute_clustalo(self):
         """Execute clustalo and return alignment, distance matrix and plots"""
-        command = [
-            "clustalo",
-            "-i",
-            self.temp_file_path,
-            "-o",
-            self.output_aln_file,
-            f"--distmat-out={self.output_dist_file}",
-            "--full",
-            "--force",
-        ]
+        if self.matrix:
+            command = [
+                "clustalo",
+                "-i",
+                self.temp_file_path,
+                "-o",
+                self.output_aln_file,
+                f"--distmat-out={self.output_dist_file}",
+                "--full",
+                "--force",
+            ]
+        else:
+            command = [
+                "clustalo",
+                "-i",
+                self.temp_file_path,
+                "-o",
+                self.output_aln_file,
+                "--full",
+                "--force",
+            ]
         subprocess.check_output(command)
 
     def parse_output(self):
@@ -42,9 +54,6 @@ class MultipleSequenceAlignment(ConfigTool):
         with open(self.output_aln_file, "r", encoding="utf-8") as file:
             output_text = file.read()
 
-        distance_table = pd.read_csv(
-            self.output_dist_file, header=None, delimiter=r"\s+", skiprows=1
-        )
         sequences = output_text.split(">")
         data = [seq.split("\n") for seq in sequences]
         data = data[1:]
@@ -59,9 +68,13 @@ class MultipleSequenceAlignment(ConfigTool):
             dictionary["id"] = i + 1
             self.alignment.append(dictionary)
 
-        self.x_labels = distance_table[0].to_list()
-        distance_table.drop([0], axis=1, inplace=True)
-        self.z_values = distance_table.values.tolist()
+        if self.matrix:
+            distance_table = pd.read_csv(
+                self.output_dist_file, header=None, delimiter=r"\s+", skiprows=1
+            )
+            self.x_labels = distance_table[0].to_list()
+            distance_table.drop([0], axis=1, inplace=True)
+            self.z_values = distance_table.values.tolist()
 
     def draw_heatmap(self):
         """Use matplotlib and seaborn for to draw a heatmap of distances"""
@@ -107,13 +120,18 @@ class MultipleSequenceAlignment(ConfigTool):
         """Run MSA functions"""
         self.execute_clustalo()
         self.parse_output()
-        self.draw_heatmap()
-        self.draw_dendrogram()
-        self.delete_file()
+        if self.matrix:
+            self.draw_heatmap()
+            self.draw_dendrogram()
+            self.delete_file()
+            return {
+                "alignment": self.alignment,
+                "output_file": self.output_aln_file,
+                "distances_file": self.output_dist_file,
+                "image_heatmap": self.heatmap_path,
+                "dendrogram": self.dendrogram_path,
+            }
         return {
-            "alignment": self.alignment,
-            "output_file": self.output_aln_file,
-            "distances_file": self.output_dist_file,
-            "image_heatmap": self.heatmap_path,
-            "dendrogram": self.dendrogram_path,
+            "alignment": self.alignment
         }
+        

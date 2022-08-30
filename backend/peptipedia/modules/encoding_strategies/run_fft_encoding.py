@@ -9,9 +9,10 @@ from peptipedia.modules.encoding_strategies.run_physicochemical_properties impor
 
 class RunFftEncoding(RunPhysicochemicalProperties):
     """FFT encoding class"""
-    def __init__(self, dataset, selected_property, path_input_cluster):
-        super().__init__(dataset, selected_property, path_input_cluster)
+    def __init__(self, dataset, selected_property, df_encoder):
+        super().__init__(dataset, selected_property, df_encoder)
         self.df_fft_encoding = None
+        
     def appy_fft(self):
         """Apply fft method"""
         matrix_encoding = []

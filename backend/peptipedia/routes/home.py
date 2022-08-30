@@ -33,3 +33,9 @@ def get_peptides_by_activity():
     """Gets count of peptides by activity"""
     res = db.get_peptides_by_activity()
     return res
+
+@home_blueprint.route("/get_chord_diagram/<by>/<query>", methods = ["GET"])
+def get_chord_diagram(by, query):
+    """Gets a chord matrix from activity parent or level"""
+    res = db.get_chord_diagram(by, query)
+    return res

@@ -20,17 +20,16 @@ from peptipedia.modules.utils import ConfigTool
 
 class Clustering(ConfigTool):
     """Clustering process class"""
-    def __init__(self, data, options, is_file, config):
+    def __init__(self, data, options, is_file, config, db):
         super().__init__("clustering", data, config, is_file)
         static_folder = config["folders"]["static_folder"]
         rand_number = str(round(random() * 10**20))
         self.dataset_encoded_path = f"{static_folder}/{rand_number}.csv"
         self.options = options
         self.dataset_encoded = None
-        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
         if self.check == {"status": "success"}:
             self.check = self.check_options()
-
+        self.df_encoder = db.get_encoder()
     def check_options(self):
         """Function for apply restriction for numeric parameters."""
         wrong_param = []
@@ -88,7 +87,7 @@ class Clustering(ConfigTool):
                 run_physicochemical_properties.RunPhysicochemicalProperties(
                     self.data,
                     self.options["selected_property"],
-                    self.path_config_aaindex_encoder,
+                    self.df_encoder
                 )
             )
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
@@ -96,7 +95,8 @@ class Clustering(ConfigTool):
         elif encoding_option == "digital_signal_processing":
             selected_property = self.options["selected_property"]
             fft_encoding = run_fft_encoding.RunFftEncoding(
-                self.data, selected_property, self.path_config_aaindex_encoder
+                self.data, selected_property,
+                self.df_encoder
             )
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()
@@ -153,7 +153,6 @@ class Clustering(ConfigTool):
             self.__generate_colors()
             grouped_df = self.dataset_encoded.groupby(by = ["label", "color"],
                 as_index = False).count()
-            print(grouped_df)
             grouped_df.label = grouped_df.label.astype(str)
             grouped_df["prefix"] = "Cluster "
             grouped_df.label = grouped_df.prefix + grouped_df.label

@@ -172,7 +172,7 @@ POST {{api}}/search/
 Content-Type: application/json
 
 {
-    "query": "((Taxonomy = 3) AND ( Activity = 1 ))",
+    "query": "( 0.1 <= Hydrophobic Ratio <= 0.3 )",
     "limit": 50,
     "page": 1
 }
@@ -402,3 +402,6 @@ GET {{api}}/get_peptides_by_database/
 
 ###
 GET {{api}}/get_peptides_by_activity/
+
+###
+GET {{api}}/get_chord_diagram/level/2

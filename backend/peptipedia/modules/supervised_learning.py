@@ -24,7 +24,7 @@ from peptipedia.modules.clustering_methods.transformation_data import Transforme
 class SupervisedLearning(ConfigTool):
     """Supervised Learning class"""
 
-    def __init__(self, data, options, is_file, config):
+    def __init__(self, data, options, is_file, config, db):
         super().__init__("supervised_learning", data, config, is_file, is_fasta=False)
         static_folder = config["folders"]["static_folder"]
         rand_number = str(round(random() * 10**20))
@@ -32,7 +32,7 @@ class SupervisedLearning(ConfigTool):
         self.job_path = self.dataset_encoded_path.replace(".csv", ".joblib")
         self.options = options
         self.dataset_encoded = None
-        self.path_config_aaindex_encoder = config["folders"]["path_aa_index"]
+        self.df_encoder = db.get_encoder()
         self.task = self.options["task"]
         self.algorithm = self.options["algorithm"]
         self.validation = self.options["validation"]
@@ -121,14 +121,14 @@ class SupervisedLearning(ConfigTool):
                 run_physicochemical_properties.RunPhysicochemicalProperties(
                     self.data,
                     self.options["selected_property"],
-                    self.path_config_aaindex_encoder,
+                    self.df_encoder
                 )
             )
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
         elif encoding_option == "digital_signal_processing":
             selected_property = self.options["selected_property"]
             fft_encoding = run_fft_encoding.RunFftEncoding(
-                self.data, selected_property, self.path_config_aaindex_encoder
+                self.data, selected_property, self.df_encoder
             )
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()

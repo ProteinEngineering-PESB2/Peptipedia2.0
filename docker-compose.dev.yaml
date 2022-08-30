@@ -23,6 +23,8 @@ services:
     build:
       context: ./frontend/
       dockerfile: Dockerfile.dev
+      args:
+        - BACKEND_BASE_URL=${BACKEND_BASEURL}
     volumes:
       - ./frontend/src:/app/src
     depends_on:

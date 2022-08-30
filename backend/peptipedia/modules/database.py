@@ -44,7 +44,7 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
         }
 
     def get_all_databases(self):
@@ -112,29 +112,25 @@ class Database:
 
     def get_min_max_parameters(self):
         """Get min max parameters for numeric selectors"""
-        data = pd.read_sql(
-            """select MAX(p.length) as max_length,
-            MIN(p.length) as min_length,
-            MAX(p.charge) as max_charge,
-            MIN(p.charge) as min_charge,
-            MAX(p.isoelectric_point) as max_isoelectric_point,
-            MIN(p.isoelectric_point) as min_isoelectric_point,
-            MAX(p.charge_density) as max_charge_density,
-            MIN(p.charge_density) as min_charge_density,
-            MAX(molecular_weight) as max_molecular_weight,
-            MIN(molecular_weight) as min_molecular_weigth
-            from peptide p""",
-            self.conn,
-        )
+        params = [("length", 0), ("charge", 1), ("isoelectric_point", 1),
+            ("charge_density", 0.01), ("molecular_weight", 1),
+            ("instability_index", 1), ("aromaticity", 0.1),
+            ("aliphatic_index", 1), ("boman_index", 1),
+            ("hydrophobic_ratio", 0.1)]
+        stmt = "select "
+        for param, upper_error in params:
+            stmt += f"MAX({param}) as max_{param}, MIN({param}) as min_{param}, "
+        stmt = stmt[:-2]
+        stmt += " from peptide p"
+        data = pd.read_sql(stmt, self.conn)
         data = json.loads(data.to_json(orient="records"))[0]
-        data["max_charge"] = int(data["max_charge"]) + 1
-        data["min_charge"] = int(data["min_charge"])
-        data["max_charge_density"] = round(data["max_charge_density"], 3) + 0.001
-        data["min_charge_density"] = round(data["min_charge_density"], 3)
-        data["max_molecular_weight"] = int(data["max_molecular_weight"]) + 1
-        data["min_molecular_weigth"] = int(data["min_molecular_weigth"])
-        data["max_isoelectric_point"] = int(data["max_isoelectric_point"]) + 1
-        data["min_isoelectric_point"] = int(data["min_isoelectric_point"])
+        for param, upper_error in params:
+            if param == "charge_density":
+                data[f"max_{param}"] = round(data[f"max_{param}"], 3) + upper_error
+                data[f"min_{param}"] = round(data[f"min_{param}"], 3)
+            else:
+                data[f"max_{param}"] = int(data[f"max_{param}"]) + upper_error
+                data[f"min_{param}"] = int(data[f"min_{param}"])
         return data
 
     def get_go_from_peptide(self, idpeptide):
@@ -165,7 +161,7 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
         }
 
     def get_tax_from_peptide(self, idpeptide):
@@ -180,16 +176,20 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
         }
 
     def get_info_from_peptide(self, idpeptide):
         """Get all phisicochemical properties and sequence from a specified peptide id"""
         data = pd.read_sql(
-            f"""select sequence, length, molecular_weight,
-            charge_density, isoelectric_point,
-            charge from peptide
-            where idpeptide = {idpeptide}""",
+            f"""select p.sequence, p.length,
+            p.molecular_weight, p.charge_density,
+            p.isoelectric_point, p.charge,
+            p.instability_index, p.aromaticity,
+            p.aliphatic_index, p.boman_index,
+            p.hydrophobic_ratio
+            from peptide p
+            where p.idpeptide = {idpeptide}""",
             con=self.conn,
         )
         return json.loads(data.to_json(orient="records"))
@@ -216,7 +216,7 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
         }
 
     def get_patent_from_peptide(self, idpeptide):
@@ -230,7 +230,7 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
         }
 
     def get_db_from_peptide(self, idpeptide):
@@ -246,7 +246,7 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
         }
 
     def get_uniprot(self, idpeptide):
@@ -276,76 +276,61 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [a.capitalize() for a in data.columns.tolist()],
         }
 
     def get_all_act_statistics(self):
         """Count peptides by activity"""
         data = pd.read_sql(
-            """select act.idactivity , act.name as Activity, COUNT(pha.idpeptide) as Peptides
+            """select act.idactivity, act.name as activity, COUNT(pha.idpeptide) as peptides
             from peptide_has_activity pha
             join activity act on act.idactivity = pha.idactivity
             group by act."name", act.idactivity
-            order by Peptides desc;""",
+            order by peptides desc;""",
             con=self.conn,
         )
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": data.columns.tolist(),
+            "columns": [a.capitalize() for a in data.columns.tolist()],
         }
 
     def get_specific_act_statistics(self, idactivity):
         """Get properties distribution by activity"""
         data = pd.read_sql(
-            f"""select p.length, p.charge, p.molecular_weight,
-            p.charge_density, p.isoelectric_point from peptide_has_activity pha
+            f"""select p.sequence, p.length,
+            p.molecular_weight, p.charge_density,
+            p.isoelectric_point, p.charge,
+            p.instability_index, p.aromaticity,
+            p.aliphatic_index, p.boman_index,
+            p.hydrophobic_ratio
+            from peptide_has_activity pha
             join peptide p on p.idpeptide = pha.idpeptide
             and pha.idactivity = {idactivity}""",
             con=self.conn,
         )
         description = data.describe()
-        length = {
-            a: round(b, 3)
-            for a, b in zip(
-                description.index.tolist(), description.length.values.tolist()
-            )
-        }
-        charge = {
-            a: round(b, 3)
-            for a, b in zip(
-                description.charge.index.tolist(), description.charge.values.tolist()
-            )
-        }
-        molecular_weight = {
-            a: round(b, 3)
-            for a, b in zip(
-                description.molecular_weight.index.tolist(),
-                description.molecular_weight.values.tolist(),
-            )
-        }
-        charge_density = {
-            a: round(b, 5)
-            for a, b in zip(
-                description.charge_density.index.tolist(),
-                description.charge_density.values.tolist(),
-            )
-        }
-        isoelectric_point = {
-            a: round(b, 4)
-            for a, b in zip(
-                description.isoelectric_point.index.tolist(),
-                description.isoelectric_point.values.tolist(),
-            )
-        }
-        return {
-            "status": "success",
-            "length": length,
-            "charge": charge,
-            "molecular_weight": molecular_weight,
-            "charge_density": charge_density,
-            "isoelectric_point": isoelectric_point,
-        }
+        params = [
+            ("length", 3),
+            ("charge", 3),
+            ("molecular_weight", 3),
+            ("charge_density", 5),
+            ("isoelectric_point", 4),
+            ("instability_index", 4),
+            ("aromaticity", 4),
+            ("aliphatic_index", 4),
+            ("boman_index", 4),
+            ("hydrophobic_ratio", 4)
+        ]
+        response = {"status": "success"}
+        for param in params:
+            response[param[0]] = {
+                a: round(b, param[1])
+                for a, b in zip(
+                    description[param[0]].index.tolist(), description[param[0]].values.tolist()
+                )
+            }
+        return response
 
     def __build_tree(self, sub_tree, val, resume):
         """Recursive function for build a tree"""
@@ -367,7 +352,6 @@ class Database:
         data = pd.read_sql("activity", con=self.conn)
         data = data.sort_values(by="level")
         parents = defaultdict(list)
-
         resume = pd.read_sql(
             """select act.name as Activity, COUNT(pha.idpeptide) as Peptides
             from peptide_has_activity pha
@@ -461,3 +445,28 @@ class Database:
             con=self.conn,
         )
         return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
+
+    def get_chord_diagram(self, by, query):
+        """Builds a matrix for a chord diagram, from parent or level"""
+        childs = pd.read_sql(f"select * from activity where {by} = {query}", con = self.conn)
+        data = []
+        for row in childs.itertuples():
+            peptides = pd.read_sql(f"""select idpeptide from peptide_has_activity
+                where idactivity = {row.idactivity}""", con = self.conn)
+            data.append((row.idactivity, row.name, peptides))
+        response = []
+        for index, row in enumerate(data):
+            for index2, row2 in enumerate(data):
+                if index <= index2:
+                    merged = pd.merge(row[2], row2[2], how = "inner", on = "idpeptide")
+                    count = merged.shape[0]
+                    if count != 0:
+                        response.append([row[1], row2[1], count])
+        return {"result": "success", "data": response}
+
+    def get_encoder(self, name = None):
+        if name is not None:
+            data = pd.read_sql(f"select * from encoding where name = {name};", con = self.conn)
+        else:
+            data = pd.read_sql("select * from encoding;", con = self.conn)
+        return data

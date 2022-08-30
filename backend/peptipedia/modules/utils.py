@@ -260,9 +260,6 @@ class Folders:
             "results_folder",
         ):
             Path(self.config["folders"][f]).mkdir(parents=True, exist_ok=True)
-        # check if aa_index directory exists
-        if not Path(self.config["folders"]["path_aa_index"]).is_dir():
-            exit()
 
     def get_static_folder(self):
         return self.config["folders"]["static_folder"]

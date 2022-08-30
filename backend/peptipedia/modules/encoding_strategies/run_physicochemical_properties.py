@@ -6,24 +6,9 @@ from peptipedia.modules.encoding_strategies.encoder import Encoder
 
 class RunPhysicochemicalProperties(Encoder):
     """Physicochemical properties class"""
-    def __init__(self, dataset, selected_property, path_input_cluster):
+    def __init__(self, dataset, selected_property, df_encoder):
         super().__init__(dataset)
-        self.list_clusters = [
-            "alpha-structure_group",
-            "betha-structure_group",
-            "energetic_group",
-            "hydropathy_group",
-            "hydrophobicity_group",
-            "index_group",
-            "secondary_structure_properties_group",
-            "volume_group",
-        ]
-        self.selected_property = selected_property
-        if self.selected_property in self.list_clusters:
-            self.dataset_cluster = pd.read_csv(
-                f"{path_input_cluster}{self.selected_property}/data_component.csv")
-        else:
-            print(f"Property {self.selected_property} not found")
+        self.encoding_row = df_encoder[df_encoder.name == selected_property]
 
     def encoding_data(self, dataset):
         """Encode data"""
@@ -32,22 +17,21 @@ class RunPhysicochemicalProperties(Encoder):
             row = row[1]
             sequence = row.sequence
             sequence = sequence.upper()
-            sequence_encoding = self.encoding_sequence(
-                sequence, self.dataset_cluster["component_1"]
-            )
+            sequence_encoding = self.encoding_sequence(sequence)
             matrix_sequence_encoding.append(sequence_encoding)
         dataset_export = pd.DataFrame(matrix_sequence_encoding)
         dataset.reset_index(drop=True, inplace=True)
         dataset_export["id"] = dataset["id"]
         return dataset_export
 
-    def encoding_sequence(self, sequence, value_property):
+    def encoding_sequence(self, sequence):
         """Encode sequence"""
         sequence_encoding = []
+        sequence = sequence.lower()
         for residue in sequence:
             try:
-                residue_index = self.residues.index(residue)
-                sequence_encoding.append(value_property[residue_index])
+                residue_value = self.encoding_row[residue].values[0]
+                sequence_encoding.append(residue_value)
             except:
                 pass
         return sequence_encoding
