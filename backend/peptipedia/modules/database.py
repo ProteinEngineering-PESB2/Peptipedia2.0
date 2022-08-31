@@ -446,6 +446,25 @@ class Database:
         )
         return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
 
+    def get_parents_levels(self):
+        """Gets parents and levels"""
+        max_level = pd.read_sql("""select MAX(level) from activity;""",
+            con = self.conn).values[0][0]
+        data = pd.read_sql("""select idactivity as value, name
+            from activity where idactivity in
+            ((select idactivity from activity)
+            INTERSECT
+            (select parent as idactivity from activity));""",
+            con = self.conn)
+        levels = pd.read_sql(f"""select DISTINCT(level) as value 
+            from activity where level != {max_level} order by level;""",
+            con = self.conn)
+        levels["name"] = levels["value"]
+        return {
+            "parents": json.loads(data.to_json(orient="records")),
+            "levels": json.loads(levels.to_json(orient="records"))
+        }
+
     def get_chord_diagram(self, by, query):
         """Builds a matrix for a chord diagram, from parent or level"""
         childs = pd.read_sql(f"select * from activity where {by} = {query}", con = self.conn)
@@ -465,6 +484,7 @@ class Database:
         return {"result": "success", "data": response}
 
     def get_encoder(self, name = None):
+        """Gets encoder table"""
         if name is not None:
             data = pd.read_sql(f"select * from encoding where name = {name};", con = self.conn)
         else:
