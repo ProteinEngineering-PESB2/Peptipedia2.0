@@ -405,3 +405,6 @@ GET {{api}}/get_peptides_by_activity/
 
 ###
 GET {{api}}/get_chord_diagram/level/2
+
+###
+GET {{api}}/get_parents_levels/
