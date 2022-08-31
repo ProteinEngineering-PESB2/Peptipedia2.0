@@ -242,7 +242,7 @@ export default function Sidebar() {
                 fontWeight: section === "actividades" ? "bold" : "normal",
               }}
             >
-              Actividades
+              Activities
             </Typography>
           </ListItemText>
         </ListItemButton>

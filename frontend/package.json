@@ -22,6 +22,7 @@
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-d3-graph": "^2.6.0",
+    "react-d3-tree": "^3.3.4",
     "react-dom": "^18.0.0",
     "react-hot-toast": "^2.2.0",
     "react-markdown": "^8.0.3",

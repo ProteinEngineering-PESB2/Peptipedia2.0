@@ -14,3 +14,12 @@
   transform: scale(1.1) !important;
   z-index: 2;
 }
+
+.node__root > circle {
+  fill: #2962ff;
+}
+
+.node__branch > circle {
+  fill: #333333;
+}
+

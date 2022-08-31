@@ -1,4 +1,6 @@
 import { Box, Grid, Paper, Skeleton } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 import DataTable from "../components/datatable";
 import Layout from "../components/layout";
@@ -6,10 +8,12 @@ import SectionTitle from "../components/section_title";
 import useGetAllActivities from "../hooks/useGetAllActivities";
 import { useHandleSection } from "../hooks/useHandleSection";
 import useLoadingComponent from "../hooks/useLoadingComponent";
+import Tree from "react-d3-tree";
 
 function Actividades() {
   useLoadingComponent();
   useHandleSection({ section: "actividades" });
+  const [dataTree, setDataTree] = useState<any>({});
 
   const {
     tableActivitiies,
@@ -19,10 +23,23 @@ function Actividades() {
     nameActivity,
   } = useGetAllActivities();
 
+  const getDataTree = async () => {
+    try {
+      const { data } = await axios.get("/api/get_tree");
+      setDataTree(data.tree);
+    } catch (error) {
+      setDataTree({});
+    }
+  };
+
+  useEffect(() => {
+    getDataTree();
+  }, []);
+
   return (
     <Layout>
       <>
-        <SectionTitle title="Actividades" description="Falta una descripción" />
+        <SectionTitle title="Activities" description="Falta una descripción" />
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={5} xl={5} marginTop={3}>
@@ -84,6 +101,39 @@ function Actividades() {
               </Grid>
             )
           )}
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} marginTop={3}>
+            {Object.keys(dataTree).length !== 0 ? (
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  boxShadow: 4,
+                }}
+              >
+                <div
+                  id="treeWrapper"
+                  style={{ width: "100%", height: "60rem" }}
+                >
+                  <Tree
+                    data={dataTree}
+                    orientation="vertical"
+                    initialDepth={1}
+                    enableLegacyTransitions={true}
+                    translate={{ x: 650, y: 150 }}
+                    nodeSize={{ x: 300, y: 300 }}
+                    collapsible={true}
+                    rootNodeClassName="node__root"
+                    branchNodeClassName="node__branch"
+                    pathFunc="step"
+                    transitionDuration={500}
+                  />
+                </div>
+              </Paper>
+            ) : (
+              <></>
+            )}
+          </Grid>
         </Grid>
       </>
     </Layout>
