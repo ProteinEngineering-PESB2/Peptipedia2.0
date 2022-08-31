@@ -12,8 +12,9 @@ import Tree from "react-d3-tree";
 
 function Actividades() {
   useLoadingComponent();
-  useHandleSection({ section: "actividades" });
+  useHandleSection({ section: "activities" });
   const [dataTree, setDataTree] = useState<any>({});
+  const [showSkeletonTree, setShowSkeletonTree] = useState(true);
 
   const {
     tableActivitiies,
@@ -30,6 +31,7 @@ function Actividades() {
     } catch (error) {
       setDataTree({});
     }
+    setShowSkeletonTree(false)
   };
 
   useEffect(() => {
@@ -102,36 +104,38 @@ function Actividades() {
             )
           )}
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12} marginTop={3}>
-            {Object.keys(dataTree).length !== 0 ? (
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  boxShadow: 4,
-                }}
-              >
-                <div
-                  id="treeWrapper"
-                  style={{ width: "100%", height: "60rem" }}
-                >
-                  <Tree
-                    data={dataTree}
-                    orientation="vertical"
-                    initialDepth={1}
-                    enableLegacyTransitions={true}
-                    translate={{ x: 650, y: 150 }}
-                    nodeSize={{ x: 300, y: 300 }}
-                    collapsible={true}
-                    rootNodeClassName="node__root"
-                    branchNodeClassName="node__branch"
-                    pathFunc="step"
-                    transitionDuration={500}
-                  />
-                </div>
-              </Paper>
+            {showSkeletonTree ? (
+              <Skeleton variant="rectangular" width="100%" height={450} />
             ) : (
-              <></>
+              Object.keys(dataTree).length !== 0 && (
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: 4,
+                  }}
+                >
+                  <div
+                    id="treeWrapper"
+                    style={{ width: "100%", height: "40rem" }}
+                  >
+                    <Tree
+                      data={dataTree}
+                      orientation="vertical"
+                      initialDepth={1}
+                      enableLegacyTransitions={true}
+                      translate={{ x: 650, y: 150 }}
+                      nodeSize={{ x: 300, y: 300 }}
+                      collapsible={true}
+                      rootNodeClassName="node__root"
+                      branchNodeClassName="node__branch"
+                      pathFunc="step"
+                      transitionDuration={500}
+                    />
+                  </div>
+                </Paper>
+              )
             )}
           </Grid>
         </Grid>

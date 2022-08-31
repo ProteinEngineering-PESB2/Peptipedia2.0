@@ -21,6 +21,7 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import GroupsIcon from "@mui/icons-material/Groups";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import BuildIcon from "@mui/icons-material/Build";
+import MediationIcon from "@mui/icons-material/Mediation";
 import { useAppContext } from "../hooks/useAppContext";
 
 export default function Sidebar() {
@@ -215,7 +216,7 @@ export default function Sidebar() {
         disablePadding
         sx={{
           p: "2px",
-          backgroundColor: section === "actividades" ? "#2962ff" : "#fff",
+          backgroundColor: section === "activities" ? "#2962ff" : "#fff",
           borderRadius: "8px",
           marginX: "6px",
           marginY: "10px",
@@ -228,21 +229,58 @@ export default function Sidebar() {
         <ListItemButton
           disableRipple
           sx={{
-            color: section === "actividades" ? "#fff" : "#000",
+            color: section === "activities" ? "#fff" : "#000",
             "&:hover": {
               color: "#fff",
             },
           }}
-          onClick={() => navigate("/actividades")}
+          onClick={() => navigate("/activities")}
+        >
+          <MediationIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight: section === "activities" ? "bold" : "normal",
+              }}
+            >
+              Activities
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor: section === "promiscuous" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "promiscuous" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/promiscuous")}
         >
           <StorageIcon sx={{ marginLeft: -0.2 }} />
           <ListItemText sx={{ marginLeft: 3 }}>
             <Typography
               sx={{
-                fontWeight: section === "actividades" ? "bold" : "normal",
+                fontWeight: section === "promiscuous" ? "bold" : "normal",
               }}
             >
-              Activities
+              Promiscuous
             </Typography>
           </ListItemText>
         </ListItemButton>

@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import StructuralPrediction from "./pages/StructuralPrediction";
 import SequencesGenerator from "./pages/SequencesGenerator";
 import Actividades from "./pages/Actividades";
+import Promiscuous from "./pages/Promiscuous";
 
 export default function App() {
   const theme = createTheme();
@@ -86,7 +87,8 @@ export default function App() {
                 element={<PeptideDetail />}
                 loading
               />
-              <Route path="/actividades" element={<Actividades/>} loading/>
+              <Route path="/activities" element={<Actividades />} loading />
+              <Route path="/promiscuous" element={<Promiscuous />} loading />
               <Route path="*" element={<NotFound />} loading />
             </Routes>
           </BrowserRouter>

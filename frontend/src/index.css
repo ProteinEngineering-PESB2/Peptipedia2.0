@@ -20,6 +20,10 @@
 }
 
 .node__branch > circle {
-  fill: #333333;
+  fill: #2196f3;
+}
+
+.chart-wheel {
+  height: 100rem;
 }
 
