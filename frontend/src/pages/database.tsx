@@ -8,7 +8,6 @@ import BackdropComponent from "../components/backdrop_component";
 import SectionTitle from "../components/section_title";
 import useGetDBStatistics from "../hooks/useGetDBStatistics";
 import DataTable from "../components/datatable";
-import useGetAllActivities from "../hooks/useGetAllActivities";
 import useGetGeneralStatistics from "../hooks/useGetGeneralStatistics";
 import useLoadingComponent from "../hooks/useLoadingComponent";
 
@@ -19,13 +18,6 @@ export default function Database() {
 
   useHandleSection({ section: "database" });
   const { tableStatistics, loadingTableStatistics } = useGetDBStatistics();
-  const {
-    tableActivitiies,
-    nameActivity,
-    dataBoxplot,
-    showSkeletonBoxplot,
-    loadingTableActivities,
-  } = useGetAllActivities();
   const { dataPie, loadingDataPie } = useGetGeneralStatistics();
 
   return (
@@ -50,7 +42,7 @@ export default function Database() {
             sx={{ marginTop: 3 }}
           >
             {loadingDataPie ? (
-              <Skeleton variant="rectangular" width="100%" height={500} />
+              <Skeleton variant="rectangular" width="100%" height={700} />
             ) : (
               dataPie.length > 0 && (
                 <Paper

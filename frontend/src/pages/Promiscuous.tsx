@@ -34,7 +34,7 @@ function Promiscuous() {
   useLoadingComponent();
   useHandleSection({ section: "promiscuous" });
 
-  const [optionsValue, setOptionsValue] = useState<string>("parent");
+  const [optionsValue, setOptionsValue] = useState<string>("level");
   const [levelsData, setLevelsData] = useState<ILevels[]>([]);
   const [parentsData, setParentsData] = useState<IParents[]>([]);
   const [selectValue, setSelectValue] = useState<string>("");
@@ -98,10 +98,17 @@ function Promiscuous() {
       <>
         <BackdropComponent open={openBackdrop} />
 
-        <SectionTitle title="Promiscuous" description="Falta una descripción" />
+        <SectionTitle title="Promiscuous" description="Analysis of promiscuity (characteristic of a peptide to perform more than one activity) according to the level of activity." />
 
         <Grid item marginTop={3}>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column", boxShadow: 4 }}>
+          <Paper
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 4,
+            }}
+          >
             <Grid container spacing={2} marginBottom={3}>
               <Grid item xs={12} sm={12} md={4} lg={3} xl={2}>
                 <FormControl fullWidth>
@@ -113,14 +120,14 @@ function Promiscuous() {
                     onChange={handleChangeOptionsValue}
                   >
                     <FormControlLabel
-                      value="parent"
-                      control={<Radio />}
-                      label="Parent"
-                    />
-                    <FormControlLabel
                       value="level"
                       control={<Radio />}
                       label="Level"
+                    />
+                    <FormControlLabel
+                      value="parent"
+                      control={<Radio />}
+                      label="Parent"
                     />
                   </RadioGroup>
                 </FormControl>

@@ -1,27 +1,55 @@
-import { useEffect, useState } from "react";
+import Layout from "../components/layout";
+import { useHandleSection } from "../hooks/useHandleSection";
+import useLoadingComponent from "../hooks/useLoadingComponent";
+import { useParams } from "react-router-dom";
+import SectionTitle from "../components/section_title";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Link, Stack } from "@mui/material";
-import { ITable } from "../utils/interfaces";
-import { InitialValueTable } from "../utils/initial_values";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Box, Grid, Paper, Skeleton } from "@mui/material";
+import Plot from "react-plotly.js";
 
-export default function useGetAllActivities() {
-  const [tableActivitiies, setTableActivities] =
-    useState<ITable>(InitialValueTable);
-  const [dataBoxplot, setDataBoxplot] = useState<any[]>([]);
-  const [nameActivity, setNameActivity] = useState<string>("");
+interface IDescription {
+  description: string;
+  level: number;
+  name: string;
+}
+
+function ActivityDetail() {
+  useLoadingComponent();
+  useHandleSection({ section: "activities" });
   const [showSkeletonBoxplot, setShowSkeletonBoxplot] =
     useState<boolean>(false);
-  const [loadingTableActivities, setLoadingTableActivities] =
-    useState<boolean>(true);
+  const [dataBoxplot, setDataBoxplot] = useState<any[]>([]);
+  const { activityId } = useParams();
+  const [description, setDescription] = useState<IDescription>({
+    description: "",
+    level: 0,
+    name: "",
+  });
 
-  const getSpecificActivity = async (id: string | number, name: string) => {
+  const getDescription = async () => {
+    try {
+      const response = await axios.get(
+        `/api/get_activity_details/${activityId}`
+      );
+      setDescription(response.data);
+    } catch (error) {
+      setDescription({
+        description: "",
+        level: 0,
+        name: "",
+      });
+    }
+  };
+
+  const getSpecificActivity = async () => {
     try {
       setShowSkeletonBoxplot(true);
 
-      const res = await axios.get(`/api/get_specific_act_statistics/${id}`);
+      const res = await axios.get(
+        `/api/get_specific_act_statistics/${activityId}`
+      );
 
       const charge = res.data["charge"];
       const charge_density = res.data["charge_density"];
@@ -186,68 +214,77 @@ export default function useGetAllActivities() {
       ];
 
       setDataBoxplot(data);
-      setNameActivity(name);
       setShowSkeletonBoxplot(false);
     } catch (error) {
       toast.error("Server error");
     }
   };
 
-  const getAllActivities = async () => {
-    const res = await axios.get("/api/get_all_act_statistics/");
-    const new_data = [];
-    for (let i = 0; i < res.data.data.length; i++) {
-      if (res.data.data[i].length === 3) {
-        const parcial_data = [
-          res.data.data[i][1],
-          res.data.data[i][2],
-          <Stack direction="row" spacing={2}>
-            <Link
-              href={`/activity/${res.data.data[i][0]}`}
-              target="_blank"
-              sx={{ textDecoration: "none", cursor: "pointer" }}
-            >
-              <RemoveRedEyeIcon />
-            </Link>
-            <Link
-              onClick={() =>
-                getSpecificActivity(res.data.data[i][0], res.data.data[i][1])
-              }
-              sx={{ textDecoration: "none", cursor: "pointer" }}
-            >
-              <EqualizerIcon />
-            </Link>
-          </Stack>,
-        ];
-        new_data.push(parcial_data);
-      }
-    }
-
-    if (res.data.data.length > 0) {
-      getSpecificActivity(res.data.data[0][0], res.data.data[0][1]);
-    }
-
-    setTableActivities({
-      columns: ["activity", "peptides", "Options"],
-      data: new_data,
-    });
-    setLoadingTableActivities(false);
-  };
-
   useEffect(() => {
-    try {
-      getAllActivities();
-    } catch (error) {
-      toast.error("Server error");
-      setLoadingTableActivities(false);
-    }
+    getDescription();
+    getSpecificActivity()
   }, []);
 
-  return {
-    tableActivitiies,
-    dataBoxplot,
-    nameActivity,
-    showSkeletonBoxplot,
-    loadingTableActivities,
-  };
+  return (
+    <Layout>
+      <>
+        <SectionTitle
+          title={description.name}
+          description={description.description}
+          level={description.level}
+        />
+
+        {showSkeletonBoxplot ? (
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={7}
+            sx={{ marginTop: 3 }}
+          >
+            <Skeleton variant="rectangular" width="100%" height={600} />
+          </Grid>
+        ) : (
+          dataBoxplot.length > 0 && (
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={12}
+              xl={7}
+              sx={{ marginTop: 3 }}
+            >
+              <Box boxShadow={4}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Plot
+                    data={dataBoxplot}
+                    layout={{
+                      autosize: true,
+                      height: 600,
+                      title: `Activity ${description.name} statistics`,
+                      grid: { rows: 2, columns: 5, pattern: "independent" },
+                    }}
+                    config={{ responsive: true }}
+                    useResizeHandler={true}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </Paper>
+              </Box>
+            </Grid>
+          )
+        )}
+      </>
+    </Layout>
+  );
 }
+
+export default ActivityDetail;

@@ -22,7 +22,7 @@ export default function AdvancedSearch() {
         <BackdropComponent open={openBackdrop} />
         <SectionTitle
           title="Advanced Search"
-          description="Advanced Search for the Peptipedia Database"
+          description="Advanced Search for the Peptipedia Database."
         />
 
         <AdvancedSearchForm

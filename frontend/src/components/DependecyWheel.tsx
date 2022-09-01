@@ -31,7 +31,7 @@ function DependecyWheel({ data }: DependecyWheelProps) {
   return (
     <HighchartsProvider Highcharts={Highcharts}>
       <HighchartsChart>
-        <Title>Highcharts Dependency Wheel Diagram</Title>
+        <Title>Promiscuity between peptides</Title>
 
         <XAxis type="category" />
 

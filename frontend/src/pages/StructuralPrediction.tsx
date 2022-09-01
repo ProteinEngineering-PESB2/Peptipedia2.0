@@ -23,7 +23,7 @@ function StructuralPrediction() {
       <>
         <SectionTitle
           title="Structural Prediction"
-          description="Falta una descripción"
+          description="Secondary Structure Element (SS3 and SS8), Solvent Accessibility (ACC), Order/Disorder prediction (DISO), and TransMembrane topology (TM2 and TM8)"
         />
 
         <StructuralPredictionForm

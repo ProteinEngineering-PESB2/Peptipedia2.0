@@ -41,7 +41,10 @@ function Actividades() {
   return (
     <Layout>
       <>
-        <SectionTitle title="Activities" description="Falta una descripción" />
+        <SectionTitle
+          title="Activities"
+          description="Description and detail of the activities reported in the Peptipedia database. Presentation of trends in physicochemical properties and spectra."
+        />
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12} marginTop={3}>
@@ -80,7 +83,7 @@ function Actividades() {
             )}
           </Grid>
 
-          <Grid item xs={12} sm={12} md={12} lg={5} xl={5} marginTop={3}>
+          <Grid item xs={12} sm={12} md={12} lg={6} xl={5} marginTop={3}>
             {loadingTableActivities ? (
               <Skeleton variant="rectangular" width="100%" height={700} />
             ) : (
@@ -91,51 +94,51 @@ function Actividades() {
               )
             )}
           </Grid>
-          {dataBoxplot.length > 0 ? (
+          {showSkeletonBoxplot ? (
             <Grid
               item
               xs={12}
               sm={12}
               md={12}
-              lg={7}
+              lg={12}
               xl={7}
               sx={{ marginTop: 3 }}
             >
-              <Box boxShadow={4}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Plot
-                    data={dataBoxplot}
-                    layout={{
-                      autosize: true,
-                      height: 400,
-                      title: `Activity ${nameActivity} statistics`,
-                      grid: { rows: 1, columns: 5, pattern: "independent" },
-                    }}
-                    config={{ responsive: true }}
-                    useResizeHandler={true}
-                    style={{ width: "100%", height: "100%" }}
-                  />
-                </Paper>
-              </Box>
+              <Skeleton variant="rectangular" width="100%" height={600} />
             </Grid>
           ) : (
-            showSkeletonBoxplot && (
+            dataBoxplot.length > 0 && (
               <Grid
                 item
                 xs={12}
                 sm={12}
                 md={12}
-                lg={6}
-                xl={6}
+                lg={12}
+                xl={7}
                 sx={{ marginTop: 3 }}
               >
-                <Skeleton variant="rectangular" width="100%" height={300} />
+                <Box boxShadow={4}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Plot
+                      data={dataBoxplot}
+                      layout={{
+                        autosize: true,
+                        height: 600,
+                        title: `Activity ${nameActivity} statistics`,
+                        grid: { rows: 2, columns: 5, pattern: "independent" },
+                      }}
+                      config={{ responsive: true }}
+                      useResizeHandler={true}
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  </Paper>
+                </Box>
               </Grid>
             )
           )}
