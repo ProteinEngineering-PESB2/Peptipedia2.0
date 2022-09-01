@@ -31,7 +31,7 @@ function Actividades() {
     } catch (error) {
       setDataTree({});
     }
-    setShowSkeletonTree(false)
+    setShowSkeletonTree(false);
   };
 
   useEffect(() => {
@@ -44,6 +44,42 @@ function Actividades() {
         <SectionTitle title="Activities" description="Falta una descripción" />
 
         <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} marginTop={3}>
+            {showSkeletonTree ? (
+              <Skeleton variant="rectangular" width="100%" height={450} />
+            ) : (
+              Object.keys(dataTree).length !== 0 && (
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: 4,
+                  }}
+                >
+                  <div
+                    id="treeWrapper"
+                    style={{ width: "100%", height: "32rem" }}
+                  >
+                    <Tree
+                      data={dataTree}
+                      orientation="vertical"
+                      initialDepth={1}
+                      enableLegacyTransitions={true}
+                      translate={{ x: 650, y: 50 }}
+                      nodeSize={{ x: 300, y: 300 }}
+                      collapsible={true}
+                      rootNodeClassName="node__root"
+                      branchNodeClassName="node__branch"
+                      pathFunc="step"
+                      transitionDuration={500}
+                    />
+                  </div>
+                </Paper>
+              )
+            )}
+          </Grid>
+
           <Grid item xs={12} sm={12} md={12} lg={5} xl={5} marginTop={3}>
             {loadingTableActivities ? (
               <Skeleton variant="rectangular" width="100%" height={700} />
@@ -103,41 +139,6 @@ function Actividades() {
               </Grid>
             )
           )}
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} marginTop={3}>
-            {showSkeletonTree ? (
-              <Skeleton variant="rectangular" width="100%" height={450} />
-            ) : (
-              Object.keys(dataTree).length !== 0 && (
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    boxShadow: 4,
-                  }}
-                >
-                  <div
-                    id="treeWrapper"
-                    style={{ width: "100%", height: "40rem" }}
-                  >
-                    <Tree
-                      data={dataTree}
-                      orientation="vertical"
-                      initialDepth={1}
-                      enableLegacyTransitions={true}
-                      translate={{ x: 650, y: 150 }}
-                      nodeSize={{ x: 300, y: 300 }}
-                      collapsible={true}
-                      rootNodeClassName="node__root"
-                      branchNodeClassName="node__branch"
-                      pathFunc="step"
-                      transitionDuration={500}
-                    />
-                  </div>
-                </Paper>
-              )
-            )}
-          </Grid>
         </Grid>
       </>
     </Layout>
