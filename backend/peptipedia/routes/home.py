@@ -52,6 +52,12 @@ def get_activity_spectral(idactivity):
     res = db.get_activity_spectral(idactivity)
     return res
     
+@home_blueprint.route("/get_spectral_by_encoding/<idencoding>", methods = ["GET"])
+def get_spectral_by_encoding(idencoding):
+    """Gets all spectral bands from specific activity level"""
+    res = db.get_spectral_by_encoding(idencoding)
+    return res
+
 @home_blueprint.route("/get_activity_details/<idactivity>", methods = ["GET"])
 def get_activity_details(idactivity):
     """Gets details from specific activity"""

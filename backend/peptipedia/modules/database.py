@@ -517,6 +517,29 @@ class Database:
         data["x_ci"] = pd.Series(x_ci)
         data = data[["name", "average", "x_average", "ci", "x_ci"]]
         return json.loads(data.to_json(orient="records"))
+
+    def get_spectral_by_encoding(self, idencoding):
+        """Gets activity spectral by encoding"""
+        T = 1.0 / float(150)
+        xf = list(np.linspace(0.0, 1.0 / (2.0 * T), 150 // 2))
+        data = pd.read_sql(f"""select a_s.average, a_s.ci_inf, a_s.ci_sup, act.name
+            from activity_spectral a_s
+            join activity act on a_s.idactivity = act.idactivity
+            where a_s.idencoding = {idencoding}
+            and act.level = 1;""",
+            con = self.conn)
+        data["x_average"] = [xf for _ in range(0, 10)]
+        ci = []
+        x_ci = []
+        for _, row in data.iterrows():
+            ci.append(row.ci_inf + row.ci_sup[::-1])
+            x_ci.append(row.x_average + row.x_average[::-1])
+
+        data["ci"] = pd.Series(ci)
+        data["x_ci"] = pd.Series(x_ci)
+        data = data[["name", "average", "x_average", "ci", "x_ci"]]
+        return json.loads(data.to_json(orient="records"))
+
     def get_activity_details(self, idactivity):
         """Gets activity details by id"""
         data = pd.read_sql(

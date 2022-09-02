@@ -414,3 +414,6 @@ GET {{api}}/get_activity_spectral/1
 
 ###
 GET {{api}}/get_activity_details/118
+
+###
+GET {{api}}/get_spectral_by_encoding/1
