@@ -408,3 +408,9 @@ GET {{api}}/get_chord_diagram/level/2
 
 ###
 GET {{api}}/get_parents_levels/
+
+###
+GET {{api}}/get_activity_spectral/1
+
+###
+GET {{api}}/get_activity_details/118

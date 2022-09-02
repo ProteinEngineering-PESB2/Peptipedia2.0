@@ -1,7 +1,7 @@
 """Database functionalities module"""
 import json
 from collections import defaultdict
-
+import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine, text
 
@@ -481,7 +481,13 @@ class Database:
                     count = merged.shape[0]
                     if count != 0:
                         response.append([row[1], row2[1], count])
-        return {"result": "success", "data": response}
+        parsed = {}
+        for row in response:
+            parsed[row[0]] = {}
+        for row in response:
+            parsed[row[0]].update({row[1]: row[2]})
+
+        return {"result": "success", "data": parsed}
 
     def get_encoder(self, name = None):
         """Gets encoder table"""
@@ -490,3 +496,44 @@ class Database:
         else:
             data = pd.read_sql("select * from encoding;", con = self.conn)
         return data
+
+    def get_activity_spectral(self, idactivity):
+        """Gets activity spectral by idactivity"""
+        T = 1.0 / float(150)
+        xf = list(np.linspace(0.0, 1.0 / (2.0 * T), 150 // 2))
+        data = pd.read_sql(f"""select a_s.average, a_s.ci_inf, a_s.ci_sup, e.name
+            from activity_spectral a_s
+            join encoding e on a_s.idencoding = e.idencoding
+            where a_s.idactivity = {idactivity};""",
+            con = self.conn)
+        data["x_average"] = [xf for _ in range(0, 8)]
+        ci = []
+        x_ci = []
+        for _, row in data.iterrows():
+            ci.append(row.ci_inf + row.ci_sup[::-1])
+            x_ci.append(row.x_average + row.x_average[::-1])
+
+        data["ci"] = pd.Series(ci)
+        data["x_ci"] = pd.Series(x_ci)
+        data = data[["name", "average", "x_average", "ci", "x_ci"]]
+        return json.loads(data.to_json(orient="records"))
+    def get_activity_details(self, idactivity):
+        """Gets activity details by id"""
+        data = pd.read_sql(
+            f"""select a.name as name,
+            a.level as level,
+            a.description as description,
+            p.name as parent
+            from activity a
+            join activity p on a.parent = p.idactivity
+            where a.idactivity = {idactivity}""",
+            con = self.conn)
+        if data.shape[0] == 0:
+            data = pd.read_sql(
+                f"""select a.name as name,
+                a.level as level,
+                a.description as description
+                from activity a
+                where a.idactivity = {idactivity}""",
+                con = self.conn)
+        return json.loads(data.to_json(orient="records"))[0]

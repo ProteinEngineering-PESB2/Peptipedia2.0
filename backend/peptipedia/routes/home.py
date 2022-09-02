@@ -45,3 +45,15 @@ def get_chord_diagram(by, query):
     """Gets a chord matrix from activity parent or level"""
     res = db.get_chord_diagram(by, query)
     return res
+
+@home_blueprint.route("/get_activity_spectral/<idactivity>", methods = ["GET"])
+def get_activity_spectral(idactivity):
+    """Gets all spectral bands from specific activity"""
+    res = db.get_activity_spectral(idactivity)
+    return res
+    
+@home_blueprint.route("/get_activity_details/<idactivity>", methods = ["GET"])
+def get_activity_details(idactivity):
+    """Gets details from specific activity"""
+    res = db.get_activity_details(idactivity)
+    return res
