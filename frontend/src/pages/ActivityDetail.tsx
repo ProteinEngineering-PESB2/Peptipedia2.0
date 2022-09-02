@@ -27,6 +27,9 @@ function ActivityDetail() {
     level: 0,
     name: "",
   });
+  const [dataErrorBars, setDataErrorBars] = useState<any[]>([]);
+  const [showSkeletonLearningCurve, setShowSkeletonLearningCurve] =
+    useState<boolean>(false);
 
   const getDescription = async () => {
     try {
@@ -220,9 +223,221 @@ function ActivityDetail() {
     }
   };
 
+  const getActivitySpectral = async () => {
+    setShowSkeletonLearningCurve(true);
+    try {
+      const response = await axios.get(
+        `/api/get_activity_spectral/${activityId}`
+      );
+
+      const traceAlphaStructureGroup = {
+        x: response.data[0].x_average,
+        y: response.data[0].average,
+        line: { color: "rgb(0,100,80)" },
+        mode: "spline",
+        name: "Alpha Structure Group",
+        type: "scatter",
+      };
+      const traceAlphaStructureGroupCi = {
+        x: response.data[0].x_ci,
+        y: response.data[0].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(0,100,80,0.2)",
+        line: { color: "transparent" },
+        name: "Alpha Structure Group",
+        showlegend: false,
+        type: "scatter",
+      };
+
+      const traceBethaStructureGroup = {
+        x: response.data[1].x_average,
+        y: response.data[1].average,
+        line: { color: "rgb(0,176,246)" },
+        mode: "spline",
+        name: "Betha Structure Group",
+        type: "scatter",
+        xaxis: "x2",
+        yaxis: "y2",
+      };
+      const traceBethaStructureGroupCi = {
+        x: response.data[1].x_ci,
+        y: response.data[1].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(0,176,246,0.2)",
+        line: { color: "transparent" },
+        name: "Betha Structure Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x2",
+        yaxis: "y2",
+      };
+
+      const traceEnergeticGroup = {
+        x: response.data[2].x_average,
+        y: response.data[2].average,
+        line: { color: "rgb(231,107,243)" },
+        mode: "spline",
+        name: "Energetic Group",
+        type: "scatter",
+        xaxis: "x3",
+        yaxis: "y3",
+      };
+      const traceEnergeticGroupCi = {
+        x: response.data[2].x_ci,
+        y: response.data[2].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(231,107,243,0.2)",
+        line: { color: "transparent" },
+        name: "Energetic Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x3",
+        yaxis: "y3",
+      };
+
+      const traceHydropathyGroup = {
+        x: response.data[3].x_average,
+        y: response.data[3].average,
+        line: { color: "rgb(68, 68, 68)" },
+        mode: "spline",
+        name: "Hydropathy Group",
+        type: "scatter",
+        xaxis: "x4",
+        yaxis: "y4",
+      };
+      const traceHydropathyGroupCi = {
+        x: response.data[3].x_ci,
+        y: response.data[3].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(68, 68, 68, 0.3)",
+        line: { color: "transparent" },
+        name: "Hydropathy Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x4",
+        yaxis: "y4",
+      };
+
+      const traceHydrophobicityGroup = {
+        x: response.data[4].x_average,
+        y: response.data[4].average,
+        line: { color: "rgb(31, 119, 180)" },
+        mode: "spline",
+        name: "Hydrophobicity Group",
+        type: "scatter",
+        xaxis: "x5",
+        yaxis: "y5",
+      };
+      const traceHydrophobicityGroupCi = {
+        x: response.data[4].x_ci,
+        y: response.data[4].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(31, 119, 180, 0.3)",
+        line: { color: "transparent" },
+        name: "Hydrophobicity Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x5",
+        yaxis: "y5",
+      };
+
+      const traceIndexGroup = {
+        x: response.data[5].x_average,
+        y: response.data[5].average,
+        line: { color: "rgb(106, 213, 42)" },
+        mode: "spline",
+        name: "Index Group",
+        type: "scatter",
+        xaxis: "x6",
+        yaxis: "y6",
+      };
+      const traceIndexGroupCi = {
+        x: response.data[5].x_ci,
+        y: response.data[5].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(106, 213, 42, 0.3)",
+        line: { color: "transparent" },
+        name: "Index Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x6",
+        yaxis: "y6",
+      };
+
+      const traceSecondaryStructurePropertiesGroup = {
+        x: response.data[6].x_average,
+        y: response.data[6].average,
+        line: { color: "rgb(94, 39, 164)" },
+        mode: "spline",
+        name: "Secondary Structure Properties Group",
+        type: "scatter",
+        xaxis: "x7",
+        yaxis: "y7",
+      };
+      const traceSecondaryStructurePropertiesGroupCi = {
+        x: response.data[6].x_ci,
+        y: response.data[6].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(94, 39, 164, 0.3)",
+        line: { color: "transparent" },
+        name: "Secondary Structure Properties Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x7",
+        yaxis: "y7",
+      };
+
+      const traceVolumeGroup = {
+        x: response.data[7].x_average,
+        y: response.data[7].average,
+        line: { color: "rgb(251, 139, 56)" },
+        mode: "spline",
+        name: "Volume Group",
+        type: "scatter",
+        xaxis: "x8",
+        yaxis: "y8",
+      };
+      const traceVolumeGroupCi = {
+        x: response.data[7].x_ci,
+        y: response.data[7].ci,
+        fill: "tozerox",
+        fillcolor: "rgba(251, 139, 56, 0.3)",
+        line: { color: "transparent" },
+        name: "Volume Group",
+        showlegend: false,
+        type: "scatter",
+        xaxis: "x8",
+        yaxis: "y8",
+      };
+
+      setDataErrorBars([
+        traceAlphaStructureGroup,
+        traceAlphaStructureGroupCi,
+        traceBethaStructureGroup,
+        traceBethaStructureGroupCi,
+        traceEnergeticGroup,
+        traceEnergeticGroupCi,
+        traceHydropathyGroup,
+        traceHydropathyGroupCi,
+        traceHydrophobicityGroup,
+        traceHydrophobicityGroupCi,
+        traceIndexGroup,
+        traceIndexGroupCi,
+        traceSecondaryStructurePropertiesGroup,
+        traceSecondaryStructurePropertiesGroupCi,
+        traceVolumeGroup,
+        traceVolumeGroupCi,
+      ]);
+    } catch (error) {
+      setDataErrorBars([]);
+    }
+    setShowSkeletonLearningCurve(false);
+  };
+
   useEffect(() => {
     getDescription();
-    getSpecificActivity()
+    getSpecificActivity();
+    getActivitySpectral();
   }, []);
 
   return (
@@ -254,7 +469,7 @@ function ActivityDetail() {
               sm={12}
               md={12}
               lg={12}
-              xl={7}
+              xl={12}
               sx={{ marginTop: 3 }}
             >
               <Box boxShadow={4}>
@@ -282,6 +497,49 @@ function ActivityDetail() {
             </Grid>
           )
         )}
+
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          xl={12}
+          sx={{ marginTop: 3 }}
+        >
+          {showSkeletonLearningCurve ? (
+            <Skeleton variant="rectangular" width="100%" height={850} />
+          ) : (
+            dataErrorBars.length > 0 && (
+              <Box boxShadow={4}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Plot
+                    data={dataErrorBars}
+                    layout={{
+                      autosize: true,
+                      height: 850,
+                      title:
+                        "Numerical representation of peptide sequences in the frequency space using FFT",
+                      font: {
+                        size: 15,
+                      },
+                      grid: { rows: 4, columns: 2, pattern: "independent" },
+                    }}
+                    config={{ responsive: true }}
+                    useResizeHandler={true}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </Paper>
+              </Box>
+            )
+          )}
+        </Grid>
       </>
     </Layout>
   );

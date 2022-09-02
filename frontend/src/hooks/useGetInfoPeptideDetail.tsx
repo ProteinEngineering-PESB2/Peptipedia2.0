@@ -40,7 +40,6 @@ export default function useGetInfoPeptideDetail({ peptideId }: Props) {
       const { data } = await axios.get(
         `/api/get_info_from_peptide/${peptideId}`
       );
-      console.log(data.result[0]);
       setDataInfo({
         charge: data.result[0].charge,
         charge_density: data.result[0].charge_density,
