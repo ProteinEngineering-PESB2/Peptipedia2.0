@@ -560,3 +560,14 @@ class Database:
                 where a.idactivity = {idactivity}""",
                 con = self.conn)
         return json.loads(data.to_json(orient="records"))[0]
+    
+    def get_sample_sequences(self, sample):
+        """Gets sample sequences"""
+        data = pd.read_sql(
+            f"""select idpeptide, sequence from peptide
+            where is_aa_seq = True limit {sample}""",
+            con = self.conn)
+        fasta_text = ""
+        for id_seq, seq in zip(data.idpeptide, data.sequence):
+            fasta_text += f">{id_seq}\n{seq}\n"
+        return {"data": fasta_text}

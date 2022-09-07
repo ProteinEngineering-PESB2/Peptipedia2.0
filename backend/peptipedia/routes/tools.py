@@ -3,6 +3,7 @@ import configparser
 
 from flask import Blueprint, request
 
+from peptipedia.modules.database import Database
 from peptipedia.modules.fasta_convertor import FastaConvertor
 
 ##Reads config file and asign folder names.
@@ -11,8 +12,9 @@ config.read("config.ini")
 
 tools_blueprint = Blueprint("tools_blueprint", __name__)
 
+db = Database(config)
 
-@tools_blueprint.route("/fasta_convertor/", methods=["POST"])
+@tools_blueprint.route("/fasta_convertor/", methods = ["POST"])
 def api_fasta_convertor():
     """Fasta convertor route"""
     text = request.json["data"]
@@ -21,3 +23,8 @@ def api_fasta_convertor():
     fasta_text = f_convert.convert()
     fasta_path = f_convert.save_file()
     return {"path": fasta_path, "text": fasta_text}
+
+@tools_blueprint.route("/sample_sequences/<sample_size>", methods = ["GET"])
+def api_sample_sequences(sample_size):
+    """Sample sequences route"""
+    return db.get_sample_sequences(sample_size)
