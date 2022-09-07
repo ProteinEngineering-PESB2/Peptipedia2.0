@@ -79,6 +79,7 @@ function Promiscuous() {
       const response = await axios.get(
         `/api/get_chord_diagram/${optionsValue}/${selectValue}`
       );
+      console.log(response.data)
       const { data } = response.data;
       setDependencyWheelData(data);
     } catch (error) {
