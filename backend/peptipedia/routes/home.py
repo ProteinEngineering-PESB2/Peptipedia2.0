@@ -69,6 +69,6 @@ def get_activity_sequences(idactivity):
     """Gets details from specific activity"""
     text = db.get_activity_sequences(idactivity)
     activity_file = f"""{config["folders"]["static_folder"]}/{idactivity}.fasta"""
-    with open(activity_file, "w", encoding = "utf-8") as f:
-        f.write(text)
+    with open(activity_file, "w", encoding = "utf-8") as file:
+        file.write(text)
     return {"file": activity_file}

@@ -492,7 +492,9 @@ class Database:
     def get_encoder(self, name = None):
         """Gets encoder table"""
         if name is not None:
-            data = pd.read_sql(f"select * from encoding where name = {name};", con = self.conn)
+            data = pd.read_sql(
+                f"select * from encoding where name = {name};",
+                con = self.conn)
         else:
             data = pd.read_sql("select * from encoding;", con = self.conn)
         return data
