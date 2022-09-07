@@ -37,7 +37,7 @@ export default function Database() {
             xs={12}
             sm={12}
             md={12}
-            lg={6}
+            lg={12}
             xl={6}
             sx={{ marginTop: 3 }}
           >

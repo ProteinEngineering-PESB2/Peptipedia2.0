@@ -6,8 +6,10 @@ import SectionTitle from "../components/section_title";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Box, Grid, Paper, Skeleton } from "@mui/material";
+import { Box, Button, Grid, Paper, Skeleton } from "@mui/material";
 import Plot from "react-plotly.js";
+import ButtonDownloadPrimary from "../components/button_download_primary";
+import BackdropComponent from "../components/backdrop_component";
 
 interface IDescription {
   description: string;
@@ -30,6 +32,10 @@ function ActivityDetail() {
   const [dataErrorBars, setDataErrorBars] = useState<any[]>([]);
   const [showSkeletonLearningCurve, setShowSkeletonLearningCurve] =
     useState<boolean>(false);
+  const [loadingFile, setLoadingFile] = useState<boolean>(true);
+  const [file, setFile] = useState<string>("");
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
+  const [percentage, setPercentage] = useState<number>(0);
 
   const getDescription = async () => {
     try {
@@ -434,20 +440,57 @@ function ActivityDetail() {
     setShowSkeletonLearningCurve(false);
   };
 
+  const getSequences = async () => {
+    try {
+      const response = await axios.get(
+        `/api/get_activity_sequences/${activityId}`
+      );
+      setFile(response.data.file);
+    } catch (error) {
+      setFile("");
+    }
+    setLoadingFile(false);
+  };
+
+  const downloadSequences = () => {};
+
   useEffect(() => {
     getDescription();
     getSpecificActivity();
     getActivitySpectral();
+    getSequences();
   }, []);
 
   return (
     <Layout>
       <>
+        <BackdropComponent open={openBackdrop} percentage={percentage} />
+
         <SectionTitle
           title={description.name}
           description={description.description}
           level={description.level}
         />
+
+        <Grid item marginTop={3}>
+          {loadingFile ? (
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#2962ff" }}
+              disabled={true}
+            >
+              Download Sequences
+            </Button>
+          ) : (
+            <ButtonDownloadPrimary
+              name="sequences.fasta"
+              path={file}
+              title="Sequences"
+              setOpenBackdrop={setOpenBackdrop}
+              setPercentage={setPercentage}
+            />
+          )}
+        </Grid>
 
         {showSkeletonBoxplot ? (
           <Grid
