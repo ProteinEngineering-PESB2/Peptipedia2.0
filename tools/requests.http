@@ -417,3 +417,7 @@ GET {{api}}/get_activity_details/118
 
 ###
 GET {{api}}/get_spectral_by_encoding/9
+
+###
+
+GET {{api}}/sample_sequences/10000
