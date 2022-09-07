@@ -569,5 +569,5 @@ class Database:
             con = self.conn)
         fasta_text = ""
         for id_seq, seq in zip(data.idpeptide, data.sequence):
-            fasta_text += f">{id_seq}\n{seq}\n"
+            fasta_text += f">sequence_{id_seq}\n{seq}\n"
         return {"data": fasta_text}
