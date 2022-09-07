@@ -16,29 +16,36 @@ import { useHandleSection } from "../hooks/useHandleSection";
 import useLoadingComponent from "../hooks/useLoadingComponent";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { sequences_model } from "./sequences_model";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 function SequencesGenerator() {
   useHandleSection({ section: "test-sequences" });
   useLoadingComponent();
 
-  const [sequencesAmount, setSequencesAmount] = useState("20");
+  const [sequencesAmount, setSequencesAmount] = useState("100");
   const [sequences, setSequences] = useState<string>("");
   const [colorIcon, setColorIcon] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const generate_sequences = () => {
-    if (parseInt(sequencesAmount) < 1 || parseInt(sequencesAmount) > 20) {
-      toast.error("Quantity admitted between 1 and 20.");
-      setSequencesAmount("20");
+  const generate_sequences = async () => {
+    setLoading(true);
+    if (parseInt(sequencesAmount) < 1 || parseInt(sequencesAmount) > 1000) {
+      toast.error("Only 1 to 1000 sequences can be generated.");
+      setSequencesAmount("100");
       return;
     }
 
-    let new_sequence = "";
-    for (let i = 0; i < parseInt(sequencesAmount); i++) {
-      new_sequence += sequences_model[i] + "\n";
+    try {
+      const response = await axios.get(
+        `/api/sample_sequences/${sequencesAmount}`
+      );
+      setSequences(response.data.data);
+      toast.success("Generated sequences.");
+    } catch (error) {
+      setSequences("");
     }
-    setSequences(new_sequence);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -77,7 +84,7 @@ function SequencesGenerator() {
             multiline
             rows={28}
             fullWidth
-            value={sequences}
+            value={loading ? "Generating..." : sequences}
             endAdornment={
               <Stack direction="row" spacing={2}>
                 <CopyToClipboard text={sequences}>

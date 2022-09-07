@@ -30,9 +30,6 @@ function Actividades() {
   const {
     tableActivitiies,
     loadingTableActivities,
-    showSkeletonBoxplot,
-    dataBoxplot,
-    nameActivity,
   } = useGetAllActivities();
 
   const getDataTree = async () => {
@@ -77,8 +74,6 @@ function Actividades() {
         mode: "spline",
         name: "Toxins",
         type: "scatter",
-        xaxis: "x2",
-        yaxis: "y2",
       };
       const traceToxinsCi = {
         x: response.data[1].x_ci,
@@ -89,8 +84,6 @@ function Actividades() {
         name: "Toxins",
         showlegend: false,
         type: "scatter",
-        xaxis: "x2",
-        yaxis: "y2",
       };
 
       const traceNeurologicalActivity = {
@@ -100,8 +93,6 @@ function Actividades() {
         mode: "spline",
         name: "Neurological Activity",
         type: "scatter",
-        xaxis: "x3",
-        yaxis: "y3",
       };
       const traceNeurologicalActivityCi = {
         x: response.data[2].x_ci,
@@ -112,8 +103,6 @@ function Actividades() {
         name: "Neurological Activity",
         showlegend: false,
         type: "scatter",
-        xaxis: "x3",
-        yaxis: "y3",
       };
 
       const traceTherapeutic = {
@@ -123,8 +112,6 @@ function Actividades() {
         mode: "spline",
         name: "Therapeutic",
         type: "scatter",
-        xaxis: "x4",
-        yaxis: "y4",
       };
       const traceTherapeuticCi = {
         x: response.data[3].x_ci,
@@ -135,8 +122,6 @@ function Actividades() {
         name: "Therapeutic",
         showlegend: false,
         type: "scatter",
-        xaxis: "x4",
-        yaxis: "y4",
       };
 
       const traceMoleculeBinding = {
@@ -146,8 +131,6 @@ function Actividades() {
         mode: "spline",
         name: "Molecule Binding",
         type: "scatter",
-        xaxis: "x5",
-        yaxis: "y5",
       };
       const traceMoleculeBindingCi = {
         x: response.data[4].x_ci,
@@ -158,8 +141,6 @@ function Actividades() {
         name: "Molecule Binding",
         showlegend: false,
         type: "scatter",
-        xaxis: "x5",
-        yaxis: "y5",
       };
 
       const traceOtherActivity = {
@@ -169,8 +150,6 @@ function Actividades() {
         mode: "spline",
         name: "Other Activity",
         type: "scatter",
-        xaxis: "x6",
-        yaxis: "y6",
       };
       const traceOtherActivityCi = {
         x: response.data[5].x_ci,
@@ -181,8 +160,6 @@ function Actividades() {
         name: "Other Activity",
         showlegend: false,
         type: "scatter",
-        xaxis: "x6",
-        yaxis: "y6",
       };
 
       const traceDrugDeliveryVehicle = {
@@ -192,8 +169,6 @@ function Actividades() {
         mode: "spline",
         name: "Drug Delivery Vehicle",
         type: "scatter",
-        xaxis: "x7",
-        yaxis: "y7",
       };
       const traceDrugDeliveryVehicleCi = {
         x: response.data[6].x_ci,
@@ -204,8 +179,6 @@ function Actividades() {
         name: "Drug Delivery Vehicle",
         showlegend: false,
         type: "scatter",
-        xaxis: "x7",
-        yaxis: "y7",
       };
 
       const traceSensorial = {
@@ -215,8 +188,6 @@ function Actividades() {
         mode: "spline",
         name: "Sensorial",
         type: "scatter",
-        xaxis: "x8",
-        yaxis: "y8",
       };
       const traceSensorialCi = {
         x: response.data[7].x_ci,
@@ -227,8 +198,6 @@ function Actividades() {
         name: "Sensorial",
         showlegend: false,
         type: "scatter",
-        xaxis: "x8",
-        yaxis: "y8",
       };
 
       const tracePropeptide = {
@@ -238,8 +207,6 @@ function Actividades() {
         mode: "spline",
         name: "Propeptide",
         type: "scatter",
-        xaxis: "x9",
-        yaxis: "y9",
       };
       const tracePropeptideCi = {
         x: response.data[8].x_ci,
@@ -250,8 +217,6 @@ function Actividades() {
         name: "Propeptide",
         showlegend: false,
         type: "scatter",
-        xaxis: "x9",
-        yaxis: "y9",
       };
 
       const traceSignalPeptide = {
@@ -261,8 +226,6 @@ function Actividades() {
         mode: "spline",
         name: "Signal Peptide",
         type: "scatter",
-        xaxis: "x10",
-        yaxis: "y10",
       };
       const traceSignalPeptideCi = {
         x: response.data[9].x_ci,
@@ -273,8 +236,6 @@ function Actividades() {
         name: "Signal Peptide",
         showlegend: false,
         type: "scatter",
-        xaxis: "x10",
-        yaxis: "y10",
       };
 
       setDataErrorBars([
@@ -400,7 +361,6 @@ function Actividades() {
                       font: {
                         size: 15,
                       },
-                      grid: { rows: 5, columns: 2, pattern: "independent" },
                     }}
                     config={{ responsive: true }}
                     useResizeHandler={true}
@@ -422,54 +382,6 @@ function Actividades() {
               )
             )}
           </Grid>
-          {showSkeletonBoxplot ? (
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              lg={12}
-              xl={7}
-              sx={{ marginTop: 3 }}
-            >
-              <Skeleton variant="rectangular" width="100%" height={600} />
-            </Grid>
-          ) : (
-            dataBoxplot.length > 0 && (
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-                xl={7}
-                sx={{ marginTop: 3 }}
-              >
-                <Box boxShadow={4}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Plot
-                      data={dataBoxplot}
-                      layout={{
-                        autosize: true,
-                        height: 600,
-                        title: `Activity ${nameActivity} statistics`,
-                        grid: { rows: 2, columns: 5, pattern: "independent" },
-                      }}
-                      config={{ responsive: true }}
-                      useResizeHandler={true}
-                      style={{ width: "100%", height: "100%" }}
-                    />
-                  </Paper>
-                </Box>
-              </Grid>
-            )
-          )}
         </Grid>
       </>
     </Layout>
