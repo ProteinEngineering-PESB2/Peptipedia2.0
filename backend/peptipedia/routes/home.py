@@ -63,3 +63,12 @@ def get_activity_details(idactivity):
     """Gets details from specific activity"""
     res = db.get_activity_details(idactivity)
     return res
+
+@home_blueprint.route("/get_activity_sequences/<idactivity>", methods = ["GET"])
+def get_activity_sequences(idactivity):
+    """Gets details from specific activity"""
+    text = db.get_activity_sequences(idactivity)
+    activity_file = f"""{config["folders"]["static_folder"]}/{idactivity}.fasta"""
+    with open(activity_file, "w", encoding = "utf-8") as f:
+        f.write(text)
+    return {"file": activity_file}

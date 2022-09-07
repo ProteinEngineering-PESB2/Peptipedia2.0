@@ -565,9 +565,25 @@ class Database:
         """Gets sample sequences"""
         data = pd.read_sql(
             f"""select idpeptide, sequence from peptide
-            where is_aa_seq = True limit {sample}""",
+            where is_aa_seq = True
+            order by random()
+            limit {sample}""",
             con = self.conn)
         fasta_text = ""
         for id_seq, seq in zip(data.idpeptide, data.sequence):
             fasta_text += f">sequence_{id_seq}\n{seq}\n"
         return {"data": fasta_text}
+    
+    def get_activity_sequences(self, idactivity):
+        """Gets sample sequences"""
+        data = pd.read_sql(
+            f"""select p.idpeptide, p.sequence
+            from peptide p
+            join peptide_has_activity pha
+            on p.idpeptide = pha.idpeptide
+            where pha.idactivity = {idactivity}""",
+            con = self.conn)
+        fasta_text = ""
+        for id_seq, seq in zip(data.idpeptide, data.sequence):
+            fasta_text += f">sequence_{id_seq}\n{seq}\n"
+        return fasta_text
