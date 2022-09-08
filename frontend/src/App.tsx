@@ -28,6 +28,7 @@ import SequencesGenerator from "./pages/SequencesGenerator";
 import Actividades from "./pages/Actividades";
 import Promiscuous from "./pages/Promiscuous";
 import ActivityDetail from "./pages/ActivityDetail";
+import ActivityPrediction from "./pages/ActivityPrediction";
 
 export default function App() {
   const theme = createTheme();
@@ -90,7 +91,16 @@ export default function App() {
               />
               <Route path="/activities" element={<Actividades />} loading />
               <Route path="/promiscuous" element={<Promiscuous />} loading />
-              <Route path="/activity/:activityId" element={<ActivityDetail/>} loading/>
+              <Route
+                path="/activity/:activityId"
+                element={<ActivityDetail />}
+                loading
+              />
+              <Route
+                path="/activity-prediction"
+                element={<ActivityPrediction />}
+                loading
+              />
               <Route path="*" element={<NotFound />} loading />
             </Routes>
           </BrowserRouter>

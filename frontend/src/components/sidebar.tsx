@@ -731,6 +731,46 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
+      <ListSubheader>Predictive Models</ListSubheader>
+      <List
+        component="div"
+        disablePadding
+        sx={{
+          p: "2px",
+          backgroundColor:
+            section === "activity-prediction" ? "#2962ff" : "#fff",
+          borderRadius: "8px",
+          marginX: "6px",
+          marginY: "10px",
+          "&:hover": {
+            background: "#2962ff",
+            color: "#fff",
+          },
+        }}
+      >
+        <ListItemButton
+          disableRipple
+          sx={{
+            color: section === "activity-prediction" ? "#fff" : "#000",
+            "&:hover": {
+              color: "#fff",
+            },
+          }}
+          onClick={() => navigate("/activity-prediction")}
+        >
+          <PsychologyIcon sx={{ marginLeft: -0.2 }} />
+          <ListItemText sx={{ marginLeft: 3 }}>
+            <Typography
+              sx={{
+                fontWeight:
+                  section === "activity-prediction" ? "bold" : "normal",
+              }}
+            >
+              Activity Prediction
+            </Typography>
+          </ListItemText>
+        </ListItemButton>
+      </List>
     </List>
   );
 }
