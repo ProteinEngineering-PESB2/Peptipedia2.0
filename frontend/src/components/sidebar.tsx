@@ -544,7 +544,7 @@ export default function Sidebar() {
           </ListItemText>
         </ListItemButton>
       </List>
-      <ListSubheader>Static Tools</ListSubheader>
+      <ListSubheader>Statistic Tools</ListSubheader>
       <List
         component="div"
         disablePadding
