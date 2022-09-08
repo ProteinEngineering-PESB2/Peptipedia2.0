@@ -6,7 +6,6 @@ from flask import Blueprint, request
 from peptipedia.modules.database import Database
 from peptipedia.modules.fasta_convertor import FastaConvertor
 
-##Reads config file and asign folder names.
 config = configparser.ConfigParser()
 config.read("config.ini")
 
