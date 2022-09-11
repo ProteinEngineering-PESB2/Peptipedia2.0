@@ -82,7 +82,8 @@ class ActivityPrediction(ConfigTool):
             ]
             response.append({
                 "id": idpeptide,
-                "data": json.loads(sub_df.to_json(orient="records"))
+                "data": sub_df.values.tolist(),
+                "columns": [" ".join(a.capitalize().split("_")) for a in sub_df.columns.tolist()],
                 })
         return response
 
