@@ -78,7 +78,7 @@ class ActivityPrediction(ConfigTool):
         response = []
         for idpeptide in df_evaluation.idpeptide.unique():
             sub_df = df_evaluation[df_evaluation["idpeptide"] == idpeptide][
-                ["idactivity", "activity", "probability"]
+                ["activity", "probability"]
             ]
             response.append({
                 "id": idpeptide,
