@@ -3,7 +3,6 @@ import json
 from random import random
 import multiprocessing as mp
 from joblib import load
-import numpy as np
 import pandas as pd
 from peptipedia.modules.utils import ConfigTool
 from peptipedia.modules.encoding_strategies import (
@@ -43,14 +42,14 @@ class ActivityPrediction(ConfigTool):
             )
     def __load_model(self, idactivity, idgroup):
         """Load model using joblib"""
-        model_path = f"{self.models_folder}/{idactivity}/{idgroup}"
+        model_path = f"{self.models_folder}/{idactivity}/{idgroup}.joblib"
         return load(model_path)
 
     def __evaluate_activity(self, idactivity):
         """Evaluate activity"""
         act_row = self.activities_list[self.activities_list["idactivity"] == idactivity]
         name = act_row.name.values[0]
-        data = [] 
+        data = []
         for _, row in self.dataset_encoded.iterrows():
             group = row["group"]
             model = self.__load_model(idactivity, group)
