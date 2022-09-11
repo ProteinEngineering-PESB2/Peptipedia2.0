@@ -4,7 +4,7 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine, text
-
+import os
 
 class Database:
     """Database class"""
@@ -16,6 +16,7 @@ class Database:
         db_name = config["database"]["db"]
         host = config["database"]["host"]
         port = config["database"]["port"]
+        self.config = config
         engine = create_engine(
             f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}"
         )
@@ -592,3 +593,15 @@ class Database:
         for id_seq, seq in zip(data.idpeptide, data.sequence):
             fasta_text += f">sequence_{id_seq}\n{seq}\n"
         return fasta_text
+
+    def get_activity_models_list(self):
+        """Gets activities if model exists"""
+        activities = pd.read_sql("activity", con = self.conn)
+        folder_models = self.config["folders"]["activity_prediction_models"]
+        list_models = [int(a) for a in os.listdir(folder_models)]
+        all_models = pd.Series(list_models)
+        df_models = pd.DataFrame(columns = ["idactivity"])
+        df_models["idactivity"] = all_models
+        merged = activities.merge(df_models, on="idactivity")[["idactivity", "name"]]
+        merged.rename(columns={"idactivity": "value", "name": "label"}, inplace=True)
+        return json.loads(merged.to_json(orient="records"))

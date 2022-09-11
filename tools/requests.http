@@ -436,3 +436,6 @@ Content-Type: application/json
         "activities": [1,2]
     }
 }
+
+###
+GET {{api}}/activity_models_list/

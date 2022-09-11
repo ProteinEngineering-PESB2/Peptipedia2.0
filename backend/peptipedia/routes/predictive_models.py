@@ -21,4 +21,8 @@ def apply_activity_prediction():
     if check["status"] == "error":
         return check
     return act_pred.run_process()
-    
+
+@models_blueprint.route("/activity_models_list/", methods=["GET"])
+def apply_activity_models_list():
+    """List all activities with predictive model"""
+    return db.get_activity_models_list()
