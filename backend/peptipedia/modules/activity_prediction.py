@@ -42,7 +42,7 @@ class ActivityPrediction(ConfigTool):
             )
     def __load_model(self, idactivity, idgroup):
         """Load model using joblib"""
-        model_path = f"{self.models_folder}/{idactivity}/{idgroup}.joblib"
+        model_path = f"{self.models_folder}/{idactivity}/{idgroup}"
         return load(model_path)
 
     def __evaluate_activity(self, idactivity):
