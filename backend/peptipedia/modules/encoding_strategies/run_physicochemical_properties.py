@@ -1,13 +1,12 @@
 """Physicochemical properties encoding module"""
 import pandas as pd
-
 from peptipedia.modules.encoding_strategies.encoder import Encoder
-
 
 class RunPhysicochemicalProperties(Encoder):
     """Physicochemical properties class"""
-    def __init__(self, dataset, selected_property, df_encoder):
+    def __init__(self, dataset, selected_property, df_encoder, padding = 150):
         super().__init__(dataset)
+        self.padding = padding
         self.encoding_row = df_encoder[df_encoder.name == selected_property]
 
     def encoding_data(self, dataset):
@@ -18,6 +17,7 @@ class RunPhysicochemicalProperties(Encoder):
             sequence = row.sequence
             sequence = sequence.upper()
             sequence_encoding = self.encoding_sequence(sequence)
+            sequence_encoding = self.zero_padding(sequence_encoding)
             matrix_sequence_encoding.append(sequence_encoding)
         dataset_export = pd.DataFrame(matrix_sequence_encoding)
         dataset.reset_index(drop=True, inplace=True)
@@ -35,3 +35,11 @@ class RunPhysicochemicalProperties(Encoder):
             except:
                 pass
         return sequence_encoding
+
+    def zero_padding(self, sequence_encoding):
+        """Zero padding until complete padding value length"""
+        length_i = len(sequence_encoding)
+        for i in range(length_i, self.padding):
+            sequence_encoding.append(0)
+        return sequence_encoding
+

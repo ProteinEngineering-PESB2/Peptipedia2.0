@@ -424,3 +424,15 @@ GET {{api}}/sample_sequences/10000
 
 ###
 GET {{api}}/get_activity_sequences/118
+
+###
+
+POST {{api}}/activity_prediction/
+Content-Type: application/json
+
+{
+    "data": ">random_sequence_1 consisting of 100 residues.\nEWVLCNRFLHQMFKDCQYQSPHCGRQDAWETIFEVSFMYVHDWHGNMFPAFVEKYKAWIL\nFFIFPMSWHKCENMMGREESECTVKTFIRVGDYMHFKIYC\n\n>random_sequence_2 consisting of 100 residues.\nPQNQENFQPTGKDLTSQDSAMSDFNASDAEKERPQMSEARFRHMKHYHMYQPAKDVGVGH\nTCRSIPPQPGWCEGCFGGCPICVRAGILQIHSPGFFLSEW\n\n>random_sequence_3 consisting of 100 residues.\nPTAADGIQPRNWFECWHQLSSFKDRHEYNWRQGKDICIIPFHMKTHGLFGPINQPLMKVK\nTHMGEYDIPSEFMFWVPSAANGDCDSLTRVGSYWPDFWAE\n\n",
+    "options": {
+        "activities": [1,2]
+    }
+}

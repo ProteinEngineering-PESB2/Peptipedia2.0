@@ -23,6 +23,9 @@ class Database:
         # Config max items for selects
         self.max_items = int(config["select"]["limit"])
 
+    def get_table(self, query):
+        return pd.read_sql(query, con = self.conn)
+
     def count_peptides(self, query):
         """Count peptides with a specified query"""
         count_query = f"select COUNT(*) from {query} as query"
