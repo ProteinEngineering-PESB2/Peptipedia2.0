@@ -75,12 +75,15 @@ class ActivityPrediction(ConfigTool):
                 idactivity
                 ) for idactivity in self.options["activities"]]
             )
-        response = {}
+        response = []
         for idpeptide in df_evaluation.idpeptide.unique():
             sub_df = df_evaluation[df_evaluation["idpeptide"] == idpeptide][
                 ["idactivity", "activity", "probability"]
             ]
-            response[idpeptide] = json.loads(sub_df.to_json(orient="records"))
+            response.append({
+                "id": idpeptide,
+                "data": json.loads(sub_df.to_json(orient="records"))
+                })
         return response
 
     def run_process(self):
