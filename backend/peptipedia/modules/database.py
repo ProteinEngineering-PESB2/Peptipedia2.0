@@ -480,7 +480,7 @@ class Database:
         response = []
         for index, row in enumerate(data):
             for index2, row2 in enumerate(data):
-                if index <= index2:
+                if index < index2:
                     merged = pd.merge(row[2], row2[2], how = "inner", on = "idpeptide")
                     count = merged.shape[0]
                     if count != 0:
