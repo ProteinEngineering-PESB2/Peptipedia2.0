@@ -26,7 +26,7 @@ function ActivityPrediction() {
 
         <SectionTitle
           title="Activity Prediction"
-          description="Falta una descripción"
+          description="Predictive modelos of peptide sequences for evaluating biological activity support by assembled machine learning strategies and numerical representation of protein sequences based on signal spaces and physicochemical properties"
         />
 
         <ActivityPredictionForm
