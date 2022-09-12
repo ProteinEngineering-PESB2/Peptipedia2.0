@@ -141,7 +141,7 @@ function ActivityPredictionForm({
               onChange={(e) => setAllActivities(e.target.checked)}
             />
           }
-          label={allActivities ? "Select Activities" : "All Activities"}
+          label={allActivities ? "All Activities" : "Select Activities"}
         />
 
         {allActivities === false && (
