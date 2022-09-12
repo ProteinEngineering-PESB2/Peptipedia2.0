@@ -42,7 +42,6 @@ function ActivityPredictionTable({ result }: ActivityPredictionTableProps) {
   };
 
   useEffect(() => {
-    console.log(result)
     handleTable(result[0].id);
   }, []);
 

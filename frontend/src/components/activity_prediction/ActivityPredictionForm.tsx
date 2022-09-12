@@ -25,7 +25,10 @@ import TextFieldFasta from "../form/text_field_fasta";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import axios from "axios";
-import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
+import {
+  parserFormDataWithOptions,
+  parserFormDataWithoutOptions,
+} from "../../helpers/parserFormData";
 import toast from "react-hot-toast";
 import { ActivityPrediction } from "../../pages/ActivityPrediction";
 
@@ -84,27 +87,28 @@ function ActivityPredictionForm({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setResult([]);
     setOpenBackdrop(true);
 
+    let options = new Object();
+    if (allActivities) {
+      const filterActivities = activities.map(
+        (activity: any) => activity.value
+      );
+      options = {
+        activities: filterActivities,
+      };
+    } else {
+      const filterActivities = activitiesValue.map(
+        (activity: any) => activity.value
+      );
+      options = {
+        activities: filterActivities,
+      };
+    }
+
     try {
-      let postData = new Object();
-      postData = parserFormDataWithoutOptions(data);
-      if (allActivities) {
-        const filterActivities = activities.map(
-          (activity: any) => activity.value
-        );
-        postData = { ...postData, options: { activities: filterActivities } };
-      } else {
-        const filterActivities = activitiesValue.map(
-          (activity: any) => activity.value
-        );
-        postData = {
-          ...postData,
-          options: {
-            activities: filterActivities,
-          },
-        };
-      }
+      const postData = parserFormDataWithOptions(data, options);
 
       const response = await axios.post("/api/activity_prediction/", postData);
       if (response.data.status === "error") {
