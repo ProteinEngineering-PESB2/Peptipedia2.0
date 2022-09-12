@@ -8,7 +8,13 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { FormEvent, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { InitialValuePostData } from "../../utils/initial_values";
 import { PostData } from "../../utils/interfaces";
 import ButtonRun from "../form/button_run";
@@ -20,6 +26,8 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import axios from "axios";
 import { parserFormDataWithoutOptions } from "../../helpers/parserFormData";
+import toast from "react-hot-toast";
+import { ActivityPrediction } from "../../pages/ActivityPrediction";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -47,7 +55,15 @@ MNTATGFIVLLVLATVLGCIEAGESHVREDAMGRARRGACTPTGQPCPYNESCCSGSCQEQLNENGHTVKRCV
 MNTATGVIALLVLATVIGCIEAEDTRADLQGGEAAEKVFRRSPTCIPSGQPCPYNENYCSQSCTFKENENANTVKRCD
 `;
 
-function ActivityPredictionForm() {
+type ActivityPredictionFormProps = {
+  setOpenBackdrop: Dispatch<SetStateAction<boolean>>;
+  setResult: Dispatch<SetStateAction<ActivityPrediction[]>>;
+};
+
+function ActivityPredictionForm({
+  setOpenBackdrop,
+  setResult,
+}: ActivityPredictionFormProps) {
   const [data, setData] = useState<PostData>(InitialValuePostData);
   const [activitiesValue, setActivitiesValue] = useState<any>([]);
   const [allActivities, setAllActivities] = useState<boolean>(true);
@@ -55,8 +71,8 @@ function ActivityPredictionForm() {
 
   const getActivities = async () => {
     try {
-      const response = await axios.get("/api/activity_list");
-      setActivities(response.data.result);
+      const response = await axios.get("/api/activity_models_list/");
+      setActivities(response.data);
     } catch (error) {
       setActivities([]);
     }
@@ -68,21 +84,39 @@ function ActivityPredictionForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setOpenBackdrop(true);
 
-    let postData = {};
-    postData = parserFormDataWithoutOptions(data);
-    if (allActivities) {
-      postData = { ...postData, activities: activities };
-    } else {
-      const filterActivities = activitiesValue.map(
-        (activity: any) => activity.value
-      );
-      postData = {
-        ...postData,
-        activities: filterActivities,
-      };
+    try {
+      let postData = new Object();
+      postData = parserFormDataWithoutOptions(data);
+      if (allActivities) {
+        const filterActivities = activities.map(
+          (activity: any) => activity.value
+        );
+        postData = { ...postData, options: { activities: filterActivities } };
+      } else {
+        const filterActivities = activitiesValue.map(
+          (activity: any) => activity.value
+        );
+        postData = {
+          ...postData,
+          options: {
+            activities: filterActivities,
+          },
+        };
+      }
+
+      const response = await axios.post("/api/activity_prediction/", postData);
+      if (response.data.status === "error") {
+        toast.error(response.data.description);
+      } else {
+        setResult(response.data);
+      }
+    } catch (error) {
+      toast.error("Server error");
     }
-    console.log(postData);
+
+    setOpenBackdrop(false);
   };
 
   return (
