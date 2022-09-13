@@ -615,7 +615,7 @@ class Database:
         alignment = []
         for index, column in enumerate(data.columns):
             alignment.append({
-                "id": index,
+                "id": index + 1,
                 "label": column,
                 "sequence": data[column].values[0]
             })
