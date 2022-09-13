@@ -605,3 +605,18 @@ class Database:
         merged = activities.merge(df_models, on="idactivity")[["idactivity", "name"]]
         merged.rename(columns={"idactivity": "value", "name": "label"}, inplace=True)
         return json.loads(merged.to_json(orient="records"))
+        
+    def get_structural_analysis(self, idpeptide):
+        data = pd.read_sql(
+            f"""select sequence, ss3, ss8,
+            tm2, tm8, acc, diso from peptide 
+            where idpeptide = {idpeptide}""",
+            con = self.conn)
+        alignment = []
+        for index, column in enumerate(data.columns):
+            alignment.append({
+                "id": index + 1,
+                "label": column,
+                "sequence": data[column].values[0]
+            })
+        return {"alignment": alignment}
