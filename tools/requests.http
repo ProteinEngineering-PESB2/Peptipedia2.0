@@ -438,4 +438,9 @@ Content-Type: application/json
 }
 
 ###
+
 GET {{api}}/activity_models_list/
+
+###
+
+GET {{api}}/get_structural_analysis/2194873
