@@ -42,7 +42,7 @@ ARG HMMER_VERSION
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends -y \
-	curl build-essential cpio
+	git curl build-essential cpio
 
 COPY --from=compile /work /work
 WORKDIR /work
@@ -57,11 +57,16 @@ RUN make -C hmmer-${HMMER_VERSION}/easel install
 # Instalación de PfamScan
 RUN cp -r PfamScan /usr/local/share
 # Seteo de permisos y creación de enlace simbólico a /usr/local/
-RUN PFAMSCAN_DIR=/usr/local/share/PfamScan && \
-	find ${PFAMSCAN_DIR} -type f -exec chmod 644 {} + && \
-	find ${PFAMSCAN_DIR} -type d -exec chmod 755 {} + && \
-	chmod +x ${PFAMSCAN_DIR}/pfam_scan.pl && \
-	ln -s ${PFAMSCAN_DIR}/pfam_scan.pl /usr/local/bin/
+WORKDIR /usr/local/share/PfamScan
+RUN find . -type f -exec chmod 644 {} + && \
+	find . -type d -exec chmod 755 {} + && \
+	chmod +x pfam_scan.pl && \
+	ln -s /usr/local/share/PfamScan/pfam_scan.pl /usr/local/bin/
+
+# Instalación de Predict_Property
+RUN git clone https://github.com/realbigws/Predict_Property /usr/local/share/Predict_Property
+RUN ln -s /usr/local/share/Predict_Property/Predict_Property.sh /usr/local/bin/
+
 # Instalación de dependencias de Perl
 RUN cpan Moose && \
 	cpan bioperl-1.4 && \
@@ -92,14 +97,15 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY --from=build /usr/local/ /usr/local/
 
-COPY install_requisites/databases /databases/pfam
-WORKDIR /databases/pfam
+COPY install_requisites/databases /data/pfam
+WORKDIR /data/pfam
 RUN hmmpress Pfam-A.hmm
-COPY install_requisites/blastdb /databases/blastdb
+COPY install_requisites/blastdb /data/blastdb
+COPY install_requisites/activity_models /data/activity_models
 
 # Variables de entorno
-ENV BLASTDB="/databases/blastdb" \
-	PFAM_DB="/databases/pfam" \
+ENV BLASTDB="/data/blastdb" \
+	PFAM_DB="/data/pfam" \
 	PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}"
 
 COPY ./peptipedia /app/peptipedia
