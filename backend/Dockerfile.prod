@@ -65,7 +65,6 @@ RUN find . -type f -exec chmod 644 {} + && \
 
 # Instalación de Predict_Property
 RUN git clone https://github.com/realbigws/Predict_Property /usr/local/share/Predict_Property
-RUN ln -s /usr/local/share/Predict_Property/Predict_Property.sh /usr/local/bin/
 
 # Instalación de dependencias de Perl
 RUN cpan Moose && \
@@ -106,7 +105,8 @@ COPY install_requisites/activity_models /data/activity_models
 # Variables de entorno
 ENV BLASTDB="/data/blastdb" \
 	PFAM_DB="/data/pfam" \
-	PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}"
+	PERL5LIB="/usr/local/share/PfamScan:${PERL5LIB}" \
+	PATH="/usr/local/share/Predict_Property:${PATH}"
 
 COPY ./peptipedia /app/peptipedia
 COPY ./conf/gunicorn.conf.py /app/
