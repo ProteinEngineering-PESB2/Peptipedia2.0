@@ -4,14 +4,12 @@ import math
 import numpy as np
 from scipy.stats import kendalltau, pearsonr, spearmanr
 from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import (
-    cross_validate,
-    learning_curve
-)
+from sklearn.model_selection import cross_validate, learning_curve
 
 
 class ResponseTrainingModel:
     """Response training class"""
+
     def __init__(self, dataset, target, model, validation):
         self.dataset = dataset
         self.target = target
@@ -196,7 +194,7 @@ class ResponseTrainingModel:
         else:
             r_2 = response[1]
         return {"spearmanr": round(r_1, 3), "pvalue": round(r_2, 3)}
-        
+
     def __calculate_kendall_tau(self, real_values, predict_values):
         """Kendall tau correlation"""
         response = kendalltau(real_values, predict_values)

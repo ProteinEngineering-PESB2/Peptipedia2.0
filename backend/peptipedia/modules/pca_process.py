@@ -1,10 +1,9 @@
 """PCA module"""
-import json
 from random import random
 
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from matplotlib.colors import to_hex
 
 from peptipedia.modules.clustering_methods.transformation_data import Transformer
@@ -51,10 +50,12 @@ class PCA:
         all_clusters = self.pca.label.unique()
         all_clusters.sort()
         linspace = np.linspace(0.1, 0.9, len(all_clusters))
-        hsv = plt.get_cmap('hsv')
+        hsv = plt.get_cmap("hsv")
         rgba_colors = hsv(linspace)
         for cluster, color in zip(all_clusters, rgba_colors):
-            hex_value = to_hex([color[0], color[1], color[2], color[3]], keep_alpha=True)
+            hex_value = to_hex(
+                [color[0], color[1], color[2], color[3]], keep_alpha=True
+            )
             self.pca.loc[self.pca.label == cluster, "color"] = hex_value
 
     def __create_traces(self):
@@ -68,10 +69,8 @@ class PCA:
                 "y": sub_df.Y.to_list(),
                 "text": sub_df.id.to_list(),
                 "name": "Cluster " + str(cluster),
-                "mode": 'markers',
-                "type": 'scatter',
-                "marker": {
-                    "color": sub_df.color.unique()[0]
-                }
+                "mode": "markers",
+                "type": "scatter",
+                "marker": {"color": sub_df.color.unique()[0]},
             }
             self.traces.append(trace)

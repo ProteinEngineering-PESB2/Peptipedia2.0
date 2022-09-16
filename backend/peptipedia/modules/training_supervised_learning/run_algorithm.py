@@ -19,6 +19,7 @@ from peptipedia.modules.training_supervised_learning import supervised_algorithm
 
 class RunAlgorithm:
     """Run algorithm class"""
+
     def __init__(self, dataset, response, task, algorithm, validation, test_size):
         self.dataset = dataset
         self.response = response

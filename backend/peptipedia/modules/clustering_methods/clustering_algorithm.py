@@ -10,8 +10,10 @@ from sklearn.cluster import (
     estimate_bandwidth,
 )
 
+
 class ApplyClustering:
     """Apply Clustering class"""
+
     def __init__(self, dataset):
         self.dataset = dataset
         self.response_apply = None

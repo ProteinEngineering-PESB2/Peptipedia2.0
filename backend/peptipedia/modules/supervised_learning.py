@@ -11,6 +11,7 @@ from sklearn.preprocessing import (
     StandardScaler,
 )
 
+from peptipedia.modules.clustering_methods.transformation_data import Transformer
 from peptipedia.modules.encoding_strategies import (
     run_fft_encoding,
     run_one_hot,
@@ -19,7 +20,6 @@ from peptipedia.modules.encoding_strategies import (
 from peptipedia.modules.training_supervised_learning.run_algorithm import RunAlgorithm
 from peptipedia.modules.utils import ConfigTool
 
-from peptipedia.modules.clustering_methods.transformation_data import Transformer
 
 class SupervisedLearning(ConfigTool):
     """Supervised Learning class"""
@@ -119,9 +119,7 @@ class SupervisedLearning(ConfigTool):
         elif encoding_option == "phisicochemical_properties":
             physicochemical_encoding = (
                 run_physicochemical_properties.RunPhysicochemicalProperties(
-                    self.data,
-                    self.options["selected_property"],
-                    self.df_encoder
+                    self.data, self.options["selected_property"], self.df_encoder
                 )
             )
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()

@@ -13,6 +13,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class Encoding(ConfigTool):
     """Encoding class"""
+
     def __init__(self, data, options, is_file, config, db):
         super().__init__("encoding", data, config, is_file)
         self.rand_name = str(round(random() * 10**20))
@@ -35,8 +36,7 @@ class Encoding(ConfigTool):
             os.mkdir(f"{self.results_folder}/physicochemical_properties")
             for selected_property in self.df_encoder.name:
                 physicochemical_encoding = RunPhysicochemicalProperties(
-                    self.data, selected_property,
-                    self.df_encoder
+                    self.data, selected_property, self.df_encoder
                 )
                 result = physicochemical_encoding.run_parallel_encoding()
                 result.to_csv(
@@ -46,8 +46,7 @@ class Encoding(ConfigTool):
             os.mkdir(f"{self.results_folder}/digital_signal_processing")
             for selected_property in self.df_encoder.name:
                 fft_encoding = RunFftEncoding(
-                    self.data, selected_property,
-                    self.df_encoder
+                    self.data, selected_property, self.df_encoder
                 )
                 fft_encoding.run_parallel_encoding()
                 result = fft_encoding.appy_fft()

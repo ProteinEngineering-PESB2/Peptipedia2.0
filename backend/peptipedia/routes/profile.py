@@ -71,6 +71,7 @@ def api_get_structure(idpeptide):
     result = struct_obj.get_structure(db, idpeptide, config)
     return result
 
+
 @profile_blueprint.route("/get_structural_analysis/<idpeptide>", methods=["GET"])
 def api_get_structural_analysis(idpeptide):
     """Gets all structural analysis from a peptide"""

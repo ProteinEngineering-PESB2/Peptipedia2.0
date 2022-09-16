@@ -3,9 +3,9 @@ import configparser
 
 from flask import Blueprint, request
 
-from peptipedia.modules.database import Database
-from peptipedia.modules.clustering_process import Clustering
 from peptipedia.modules.alignment_clustering import AlignmentClustering
+from peptipedia.modules.clustering_process import Clustering
+from peptipedia.modules.database import Database
 from peptipedia.modules.distance_clustering import DistanceClustering
 from peptipedia.modules.encoding import Encoding
 
@@ -46,6 +46,7 @@ def api_clustering():
     result = clustering_object.process_by_options()
     return {"result": result}
 
+
 @machine_learning_blueprint.route("/alignment_clustering/", methods=["POST"])
 def api_alignment_clustering():
     """It performs clustering from a fasta file or text"""
@@ -57,6 +58,7 @@ def api_alignment_clustering():
     result = clustering_object.run_clustering()
     return {"result": result}
 
+
 @machine_learning_blueprint.route("/distance_clustering/", methods=["POST"])
 def api_distance_clustering():
     """It performs clustering from a fasta file or text"""
@@ -67,6 +69,8 @@ def api_distance_clustering():
         return check
     result = clustering_object.run_process()
     return {"result": result}
+
+
 @machine_learning_blueprint.route("/pca/", methods=["POST"])
 def api_pca():
     """It performs a PCA from a stored dataframe"""

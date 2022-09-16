@@ -1,7 +1,10 @@
 """Evaluation performance clustering module"""
 from sklearn import metrics
+
+
 class EvaluationClustering:
     """Evaluation clustering class"""
+
     def get_metrics(self, dataset, labels_response):
         """Return clustering metrics"""
         try:

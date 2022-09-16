@@ -1,10 +1,12 @@
 """Database functionalities module"""
 import json
+import os
 from collections import defaultdict
+
 import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine, text
-import os
+
 
 class Database:
     """Database class"""
@@ -25,7 +27,7 @@ class Database:
         self.max_items = int(config["select"]["limit"])
 
     def get_table(self, query):
-        return pd.read_sql(query, con = self.conn)
+        return pd.read_sql(query, con=self.conn)
 
     def count_peptides(self, query):
         """Count peptides with a specified query"""
@@ -48,7 +50,9 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
+            "columns": [
+                " ".join(a.capitalize().split("_")) for a in data.columns.tolist()
+            ],
         }
 
     def get_all_databases(self):
@@ -116,11 +120,18 @@ class Database:
 
     def get_min_max_parameters(self):
         """Get min max parameters for numeric selectors"""
-        params = [("length", 0), ("charge", 1), ("isoelectric_point", 1),
-            ("charge_density", 0.01), ("molecular_weight", 1),
-            ("instability_index", 1), ("aromaticity", 0.1),
-            ("aliphatic_index", 1), ("boman_index", 1),
-            ("hydrophobic_ratio", 0.1)]
+        params = [
+            ("length", 0),
+            ("charge", 1),
+            ("isoelectric_point", 1),
+            ("charge_density", 0.01),
+            ("molecular_weight", 1),
+            ("instability_index", 1),
+            ("aromaticity", 0.1),
+            ("aliphatic_index", 1),
+            ("boman_index", 1),
+            ("hydrophobic_ratio", 0.1),
+        ]
         stmt = "select "
         for param, upper_error in params:
             stmt += f"MAX({param}) as max_{param}, MIN({param}) as min_{param}, "
@@ -165,7 +176,9 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
+            "columns": [
+                " ".join(a.capitalize().split("_")) for a in data.columns.tolist()
+            ],
         }
 
     def get_tax_from_peptide(self, idpeptide):
@@ -180,7 +193,9 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
+            "columns": [
+                " ".join(a.capitalize().split("_")) for a in data.columns.tolist()
+            ],
         }
 
     def get_info_from_peptide(self, idpeptide):
@@ -220,7 +235,9 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
+            "columns": [
+                " ".join(a.capitalize().split("_")) for a in data.columns.tolist()
+            ],
         }
 
     def get_patent_from_peptide(self, idpeptide):
@@ -234,7 +251,9 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
+            "columns": [
+                " ".join(a.capitalize().split("_")) for a in data.columns.tolist()
+            ],
         }
 
     def get_db_from_peptide(self, idpeptide):
@@ -250,7 +269,9 @@ class Database:
         return {
             "status": "success",
             "data": data.values.tolist(),
-            "columns": [" ".join(a.capitalize().split("_")) for a in data.columns.tolist()],
+            "columns": [
+                " ".join(a.capitalize().split("_")) for a in data.columns.tolist()
+            ],
         }
 
     def get_uniprot(self, idpeptide):
@@ -324,14 +345,15 @@ class Database:
             ("aromaticity", 4),
             ("aliphatic_index", 4),
             ("boman_index", 4),
-            ("hydrophobic_ratio", 4)
+            ("hydrophobic_ratio", 4),
         ]
         response = {"status": "success"}
         for param in params:
             response[param[0]] = {
                 a: round(b, param[1])
                 for a, b in zip(
-                    description[param[0]].index.tolist(), description[param[0]].values.tolist()
+                    description[param[0]].index.tolist(),
+                    description[param[0]].values.tolist(),
                 )
             }
         return response
@@ -406,7 +428,9 @@ class Database:
     def get_general_counts(self):
         """Count databases, activities, sequences and return last update"""
         dbs = pd.read_sql("""select COUNT(*) from db""", con=self.conn).values[0][0]
-        acts = pd.read_sql("""select COUNT(*) from activity""", con=self.conn).values[0][0]
+        acts = pd.read_sql("""select COUNT(*) from activity""", con=self.conn).values[
+            0
+        ][0]
         sequences = pd.read_sql(
             """select COUNT(*) from peptide""", con=self.conn
         ).values[0][0]
@@ -452,36 +476,46 @@ class Database:
 
     def get_parents_levels(self):
         """Gets parents and levels"""
-        max_level = pd.read_sql("""select MAX(level) from activity;""",
-            con = self.conn).values[0][0]
-        data = pd.read_sql("""select idactivity as value, name
+        max_level = pd.read_sql(
+            """select MAX(level) from activity;""", con=self.conn
+        ).values[0][0]
+        data = pd.read_sql(
+            """select idactivity as value, name
             from activity where idactivity in
             ((select idactivity from activity)
             INTERSECT
             (select parent as idactivity from activity));""",
-            con = self.conn)
-        levels = pd.read_sql(f"""select DISTINCT(level) as value 
+            con=self.conn,
+        )
+        levels = pd.read_sql(
+            f"""select DISTINCT(level) as value 
             from activity where level != {max_level} order by level;""",
-            con = self.conn)
+            con=self.conn,
+        )
         levels["name"] = levels["value"]
         return {
             "parents": json.loads(data.to_json(orient="records")),
-            "levels": json.loads(levels.to_json(orient="records"))
+            "levels": json.loads(levels.to_json(orient="records")),
         }
 
     def get_chord_diagram(self, by, query):
         """Builds a matrix for a chord diagram, from parent or level"""
-        childs = pd.read_sql(f"select * from activity where {by} = {query}", con = self.conn)
+        childs = pd.read_sql(
+            f"select * from activity where {by} = {query}", con=self.conn
+        )
         data = []
         for row in childs.itertuples():
-            peptides = pd.read_sql(f"""select idpeptide from peptide_has_activity
-                where idactivity = {row.idactivity}""", con = self.conn)
+            peptides = pd.read_sql(
+                f"""select idpeptide from peptide_has_activity
+                where idactivity = {row.idactivity}""",
+                con=self.conn,
+            )
             data.append((row.idactivity, row.name, peptides))
         response = []
         for index, row in enumerate(data):
             for index2, row2 in enumerate(data):
                 if index < index2:
-                    merged = pd.merge(row[2], row2[2], how = "inner", on = "idpeptide")
+                    merged = pd.merge(row[2], row2[2], how="inner", on="idpeptide")
                     count = merged.shape[0]
                     if count != 0:
                         response.append([row[1], row2[1], count])
@@ -493,25 +527,27 @@ class Database:
 
         return {"result": "success", "data": parsed}
 
-    def get_encoder(self, name = None):
+    def get_encoder(self, name=None):
         """Gets encoder table"""
         if name is not None:
             data = pd.read_sql(
-                f"select * from encoding where name = {name};",
-                con = self.conn)
+                f"select * from encoding where name = {name};", con=self.conn
+            )
         else:
-            data = pd.read_sql("select * from encoding;", con = self.conn)
+            data = pd.read_sql("select * from encoding;", con=self.conn)
         return data
 
     def get_activity_spectral(self, idactivity):
         """Gets activity spectral by idactivity"""
         T = 1.0 / float(150)
         xf = list(np.linspace(0.0, 1.0 / (2.0 * T), 150 // 2))
-        data = pd.read_sql(f"""select a_s.average, a_s.ci_inf, a_s.ci_sup, e.name
+        data = pd.read_sql(
+            f"""select a_s.average, a_s.ci_inf, a_s.ci_sup, e.name
             from activity_spectral a_s
             join encoding e on a_s.idencoding = e.idencoding
             where a_s.idactivity = {idactivity};""",
-            con = self.conn)
+            con=self.conn,
+        )
         data["x_average"] = [xf for _ in range(0, 8)]
         ci = []
         x_ci = []
@@ -528,12 +564,14 @@ class Database:
         """Gets activity spectral by encoding"""
         T = 1.0 / float(150)
         xf = list(np.linspace(0.0, 1.0 / (2.0 * T), 150 // 2))
-        data = pd.read_sql(f"""select a_s.average, a_s.ci_inf, a_s.ci_sup, act.name
+        data = pd.read_sql(
+            f"""select a_s.average, a_s.ci_inf, a_s.ci_sup, act.name
             from activity_spectral a_s
             join activity act on a_s.idactivity = act.idactivity
             where a_s.idencoding = {idencoding}
             and act.level = 1;""",
-            con = self.conn)
+            con=self.conn,
+        )
         data["x_average"] = [xf for _ in range(0, 10)]
         ci = []
         x_ci = []
@@ -556,7 +594,8 @@ class Database:
             from activity a
             join activity p on a.parent = p.idactivity
             where a.idactivity = {idactivity}""",
-            con = self.conn)
+            con=self.conn,
+        )
         if data.shape[0] == 0:
             data = pd.read_sql(
                 f"""select a.name as name,
@@ -564,9 +603,10 @@ class Database:
                 a.description as description
                 from activity a
                 where a.idactivity = {idactivity}""",
-                con = self.conn)
+                con=self.conn,
+            )
         return json.loads(data.to_json(orient="records"))[0]
-    
+
     def get_sample_sequences(self, sample):
         """Gets sample sequences"""
         data = pd.read_sql(
@@ -574,12 +614,13 @@ class Database:
             where is_aa_seq = True
             order by random()
             limit {sample}""",
-            con = self.conn)
+            con=self.conn,
+        )
         fasta_text = ""
         for id_seq, seq in zip(data.idpeptide, data.sequence):
             fasta_text += f">sequence_{id_seq}\n{seq}\n"
         return {"data": fasta_text}
-    
+
     def get_activity_sequences(self, idactivity):
         """Gets sample sequences"""
         data = pd.read_sql(
@@ -588,7 +629,8 @@ class Database:
             join peptide_has_activity pha
             on p.idpeptide = pha.idpeptide
             where pha.idactivity = {idactivity}""",
-            con = self.conn)
+            con=self.conn,
+        )
         fasta_text = ""
         for id_seq, seq in zip(data.idpeptide, data.sequence):
             fasta_text += f">sequence_{id_seq}\n{seq}\n"
@@ -596,27 +638,26 @@ class Database:
 
     def get_activity_models_list(self):
         """Gets activities if model exists"""
-        activities = pd.read_sql("activity", con = self.conn)
+        activities = pd.read_sql("activity", con=self.conn)
         folder_models = self.config["folders"]["activity_prediction_models"]
         list_models = [int(a) for a in os.listdir(folder_models)]
         all_models = pd.Series(list_models)
-        df_models = pd.DataFrame(columns = ["idactivity"])
+        df_models = pd.DataFrame(columns=["idactivity"])
         df_models["idactivity"] = all_models
         merged = activities.merge(df_models, on="idactivity")[["idactivity", "name"]]
         merged.rename(columns={"idactivity": "value", "name": "label"}, inplace=True)
         return json.loads(merged.to_json(orient="records"))
-        
+
     def get_structural_analysis(self, idpeptide):
         data = pd.read_sql(
             f"""select sequence, ss3, ss8,
             tm2, tm8, acc, diso from peptide 
             where idpeptide = {idpeptide}""",
-            con = self.conn)
+            con=self.conn,
+        )
         alignment = []
         for index, column in enumerate(data.columns):
-            alignment.append({
-                "id": index + 1,
-                "label": column,
-                "sequence": data[column].values[0]
-            })
+            alignment.append(
+                {"id": index + 1, "label": column, "sequence": data[column].values[0]}
+            )
         return {"alignment": alignment}

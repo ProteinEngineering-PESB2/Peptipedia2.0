@@ -18,7 +18,7 @@ class search:
             "Aromaticity": "p.aromaticity",
             "Aliphatic Index": "p.aliphatic_index",
             "Boman Index": "p.boman_index",
-            "Hydrophobic Ratio": "p.hydrophobic_ratio"
+            "Hydrophobic Ratio": "p.hydrophobic_ratio",
         }
 
     def parse_terms(self, term):
@@ -132,7 +132,7 @@ class search:
                 "Aromaticity",
                 "Aliphatic",
                 "Hydrophobic",
-                "Ratio"
+                "Ratio",
             ]:
                 broken[i] = ""
             elif value in [

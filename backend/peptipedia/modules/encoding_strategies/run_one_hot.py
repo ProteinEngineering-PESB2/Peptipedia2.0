@@ -1,9 +1,12 @@
 """One Hot Encoding module"""
 import pandas as pd
+
 from peptipedia.modules.encoding_strategies.encoder import Encoder
+
 
 class RunOneHotEncoding(Encoder):
     """One Hot Encoding class"""
+
     def __init__(self, dataset):
         super().__init__(dataset)
         self.residues.sort()
@@ -20,7 +23,7 @@ class RunOneHotEncoding(Encoder):
         self.dict_residues = {}
         for index, value in enumerate(self.residues):
             self.dict_residues.update({value: index})
-        
+
     def encoding_data(self, dataset):
         """Encode data"""
         id_sequences = []

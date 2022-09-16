@@ -1,8 +1,10 @@
 """Transforms data module"""
 from sklearn.decomposition import PCA, KernelPCA
 
+
 class Transformer:
     """Transformer class"""
+
     def apply_pca_data(self, dataset):
         """Apply PCA"""
         pca_transformer = PCA(n_components=2)

@@ -14,7 +14,8 @@ from peptipedia.modules.utils import ConfigTool
 
 class MultipleSequenceAlignment(ConfigTool):
     """MSA Class"""
-    def __init__(self, data, is_file, config, config_module = "msa", matrix = True):
+
+    def __init__(self, data, is_file, config, config_module="msa", matrix=True):
         super().__init__(config_module, data, config, is_file)
         static_folder = config["folders"]["static_folder"]
         random_number = str(round(random() * 10**20))
@@ -131,7 +132,4 @@ class MultipleSequenceAlignment(ConfigTool):
                 "image_heatmap": self.heatmap_path,
                 "dendrogram": self.dendrogram_path,
             }
-        return {
-            "alignment": self.alignment
-        }
-        
+        return {"alignment": self.alignment}

@@ -2,10 +2,11 @@
 import json
 from random import random
 
-from scipy import stats
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import to_hex
+from scipy import stats
+
 from peptipedia.modules.clustering_methods import (
     clustering_algorithm,
     evaluation_performances,
@@ -20,6 +21,7 @@ from peptipedia.modules.utils import ConfigTool
 
 class Clustering(ConfigTool):
     """Clustering process class"""
+
     def __init__(self, data, options, is_file, config, db):
         super().__init__("clustering", data, config, is_file)
         static_folder = config["folders"]["static_folder"]
@@ -30,6 +32,7 @@ class Clustering(ConfigTool):
         if self.check == {"status": "success"}:
             self.check = self.check_options()
         self.df_encoder = db.get_encoder()
+
     def check_options(self):
         """Function for apply restriction for numeric parameters."""
         wrong_param = []
@@ -85,9 +88,7 @@ class Clustering(ConfigTool):
         elif encoding_option == "phisicochemical_properties":
             physicochemical_encoding = (
                 run_physicochemical_properties.RunPhysicochemicalProperties(
-                    self.data,
-                    self.options["selected_property"],
-                    self.df_encoder
+                    self.data, self.options["selected_property"], self.df_encoder
                 )
             )
             self.dataset_encoded = physicochemical_encoding.run_parallel_encoding()
@@ -95,8 +96,7 @@ class Clustering(ConfigTool):
         elif encoding_option == "digital_signal_processing":
             selected_property = self.options["selected_property"]
             fft_encoding = run_fft_encoding.RunFftEncoding(
-                self.data, selected_property,
-                self.df_encoder
+                self.data, selected_property, self.df_encoder
             )
             fft_encoding.run_parallel_encoding()
             self.dataset_encoded = fft_encoding.appy_fft()
@@ -106,9 +106,7 @@ class Clustering(ConfigTool):
         self.process_encoding_stage()
         dataset_to_cluster = self.dataset_encoded.copy()
         dataset_to_cluster.drop(["id"], inplace=True, axis=1)
-        clustering_process = clustering_algorithm.ApplyClustering(
-            dataset_to_cluster
-        )
+        clustering_process = clustering_algorithm.ApplyClustering(dataset_to_cluster)
         evaluation_process = evaluation_performances.EvaluationClustering()
 
         algorithm = self.options["algorithm"]
@@ -151,19 +149,21 @@ class Clustering(ConfigTool):
             )
             response.update({"status": "success"})
             self.__generate_colors()
-            grouped_df = self.dataset_encoded.groupby(by = ["label", "color"],
-                as_index = False).count()
+            grouped_df = self.dataset_encoded.groupby(
+                by=["label", "color"], as_index=False
+            ).count()
             grouped_df.label = grouped_df.label.astype(str)
             grouped_df["prefix"] = "Cluster "
             grouped_df.label = grouped_df.prefix + grouped_df.label
-            response.update({"resume": {
-                "labels": [str(a) for a in grouped_df.label.tolist()],
-                "values": grouped_df.id.tolist(),
-                "marker": {
-                    "colors": grouped_df.color.tolist()
+            response.update(
+                {
+                    "resume": {
+                        "labels": [str(a) for a in grouped_df.label.tolist()],
+                        "values": grouped_df.id.tolist(),
+                        "marker": {"colors": grouped_df.color.tolist()},
                     }
                 }
-            })
+            )
             response.update({"data": data_json})
             performances = evaluation_process.get_metrics(
                 dataset_to_cluster, clustering_process.labels
@@ -212,8 +212,12 @@ class Clustering(ConfigTool):
         all_clusters = self.dataset_encoded.label.unique()
         all_clusters.sort()
         linspace = np.linspace(0.1, 0.9, len(all_clusters))
-        hsv = plt.get_cmap('hsv')
+        hsv = plt.get_cmap("hsv")
         rgba_colors = hsv(linspace)
         for cluster, color in zip(all_clusters, rgba_colors):
-            hex_value = to_hex([color[0], color[1], color[2], color[3]], keep_alpha=True)
-            self.dataset_encoded.loc[self.dataset_encoded.label == cluster, "color"] = hex_value
+            hex_value = to_hex(
+                [color[0], color[1], color[2], color[3]], keep_alpha=True
+            )
+            self.dataset_encoded.loc[
+                self.dataset_encoded.label == cluster, "color"
+            ] = hex_value

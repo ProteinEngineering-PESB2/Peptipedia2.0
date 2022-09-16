@@ -4,8 +4,10 @@ import multiprocessing as mp
 import numpy as np
 import pandas as pd
 
+
 class Encoder:
     """Encoder class"""
+
     def __init__(self, dataset):
         self.residues = [
             "A",
@@ -31,6 +33,7 @@ class Encoder:
         ]
         self.dataset = dataset
         self.df_encoding = None
+
     def encoding_data(self, dataset):
         """Polimorfism function"""
 
