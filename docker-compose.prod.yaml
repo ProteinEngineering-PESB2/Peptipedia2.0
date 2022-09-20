@@ -13,13 +13,12 @@ services:
       context: ./backend/
       dockerfile: Dockerfile.prod
       network: host
-      args:
-        BUILD_CPUS: ${BUILD_CPUS:-4}
     volumes:
       - ./backend/config.ini:/app/config.ini
-      - ./bd/backup_sql.zip:/files/downloads/backup_sql.zip
-      - ./bd/dump_fasta.zip:/files/downloads/dump_fasta.zip
-      - ./bd/dump_csv.zip:/files/downloads/dump_csv.zip
+      - ./bd/backup_sql.zip:/static/downloads/backup_sql.zip
+      - ./bd/dump_fasta.zip:/static/downloads/dump_fasta.zip
+      - ./bd/dump_csv.zip:/static/downloads/dump_csv.zip
+      - ../peptipedia_storage:/storage
     ports:
       - "8000"
     networks:

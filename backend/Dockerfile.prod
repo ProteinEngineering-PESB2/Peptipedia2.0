@@ -1,38 +1,6 @@
-FROM python:3.10-slim as base
+FROM python:3.10 as base
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG BLAST_VERSION=2.13.0
-ARG HMMER_VERSION=3.3.2
-ARG BUILD_CPUS=4
-
-
-FROM base as compile
-
-ARG DEBIAN_FRONTEND
-ARG BLAST_VERSION
-ARG HMMER_VERSION
-ARG BUILD_CPUS
-
-RUN apt-get update && \
-	apt-get install --no-install-recommends -y \
-	wget build-essential procps
-
-WORKDIR /work
-
-# Descarga y compilación de BLAST
-RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${BLAST_VERSION}/ncbi-blast-${BLAST_VERSION}+-src.tar.gz
-RUN tar -xzf ncbi-blast-${BLAST_VERSION}+-src.tar.gz
-RUN cd ncbi-blast-${BLAST_VERSION}+-src/c++ && ./configure && make -j ${BUILD_CPUS}
-
-# Descarga y compilación de HMMER
-RUN wget http://eddylab.org/software/hmmer/hmmer-${HMMER_VERSION}.tar.gz
-RUN tar -xzf hmmer-${HMMER_VERSION}.tar.gz
-RUN cd hmmer-${HMMER_VERSION} && ./configure && make -j ${BUILD_CPUS}
-
-# Descarga y descompresión de PfamScan
-RUN wget -T 10 http://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/PfamScan.tar.gz
-RUN tar -xzf PfamScan.tar.gz
-
 
 FROM base as build
 
@@ -42,19 +10,13 @@ ARG HMMER_VERSION
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends -y \
-	git curl build-essential cpio
+	git curl
 
-COPY --from=compile /work /work
 WORKDIR /work
 
-# Instalación de BLAST
-RUN make -C ncbi-blast-${BLAST_VERSION}+-src/c++ install
-
-# Instalación de Hmmer
-RUN make -C hmmer-${HMMER_VERSION} install
-RUN make -C hmmer-${HMMER_VERSION}/easel install
-
-# Instalación de PfamScan
+# Descarga e instalación de PfamScan
+RUN wget -T 10 http://ftp.ebi.ac.uk/pub/databases/Pfam/Tools/PfamScan.tar.gz
+RUN tar -xzf PfamScan.tar.gz
 RUN cp -r PfamScan /usr/local/share
 # Seteo de permisos y creación de enlace simbólico a /usr/local/
 WORKDIR /usr/local/share/PfamScan
@@ -72,7 +34,7 @@ RUN cpan Moose && \
 	cpan IPC:Run
 
 # Instalación de dependencias de Python
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | python -
 COPY pyproject.toml poetry.lock /src/
 WORKDIR /src
 RUN /root/.local/bin/poetry export --without-hashes --no-interaction --no-ansi -f requirements.txt -o requirements.txt
@@ -91,7 +53,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y --no-install-recommends \
 	zip pp-popularity-contest \
 	libpath-tiny-perl \
-	metastudent clustalo && \
+	ncbi-blast+ hmmer metastudent clustalo && \
 	rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /usr/local/ /usr/local/
