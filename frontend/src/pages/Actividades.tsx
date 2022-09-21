@@ -34,7 +34,7 @@ function Actividades() {
 
   const getDataTree = async () => {
     try {
-      const { data } = await axios.get("/api/get_tree");
+      const { data } = await axios.get("/api/get_tree/");
       setDataTree(data.tree);
     } catch (error) {
       setDataTree({});
