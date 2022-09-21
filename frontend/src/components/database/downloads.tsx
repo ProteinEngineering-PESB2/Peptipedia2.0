@@ -22,7 +22,7 @@ export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
             }}
             onClick={() =>
               downloadFile({
-                url: "/files/downloads/dump_csv.zip",
+                url: "https://static.peptipedia.cl/downloads/dump_csv.zip",
                 name: "dump_csv.zip",
                 setOpenBackdrop: setOpenBackdrop,
                 setPercentage: setPercentage,
@@ -38,7 +38,7 @@ export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
             size="large"
             onClick={() =>
               downloadFile({
-                url: "/files/downloads/backup_sql.zip",
+                url: "https://static.peptipedia.cl/downloads/dump_sql.zip",
                 name: "dump_sql.zip",
                 setOpenBackdrop: setOpenBackdrop,
                 setPercentage: setPercentage,
@@ -56,7 +56,7 @@ export default function Downloads({ setOpenBackdrop, setPercentage }: Props) {
             size="large"
             onClick={() =>
               downloadFile({
-                url: "/files/downloads/dump_fasta.zip",
+                url: "https://static.peptipedia.cl/downloads/dump_fasta.zip",
                 name: "dump_fasta.zip",
                 setOpenBackdrop: setOpenBackdrop,
                 setPercentage: setPercentage,

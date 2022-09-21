@@ -14,11 +14,8 @@ services:
       dockerfile: Dockerfile.prod
       network: host
     volumes:
-      - ./backend/config.ini:/app/config.ini
-      - ./bd/backup_sql.zip:/static/downloads/backup_sql.zip
-      - ./bd/dump_fasta.zip:/static/downloads/dump_fasta.zip
-      - ./bd/dump_csv.zip:/static/downloads/dump_csv.zip
-      - ../peptipedia_storage:/storage
+      - ./backend/config.ini:/app/config.ini:ro
+      - ../peptipedia_storage:/storage:rw
     ports:
       - "8000"
     networks:
@@ -42,6 +39,32 @@ services:
         - BACKEND_BASE_URL=${BACKEND_BASEURL}
     ports:
       - "80"
+    networks:
+      - peptipedia
+    restart: "always"
+  static:
+    image: nginx
+    container_name: peptipedia-static
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.peptipedia-static.rule=Host(`static.peptipedia.cl`)
+      - traefik.http.services.peptipedia-static.loadbalancer.server.port=80
+      - traefik.http.routers.peptipedia-static.tls=true
+      - traefik.http.routers.peptipedia-static.tls.certresolver=letsencrypt
+    command:
+      - /bin/bash
+      - -c
+      - |
+        rm -rf /usr/share/nginx/html/*
+        nginx -g 'daemon off;'
+    volumes:
+      - ./bd/backup_sql.zip:/usr/share/nginx/html/downloads/dump_sql.zip:ro
+      - ./bd/dump_fasta.zip:/usr/share/nginx/html/downloads/dump_fasta.zip:ro
+      - ./bd/dump_csv.zip:/usr/share/nginx/html/downloads/dump_csv.zip:ro
+    ports:
+      - "80"
+    environment:
+      - NGINX_HOST=static.peptipedia.cl
     networks:
       - peptipedia
     restart: "always"
