@@ -51,20 +51,14 @@ services:
       - traefik.http.services.peptipedia-static.loadbalancer.server.port=80
       - traefik.http.routers.peptipedia-static.tls=true
       - traefik.http.routers.peptipedia-static.tls.certresolver=letsencrypt
-    command:
-      - /bin/bash
-      - -c
-      - |
-        rm -rf /usr/share/nginx/html/*
-        nginx -g 'daemon off;'
+    build:
+      context: ./static/
     volumes:
       - ./bd/backup_sql.zip:/usr/share/nginx/html/downloads/dump_sql.zip:ro
       - ./bd/dump_fasta.zip:/usr/share/nginx/html/downloads/dump_fasta.zip:ro
       - ./bd/dump_csv.zip:/usr/share/nginx/html/downloads/dump_csv.zip:ro
     ports:
       - "80"
-    environment:
-      - NGINX_HOST=static.peptipedia.cl
     networks:
       - peptipedia
     restart: "always"
