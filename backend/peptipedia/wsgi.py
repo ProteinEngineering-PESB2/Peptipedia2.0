@@ -10,11 +10,7 @@ from peptipedia.modules.utils import Folders
 f = Folders("config.ini")
 f.create_folders()
 
-app = Flask(
-    __name__,
-    static_url_path="/files",
-    static_folder=os.path.realpath(f.get_static_folder()),
-)
+app = Flask(__name__, static_folder=os.path.realpath(f.get_static_folder()))
 # Cors
 CORS(app)
 
