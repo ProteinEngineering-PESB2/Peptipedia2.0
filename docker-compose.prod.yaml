@@ -18,6 +18,7 @@ services:
       - ../peptipedia_storage:/storage:rw
     ports:
       - "8000"
+    network_mode: bridge
     networks:
       - backend
       - peptipedia
@@ -39,6 +40,7 @@ services:
         - BACKEND_BASE_URL=${BACKEND_BASEURL}
     ports:
       - "80"
+    network_mode: bridge
     networks:
       - peptipedia
     restart: "always"
@@ -59,6 +61,7 @@ services:
       - ./bd/dump_csv.zip:/usr/share/nginx/html/downloads/dump_csv.zip:ro
     ports:
       - "80"
+    network_mode: bridge
     networks:
       - peptipedia
     restart: "always"

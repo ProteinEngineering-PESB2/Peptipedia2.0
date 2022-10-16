@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   reverse-proxy:
-    image: traefik:2.8
+    image: traefik:2.9
     container_name: traefik
     ports:
       - "80:80"
