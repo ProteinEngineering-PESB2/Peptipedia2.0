@@ -6,7 +6,7 @@ services:
     build:
       context: .
       args:
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_PASSWORD=${DB_PASS}
     command: postgres -c shared_buffers=2GB -c effective_cache_size=3GB -c max_wal_size=4GB
     ports:
       - target: 5432

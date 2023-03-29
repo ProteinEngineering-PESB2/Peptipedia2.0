@@ -28,14 +28,6 @@ def api_get_pfam_from_peptide(idpeptide):
     result = db.get_pfam_from_peptide(idpeptide)
     return {"result": result}
 
-
-@profile_blueprint.route("/get_tax_from_peptide/<idpeptide>", methods=["GET"])
-def api_get_tax_from_peptide(idpeptide):
-    """Gets all taxonomy terms from a peptide"""
-    result = db.get_tax_from_peptide(idpeptide)
-    return {"result": result}
-
-
 @profile_blueprint.route("/get_info_from_peptide/<idpeptide>", methods=["GET"])
 def api_get_info_from_peptide(idpeptide):
     """Gets all properties from a peptide"""

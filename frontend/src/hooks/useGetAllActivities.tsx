@@ -209,14 +209,7 @@ export default function useGetAllActivities() {
             >
               <RemoveRedEyeIcon />
             </Link>
-            <Link
-              onClick={() =>
-                getSpecificActivity(res.data.data[i][0], res.data.data[i][1])
-              }
-              sx={{ textDecoration: "none", cursor: "pointer" }}
-            >
-              <EqualizerIcon />
-            </Link>
+            
           </Stack>,
         ];
         new_data.push(parcial_data);
@@ -228,7 +221,7 @@ export default function useGetAllActivities() {
     }
 
     setTableActivities({
-      columns: ["activity", "peptides", "Options"],
+      columns: ["Activity", "Peptides", "Details"],
       data: new_data,
     });
     setLoadingTableActivities(false);

@@ -34,7 +34,7 @@ export default function useGetDBStatistics() {
     }
 
     setTableStatistics({
-      columns: [res.data.columns[0], res.data.columns[1], "Options"],
+      columns: [res.data.columns[0], res.data.columns[1], "Details"],
       data: new_data,
     });
     setLoadingTableStatistics(false);

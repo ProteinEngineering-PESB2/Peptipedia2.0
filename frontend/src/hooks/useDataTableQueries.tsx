@@ -117,7 +117,7 @@ export default function useDataTableQueries({
         }
 
         const new_columns = data.columns;
-        new_columns.push("Options");
+        new_columns.push("Details");
 
         setTableResultQueries({ columns: new_columns, data: new_data });
         setOpenBackdrop(false);
@@ -158,7 +158,7 @@ export default function useDataTableQueries({
       ]);
       cont++;
     });
-    setTableQueries({ data: d, columns: ["#", "Query", "Results", "Options"] });
+    setTableQueries({ data: d, columns: ["#", "Query", "Results", "Details"] });
     setOpenBackdrop(false);
   }, [queries, counts, queriesWithID]);
 

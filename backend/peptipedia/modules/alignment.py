@@ -1,11 +1,8 @@
 """Blast alignment module"""
-import subprocess
 from re import split
-
 import pandas as pd
-
 from peptipedia.modules.utils import ConfigTool
-
+from Bio.Blast.Applications import NcbiblastpCommandline
 
 class BlastAlignment(ConfigTool):
     """Alignment class, it performs a blast+ function for to align against Peptipedia Database"""
@@ -19,18 +16,8 @@ class BlastAlignment(ConfigTool):
 
     def execute_blastp(self):
         """Execute blastp with an e-value 0.5, against Peptipedia database"""
-        command = [
-            "blastp",
-            "-db",
-            "peptipedia/peptipedia",
-            "-query",
-            self.temp_file_path,
-            "-evalue",
-            "0.5",
-            "-out",
-            self.output_path,
-        ]
-        subprocess.check_output(command)
+        cline = NcbiblastpCommandline(db="peptipedia.fasta", out=self.output_path, query= self.temp_file_path)
+        cline()
         return self.output_path
 
     def parse_response(self):

@@ -25,7 +25,6 @@ import ChargeField from "./fields/charge";
 import ChargeDensityField from "./fields/charge_density";
 import DatabaseField from "./fields/database";
 import ActivityField from "./fields/activity";
-import TaxonomyField from "./fields/taxonomy";
 import PfamField from "./fields/pfam";
 import GeneOntologyField from "./fields/gene_ontology";
 import SequenceField from "./fields/sequence";
@@ -36,7 +35,6 @@ import useValueFieldAdvancedSearch from "../../hooks/useValueFieldAdvancedSearch
 import useValueLogicOperator from "../../hooks/useValueLogicOperator";
 import useGetDatabases from "../../hooks/useGetDatabases";
 import useGetActivities from "../../hooks/useGetActivities";
-import useGetTaxonomies from "../../hooks/useGetTaxonomies";
 import useGetPfam from "../../hooks/useGetPfams";
 import useGetGeneOntologoies from "../../hooks/useGetGeneOntologoies";
 import useInitialParamsAdvancedSearch from "../../hooks/useInitialParamsAdvancedSearch";
@@ -96,8 +94,6 @@ export default function AdvancedSearchForm({
     setValueDatabase,
     setValueActivity,
     valueActivity,
-    setValueTaxonomy,
-    valueTaxonomy,
     setValuePfam,
     valuePfam,
     setValueGeneOnotology,
@@ -142,8 +138,6 @@ export default function AdvancedSearchForm({
     setLogicOperatorValueForDatabase,
     logicOperatorValueForActivity,
     setLogicOperatorValueForActivity,
-    logicOperatorValueForTaxonomy,
-    setLogicOperatorValueForTaxonomy,
     handleChangeLogicOperatorPfam,
     logicOperatorValueForPfam,
     logicOperatorValueForGeneOntology,
@@ -175,7 +169,6 @@ export default function AdvancedSearchForm({
 
   const { databases } = useGetDatabases();
   const { activities } = useGetActivities();
-  const { taxonomies } = useGetTaxonomies();
   const { pfams } = useGetPfam();
   const { geneOntologies } = useGetGeneOntologoies();
 
@@ -264,7 +257,6 @@ export default function AdvancedSearchForm({
       params.max_hydrophobic_ratio,
     ]);
     setValueActivity({ label: undefined, value: undefined });
-    setValueTaxonomy({ label: undefined, value: undefined });
     setValueDatabase({ label: undefined, value: undefined });
     setValueGeneOnotology({ label: undefined, value: undefined });
     setValuePfam({ label: undefined, value: undefined });
@@ -274,7 +266,6 @@ export default function AdvancedSearchForm({
     setLogicOperatorValueForCharge("AND");
     setLogicOperatorValueForChargeDensity("AND");
     setLogicOperatorValueForActivity("AND");
-    setLogicOperatorValueForTaxonomy("AND");
     setLogicOperatorValueForDatabase("AND");
     setLogicOperatorValueForGeneOntology("AND");
     setLogicOperatorValueForPfam("AND");
@@ -348,8 +339,6 @@ export default function AdvancedSearchForm({
             selectedOperators.push(logicOperatorValueForHydrophobicRatio);
           if (value === "Activity")
             selectedOperators.push(logicOperatorValueForActivity);
-          if (value === "Taxonomy")
-            selectedOperators.push(logicOperatorValueForTaxonomy);
           if (value === "Database")
             selectedOperators.push(logicOperatorValueForDatabase);
           if (value === "Gene Ontology")
@@ -482,20 +471,6 @@ export default function AdvancedSearchForm({
           queryWithId += rangeInput(
             value,
             valueHydrophobicRatio,
-            index,
-            selectedOperators
-          );
-        }
-        if (value === "Taxonomy") {
-          query += selectInput(
-            value,
-            valueTaxonomy.label,
-            index,
-            selectedOperators
-          );
-          queryWithId += selectInput(
-            value,
-            valueTaxonomy.value,
             index,
             selectedOperators
           );
@@ -821,20 +796,6 @@ export default function AdvancedSearchForm({
                         options={activities}
                       />
                     )}
-                    {option === "Taxonomy" && (
-                      <TaxonomyField
-                        valueTaxonomy={valueTaxonomy}
-                        setValueTaxonomy={setValueTaxonomy}
-                        logicOperatorValueForTaxonomy={
-                          logicOperatorValueForTaxonomy
-                        }
-                        setLogicOperatorValueForTaxonomy={
-                          setLogicOperatorValueForTaxonomy
-                        }
-                        index={index}
-                        options={taxonomies}
-                      />
-                    )}
                     {option === "Pfam" && (
                       <PfamField
                         options={pfams}
@@ -907,10 +868,6 @@ export default function AdvancedSearchForm({
                     ? queryText.length === 0
                       ? true
                       : false
-                    : false ||
-                      (selectedOptions.includes("Taxonomy") &&
-                        valueTaxonomy.value === undefined)
-                    ? true
                     : false ||
                       (selectedOptions.includes("Database") &&
                         valueDatabase.value === undefined)

@@ -4,10 +4,10 @@ import configparser
 import re
 from pathlib import Path
 from random import random
-
+import os
 import pandas as pd
 from Bio import SeqIO
-
+from peptipedia.modules.database import Database
 AMINOACID_ALPHABET = "ARNDCEQGHILKMFPSTWYVX*"
 
 
@@ -249,6 +249,7 @@ class Folders:
         # read config file and asign folder names.
         self.config = configparser.ConfigParser()
         self.config.read(config_file)
+        self.db = Database(self.config)
 
     def create_folders(self):
         # create folders
@@ -258,16 +259,20 @@ class Folders:
             "alignments_folder",
             "downloads_folder",
             "results_folder",
+            "blastdb_folder"
         ):
             Path(self.config["folders"][f]).mkdir(parents=True, exist_ok=True)
+        if "peptipedia.fasta.phr" not in os.listdir(self.config["folders"]["blastdb_folder"]):
+            self.makeblastdb()
 
     def get_static_folder(self):
         return self.config["folders"]["static_folder"]
-
-
+    
+    def makeblastdb(self):
+        os.system(f"""makeblastdb -in {self.config["folders"]["blastdb_folder"]}/peptipedia.fasta -dbtype prot""")
+        print("creado")
 def _error_message(message):
     return {"status": "error", "description": message}
-
 
 def parse_fasta(text):
     fasta_regex = re.compile(r">([^\n]+)\n([^>]+)")

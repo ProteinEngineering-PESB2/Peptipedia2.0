@@ -19,6 +19,7 @@ import DependecyWheel from "../components/DependecyWheel";
 import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import BackdropComponent from "../components/backdrop_component";
+import toast from "react-hot-toast";
 
 interface ILevels {
   name: number;
@@ -65,25 +66,32 @@ function Promiscuous() {
   const handleChangeOptionsValue = (e: ChangeEvent<HTMLInputElement>) => {
     setOptionsValue(e.target.value);
     if (levelsData.length > 0 && parentsData.length > 0) {
-      if (e.target.value === "parent")
-        setSelectValue(levelsData[0].value.toString());
-      if (e.target.value === "level")
-        setSelectValue(parentsData[0].value.toString());
+      if (e.target.value.toString() === "parent")
+        setSelectValue(parentsData[0].value);
+      if (e.target.value.toString() === "level")
+        setSelectValue(levelsData[0].value);
     }
   };
 
   const getChordDiagram = async () => {
-    setDependencyWheelData(null);
     setOpenBackdrop(true);
     try {
       const response = await axios.get(
         `/api/get_chord_diagram/${optionsValue}/${selectValue}`
       );
-      console.log(response.data)
-      const { data } = response.data;
-      setDependencyWheelData(data);
+      if (response.data.data == null) {
+        toast("This node has not promiscuity between his childs.", {
+          icon: '⚠',
+        });
+        setDependencyWheelData(null);
+      }
+      else{
+        const { data } = response.data;
+        setDependencyWheelData(data);
+      }
     } catch (error) {
-      setDependencyWheelData(null);
+        toast.error("Server error");
+        setDependencyWheelData(null);
     }
     setOpenBackdrop(false);
   };

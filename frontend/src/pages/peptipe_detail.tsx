@@ -10,7 +10,6 @@ import PeptideDetailPfam from "../components/peptide_detail/peptide_detail_pfam"
 import PeptideDetailPhysicochemicalProperties from "../components/peptide_detail/peptide_detail_physicochemical_properties";
 import PeptideDetailSequence from "../components/peptide_detail/peptide_detail_sequence";
 import PeptideDetailStructure from "../components/peptide_detail/peptide_detail_structure";
-import PeptideDetailTaxonomy from "../components/peptide_detail/peptide_detail_taxonomy";
 import ProSeqViewer from "../components/pro_seq_viewer";
 import SectionTitle from "../components/section_title";
 import useGetInfoPeptideDetail from "../hooks/useGetInfoPeptideDetail";
@@ -57,8 +56,6 @@ export default function PeptideDetail() {
         <PeptideDetailPfam peptideId={peptideId} />
 
         <PeptideDetailActivities peptideId={peptideId} />
-
-        <PeptideDetailTaxonomy peptideId={peptideId} />
 
         <PeptideDetailDatabases peptideId={peptideId} />
 

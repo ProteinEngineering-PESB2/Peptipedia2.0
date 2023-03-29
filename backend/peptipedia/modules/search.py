@@ -45,11 +45,6 @@ class search:
                 join peptide_has_pfam php
                 on php.idpeptide = p.idpeptide and php.id_pfam = {value}"""
 
-            if "Taxonomy" in ff:
-                phrase = f"""{select}
-                join peptide_has_taxonomy pht
-                on pht.idpeptide = p.idpeptide and pht.idtaxonomy = {value}"""
-
             if "Gene Ontology" in ff:
                 phrase = f"""{select}
                 join peptide_has_go phg
@@ -138,7 +133,6 @@ class search:
             elif value in [
                 "Gene",
                 "Ontology",
-                "Taxonomy",
                 "Pfam",
                 "Database",
                 "Sequence",
