@@ -12,10 +12,10 @@ Create two .env files (first one in ./bd, second in ./backend) and store a passw
 DB_PASS = example_password
 ```
 
-Create a final .env file in ./frontend.
+Create a final .env.local file in ./frontend.
 
 ```
-BACKEND_URL = http://localhost:8001
+VITE_BACKEND_URL = http://localhost:8001
 ```
 
 If you will use another server to store the backend, write the IP inplace. 
