@@ -263,7 +263,8 @@ class Folders:
         ):
             Path(self.config["folders"][f]).mkdir(parents=True, exist_ok=True)
         if "peptipedia.fasta.phr" not in os.listdir(self.config["folders"]["blastdb_folder"]):
-            self.makeblastdb()
+            #self.makeblastdb()
+            pass
 
     def get_static_folder(self):
         return self.config["folders"]["static_folder"]

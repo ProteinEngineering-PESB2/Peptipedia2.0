@@ -8,6 +8,8 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 import os
 from dotenv import dotenv_values
+from peptipedia.modules.models import *
+from sqlalchemy import select, func, desc
 
 class Database:
     """Database class"""
@@ -29,6 +31,11 @@ class Database:
 
     def get_table(self, query):
         return pd.read_sql(text(query), con=self.conn)
+    
+    def get_table_query(self, stmt):
+        """Applies a select for a previous stmt"""
+        return pd.read_sql(stmt, con = self.conn)
+
 
     #SEARCH
     def count_peptides(self, query):
@@ -389,32 +396,23 @@ class Database:
 
     def get_general_counts(self):
         """Count databases, activities, sequences and return last update"""
-        dbs = pd.read_sql(text("""select * from count_db;"""), con=self.conn).values[0][0]
-        acts = pd.read_sql(text("""select * from count_activity;"""), con=self.conn).values[
-            0
-        ][0]
-        sequences = pd.read_sql(text(
-            """select * from count_peptide;"""), con=self.conn
-        ).values[0][0]
-        last_update = pd.read_sql(text(
-            """select * from last_update;"""), con=self.conn
-        ).values[0][0]
-        return {
-            "databases": int(dbs),
-            "activity": int(acts),
-            "sequences": int(sequences),
-            "last_update": str(last_update).split("T", maxsplit=1)[0],
-        }
+        stmt = select(MVGeneralInformation)
+        general_info = pd.read_sql(stmt, con=self.conn)
+        general_info.last_update = general_info.last_update.astype(str)
+        general_info_data = general_info.values[0].tolist()
+        return {column: general_info_data[column_index] for  column_index, column in enumerate(general_info.columns)}
 
     def get_peptides_by_database(self):
         """Counts all peptides by database"""
-        data = pd.read_sql(text("""select * from peptides_by_database limit 16;"""), con=self.conn)
-        data = data.iloc[1:]
+        stmt = select(MVPeptideByDatabase)
+        data = pd.read_sql(stmt, con = self.conn)
+        data = data.iloc[3:]
         return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
 
     def get_peptides_by_activity(self):
         """Counts all peptides by activity"""
-        data = pd.read_sql(text("""select * from peptides_by_activity limit 15;"""), con=self.conn)
+        stmt = select(MVPeptideByActivity)
+        data = pd.read_sql(stmt, con = self.conn)
         return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
 
     def get_parents_levels(self):

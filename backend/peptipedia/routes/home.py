@@ -10,17 +10,17 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 
 db = Database(config)
-
+session = Session()
 home_blueprint = Blueprint("home_blueprint", __name__)
-
 
 @home_blueprint.route("/get_general_counts/", methods=["GET"])
 def get_general_counts():
     """Get count of peptides, activities, databases and last update"""
     try:
         res = db.get_general_counts()
-    except:
-        Session.rollback()
+    except Exception as e:
+        print(e)
+        session.rollback()
     return res
 
 
@@ -30,7 +30,8 @@ def get_peptides_by_database():
     try:
         res = db.get_peptides_by_database()
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return res
 
 
@@ -40,7 +41,8 @@ def get_peptides_by_activity():
     try:
         res = db.get_peptides_by_activity()
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return res
 
 
@@ -51,7 +53,7 @@ def get_parents_levels():
         res = db.get_parents_levels()
     except Exception as e:
         print(e)
-        Session.rollback()
+        session.rollback()
     return res
 
 
@@ -61,7 +63,8 @@ def get_chord_diagram(by, query):
     try:
         res = db.get_chord_diagram(by, query)
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return res
 
 
@@ -71,7 +74,8 @@ def get_activity_spectral(idactivity):
     try:
         res = db.get_activity_spectral(idactivity)
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return res
 
 
@@ -81,7 +85,8 @@ def get_spectral_by_encoding(idencoding):
     try:
         res = db.get_spectral_by_encoding(idencoding)
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return res
 
 
@@ -91,7 +96,8 @@ def get_activity_details(idactivity):
     try:
         res = db.get_activity_details(idactivity)
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return res
 
 
@@ -104,5 +110,6 @@ def get_activity_sequences(idactivity):
         with open(activity_file, "w", encoding="utf-8") as file:
             file.write(text)
     except:
-        Session.rollback()
+        print(e)
+        session.rollback()
     return {"file": activity_file}
