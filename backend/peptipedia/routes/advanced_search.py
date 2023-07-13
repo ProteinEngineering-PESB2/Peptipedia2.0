@@ -1,18 +1,12 @@
 """Advanced search routes"""
-import configparser
-
 from flask import Blueprint, request
-
 from peptipedia.modules.database import Database
 from peptipedia.modules.search import search
 from sqlalchemy.orm import Session
-##Reads config file and asign folder names.
-config = configparser.ConfigParser()
-config.read("config.ini")
 
 search_blueprint = Blueprint("search_blueprint", __name__)
 
-db = Database(config)
+db = Database()
 session = Session()
 
 @search_blueprint.route("/count/", methods=["POST"])

@@ -8,26 +8,27 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 import os
 from dotenv import dotenv_values
-from peptipedia.modules.models import *
+from peptipedia.modules.table_models import *
+from peptipedia.modules.materialized_views import *
 from sqlalchemy import select, func, desc
+import peptipedia.config as config
 
 class Database:
     """Database class"""
 
-    def __init__(self, config):
+    def __init__(self):
         # Config connection
-        user = config["database"]["user"]
-        db_name = config["database"]["db"]
-        host = config["database"]["host"]
+        user = config.user
+        db_name = config.db
+        host = config.host
         password = dotenv_values(".env")["DB_PASS"]
-        port = config["database"]["port"]
-        self.config = config
-        engine = create_engine(
+        port = config.port
+        self.engine = create_engine(
             f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}"
         )
-        self.conn = engine.connect()
+        self.conn = self.engine.connect()
         # Config max items for selects
-        self.max_items = int(config["select"]["limit"])
+        self.max_items = config.select_limit
 
     def get_table(self, query):
         return pd.read_sql(text(query), con=self.conn)
@@ -35,6 +36,34 @@ class Database:
     def get_table_query(self, stmt):
         """Applies a select for a previous stmt"""
         return pd.read_sql(stmt, con = self.conn)
+
+    def create_fasta_from_peptides(self):
+        #All peptides
+        stmt = select(Peptide.id_peptide, Peptide.sequence).where(Peptide.is_canon == True).limit(1000)
+        peptides = self.get_table_query(stmt)
+        fasta_text = ""
+        for _,row in peptides.iterrows():
+            fasta_text += f">{row.id_peptide}  \n{row.sequence}\n"
+
+        with open(config.blastdb_folder + "/peptipedia.fasta", mode="w", encoding="utf-8") as file:
+            file.write(fasta_text)
+
+        with open(config.downloads_folder + "/all_peptides.fasta", mode="w", encoding="utf-8") as file:
+            file.write(fasta_text)
+        #Peptides with activity
+        stmt = select(MVPeptideWithActivity).limit(1000)
+        data = self.get_table_query(stmt)
+        fasta_text = ""
+        for _,row in data.iterrows():
+            fasta_text += f">{row.id_peptide}|{row.activities}\n{row.sequence}\n"
+        
+        data.to_csv(config.downloads_folder + "/peptides_with_activity.csv", index=False)
+        with open(config.downloads_folder + "/peptides_with_activity.fasta", mode="w", encoding="utf-8") as file:
+            file.write(fasta_text)
+
+    def get_general_statistics():
+        stmt = select(Peptide)
+
 
 
     #SEARCH
@@ -404,14 +433,14 @@ class Database:
 
     def get_peptides_by_database(self):
         """Counts all peptides by database"""
-        stmt = select(MVPeptideByDatabase)
+        stmt = select(MVPeptidesByDatabase)
         data = pd.read_sql(stmt, con = self.conn)
         data = data.iloc[3:]
         return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
 
     def get_peptides_by_activity(self):
         """Counts all peptides by activity"""
-        stmt = select(MVPeptideByActivity)
+        stmt = select(MVPeptidesByActivity)
         data = pd.read_sql(stmt, con = self.conn)
         return {"X": data["name"].to_list(), "Y": data["count_peptide"].to_list()}
 

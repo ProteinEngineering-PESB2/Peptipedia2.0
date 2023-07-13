@@ -100,27 +100,3 @@ class PeptideHasGO(Base):
 
     def __repr__(self):
         return f"PeptideHasGO(id_peptide={self.id_peptide}, id_go={self.id_go})"
-
-class MVPeptideByDatabase(Base):
-    """Peptide table"""
-    __tablename__ = "peptides_by_database"
-    name = Column(String, primary_key=True)
-    count_peptide = Column(Integer)
-    def __repr__(self):
-        return f"MV_peptides_by_database(name={self.name}, count={self.count_peptide})"
-class MVPeptideByActivity(Base):
-    """Peptide table"""
-    __tablename__ = "peptides_by_activity"
-    name = Column(String, primary_key=True)
-    count_peptide = Column(Integer)
-    def __repr__(self):
-        return f"MV_peptides_by_activity(name={self.name}, count={self.count_peptide})"
-    
-class MVGeneralInformation(Base):
-    __tablename__ = "general_information"
-    databases = Column(Integer, primary_key=True)
-    sequences = Column(Integer, primary_key=True)
-    activity = Column(Integer, primary_key=True)
-    last_update = Column(Date, primary_key=True)
-    def __repr__(self):
-        return f"general_information(databases={self.databases}, sequences={self.sequences}, activity={self.activity}, last_update={self.last_update})"

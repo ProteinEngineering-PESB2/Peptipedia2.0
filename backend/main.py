@@ -1,15 +1,16 @@
 """main module"""
 import os
+
 from flask import Flask
 from flask_cors import CORS
+
 from peptipedia.blueprint import api_blueprint
 from peptipedia.modules.utils import Folders
-import peptipedia.config as config
 
-f = Folders()
+f = Folders("config.ini")
 f.create_folders()
 
-app = Flask(__name__, static_folder=os.path.realpath(config.static_folder))
+app = Flask(__name__, static_folder=os.path.realpath(f.get_static_folder()))
 # Cors
 CORS(app)
 

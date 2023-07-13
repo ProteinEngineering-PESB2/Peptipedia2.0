@@ -1,28 +1,27 @@
 """Database routes"""
-import configparser
-
 from flask import Blueprint
 from sqlalchemy.orm import Session
 from peptipedia.modules.database import Database
 
-##Reads config file and asign folder names.
-config = configparser.ConfigParser()
-config.read("config.ini")
-
 database_blueprint = Blueprint("database_blueprint", __name__)
 
-db = Database(config)
+db = Database()
 session = Session()
+
+@database_blueprint.route("/get_general_statistics/", methods=["GET"])
+def api_get_general_statistics():
+    return db.get_general_statistics()
+
+
 @database_blueprint.route("/get_general_act_statistic/", methods=["GET"])
 def api_get_general_act_statistic():
     """Get general activities count"""
     try:
         res = db.get_general_act_statistic()
         return res
-    except:
+    except Exception as e:
+        print(e)
         session.rollback()
-        return {"None": None}
-
 
 @database_blueprint.route("/get_db_statistics/", methods=["GET"])
 def api_get_db_statistics():
