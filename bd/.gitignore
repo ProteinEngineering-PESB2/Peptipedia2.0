@@ -1,5 +1,2 @@
-*
-
-!.gitignore
-!Dockerfile
-!docker-compose.yaml
+tables/
+*__pycache__*
