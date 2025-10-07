@@ -1,5 +1,7 @@
 # Peptipedia 2.0
 
+> This repository is outdated, please find the new one here: https://github.com/ProteinEngineering-PESB2/Peptipedia
+
 ## Usage
 
 Download requisites files and database from https://drive.google.com/file/d/1x3yHNl8k5teHlBI2FMgl966o51s0T8i_/view?usp=sharing.
